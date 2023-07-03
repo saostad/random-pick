@@ -1,4 +1,4 @@
-# random-pick
+# random-pick [Domain URL](randompick.app)
 
 ## Business Plan
 
@@ -20,3 +20,8 @@ make maximum benefit
   - random question-answer (quiz)
 
 ### Competitions
+
+### Technology Stack
+ - Frontend - Svelte, UI DaisyUI
+ - Backend - Sveltekit, Supabase, 
+
