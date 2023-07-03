@@ -18,6 +18,7 @@ make maximum benefit
   - raffle tickets 
   - flashcards 
   - random question-answer (quiz)
+  - Count down clock
 
 ### Competitions
 
