@@ -3,7 +3,9 @@
 ## Features
 - English and Spanish
 - each function in separate page
-  - number
-  - name 
-  - 
+  - random number
+  - random name 
+  - raffle prizes
+  - raffle names
+  - raffle tickets 
 ## Compatitions
