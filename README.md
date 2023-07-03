@@ -8,4 +8,5 @@
   - raffle prizes
   - raffle names
   - raffle tickets 
+  - flash cards 
 ## Compatitions
