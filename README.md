@@ -9,5 +9,5 @@
   - raffle names
   - raffle tickets 
   - flash cards 
-  - random question-answer 
+  - random question-answer (quiz)
 ## Compatitions
