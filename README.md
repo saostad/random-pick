@@ -19,6 +19,7 @@ make maximum benefit
   - flashcards 
   - random question-answer (quiz)
   - Count down clock
+  - Leaderboard statistics (highest user winnings, keeps environment competitive)
 
 ### Competitions
 
