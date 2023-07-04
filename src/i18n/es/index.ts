@@ -5,7 +5,7 @@ const es = {
 	general: {
 		siteName: 'Selección aleatoria',
 		siteDescription:
-			'"Random Pick" se refiere a una herramienta que ayuda a hacer una elección aleatoria de una lista de elementos. ¿Te gustaría que te ayude a implementar esta herramienta'
+			'"Random Pick" se refiere a una herramienta que ayuda a hacer una elección aleatoria de una lista de elementos.'
 	}
 } satisfies Translation;
 
