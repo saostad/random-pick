@@ -1,20 +1,13 @@
 <script>
+	import Footer from '$components/layout/Footer.svelte';
+	import Header from '$components/layout/Header.svelte';
 	import '../app.css';
 </script>
 
-<header class="flex justify-between items-center py-4 bg-primary">
-	<h1 class="text-white">My App</h1>
-	<nav class="flex">
-		<a href="#" class="text-white">Home</a>
-		<a href="#" class="text-white">About</a>
-		<a href="#" class="text-white">Contact</a>
-	</nav>
-</header>
+<Header />
 
-<main class="py-4">
+<main class="md:container md:mx-auto">
 	<slot />
 </main>
 
-<footer class="py-4 bg-secondary">
-	<p class="text-center text-white">Copyright 2023</p>
-</footer>
+<Footer />
