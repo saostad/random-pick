@@ -1,6 +1,5 @@
 import type { Translation } from '../i18n-types';
 
-// spanish translation
 const es = {
 	general: {
 		siteName: 'Selección aleatoria',
