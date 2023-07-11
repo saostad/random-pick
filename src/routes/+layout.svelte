@@ -7,7 +7,9 @@
 <Header />
 
 <main class="md:container md:mx-auto">
-	<slot />
+	<article class="prose lg:prose-xl">
+		<slot />
+	</article>
 </main>
 
 <Footer />
