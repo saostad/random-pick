@@ -1,3 +1,7 @@
+<script lang="ts">
+	import { locale } from '$i18n/i18n-svelte';
+</script>
+
 <div
 	class="
   sticky top-0 z-30 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-all duration-100
@@ -31,7 +35,7 @@
 			>
 			<div class="flex items-center gap-2">
 				<a
-					href="/"
+					href={`/${$locale}`}
 					aria-current="page"
 					aria-label="Homepage"
 					class="flex-0 btn btn-ghost gap-1 px-2 md:gap-2"

@@ -1,5 +1,18 @@
+<script lang="ts">
+	import { locale } from '$i18n/i18n-svelte';
+	
+	// get the current page
+	import { page } from '$app/stores';
+
+	// get the current page
+	$:{
+		const currentPage = $page;
+		console.log(currentPage.url.pathname)
+	}
+</script>
+
 <footer class="btm-nav">
-	<button>
+	<a href={`/${$locale}`}>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			class="h-5 w-5"
@@ -14,8 +27,8 @@
 			/></svg
 		>
 		<span>Home</span>
-	</button>
-	<button class="active">
+	</a>
+	<a class="active" href={`/${$locale}/products`}>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			class="h-5 w-5"
@@ -29,9 +42,9 @@
 				d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
 			/></svg
 		>
-		<span>Info</span>
-	</button>
-	<button>
+		<span>Products</span>
+	</a>
+	<a href={`/${$locale}/account`}>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			class="h-5 w-5"
@@ -45,6 +58,6 @@
 				d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
 			/></svg
 		>
-		<span>Stats</span>
-	</button>
+		<span>Account</span>
+	</a>
 </footer>
