@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { locale } from '$i18n/i18n-svelte';
-	
+
 	// get the current page
 	import { page } from '$app/stores';
 
 	// get the current page
-	$:{
+	$: {
 		const currentPage = $page;
-		console.log(currentPage.url.pathname)
+		console.log(currentPage.url.pathname);
 	}
 </script>
 
