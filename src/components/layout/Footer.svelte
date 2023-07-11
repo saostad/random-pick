@@ -4,15 +4,20 @@
 	// get the current page
 	import { page } from '$app/stores';
 
-	// get the current page
+	type PageUrls = 'products' | 'account' | undefined;
+
+	// the current page url
+	let url: PageUrls;
 	$: {
 		const currentPage = $page;
-		console.log(currentPage.url.pathname);
+
+		// get the second part of the url
+		url = currentPage.url.pathname.split('/')[2] as PageUrls;
 	}
 </script>
 
 <footer class="btm-nav">
-	<a href={`/${$locale}`}>
+	<a href={`/${$locale}`} class={url === undefined ? 'active' : ''}>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			class="h-5 w-5"
@@ -28,7 +33,7 @@
 		>
 		<span>Home</span>
 	</a>
-	<a class="active" href={`/${$locale}/products`}>
+	<a class={url === 'products' ? 'active' : ''} href={`/${$locale}/products`}>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			class="h-5 w-5"
@@ -44,7 +49,7 @@
 		>
 		<span>Products</span>
 	</a>
-	<a href={`/${$locale}/account`}>
+	<a class={url === 'account' ? 'active' : ''} href={`/${$locale}/account`}>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			class="h-5 w-5"
