@@ -29,9 +29,13 @@
     background-color: black;
     
   }
+
+  #container {
+    margin-left: 10%;
+  }
 </style>
 
-<div>
+<div id="container">
   <input type="number" id="input" placeholder="Enter a number" />
   <button on:click={addNumberToList}>Add number</button>
   <div>
