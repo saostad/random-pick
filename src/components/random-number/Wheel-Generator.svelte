@@ -24,13 +24,18 @@
   button {
     margin-top: 10px;
   }
+
+  #g-btn {
+    background-color: black;
+    
+  }
 </style>
 
 <div>
   <input type="number" id="input" placeholder="Enter a number" />
   <button on:click={addNumberToList}>Add number</button>
   <div>
-    <button on:click={generateNumber}>Generate Random Number</button>
+    <button id="g-btn" on:click={generateNumber}>Generate Random Number</button>
   </div>
   {#if numbList.length > 0}
     <div>
