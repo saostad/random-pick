@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Player, useGameContext } from "../GameContext";
 
 // Component for displaying and managing the list of players
-const PlayerList: React.FC = () => {
+const Players: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
   const [newPlayerName, setNewPlayerName] = useState("");
 
@@ -52,4 +52,4 @@ const PlayerList: React.FC = () => {
   );
 };
 
-export default PlayerList;
+export default Players;

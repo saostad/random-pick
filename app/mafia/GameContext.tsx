@@ -1,4 +1,10 @@
-import React, { useState, createContext, useContext, ReactNode } from "react";
+import React, {
+  useState,
+  createContext,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
 export type Player = {
   id: string;
   name: string;
@@ -23,15 +29,18 @@ export type GameContextType = {
   updateGameState: (newState: Partial<GameState>) => void;
   markPlayerAsDead: (playerId: string) => void; // Method to mark a player as dead
   assignRoleToPlayer: (playerId: string, roleId: string) => void; // Method to assign a role to a player
-  handleNightActions: (gameState: GameState) => GameState; // Method to handle night actions
+  resetGameState: () => void; // Method to reset the game role assignments and player statuses
 };
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
 const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [gameState, setGameState] = useState<GameState>({
+  // Initialize state from local storage or default to empty arrays
+  const initialState: GameState = {
     players: [],
     gameRoles: [],
-  });
+  };
+
+  const [gameState, setGameState] = useState<GameState>(initialState);
 
   const updateGameState = (newState: Partial<GameState>) => {
     setGameState((prevState) => ({ ...prevState, ...newState }));
@@ -58,21 +67,15 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setGameState((prevState) => ({ ...prevState, players: updatedPlayers }));
   };
 
-  // A function to simulate the night phase
-  const handleNightActions = (gameState: GameState): GameState => {
-    // Filter roles that have actions and sort them by their action order
-    const actionableRoles = gameState.gameRoles
-      .filter((role) => role.hasAction)
-      .sort((a, b) => a.actionOrder! - b.actionOrder!);
+  /** Method to reset the game role-assignments and player-statuses */
+  const resetGameState = () => {
+    const initPlayers = gameState.players.map((player) => ({
+      ...player,
+      roleId: undefined,
+      isAlive: true,
+    }));
 
-    actionableRoles.forEach((role) => {
-      // Implement actions for each role here
-      console.log(`Processing action for ${role.name}`);
-      window.alert(`Processing action for ${role.name}`);
-      // Example: Mafia chooses a target, Detective investigates a player, etc.
-    });
-
-    return gameState; // Return the updated state after all actions
+    setGameState((prevState) => ({ ...prevState, players: initPlayers }));
   };
 
   const value = {
@@ -80,7 +83,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     updateGameState,
     markPlayerAsDead,
     assignRoleToPlayer,
-    handleNightActions,
+    resetGameState,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

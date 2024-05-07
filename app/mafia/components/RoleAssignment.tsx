@@ -18,7 +18,6 @@ const RoleAssignment: React.FC = () => {
             <select
               value={player.roleId || ""}
               onChange={(e) => handleRoleChange(player.id, e.target.value)}
-              defaultValue="Select a role"
             >
               <option disabled value="">
                 Select a role
