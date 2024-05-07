@@ -1,15 +1,12 @@
-import React, {
-  useState,
-  createContext,
-  useContext,
-  ReactNode,
-  useEffect,
-} from "react";
+import React, { useState, createContext, useContext, ReactNode } from "react";
+
 export type Player = {
   id: string;
   name: string;
   roleId?: string;
   isAlive: boolean; // Track whether the player is alive or dead
+  voteCount: number; // To track the number of votes a player has
+  order: number; // To define their physical location or order in voting
 };
 
 export type GameRole = {
@@ -30,6 +27,9 @@ export type GameContextType = {
   markPlayerAsDead: (playerId: string) => void; // Method to mark a player as dead
   assignRoleToPlayer: (playerId: string, roleId: string) => void; // Method to assign a role to a player
   resetGameState: () => void; // Method to reset the game role assignments and player statuses
+  increaseVote: (playerId: string) => void;
+  decreaseVote: (playerId: string) => void;
+  resetVotes: () => void;
 };
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
@@ -72,10 +72,48 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const initPlayers = gameState.players.map((player) => ({
       ...player,
       roleId: undefined,
+      voteCount: 0,
       isAlive: true,
     }));
 
     setGameState((prevState) => ({ ...prevState, players: initPlayers }));
+  };
+
+  const increaseVote = (playerId: string) => {
+    setGameState((prev) => {
+      return {
+        ...prev,
+        players: prev.players.map((player) =>
+          player.id === playerId
+            ? { ...player, voteCount: player.voteCount + 1 }
+            : player
+        ),
+      };
+    });
+  };
+
+  // Function to decrease vote count for a player
+  const decreaseVote = (playerId: string) => {
+    setGameState((prev) => {
+      return {
+        ...prev,
+        players: prev.players.map((player) =>
+          player.id === playerId && player.voteCount > 0
+            ? { ...player, voteCount: player.voteCount - 1 }
+            : player
+        ),
+      };
+    });
+  };
+
+  const resetVotes = () => {
+    setGameState((prev) => {
+      const newPlayers = prev.players.map((player) => ({
+        ...player,
+        voteCount: 0,
+      }));
+      return { ...prev, players: newPlayers };
+    });
   };
 
   const value = {
@@ -84,6 +122,9 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     markPlayerAsDead,
     assignRoleToPlayer,
     resetGameState,
+    increaseVote,
+    decreaseVote,
+    resetVotes,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

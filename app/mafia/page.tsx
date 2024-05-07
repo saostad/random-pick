@@ -7,11 +7,13 @@ import RoleAssignment from "./components/RoleAssignment";
 import Roles from "./components/Roles";
 import NightActionsControl from "./components/NightActionsControl";
 import NewGameButton from "./components/NewGameButton";
+import VotingSession from "./components/VotingSession";
 
 export default function Mafia() {
   return (
     <GameProvider>
       <h1>Mafia</h1>
+      <NewGameButton />
       <hr />
       <Players />
       <hr />
@@ -21,9 +23,10 @@ export default function Mafia() {
       <hr />
       <PlayerStatusManager />
       <hr />
+      <VotingSession />
+      <hr />
       <NightActionsControl />
       <hr />
-      <NewGameButton />
     </GameProvider>
   );
 }

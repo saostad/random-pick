@@ -5,16 +5,20 @@ import { Player, useGameContext } from "../GameContext";
 const Players: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
   const [newPlayerName, setNewPlayerName] = useState("");
+  const [newPlayerOrder, setNewPlayerOrder] = useState<number>(1);
 
   // Function to add a new player
   const handleAddPlayer = () => {
     const newPlayer: Player = {
       id: new Date().toISOString(), // Generating a unique ID based on the current time
       name: newPlayerName,
+      voteCount: 0,
+      order: newPlayerOrder,
       isAlive: true,
     };
     updateGameState({ players: [...gameState.players, newPlayer] });
     setNewPlayerName(""); // Reset input after adding
+    setNewPlayerOrder((prev) => prev + 1); // Reset input after adding
   };
 
   // Function to remove a player by ID
@@ -43,6 +47,12 @@ const Players: React.FC = () => {
           value={newPlayerName}
           onChange={(e) => setNewPlayerName(e.target.value)}
           placeholder="Enter player's name"
+        />
+        <input
+          type="number"
+          value={newPlayerOrder}
+          onChange={(e) => setNewPlayerOrder(Number(e.target.value))}
+          placeholder="Enter player's seat number"
         />
         <button onClick={handleAddPlayer} disabled={!newPlayerName.trim()}>
           Add Player
