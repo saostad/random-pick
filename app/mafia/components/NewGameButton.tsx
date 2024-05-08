@@ -1,5 +1,5 @@
 import React from "react";
-import { useGameContext } from "../GameContext";
+import { useGameContext } from "../contexts/GameContext";
 
 const NewGameButton: React.FC = () => {
   const { resetGameState } = useGameContext();

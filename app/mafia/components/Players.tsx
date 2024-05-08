@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Player, useGameContext } from "../GameContext";
+import { useGameContext, Player } from "../contexts/GameContext";
 
 // Component for displaying and managing the list of players
 const Players: React.FC = () => {
@@ -31,16 +31,6 @@ const Players: React.FC = () => {
   return (
     <div>
       <h2>Players List</h2>
-      <ul>
-        {gameState.players.map((player) => (
-          <li key={player.id}>
-            {player.name}
-            <button onClick={() => handleRemovePlayer(player.id)}>
-              Remove
-            </button>
-          </li>
-        ))}
-      </ul>
       <div>
         <input
           type="text"
@@ -58,6 +48,17 @@ const Players: React.FC = () => {
           Add Player
         </button>
       </div>
+      <hr />
+      <ul>
+        {gameState.players.map((player) => (
+          <li key={player.id}>
+            {player.name}
+            <button onClick={() => handleRemovePlayer(player.id)}>
+              Remove
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

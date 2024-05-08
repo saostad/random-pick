@@ -1,4 +1,4 @@
-import { GameState, useGameContext } from "../GameContext";
+import { GameState, useGameContext } from "../contexts/GameContext";
 
 // A function to simulate the night phase
 const handleNightActions = (gameState: GameState): GameState => {

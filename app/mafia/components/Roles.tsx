@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { GameRole, useGameContext } from "../GameContext";
+import { useGameContext, GameRole } from "../contexts/GameContext";
 
 // Component for displaying and managing the list of roles
 const Roles: React.FC = () => {
