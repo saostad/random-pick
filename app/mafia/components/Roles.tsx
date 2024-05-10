@@ -40,17 +40,7 @@ const Roles: React.FC = () => {
   return (
     <div>
       <h2>Game Roles</h2>
-      <ul>
-        {gameState.gameRoles.map((role) => (
-          <li key={role.id}>
-            {role.name}
-            {role.hasAction
-              ? ` - Action Order: ${role.actionOrder}`
-              : " - No Action"}
-            <button onClick={() => handleRemoveRole(role.id)}>Remove</button>
-          </li>
-        ))}
-      </ul>
+
       <div>
         <input
           type="text"
@@ -78,6 +68,24 @@ const Roles: React.FC = () => {
         </div>
         <button onClick={handleAddRole}>Add Role</button>
       </div>
+      <ul>
+        {gameState.gameRoles.map((role) => (
+          <li key={role.id}>
+            <span style={{ marginRight: "0.5rem" }}>{role.name}</span>
+            <span style={{ marginRight: "0.5rem" }}>
+              {role.hasAction
+                ? ` - Action Order: ${role.actionOrder}`
+                : " - No Action"}
+            </span>
+            <button
+              className="secondary"
+              onClick={() => handleRemoveRole(role.id)}
+            >
+              Remove
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
