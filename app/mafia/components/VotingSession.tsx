@@ -6,7 +6,7 @@ const VotingSession: React.FC = () => {
   const { gameState, decreaseVote, increaseVote, resetVotes } =
     useGameContext();
 
-  const [showVoting, setShowVoting] = useState(false);
+  const [showVoting, setShowVoting] = useState(true);
 
   return (
     <div>
