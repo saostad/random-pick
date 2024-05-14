@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GameState, useGameContext } from "../contexts/GameContext";
 import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
@@ -24,6 +24,23 @@ const NightActionsControl: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
   const [currentActionIndex, setCurrentActionIndex] = useState<number>(0);
   const [actionableRoles, setActionableRoles] = useState<any[]>([]);
+  const [rolePlayers, setRolePlayers] = useState<{ [key: string]: string }>({});
+
+  useEffect(() => {
+    const mapRoleToPlayer = () => {
+      const roleToPlayerMap: { [key: string]: string } = {};
+
+      gameState.players.forEach((player) => {
+        if (player.roleId) {
+          roleToPlayerMap[player.roleId] = player.name;
+        }
+      });
+
+      setRolePlayers(roleToPlayerMap);
+    };
+
+    mapRoleToPlayer();
+  }, [gameState]);
 
   const handleStartNight = () => {
     console.log("Starting night actions");
@@ -61,7 +78,9 @@ const NightActionsControl: React.FC = () => {
                 Processing action for{" "}
                 <b>
                   <u>{actionableRoles[currentActionIndex].name}</u>
-                </b>
+                </b>{" "}
+                (Player:{" "}
+                <b>{rolePlayers[actionableRoles[currentActionIndex].id]}</b>)
               </p>
               <button onClick={handleNextAction}>Next Action</button>
             </>
