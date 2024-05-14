@@ -58,7 +58,10 @@ const NightActionsControl: React.FC = () => {
           currentActionIndex < actionableRoles.length ? (
             <>
               <p>
-                Processing action for {actionableRoles[currentActionIndex].name}
+                Processing action for{" "}
+                <b>
+                  <u>{actionableRoles[currentActionIndex].name}</u>
+                </b>
               </p>
               <button onClick={handleNextAction}>Next Action</button>
             </>

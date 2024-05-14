@@ -1,17 +1,10 @@
-"use client";
-import "@picocss/pico/css/pico.min.css";
+import Mafia from "./Mafia";
+import { Metadata } from "next";
 
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import { ThemeProvider } from "./contexts/ThemeContext";
-import Main from "./components/Main";
+export const metadata: Metadata = {
+  title: "Mafia Night Online",
+  description:
+    "New to Mafia games? Join us at Mafia Night and dive into a game of trust and treachery. Learn the ropes of social deduction and enjoy a fun, engaging game night with friends.",
+};
 
-export default function Mafia() {
-  return (
-    <ThemeProvider>
-      <Header />
-      <Main />
-      <Footer />
-    </ThemeProvider>
-  );
-}
+export default Mafia;

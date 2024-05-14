@@ -2,7 +2,7 @@ import React from "react";
 import { useGameContext } from "../contexts/GameContext";
 
 const PlayerStatusManager: React.FC = () => {
-  const { gameState, markPlayerAsDead } = useGameContext();
+  const { gameState, markPlayerAsDead, markPlayerAsAlive } = useGameContext();
 
   return (
     <>
@@ -19,6 +19,13 @@ const PlayerStatusManager: React.FC = () => {
               ) : (
                 <span>
                   <del> (deceased)</del>
+                  <button
+                    className="secondary"
+                    style={{ marginLeft: "1rem" }}
+                    onClick={() => markPlayerAsAlive(player.id)}
+                  >
+                    Return to Game
+                  </button>
                 </span>
               )}
             </span>

@@ -30,6 +30,7 @@ export type GameContextType = {
   gameState: GameState;
   updateGameState: (newState: Partial<GameState>) => void;
   markPlayerAsDead: (playerId: string) => void;
+  markPlayerAsAlive: (playerId: string) => void;
   assignRoleToPlayer: (playerId: string, roleId: string) => void;
   resetGameState: () => void;
   increaseVote: (playerId: string) => void;
@@ -68,6 +69,15 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       player.id === playerId ? { ...player, isAlive: false } : player
     );
     setGameState((prevState) => ({ ...prevState, players: updatedPlayers }));
+  };
+
+  const markPlayerAsAlive = (playerId: string) => {
+    setGameState((prevState) => ({
+      ...prevState,
+      players: prevState.players.map((player) =>
+        player.id === playerId ? { ...player, isAlive: true } : player
+      ),
+    }));
   };
 
   // Assign a role to a player and remove the role from any other player who has it
@@ -141,6 +151,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     gameState,
     updateGameState,
     markPlayerAsDead,
+    markPlayerAsAlive,
     assignRoleToPlayer,
     resetGameState,
     increaseVote,
