@@ -1,5 +1,8 @@
-import React, { useState, createContext, useContext, ReactNode } from "react";
+import React, { createContext, useContext, ReactNode } from "react";
+import useLocalStorageState from "use-local-storage-state";
+import { useModal } from "./ModalContext";
 
+// Define the types for Player and GameRole
 export type Player = {
   id: string;
   name: string;
@@ -16,36 +19,50 @@ export type GameRole = {
   actionOrder?: number;
 };
 
+// Define the type for GameState
 export type GameState = {
   players: Player[];
   gameRoles: GameRole[];
 };
 
+// Define the type for the GameContext
 export type GameContextType = {
   gameState: GameState;
   updateGameState: (newState: Partial<GameState>) => void;
-  markPlayerAsDead: (playerId: string) => void; // Method to mark a player as dead
-  assignRoleToPlayer: (playerId: string, roleId: string) => void; // Method to assign a role to a player
-  resetGameState: () => void; // Method to reset the game role assignments and player statuses
+  markPlayerAsDead: (playerId: string) => void;
+  assignRoleToPlayer: (playerId: string, roleId: string) => void;
+  resetGameState: () => void;
   increaseVote: (playerId: string) => void;
   decreaseVote: (playerId: string) => void;
   resetVotes: () => void;
 };
+
+// Create the GameContext with an undefined default value
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
 const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const { handleOpen } = useModal(); // Access the modal context
+
   // Initialize state from local storage or default to empty arrays
   const initialState: GameState = {
     players: [],
     gameRoles: [],
   };
 
-  const [gameState, setGameState] = useState<GameState>(initialState);
+  // Use local storage to persist game state
+  const [gameState, setGameState] = useLocalStorageState<GameState>(
+    "gameState",
+    {
+      defaultValue: initialState,
+    }
+  );
 
+  // Update game state with new state values
   const updateGameState = (newState: Partial<GameState>) => {
     setGameState((prevState) => ({ ...prevState, ...newState }));
   };
 
+  // Mark a player as dead by updating their isAlive status
   const markPlayerAsDead = (playerId: string) => {
     const updatedPlayers = gameState.players.map((player) =>
       player.id === playerId ? { ...player, isAlive: false } : player
@@ -53,6 +70,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setGameState((prevState) => ({ ...prevState, players: updatedPlayers }));
   };
 
+  // Assign a role to a player and remove the role from any other player who has it
   const assignRoleToPlayer = (playerId: string, roleId: string) => {
     const updatedPlayers = gameState.players.map((player) => {
       if (player.id === playerId) {
@@ -67,7 +85,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setGameState((prevState) => ({ ...prevState, players: updatedPlayers }));
   };
 
-  /** Method to reset the game role-assignments and player-statuses */
+  // Reset the game state, setting all players to alive, without roles, and with zero votes
   const resetGameState = () => {
     const initPlayers = gameState.players.map((player) => ({
       ...player,
@@ -77,43 +95,46 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }));
 
     setGameState((prevState) => ({ ...prevState, players: initPlayers }));
+
+    handleOpen("game-reset"); // Show a reset confirmation in a modal
   };
 
+  // Increase the vote count for a specific player
   const increaseVote = (playerId: string) => {
-    setGameState((prev) => {
-      return {
-        ...prev,
-        players: prev.players.map((player) =>
-          player.id === playerId
-            ? { ...player, voteCount: player.voteCount + 1 }
-            : player
-        ),
-      };
-    });
+    setGameState((prev) => ({
+      ...prev,
+      players: prev.players.map((player) =>
+        player.id === playerId
+          ? { ...player, voteCount: player.voteCount + 1 }
+          : player
+      ),
+    }));
   };
 
-  // Function to decrease vote count for a player
+  // Decrease the vote count for a specific player
   const decreaseVote = (playerId: string) => {
-    setGameState((prev) => {
-      return {
-        ...prev,
-        players: prev.players.map((player) =>
-          player.id === playerId && player.voteCount > 0
-            ? { ...player, voteCount: player.voteCount - 1 }
-            : player
-        ),
-      };
-    });
+    setGameState((prev) => ({
+      ...prev,
+      players: prev.players.map((player) =>
+        player.id === playerId && player.voteCount > 0
+          ? { ...player, voteCount: player.voteCount - 1 }
+          : player
+      ),
+    }));
   };
 
+  // Reset the vote counts for all players
   const resetVotes = () => {
     setGameState((prev) => {
       const newPlayers = prev.players.map((player) => ({
         ...player,
         voteCount: 0,
       }));
+
       return { ...prev, players: newPlayers };
     });
+
+    handleOpen("votes-reset"); // Show a reset confirmation in a modal
   };
 
   const value = {
@@ -130,6 +151,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 };
 
+// Custom hook to use the GameContext
 const useGameContext = (): GameContextType => {
   const context = useContext(GameContext);
   if (!context) {

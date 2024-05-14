@@ -40,7 +40,6 @@ const Roles: React.FC = () => {
   return (
     <div>
       <h2>Game Roles</h2>
-
       <div>
         <input
           type="text"
@@ -68,6 +67,7 @@ const Roles: React.FC = () => {
         </div>
         <button onClick={handleAddRole}>Add Role</button>
       </div>
+      <hr />
       <ul>
         {gameState.gameRoles.map((role) => (
           <li key={role.id}>

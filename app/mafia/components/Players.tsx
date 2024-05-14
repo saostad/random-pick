@@ -52,7 +52,7 @@ const Players: React.FC = () => {
       <ul>
         {gameState.players.map((player) => (
           <li key={player.id}>
-            {player.name}
+            <span style={{ marginRight: "1rem" }}>{player.name} </span>
             <button onClick={() => handleRemovePlayer(player.id)}>
               Remove
             </button>

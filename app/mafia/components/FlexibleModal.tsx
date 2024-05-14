@@ -27,7 +27,19 @@ const FlexibleModal: React.FC<ModalProps> = ({
 
   return (
     <dialog onClick={handleClickOverlay} open={isOpen} {...props}>
-      <article>{Component ? <Component /> : children}</article>
+      <article>
+        <header>
+          <button
+            aria-label="Close"
+            rel="prev"
+            onClick={() => handleClose(modalId)}
+          ></button>
+        </header>
+        {Component ? <Component /> : children}
+        <footer>
+          <button onClick={() => handleClose(modalId)}>Close</button>
+        </footer>
+      </article>
     </dialog>
   );
 };

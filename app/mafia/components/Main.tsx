@@ -17,8 +17,8 @@ interface MainProps extends HTMLAttributes<HTMLElement> {}
 const Main: React.FC<MainProps> = (props) => {
   return (
     <main className="container" {...props}>
-      <GameProvider>
-        <ModalProvider>
+      <ModalProvider>
+        <GameProvider>
           <h1>Mafia</h1>
           <NewGameButton />
           <hr />
@@ -37,8 +37,8 @@ const Main: React.FC<MainProps> = (props) => {
           <hr />
           <NightActionsControl />
           <hr />
-        </ModalProvider>
-      </GameProvider>
+        </GameProvider>
+      </ModalProvider>
     </main>
   );
 };
