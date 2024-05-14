@@ -29,7 +29,7 @@ const PlayerStatusManager: React.FC = () => {
       <h2>Player Status</h2>
       <details>
         <summary className="secondary" role="button">
-          Still In-Game Players
+          Players
         </summary>
         <ul>
           {alivePlayers.map((player) => (
