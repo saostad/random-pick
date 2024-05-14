@@ -24,19 +24,34 @@ const NightActionsControl: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
   const [currentActionIndex, setCurrentActionIndex] = useState<number>(0);
   const [actionableRoles, setActionableRoles] = useState<any[]>([]);
-  const [rolePlayers, setRolePlayers] = useState<{ [key: string]: string }>({});
+  const [rolePlayers, setRolePlayers] = useState<{
+    [key: string]: { name: string; isAlive: boolean };
+  }>({});
+  const [unassignedRoles, setUnassignedRoles] = useState<any[]>([]);
 
   useEffect(() => {
     const mapRoleToPlayer = () => {
-      const roleToPlayerMap: { [key: string]: string } = {};
+      const roleToPlayerMap: {
+        [key: string]: { name: string; isAlive: boolean };
+      } = {};
 
       gameState.players.forEach((player) => {
         if (player.roleId) {
-          roleToPlayerMap[player.roleId] = player.name;
+          roleToPlayerMap[player.roleId] = {
+            name: player.name,
+            isAlive: player.isAlive,
+          };
         }
       });
 
       setRolePlayers(roleToPlayerMap);
+
+      // Identify roles without players assigned
+      const rolesWithoutPlayers = gameState.gameRoles.filter(
+        (role) => !roleToPlayerMap[role.id]
+      );
+
+      setUnassignedRoles(rolesWithoutPlayers);
     };
 
     mapRoleToPlayer();
@@ -68,6 +83,18 @@ const NightActionsControl: React.FC = () => {
 
   return (
     <>
+      <h2>Night Actions</h2>
+      {unassignedRoles.length > 0 && (
+        <div>
+          <h3>Unassigned Roles</h3>
+          <ul>
+            {unassignedRoles.map((role) => (
+              <li key={role.id}>{role.name}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <button onClick={handleStartNight}>Start Night Phase</button>
       <FlexibleModal modalId="night-actions">
         <>
           <h2>Night Actions</h2>
@@ -75,12 +102,16 @@ const NightActionsControl: React.FC = () => {
           currentActionIndex < actionableRoles.length ? (
             <>
               <p>
-                Processing action for{" "}
                 <b>
                   <u>{actionableRoles[currentActionIndex].name}</u>
                 </b>{" "}
                 (Player:{" "}
-                <b>{rolePlayers[actionableRoles[currentActionIndex].id]}</b>)
+                <b>
+                  {rolePlayers[actionableRoles[currentActionIndex].id]?.name}
+                  {!rolePlayers[actionableRoles[currentActionIndex].id]
+                    ?.isAlive && <mark> (Dead)</mark>}
+                </b>
+                )
               </p>
               <button onClick={handleNextAction}>Next Action</button>
             </>
@@ -91,7 +122,6 @@ const NightActionsControl: React.FC = () => {
           )}
         </>
       </FlexibleModal>
-      <button onClick={handleStartNight}>Start Night Phase</button>
     </>
   );
 };

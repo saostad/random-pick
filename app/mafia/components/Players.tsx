@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useGameContext, Player } from "../contexts/GameContext";
 
 // Component for displaying and managing the list of players
@@ -6,6 +6,36 @@ const Players: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
   const [newPlayerName, setNewPlayerName] = useState("");
   const [newPlayerOrder, setNewPlayerOrder] = useState<number>(1);
+  const [playerRoles, setPlayerRoles] = useState<{ [key: string]: string }>({});
+
+  useEffect(() => {
+    const mapPlayerRoles = () => {
+      const rolesMap: { [key: string]: string } = {};
+
+      gameState.players.forEach((player) => {
+        if (player.roleId) {
+          const role = gameState.gameRoles.find(
+            (role) => role.id === player.roleId
+          );
+          if (role) {
+            rolesMap[player.id] = role.name;
+          }
+        }
+      });
+
+      setPlayerRoles(rolesMap);
+    };
+
+    mapPlayerRoles();
+  }, [gameState]);
+
+  useEffect(() => {
+    const highestOrder = Math.max(
+      0,
+      ...gameState.players.map((player) => player.order)
+    );
+    setNewPlayerOrder(highestOrder + 1);
+  }, [gameState.players]);
 
   // Function to add a new player
   const handleAddPlayer = () => {
@@ -15,10 +45,11 @@ const Players: React.FC = () => {
       voteCount: 0,
       order: newPlayerOrder,
       isAlive: true,
+      roleId: "", // Add a default role ID or modify as needed
     };
     updateGameState({ players: [...gameState.players, newPlayer] });
     setNewPlayerName(""); // Reset input after adding
-    setNewPlayerOrder((prev) => prev + 1); // Reset input after adding
+    setNewPlayerOrder((prev) => prev + 1); // Increment order for the next player
   };
 
   // Function to remove a player by ID
@@ -26,6 +57,22 @@ const Players: React.FC = () => {
     updateGameState({
       players: gameState.players.filter((player) => player.id !== playerId),
     });
+  };
+
+  // Function to update a player's name
+  const handleUpdatePlayerName = (playerId: string, newName: string) => {
+    const updatedPlayers = gameState.players.map((player) =>
+      player.id === playerId ? { ...player, name: newName } : player
+    );
+    updateGameState({ players: updatedPlayers });
+  };
+
+  // Function to update a player's order
+  const handleUpdatePlayerOrder = (playerId: string, newOrder: number) => {
+    const updatedPlayers = gameState.players.map((player) =>
+      player.id === playerId ? { ...player, order: newOrder } : player
+    );
+    updateGameState({ players: updatedPlayers });
   };
 
   return (
@@ -49,16 +96,54 @@ const Players: React.FC = () => {
         </button>
       </div>
       <hr />
-      <ul>
-        {gameState.players.map((player) => (
-          <li key={player.id}>
-            <span style={{ marginRight: "1rem" }}>{player.name} </span>
-            <button onClick={() => handleRemovePlayer(player.id)}>
-              Remove
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "2fr 2fr 1fr auto",
+          gap: "1rem",
+        }}
+      >
+        {gameState.players
+          .slice() // Create a copy of the players array to avoid mutating the original state
+          .sort((a, b) => a.order - b.order) // Sort players by order
+          .map((player) => (
+            <React.Fragment key={player.id}>
+              <input
+                type="text"
+                value={player.name}
+                onChange={(e) =>
+                  handleUpdatePlayerName(player.id, e.target.value)
+                }
+                placeholder="Enter player's name"
+              />
+              <span>
+                <small>
+                  {playerRoles[player.id] ? `(${playerRoles[player.id]})` : ""}
+                </small>
+              </span>
+              <input
+                type="number"
+                value={player.order}
+                onChange={(e) =>
+                  handleUpdatePlayerOrder(player.id, Number(e.target.value))
+                }
+                placeholder="Enter player's seat number"
+              />
+              <button
+                onClick={() => handleRemovePlayer(player.id)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: "red",
+                  cursor: "pointer",
+                  fontSize: "1rem",
+                }}
+              >
+                &#x2715;
+              </button>
+            </React.Fragment>
+          ))}
+      </div>
     </div>
   );
 };

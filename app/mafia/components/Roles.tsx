@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useGameContext, GameRole } from "../contexts/GameContext";
 
 // Component for displaying and managing the list of roles
@@ -37,6 +37,39 @@ const Roles: React.FC = () => {
     });
   };
 
+  // Function to update a role's name
+  const handleUpdateRoleName = (roleId: string, newName: string) => {
+    const updatedRoles = gameState.gameRoles.map((role) =>
+      role.id === roleId ? { ...role, name: newName } : role
+    );
+    updateGameState({ gameRoles: updatedRoles });
+  };
+
+  // Function to update a role's action status
+  const handleUpdateRoleAction = (roleId: string, hasAction: boolean) => {
+    const updatedRoles = gameState.gameRoles.map((role) =>
+      role.id === roleId
+        ? {
+            ...role,
+            hasAction,
+            actionOrder: hasAction ? role.actionOrder : undefined,
+          }
+        : role
+    );
+    updateGameState({ gameRoles: updatedRoles });
+  };
+
+  // Function to update a role's action order
+  const handleUpdateActionOrder = (
+    roleId: string,
+    newOrder: number | undefined
+  ) => {
+    const updatedRoles = gameState.gameRoles.map((role) =>
+      role.id === roleId ? { ...role, actionOrder: newOrder } : role
+    );
+    updateGameState({ gameRoles: updatedRoles });
+  };
+
   return (
     <div>
       <h2>Game Roles</h2>
@@ -68,24 +101,66 @@ const Roles: React.FC = () => {
         <button onClick={handleAddRole}>Add Role</button>
       </div>
       <hr />
-      <ul>
-        {gameState.gameRoles.map((role) => (
-          <li key={role.id}>
-            <span style={{ marginRight: "0.5rem" }}>{role.name}</span>
-            <span style={{ marginRight: "0.5rem" }}>
-              {role.hasAction
-                ? ` - Action Order: ${role.actionOrder}`
-                : " - No Action"}
-            </span>
-            <button
-              className="secondary"
-              onClick={() => handleRemoveRole(role.id)}
-            >
-              Remove
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "2fr 2fr auto",
+          gap: "1rem",
+        }}
+      >
+        {gameState.gameRoles
+          .slice() // Create a copy of the roles array to avoid mutating the original state
+          .sort(
+            (a, b) => (a.actionOrder ?? Infinity) - (b.actionOrder ?? Infinity)
+          ) // Sort roles by action order
+          .map((role) => (
+            <React.Fragment key={role.id}>
+              <input
+                type="text"
+                value={role.name}
+                onChange={(e) => handleUpdateRoleName(role.id, e.target.value)}
+                placeholder="Enter role name"
+              />
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <small>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={role.hasAction}
+                      onChange={(e) =>
+                        handleUpdateRoleAction(role.id, e.target.checked)
+                      }
+                    />
+                    Has Action?
+                  </label>
+                </small>
+                {role.hasAction && (
+                  <input
+                    type="number"
+                    value={role.actionOrder ?? ""}
+                    onChange={(e) =>
+                      handleUpdateActionOrder(role.id, Number(e.target.value))
+                    }
+                    placeholder="Enter action order"
+                    style={{ marginLeft: "1rem" }}
+                  />
+                )}
+              </div>
+              <button
+                onClick={() => handleRemoveRole(role.id)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: "red",
+                  cursor: "pointer",
+                  fontSize: "1rem",
+                }}
+              >
+                &#x2715;
+              </button>
+            </React.Fragment>
+          ))}
+      </div>
     </div>
   );
 };
