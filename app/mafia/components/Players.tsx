@@ -99,8 +99,8 @@ const Players: React.FC = () => {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "2fr 2fr 1fr auto",
-          gap: "1rem",
+          gridTemplateColumns: "2fr 2fr 2fr auto",
+          gap: ".075rem",
         }}
       >
         {gameState.players

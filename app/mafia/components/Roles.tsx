@@ -105,7 +105,7 @@ const Roles: React.FC = () => {
         style={{
           display: "grid",
           gridTemplateColumns: "2fr 2fr auto",
-          gap: "1rem",
+          gap: "0.75rem",
         }}
       >
         {gameState.gameRoles
