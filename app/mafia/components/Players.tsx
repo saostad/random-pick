@@ -94,18 +94,28 @@ const Players: React.FC = () => {
     <div>
       <h2>Players List</h2>
       <div>
-        <input
-          type="text"
-          value={newPlayerName}
-          onChange={(e) => setNewPlayerName(e.target.value)}
-          placeholder="Enter player's name"
-        />
-        <input
-          type="number"
-          value={newPlayerOrder}
-          onChange={(e) => setNewPlayerOrder(Number(e.target.value))}
-          placeholder="Enter player's seat number"
-        />
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "0.5rem",
+          }}
+        >
+          <input
+            type="text"
+            className="input input-bordered w-full max-w-xs"
+            value={newPlayerName}
+            onChange={(e) => setNewPlayerName(e.target.value)}
+            placeholder="Player's name"
+          />
+          <input
+            type="number"
+            className="input input-bordered w-full max-w-xs"
+            value={newPlayerOrder}
+            onChange={(e) => setNewPlayerOrder(Number(e.target.value))}
+            placeholder="Seat number"
+          />
+        </div>
         <button
           className="btn btn-primary"
           onClick={handleAddPlayer}
@@ -130,11 +140,12 @@ const Players: React.FC = () => {
             <React.Fragment key={player.id}>
               <input
                 type="text"
+                className="input input-bordered w-full max-w-xs"
                 value={player.name}
                 onChange={(e) =>
                   handleUpdatePlayerName(player.id, e.target.value)
                 }
-                placeholder="Enter player's name"
+                placeholder="Player's name"
               />
               <span>
                 <small>
@@ -143,11 +154,12 @@ const Players: React.FC = () => {
               </span>
               <input
                 type="number"
+                className="input input-bordered w-full max-w-xs"
                 value={player.order}
                 onChange={(e) =>
                   handleUpdatePlayerOrder(player.id, Number(e.target.value))
                 }
-                placeholder="Enter player's seat number"
+                placeholder="Seat number"
               />
               <button
                 onClick={() => handleRemovePlayer(player.id)}

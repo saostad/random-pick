@@ -28,7 +28,9 @@ const VotingSession: React.FC = () => {
         </summary>
         <div>
           <div style={{ marginBottom: "1rem" }}>
-            <button onClick={resetVotes}>Reset Votes</button>
+            <button className="btn btn-primary" onClick={resetVotes}>
+              Reset Votes
+            </button>
           </div>
           {gameState.players
             .filter((p) => p.isAlive)
@@ -46,9 +48,19 @@ const VotingSession: React.FC = () => {
               >
                 <span style={{ marginRight: "1rem" }}>{player.name}</span>
                 <div>
-                  <button onClick={() => decreaseVote(player.id)}>-</button>
+                  <button
+                    className="btn btn-circle btn-outline"
+                    onClick={() => decreaseVote(player.id)}
+                  >
+                    -
+                  </button>
                   {` Votes: ${player.voteCount} `}
-                  <button onClick={() => increaseVote(player.id)}>+</button>
+                  <button
+                    className="btn btn-circle btn-outline"
+                    onClick={() => increaseVote(player.id)}
+                  >
+                    +
+                  </button>
                 </div>
               </div>
             ))}

@@ -49,7 +49,10 @@ const PlayerStatusManager: React.FC = () => {
                   {player.order}. {player.name} (
                   {getRoleNameById(player.roleId ?? "")})
                 </span>
-                <button onClick={() => handleMarkPlayerAsDead(player.id)}>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => handleMarkPlayerAsDead(player.id)}
+                >
                   Mark as Dead
                 </button>
               </div>
@@ -89,7 +92,7 @@ const PlayerStatusManager: React.FC = () => {
                       </del>
                     </span>
                     <button
-                      className="secondary"
+                      className="btn btn-secondary"
                       style={{ marginLeft: "1rem" }}
                       onClick={() => handleMarkPlayerAsAlive(player.id)}
                     >

@@ -95,6 +95,7 @@ const Roles: React.FC = () => {
       <div>
         <input
           type="text"
+          className="input input-bordered w-full max-w-xs"
           value={newRoleName}
           onChange={(e) => setNewRoleName(e.target.value)}
           placeholder="Enter new role name"
@@ -103,6 +104,7 @@ const Roles: React.FC = () => {
           <label>
             <input
               type="checkbox"
+              className="checkbox"
               checked={hasAction}
               onChange={(e) => setHasAction(e.target.checked)}
             />{" "}
@@ -111,13 +113,16 @@ const Roles: React.FC = () => {
           {hasAction && (
             <input
               type="number"
+              className="input input-bordered w-full max-w-xs"
               value={actionOrder ?? ""}
               onChange={(e) => setActionOrder(Number(e.target.value))}
               placeholder="Enter action order"
             />
           )}
         </div>
-        <button onClick={handleAddRole}>Add Role</button>
+        <button className="btn btn-primary" onClick={handleAddRole}>
+          Add Role
+        </button>
         {error && <div style={{ color: "red" }}>{error}</div>}
       </div>
       <hr />
@@ -137,6 +142,7 @@ const Roles: React.FC = () => {
             <React.Fragment key={role.id}>
               <input
                 type="text"
+                className="input input-bordered w-full max-w-xs"
                 value={role.name}
                 onChange={(e) => handleUpdateRoleName(role.id, e.target.value)}
                 placeholder="Enter role name"
@@ -146,6 +152,7 @@ const Roles: React.FC = () => {
                   <label>
                     <input
                       type="checkbox"
+                      className="checkbox"
                       checked={role.hasAction}
                       onChange={(e) =>
                         handleUpdateRoleAction(role.id, e.target.checked)
@@ -157,6 +164,7 @@ const Roles: React.FC = () => {
                 {role.hasAction && (
                   <input
                     type="number"
+                    className="input input-bordered w-full max-w-xs"
                     value={role.actionOrder ?? ""}
                     onChange={(e) =>
                       handleUpdateActionOrder(role.id, Number(e.target.value))

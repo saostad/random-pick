@@ -24,6 +24,7 @@ const RoleAssignment: React.FC = () => {
           </span>
           <span style={{ flex: "1", alignSelf: "flex-start" }}>
             <select
+              className="select w-full max-w-xs"
               value={player.roleId || ""}
               onChange={(e) => handleRoleChange(player.id, e.target.value)}
             >
