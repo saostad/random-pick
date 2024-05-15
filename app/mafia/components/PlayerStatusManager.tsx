@@ -31,12 +31,20 @@ const PlayerStatusManager: React.FC = () => {
         <summary className="secondary" role="button">
           Players ({alivePlayers.length})
         </summary>
-        <ul>
+        <>
           {alivePlayers
             .slice() // Create a copy of the players array to avoid mutating the original state
             .sort((a, b) => a.order - b.order) // Sort players by order
             .map((player) => (
-              <li key={player.id}>
+              <div
+                key={player.id}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  alignItems: "center",
+                  marginBottom: "0.5rem",
+                }}
+              >
                 <span style={{ marginRight: "1rem" }}>
                   {player.order}. {player.name} (
                   {getRoleNameById(player.roleId ?? "")})
@@ -44,9 +52,9 @@ const PlayerStatusManager: React.FC = () => {
                 <button onClick={() => handleMarkPlayerAsDead(player.id)}>
                   Mark as Dead
                 </button>
-              </li>
+              </div>
             ))}
-        </ul>
+        </>
       </details>
       {deadPlayers.length > 0 && (
         <details
@@ -60,12 +68,20 @@ const PlayerStatusManager: React.FC = () => {
             Dead Players ({deadPlayers.length})
           </summary>
           {showDeadPlayers && (
-            <ul>
+            <>
               {deadPlayers
                 .slice() // Create a copy of the players array to avoid mutating the original state
                 .sort((a, b) => a.order - b.order) // Sort players by order
                 .map((player) => (
-                  <li key={player.id}>
+                  <div
+                    key={player.id}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "1fr 1fr",
+                      alignItems: "center",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
                     <span style={{ marginRight: "1rem" }}>
                       <del>
                         {player.order}. {player.name} (
@@ -79,9 +95,9 @@ const PlayerStatusManager: React.FC = () => {
                     >
                       Return to Game
                     </button>
-                  </li>
+                  </div>
                 ))}
-            </ul>
+            </>
           )}
         </details>
       )}

@@ -30,19 +30,28 @@ const VotingSession: React.FC = () => {
           <div style={{ marginBottom: "1rem" }}>
             <button onClick={resetVotes}>Reset Votes</button>
           </div>
-          <ul>
-            {gameState.players
-              .filter((p) => p.isAlive)
-              .sort((a, b) => a.order - b.order)
-              .map((player) => (
-                <li key={player.id}>
-                  <span style={{ marginRight: "1rem" }}>{player.name} </span>
+          {gameState.players
+            .filter((p) => p.isAlive)
+            .sort((a, b) => a.order - b.order)
+            .map((player) => (
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 3fr",
+                  gap: "1rem",
+                  alignItems: "center",
+                  paddingBottom: "0.5rem",
+                }}
+                key={player.id}
+              >
+                <span style={{ marginRight: "1rem" }}>{player.name}</span>
+                <div>
                   <button onClick={() => decreaseVote(player.id)}>-</button>
                   {` Votes: ${player.voteCount} `}
                   <button onClick={() => increaseVote(player.id)}>+</button>
-                </li>
-              ))}
-          </ul>
+                </div>
+              </div>
+            ))}
         </div>
       </details>
     </div>

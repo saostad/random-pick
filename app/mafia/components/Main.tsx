@@ -20,16 +20,23 @@ const Main: React.FC<MainProps> = (props) => {
       <ModalProvider>
         <GameProvider>
           <h1>Mafia</h1>
+          <FlexibleModal modalId="Players" component={Players} />
+          <FlexibleModal modalId="Roles" component={Roles} />
+          <FlexibleModal modalId="RoleAssignment" component={RoleAssignment} />
+
           <NewGameButton />
           <hr />
-          <FlexibleModal modalId="Players" component={Players} />
-          <ModalButton modalId="Players">Manage Players</ModalButton>
-          <hr />
-          <FlexibleModal modalId="Roles" component={Roles} />
-          <ModalButton modalId="Roles">Manage Roles</ModalButton>
-          <hr />
-          <FlexibleModal modalId="RoleAssignment" component={RoleAssignment} />
-          <ModalButton modalId="RoleAssignment">Role Assignment</ModalButton>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr",
+              gap: "0.5rem",
+            }}
+          >
+            <ModalButton modalId="Players">Manage Players</ModalButton>
+            <ModalButton modalId="Roles">Manage Roles</ModalButton>
+            <ModalButton modalId="RoleAssignment">Role Assignment</ModalButton>
+          </div>
           <hr />
           <PlayerStatusManager />
           <hr />
