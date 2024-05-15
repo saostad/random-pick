@@ -28,6 +28,7 @@ const NightActionsControl: React.FC = () => {
     [key: string]: { name: string; isAlive: boolean };
   }>({});
   const [unassignedRoles, setUnassignedRoles] = useState<any[]>([]);
+  const [unassignedPlayers, setUnassignedPlayers] = useState<any[]>([]);
 
   useEffect(() => {
     const mapRoleToPlayer = () => {
@@ -52,6 +53,13 @@ const NightActionsControl: React.FC = () => {
       );
 
       setUnassignedRoles(rolesWithoutPlayers);
+
+      // Identify players without roles assigned
+      const playersWithoutRoles = gameState.players.filter(
+        (player) => !player.roleId
+      );
+
+      setUnassignedPlayers(playersWithoutRoles);
     };
 
     mapRoleToPlayer();
@@ -90,6 +98,16 @@ const NightActionsControl: React.FC = () => {
           <ul>
             {unassignedRoles.map((role) => (
               <li key={role.id}>{role.name}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {unassignedPlayers.length > 0 && (
+        <div>
+          <h3>Unassigned Players</h3>
+          <ul>
+            {unassignedPlayers.map((player) => (
+              <li key={player.id}>{player.name}</li>
             ))}
           </ul>
         </div>
