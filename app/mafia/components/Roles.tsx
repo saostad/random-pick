@@ -7,10 +7,19 @@ const Roles: React.FC = () => {
   const [newRoleName, setNewRoleName] = useState("");
   const [hasAction, setHasAction] = useState(false);
   const [actionOrder, setActionOrder] = useState<number | undefined>();
+  const [error, setError] = useState<string | null>(null);
 
   // Function to add a new role
   const handleAddRole = () => {
     if (!newRoleName.trim()) return;
+    if (
+      hasAction &&
+      gameState.gameRoles.some((role) => role.actionOrder === actionOrder)
+    ) {
+      setError("Duplicate action order");
+      return;
+    }
+    setError(null);
     const newRole: GameRole = {
       id: new Date().toISOString(), // Generating a unique ID based on the current time
       name: newRoleName,
@@ -64,6 +73,16 @@ const Roles: React.FC = () => {
     roleId: string,
     newOrder: number | undefined
   ) => {
+    if (
+      newOrder !== undefined &&
+      gameState.gameRoles.some(
+        (role) => role.id !== roleId && role.actionOrder === newOrder
+      )
+    ) {
+      setError("Duplicate action order");
+      return;
+    }
+    setError(null);
     const updatedRoles = gameState.gameRoles.map((role) =>
       role.id === roleId ? { ...role, actionOrder: newOrder } : role
     );
@@ -99,6 +118,7 @@ const Roles: React.FC = () => {
           )}
         </div>
         <button onClick={handleAddRole}>Add Role</button>
+        {error && <div style={{ color: "red" }}>{error}</div>}
       </div>
       <hr />
       <div

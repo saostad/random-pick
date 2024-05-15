@@ -7,6 +7,7 @@ const Players: React.FC = () => {
   const [newPlayerName, setNewPlayerName] = useState("");
   const [newPlayerOrder, setNewPlayerOrder] = useState<number>(1);
   const [playerRoles, setPlayerRoles] = useState<{ [key: string]: string }>({});
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const mapPlayerRoles = () => {
@@ -39,6 +40,11 @@ const Players: React.FC = () => {
 
   // Function to add a new player
   const handleAddPlayer = () => {
+    if (gameState.players.some((player) => player.order === newPlayerOrder)) {
+      setError("Duplicate seat number");
+      return;
+    }
+    setError(null);
     const newPlayer: Player = {
       id: new Date().toISOString(), // Generating a unique ID based on the current time
       name: newPlayerName,
@@ -69,6 +75,15 @@ const Players: React.FC = () => {
 
   // Function to update a player's order
   const handleUpdatePlayerOrder = (playerId: string, newOrder: number) => {
+    if (
+      gameState.players.some(
+        (player) => player.id !== playerId && player.order === newOrder
+      )
+    ) {
+      setError("Duplicate seat number");
+      return;
+    }
+    setError(null);
     const updatedPlayers = gameState.players.map((player) =>
       player.id === playerId ? { ...player, order: newOrder } : player
     );
@@ -94,13 +109,14 @@ const Players: React.FC = () => {
         <button onClick={handleAddPlayer} disabled={!newPlayerName.trim()}>
           Add Player
         </button>
+        {error && <div style={{ color: "red" }}>{error}</div>}
       </div>
       <hr />
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "2fr 2fr 2fr auto",
-          gap: ".075rem",
+          gap: "0.75rem",
         }}
       >
         {gameState.players
