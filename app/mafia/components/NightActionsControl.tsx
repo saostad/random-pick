@@ -112,7 +112,9 @@ const NightActionsControl: React.FC = () => {
           </ul>
         </div>
       )}
-      <button onClick={handleStartNight}>Start Night Phase</button>
+      <button className="btn btn-primary" onClick={handleStartNight}>
+        Start Night Phase
+      </button>
       <FlexibleModal modalId="night-actions">
         <>
           <h2>Night Actions</h2>
@@ -131,7 +133,9 @@ const NightActionsControl: React.FC = () => {
                 </b>
                 )
               </p>
-              <button onClick={handleNextAction}>Next Action</button>
+              <button className="btn btn-primary" onClick={handleNextAction}>
+                Next Action
+              </button>
             </>
           ) : (
             <>

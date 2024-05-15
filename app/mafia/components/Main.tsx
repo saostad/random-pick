@@ -19,31 +19,37 @@ const Main: React.FC<MainProps> = (props) => {
     <main className="container" {...props}>
       <ModalProvider>
         <GameProvider>
-          <h1>Mafia</h1>
-          <FlexibleModal modalId="Players" component={Players} />
-          <FlexibleModal modalId="Roles" component={Roles} />
-          <FlexibleModal modalId="RoleAssignment" component={RoleAssignment} />
+          <div>
+            <FlexibleModal modalId="Players" component={Players} />
+            <FlexibleModal modalId="Roles" component={Roles} />
+            <FlexibleModal
+              modalId="RoleAssignment"
+              component={RoleAssignment}
+            />
 
-          <NewGameButton />
-          <hr />
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr",
-              gap: "0.5rem",
-            }}
-          >
-            <ModalButton modalId="Players">Manage Players</ModalButton>
-            <ModalButton modalId="Roles">Manage Roles</ModalButton>
-            <ModalButton modalId="RoleAssignment">Role Assignment</ModalButton>
+            <NewGameButton />
+            <div className="divider" />
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 1fr",
+                gap: "0.5rem",
+              }}
+            >
+              <ModalButton modalId="Players">Manage Players</ModalButton>
+              <ModalButton modalId="Roles">Manage Roles</ModalButton>
+              <ModalButton modalId="RoleAssignment">
+                Role Assignment
+              </ModalButton>
+            </div>
+            <div className="divider" />
+            <PlayerStatusManager />
+            <div className="divider" />
+            <VotingSession />
+            <div className="divider" />
+            <NightActionsControl />
+            <div className="divider" />
           </div>
-          <hr />
-          <PlayerStatusManager />
-          <hr />
-          <VotingSession />
-          <hr />
-          <NightActionsControl />
-          <hr />
         </GameProvider>
       </ModalProvider>
     </main>

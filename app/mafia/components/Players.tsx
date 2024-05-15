@@ -106,7 +106,11 @@ const Players: React.FC = () => {
           onChange={(e) => setNewPlayerOrder(Number(e.target.value))}
           placeholder="Enter player's seat number"
         />
-        <button onClick={handleAddPlayer} disabled={!newPlayerName.trim()}>
+        <button
+          className="btn btn-primary"
+          onClick={handleAddPlayer}
+          disabled={!newPlayerName.trim()}
+        >
           Add Player
         </button>
         {error && <div style={{ color: "red" }}>{error}</div>}

@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import getScrollBarWidth from "../utils/getScrollBarWidth";
 
-// Defining the context type to manage multiple modals
+// Defining the context type for managing multiple modals
 interface ModalContextType {
   modals: Record<string, boolean>; // Tracks open state of multiple modals
   handleOpen: (modalId: string) => void;
@@ -21,82 +21,49 @@ const ModalContext = createContext<ModalContextType>({
   handleOpen: () => {},
   handleClose: () => {},
 });
+
+// Custom hook for easy context consumption
 const useModal = () => useContext(ModalContext);
 
-// Interface for the props of ModalProvider
+// Interface for ModalProvider component props
 interface ModalProviderProps {
   children: ReactNode;
 }
 
 const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
-  const isSSR = typeof window === "undefined";
-  const htmlTag = !isSSR ? document.querySelector("html") : null;
   const [modals, setModals] = useState<Record<string, boolean>>({});
-  const modalAnimationDuration = 400;
 
-  // Handle opening a modal
-  const handleOpen = (modalId: string) => {
+  // Handle to open a modal by its ID
+  const handleOpen = useCallback((modalId: string) => {
     setModals((prev) => ({ ...prev, [modalId]: true }));
-    if (htmlTag) {
-      htmlTag.classList.add("modal-is-open", "modal-is-opening");
-      setTimeout(() => {
-        htmlTag.classList.remove("modal-is-opening");
-      }, modalAnimationDuration);
-    }
-  };
+    (document.getElementById(modalId) as HTMLDialogElement)?.showModal();
+  }, []);
 
-  // Handle closing a modal
-  const handleClose = useCallback(
-    (modalId: string) => {
-      if (htmlTag) {
-        htmlTag.classList.add("modal-is-closing");
-        setTimeout(() => {
-          setModals((prev) => ({ ...prev, [modalId]: false }));
-          htmlTag.classList.remove("modal-is-open", "modal-is-closing");
-        }, modalAnimationDuration);
-      }
-    },
-    [htmlTag]
-  );
+  // Handle to close a modal by its ID
+  const handleClose = useCallback((modalId: string) => {
+    setModals((prev) => ({ ...prev, [modalId]: false }));
+    (document.getElementById(modalId) as HTMLDialogElement)?.close();
+  }, []);
 
-  // Handle escape key
+  // Effect to manage keyboard interactions, specifically the Escape key
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      Object.keys(modals).forEach((modalId) => {
-        if (modals[modalId]) {
-          handleClose(modalId);
-        }
-      });
+      if (event.key === "Escape") {
+        Object.keys(modals).forEach((modalId) => {
+          if (modals[modalId]) {
+            handleClose(modalId);
+          }
+        });
+      }
     };
-    window.addEventListener("keydown", handleEscape);
+    document.addEventListener("keydown", handleEscape);
     return () => {
-      window.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("keydown", handleEscape);
     };
   }, [handleClose, modals]);
 
-  // Set scrollbar width on mount
-  useEffect(() => {
-    if (htmlTag) {
-      const scrollBarWidth = getScrollBarWidth();
-      htmlTag.style.setProperty(
-        "--pico-scrollbar-width",
-        `${scrollBarWidth}px`
-      );
-      return () => {
-        htmlTag.style.removeProperty("--pico-scrollbar-width");
-      };
-    }
-  }, [htmlTag]);
-
   return (
-    <ModalContext.Provider
-      value={{
-        modals,
-        handleOpen,
-        handleClose,
-      }}
-    >
+    <ModalContext.Provider value={{ modals, handleOpen, handleClose }}>
       {children}
     </ModalContext.Provider>
   );
