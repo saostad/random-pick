@@ -8,14 +8,14 @@ const NewGameButton: React.FC = () => {
   return (
     <>
       <FlexibleModal modalId="game-reset">
-        <>
+        <div>
           <h2>Game Reset</h2>
           <ul>
-            <li>Player statuses reset successfully</li>
-            <li>Votes reset successfully</li>
-            <li>Role assignments reset successfully</li>
+            <li>Player statuses reset.</li>
+            <li>Votes reset.</li>
+            <li>Roles reassigned.</li>
           </ul>
-        </>
+        </div>
       </FlexibleModal>
       <button className="secondary" onClick={resetGameState}>
         Start a New Game

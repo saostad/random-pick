@@ -94,7 +94,7 @@ const NightActionsControl: React.FC = () => {
       <h2>Night Actions</h2>
       {unassignedRoles.length > 0 && (
         <div>
-          <h3>Unassigned Roles</h3>
+          <h3>Unassigned Roles ({unassignedRoles.length})</h3>
           <ul>
             {unassignedRoles.map((role) => (
               <li key={role.id}>{role.name}</li>
@@ -104,7 +104,7 @@ const NightActionsControl: React.FC = () => {
       )}
       {unassignedPlayers.length > 0 && (
         <div>
-          <h3>Unassigned Players</h3>
+          <h3>Players with no role ({unassignedPlayers.length})</h3>
           <ul>
             {unassignedPlayers.map((player) => (
               <li key={player.id}>{player.name}</li>
