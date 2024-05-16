@@ -97,8 +97,9 @@ const Players: React.FC = () => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "0.5rem",
+            gridTemplateColumns: "2fr 1fr",
+            columnGap: "0.75rem",
+            paddingBottom: "0.75rem",
           }}
         >
           <input
@@ -129,8 +130,9 @@ const Players: React.FC = () => {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "2fr 2fr 2fr auto",
+          gridTemplateColumns: "3fr 2fr 2fr auto",
           gap: "0.75rem",
+          alignItems: "center",
         }}
       >
         {gameState.players
@@ -149,7 +151,7 @@ const Players: React.FC = () => {
               />
               <span>
                 <small>
-                  {playerRoles[player.id] ? `(${playerRoles[player.id]})` : ""}
+                  {playerRoles[player.id] ? `${playerRoles[player.id]}` : ""}
                 </small>
               </span>
               <input

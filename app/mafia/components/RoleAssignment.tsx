@@ -11,22 +11,26 @@ const RoleAssignment: React.FC = () => {
   return (
     <>
       <h2>Assign Roles to Players</h2>
-      {gameState.players.map((player) => (
-        <div key={player.id} style={{ display: "flex", alignItems: "center" }}>
-          <span
+      {gameState.players
+        .sort((a, b) => a.order - b.order)
+        .map((player) => (
+          <div
+            key={player.id}
             style={{
-              marginRight: "1rem",
-              flex: "0 1 auto",
-              paddingBottom: "1rem",
+              display: "grid",
+              gridTemplateColumns: "1fr 3fr",
+              alignItems: "center",
+              marginBottom: "0.25rem",
             }}
           >
-            {player.name}
-          </span>
-          <span style={{ flex: "1", alignSelf: "flex-start" }}>
+            <span>
+              {player.order}-{player.name}
+            </span>
             <select
-              className="select w-full max-w-xs"
+              className="select w-full select-primary max-w-xs"
               value={player.roleId || ""}
               onChange={(e) => handleRoleChange(player.id, e.target.value)}
+              title="Select a role"
             >
               <option disabled value="">
                 Select a role
@@ -37,9 +41,8 @@ const RoleAssignment: React.FC = () => {
                 </option>
               ))}
             </select>
-          </span>
-        </div>
-      ))}
+          </div>
+        ))}
     </>
   );
 };

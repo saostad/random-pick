@@ -95,28 +95,30 @@ const Roles: React.FC = () => {
       <div>
         <input
           type="text"
-          className="input input-bordered w-full max-w-xs"
+          className="input input-bordered input-primary w-full max-w-xs mb-2"
           value={newRoleName}
           onChange={(e) => setNewRoleName(e.target.value)}
-          placeholder="Enter new role name"
+          placeholder="Role name"
         />
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              className="checkbox"
-              checked={hasAction}
-              onChange={(e) => setHasAction(e.target.checked)}
-            />{" "}
-            Has Action?
-          </label>
+        <div className="grid grid-cols-2 gap-2 m-2">
+          <div className="form-control w-32">
+            <label className="cursor-pointer label">
+              <span className="label-text">Action?</span>
+              <input
+                type="checkbox"
+                checked={hasAction}
+                onChange={(e) => setHasAction(e.target.checked)}
+                className="toggle toggle-primary"
+              />
+            </label>
+          </div>
           {hasAction && (
             <input
               type="number"
-              className="input input-bordered w-full max-w-xs"
+              className="input input-bordered input-primary w-full max-w-xs"
               value={actionOrder ?? ""}
               onChange={(e) => setActionOrder(Number(e.target.value))}
-              placeholder="Enter action order"
+              placeholder="Action order"
             />
           )}
         </div>
@@ -131,6 +133,7 @@ const Roles: React.FC = () => {
           display: "grid",
           gridTemplateColumns: "2fr 2fr auto",
           gap: "0.75rem",
+          alignItems: "center",
         }}
       >
         {gameState.gameRoles
@@ -142,29 +145,29 @@ const Roles: React.FC = () => {
             <React.Fragment key={role.id}>
               <input
                 type="text"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-sm input-primary w-full max-w-xs"
                 value={role.name}
                 onChange={(e) => handleUpdateRoleName(role.id, e.target.value)}
-                placeholder="Enter role name"
+                placeholder="Role name"
               />
               <div style={{ display: "flex", alignItems: "center" }}>
                 <small>
                   <label>
                     <input
                       type="checkbox"
-                      className="checkbox"
+                      className="checkbox checkbox-sx"
                       checked={role.hasAction}
                       onChange={(e) =>
                         handleUpdateRoleAction(role.id, e.target.checked)
                       }
                     />
-                    Has Action?
+                    Action?
                   </label>
                 </small>
                 {role.hasAction && (
                   <input
                     type="number"
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-sm input-bordered input-primary w-full max-w-xs"
                     value={role.actionOrder ?? ""}
                     onChange={(e) =>
                       handleUpdateActionOrder(role.id, Number(e.target.value))
