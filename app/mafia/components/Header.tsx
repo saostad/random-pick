@@ -11,7 +11,7 @@ const Header: React.FC<HeaderProps> = (props) => {
       style={{ display: "flex", justifyContent: "space-between" }}
       {...props}
     >
-      <h1>Mafia</h1>
+      <h1>Mafia (Manager)</h1>
       <ColorSchemeSwitcher className="contrast" />
     </header>
   );

@@ -17,16 +17,16 @@ const VotingSession: React.FC = () => {
           </ul>
         </>
       </FlexibleModal>
-      <details
-        open={showVoting}
-        onToggle={() => {
-          setShowVoting((prev) => !prev);
-        }}
-      >
-        <summary className="secondary" role="button">
+      <div className="collapse collapse-arrow bg-base-200">
+        <input
+          type="checkbox"
+          checked={showVoting}
+          onChange={() => setShowVoting((prev) => !prev)}
+        />
+        <div className="collapse-title text-xl font-medium">
           {showVoting ? "Hide " : "Show "} Voting Session
-        </summary>
-        <div>
+        </div>
+        <div className="collapse-content">
           <div style={{ marginBottom: "1rem" }}>
             <button className="btn btn-primary" onClick={resetVotes}>
               Reset Votes
@@ -65,7 +65,7 @@ const VotingSession: React.FC = () => {
               </div>
             ))}
         </div>
-      </details>
+      </div>
     </div>
   );
 };

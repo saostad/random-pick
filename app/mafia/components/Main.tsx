@@ -42,11 +42,8 @@ const Main: React.FC<MainProps> = (props) => {
                 Role Assignment
               </ModalButton>
             </div>
-            <div className="divider" />
             <PlayerStatusManager />
-            <div className="divider" />
             <VotingSession />
-            <div className="divider" />
             <NightActionsControl />
             <div className="divider" />
           </div>

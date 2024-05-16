@@ -27,82 +27,83 @@ const PlayerStatusManager: React.FC = () => {
   return (
     <>
       <h2>Player Status</h2>
-      <details>
-        <summary className="secondary" role="button">
+      <div className="collapse collapse-arrow bg-base-200 mb-2">
+        <input type="checkbox" />
+        <div className="collapse-title text-xl font-medium">
           Players ({alivePlayers.length})
-        </summary>
-        <>
-          {alivePlayers
-            .slice() // Create a copy of the players array to avoid mutating the original state
-            .sort((a, b) => a.order - b.order) // Sort players by order
-            .map((player) => (
-              <div
-                key={player.id}
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  alignItems: "center",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                <span style={{ marginRight: "1rem" }}>
-                  {player.order}. {player.name} (
-                  {getRoleNameById(player.roleId ?? "")})
-                </span>
-                <button
-                  className="btn btn-primary"
-                  onClick={() => handleMarkPlayerAsDead(player.id)}
+        </div>
+        <div className="collapse-content">
+          <>
+            {alivePlayers
+              .slice() // Create a copy of the players array to avoid mutating the original state
+              .sort((a, b) => a.order - b.order) // Sort players by order
+              .map((player) => (
+                <div
+                  key={player.id}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    alignItems: "center",
+                    marginBottom: "0.5rem",
+                  }}
                 >
-                  Mark as Dead
-                </button>
-              </div>
-            ))}
-        </>
-      </details>
-      {deadPlayers.length > 0 && (
-        <details
-          open={showDeadPlayers}
-          onClick={(e) => {
-            e.preventDefault();
-            setShowDeadPlayers((prev) => !prev);
-          }}
-        >
-          <summary className="secondary" role="button">
-            Dead Players ({deadPlayers.length})
-          </summary>
-          {showDeadPlayers && (
-            <>
-              {deadPlayers
-                .slice() // Create a copy of the players array to avoid mutating the original state
-                .sort((a, b) => a.order - b.order) // Sort players by order
-                .map((player) => (
-                  <div
-                    key={player.id}
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "1fr 1fr",
-                      alignItems: "center",
-                      marginBottom: "0.5rem",
-                    }}
+                  <span style={{ marginRight: "1rem" }}>
+                    {player.order}. {player.name} (
+                    {getRoleNameById(player.roleId ?? "")})
+                  </span>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => handleMarkPlayerAsDead(player.id)}
                   >
-                    <span style={{ marginRight: "1rem" }}>
-                      <del>
+                    Mark as Dead
+                  </button>
+                </div>
+              ))}
+          </>
+        </div>
+      </div>
+      {deadPlayers.length > 0 && (
+        <div className="collapse collapse-arrow bg-base-200 mb-2">
+          <input
+            type="checkbox"
+            defaultChecked={showDeadPlayers}
+            onChange={() => setShowDeadPlayers((prev) => !prev)}
+          />
+          <div className="collapse-title text-xl font-medium">
+            Dead Players ({deadPlayers.length})
+          </div>
+          <div className="collapse-content">
+            {showDeadPlayers && (
+              <>
+                {deadPlayers
+                  .slice() // Create a copy of the players array to avoid mutating the original state
+                  .sort((a, b) => a.order - b.order) // Sort players by order
+                  .map((player) => (
+                    <div
+                      key={player.id}
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        alignItems: "center",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      <span style={{ marginRight: "1rem" }}>
                         {player.order}. {player.name} (
                         {getRoleNameById(player.roleId ?? "")})
-                      </del>
-                    </span>
-                    <button
-                      className="btn btn-secondary"
-                      style={{ marginLeft: "1rem" }}
-                      onClick={() => handleMarkPlayerAsAlive(player.id)}
-                    >
-                      Return to Game
-                    </button>
-                  </div>
-                ))}
-            </>
-          )}
-        </details>
+                      </span>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => handleMarkPlayerAsAlive(player.id)}
+                      >
+                        Mark as Alive
+                      </button>
+                    </div>
+                  ))}
+              </>
+            )}
+          </div>
+        </div>
       )}
     </>
   );

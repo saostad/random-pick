@@ -93,26 +93,37 @@ const NightActionsControl: React.FC = () => {
     <>
       <h2>Night Actions</h2>
       {unassignedRoles.length > 0 && (
-        <div>
-          <h3>Unassigned Roles ({unassignedRoles.length})</h3>
-          <ul>
-            {unassignedRoles.map((role) => (
-              <li key={role.id}>{role.name}</li>
-            ))}
-          </ul>
+        <div className="collapse collapse-arrow bg-base-200 mb-2">
+          <input type="checkbox" />
+          <div className="collapse-title text-xl font-medium">
+            Unassigned Roles ({unassignedRoles.length})
+          </div>
+          <div className="collapse-content">
+            <ul>
+              {unassignedRoles.map((role) => (
+                <li key={role.id}>{role.name}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
+
       {unassignedPlayers.length > 0 && (
-        <div>
-          <h3>Players with no role ({unassignedPlayers.length})</h3>
-          <ul>
-            {unassignedPlayers.map((player) => (
-              <li key={player.id}>{player.name}</li>
-            ))}
-          </ul>
+        <div className="collapse collapse-arrow bg-base-200 mb-2">
+          <input type="checkbox" />
+          <div className="collapse-title text-xl font-medium">
+            Players without Role ({unassignedPlayers.length})
+          </div>
+          <div className="collapse-content">
+            <ul>
+              {unassignedPlayers.map((player) => (
+                <li key={player.id}>{player.name}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
-      <button className="btn btn-primary" onClick={handleStartNight}>
+      <button className="btn btn-accent mt-2" onClick={handleStartNight}>
         Start Night Phase
       </button>
       <FlexibleModal modalId="night-actions">
