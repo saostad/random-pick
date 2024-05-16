@@ -95,7 +95,7 @@ const NightActionsControl: React.FC = () => {
       {unassignedRoles.length > 0 && (
         <div className="collapse collapse-arrow bg-base-200 mb-2">
           <input type="checkbox" />
-          <div className="collapse-title text-xl font-medium">
+          <div className="collapse-title">
             Unassigned Roles ({unassignedRoles.length})
           </div>
           <div className="collapse-content">
@@ -111,7 +111,7 @@ const NightActionsControl: React.FC = () => {
       {unassignedPlayers.length > 0 && (
         <div className="collapse collapse-arrow bg-base-200 mb-2">
           <input type="checkbox" />
-          <div className="collapse-title text-xl font-medium">
+          <div className="collapse-title">
             Players without Role ({unassignedPlayers.length})
           </div>
           <div className="collapse-content">

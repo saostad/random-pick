@@ -23,7 +23,7 @@ const VotingSession: React.FC = () => {
           checked={showVoting}
           onChange={() => setShowVoting((prev) => !prev)}
         />
-        <div className="collapse-title text-xl font-medium">
+        <div className="collapse-title">
           {showVoting ? "Hide " : "Show "} Voting Session
         </div>
         <div className="collapse-content">

@@ -29,9 +29,7 @@ const PlayerStatusManager: React.FC = () => {
       <h2>Player Status</h2>
       <div className="collapse collapse-arrow bg-base-200 mb-2">
         <input type="checkbox" />
-        <div className="collapse-title text-xl font-medium">
-          Players ({alivePlayers.length})
-        </div>
+        <div className="collapse-title">Players ({alivePlayers.length})</div>
         <div className="collapse-content">
           <>
             {alivePlayers
@@ -69,7 +67,7 @@ const PlayerStatusManager: React.FC = () => {
             defaultChecked={showDeadPlayers}
             onChange={() => setShowDeadPlayers((prev) => !prev)}
           />
-          <div className="collapse-title text-xl font-medium">
+          <div className="collapse-title">
             Dead Players ({deadPlayers.length})
           </div>
           <div className="collapse-content">
