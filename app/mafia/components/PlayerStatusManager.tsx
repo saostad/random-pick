@@ -91,7 +91,7 @@ const PlayerStatusManager: React.FC = () => {
                         {getRoleNameById(player.roleId ?? "")})
                       </span>
                       <button
-                        className="btn btn-primary"
+                        className="btn btn-warning"
                         onClick={() => handleMarkPlayerAsAlive(player.id)}
                       >
                         Mark as Alive
