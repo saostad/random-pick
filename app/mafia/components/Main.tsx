@@ -10,6 +10,7 @@ import RoleAssignment from "./RoleAssignment";
 import Roles from "./Roles";
 import VotingSession from "./VotingSession";
 import FlexibleModal from "./FlexibleModal";
+import DayActionsControl from "./DayActionsControl";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -43,6 +44,7 @@ const Main: React.FC<MainProps> = (props) => {
               </ModalButton>
             </div>
             <PlayerStatusManager />
+            <DayActionsControl />
             <VotingSession />
             <NightActionsControl />
             <div className="divider" />

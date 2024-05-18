@@ -3,25 +3,21 @@ import { GameState, useGameContext } from "../contexts/GameContext";
 import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
 
-// A function to simulate the night phase
 const handleNightActions = (gameState: GameState): GameState => {
-  // Filter roles that have actions and sort them by their action order
   const actionableRoles = gameState.gameRoles
     .filter((role) => role.hasAction)
     .sort((a, b) => a.actionOrder! - b.actionOrder!);
 
   actionableRoles.forEach((role) => {
-    // Implement actions for each role here
     console.log(`Processing action for ${role.name}`);
-    // Example: Mafia chooses a target, Detective investigates a player, etc.
   });
 
-  return gameState; // Return the updated state after all actions
+  return gameState;
 };
 
 const NightActionsControl: React.FC = () => {
   const { handleOpen, handleClose } = useModal();
-  const { gameState, updateGameState } = useGameContext();
+  const { gameState, updateGameState, increaseNightCount } = useGameContext();
   const [currentActionIndex, setCurrentActionIndex] = useState<number>(0);
   const [actionableRoles, setActionableRoles] = useState<any[]>([]);
   const [rolePlayers, setRolePlayers] = useState<{
@@ -29,6 +25,7 @@ const NightActionsControl: React.FC = () => {
   }>({});
   const [unassignedRoles, setUnassignedRoles] = useState<any[]>([]);
   const [unassignedPlayers, setUnassignedPlayers] = useState<any[]>([]);
+  const [nightCompleted, setNightCompleted] = useState<boolean>(false);
 
   useEffect(() => {
     const mapRoleToPlayer = () => {
@@ -47,14 +44,12 @@ const NightActionsControl: React.FC = () => {
 
       setRolePlayers(roleToPlayerMap);
 
-      // Identify roles without players assigned
       const rolesWithoutPlayers = gameState.gameRoles.filter(
         (role) => !roleToPlayerMap[role.id]
       );
 
       setUnassignedRoles(rolesWithoutPlayers);
 
-      // Identify players without roles assigned
       const playersWithoutRoles = gameState.players.filter(
         (player) => !player.roleId
       );
@@ -68,30 +63,46 @@ const NightActionsControl: React.FC = () => {
   const handleStartNight = () => {
     console.log("Starting night actions");
 
-    // Filter and sort actionable roles
     const rolesWithActions = gameState.gameRoles
       .filter((role) => role.hasAction)
       .sort((a, b) => a.actionOrder! - b.actionOrder!);
     setActionableRoles(rolesWithActions);
 
-    // Show the modal
     handleOpen("night-actions");
 
-    // Start the action display
     setCurrentActionIndex(0);
 
-    // Update the game state
     const updatedState = handleNightActions(gameState);
     updateGameState({ ...updatedState });
+
+    setNightCompleted(false);
   };
 
   const handleNextAction = () => {
     setCurrentActionIndex((prevIndex) => prevIndex + 1);
   };
 
+  useEffect(() => {
+    if (
+      currentActionIndex >= actionableRoles.length &&
+      actionableRoles.length > 0 &&
+      !nightCompleted
+    ) {
+      increaseNightCount();
+      setNightCompleted(true);
+    }
+  }, [
+    currentActionIndex,
+    actionableRoles.length,
+    increaseNightCount,
+    nightCompleted,
+  ]);
+
   return (
     <>
-      <h2>Night Actions</h2>
+      <h2>
+        Night Actions <small>(Night {gameState.nightCount})</small>
+      </h2>
       {unassignedRoles.length > 0 && (
         <div className="collapse collapse-arrow bg-base-200 mb-2">
           <input type="checkbox" />
@@ -124,7 +135,7 @@ const NightActionsControl: React.FC = () => {
         </div>
       )}
       <button className="btn btn-accent mt-2" onClick={handleStartNight}>
-        Start Night Phase
+        Start Night {gameState.nightCount}
       </button>
       <FlexibleModal modalId="night-actions">
         <>
