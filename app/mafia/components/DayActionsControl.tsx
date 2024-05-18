@@ -30,7 +30,7 @@ const DayActionsControl: React.FC = () => {
         clearInterval(timerRef.current);
       }
     };
-  }, [currentSpeakerIndex]); // Reset timer when the current speaker changes
+  }, [currentSpeakerIndex]);
 
   const handleNextSpeaker = () => {
     const nextIndex = (currentSpeakerIndex + 1) % speakingOrder.length;
@@ -51,15 +51,16 @@ const DayActionsControl: React.FC = () => {
 
     handleOpen("day-actions");
 
-    const startingIndex = gameState.players.findIndex(
+    const alivePlayers = gameState.players.filter((player) => player.isAlive);
+    const startingIndex = alivePlayers.findIndex(
       (player) => player.id === selectedStartingPlayer
     );
 
     if (startingIndex !== -1) {
-      // Create the speaking order array
+      // Create the speaking order array for alive players
       const order = [
-        ...gameState.players.slice(startingIndex),
-        ...gameState.players.slice(0, startingIndex),
+        ...alivePlayers.slice(startingIndex),
+        ...alivePlayers.slice(0, startingIndex),
       ].map((player) => gameState.players.findIndex((p) => p.id === player.id));
 
       setSpeakingOrder(order);
@@ -86,6 +87,8 @@ const DayActionsControl: React.FC = () => {
     (player) => player.id === gameState.startingPlayerId
   );
 
+  const alivePlayers = gameState.players.filter((player) => player.isAlive);
+
   return (
     <>
       <h2>
@@ -97,6 +100,7 @@ const DayActionsControl: React.FC = () => {
       <div className="mb-2">
         <label htmlFor="starting-player">Select Starting Player: </label>
         <select
+          className="select select-secondary w-full max-w-xs"
           id="starting-player"
           value={selectedStartingPlayer}
           onChange={handleSelectChange}
@@ -104,7 +108,7 @@ const DayActionsControl: React.FC = () => {
           <option value="" disabled>
             Select Player
           </option>
-          {gameState.players.map((player) => (
+          {alivePlayers.map((player) => (
             <option key={player.id} value={player.id}>
               {player.name}
             </option>
@@ -125,7 +129,7 @@ const DayActionsControl: React.FC = () => {
             <p>All players completed.</p>
           ) : (
             <>
-              {gameState.players.length > 0 && speakingOrder.length > 0 && (
+              {alivePlayers.length > 0 && speakingOrder.length > 0 && (
                 <>
                   <p>
                     <b>Current Speaker:</b>{" "}
