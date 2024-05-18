@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { GameState, useGameContext } from "../contexts/GameContext";
 import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
+import CarbonPartlyCloudyNight from "~icons/carbon/partly-cloudy-night";
+import CarbonTouchInteraction from "~icons/carbon/touch-interaction";
 
 const handleNightActions = (gameState: GameState): GameState => {
   const actionableRoles = gameState.gameRoles
@@ -135,7 +137,7 @@ const NightActionsControl: React.FC = () => {
         </div>
       )}
       <button className="btn btn-accent mt-2" onClick={handleStartNight}>
-        Start Night {gameState.nightCount}
+        Start Night {gameState.nightCount} <CarbonPartlyCloudyNight />
       </button>
       <FlexibleModal modalId="night-actions">
         <>
@@ -156,7 +158,7 @@ const NightActionsControl: React.FC = () => {
                 )
               </p>
               <button className="btn btn-primary" onClick={handleNextAction}>
-                Next Action
+                Next Action <CarbonTouchInteraction />
               </button>
             </>
           ) : (

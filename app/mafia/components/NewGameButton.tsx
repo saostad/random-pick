@@ -1,6 +1,7 @@
 import React from "react";
 import { useGameContext } from "../contexts/GameContext";
 import FlexibleModal from "./FlexibleModal";
+import CarbonRenew from "~icons/carbon/renew.jsx";
 
 const NewGameButton: React.FC = () => {
   const { resetGameState } = useGameContext();
@@ -19,6 +20,7 @@ const NewGameButton: React.FC = () => {
       </FlexibleModal>
       <button className="btn btn-secondary" onClick={resetGameState}>
         Start a New Game
+        <CarbonRenew />
       </button>
     </>
   );

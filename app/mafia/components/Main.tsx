@@ -11,6 +11,9 @@ import Roles from "./Roles";
 import VotingSession from "./VotingSession";
 import FlexibleModal from "./FlexibleModal";
 import DayActionsControl from "./DayActionsControl";
+import CarbonGroup from "~icons/carbon/group.jsx";
+import CarbonUserRole from "~icons/carbon/user-role";
+import CarbonUserIdentification from "~icons/carbon/user-identification";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -37,10 +40,14 @@ const Main: React.FC<MainProps> = (props) => {
                 gap: "0.5rem",
               }}
             >
-              <ModalButton modalId="Players">Manage Players</ModalButton>
-              <ModalButton modalId="Roles">Manage Roles</ModalButton>
+              <ModalButton modalId="Players">
+                Manage Players <CarbonGroup />
+              </ModalButton>
+              <ModalButton modalId="Roles">
+                Manage Roles <CarbonUserRole />
+              </ModalButton>
               <ModalButton modalId="RoleAssignment">
-                Role Assignment
+                Role Assignment <CarbonUserIdentification />
               </ModalButton>
             </div>
             <PlayerStatusManager />

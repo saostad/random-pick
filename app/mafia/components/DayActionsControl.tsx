@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
+import CarbonSun from "~icons/carbon/sun";
+import CarbonUserSpeaker from "~icons/carbon/user-speaker";
 
 const DayActionsControl: React.FC = () => {
   const { gameState, updateGameState, increaseDayCount } = useGameContext();
@@ -120,7 +122,7 @@ const DayActionsControl: React.FC = () => {
         onClick={handleStartDay}
         disabled={!selectedStartingPlayer}
       >
-        Start Day {gameState.dayCount}
+        Start Day {gameState.dayCount} <CarbonSun />
       </button>
       <FlexibleModal modalId="day-actions">
         <>
@@ -143,7 +145,7 @@ const DayActionsControl: React.FC = () => {
                     className="btn btn-primary"
                     onClick={handleNextSpeaker}
                   >
-                    Next Speaker
+                    Next Speaker <CarbonUserSpeaker />
                   </button>
                 </>
               )}

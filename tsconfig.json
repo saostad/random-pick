@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "types": ["unplugin-icons/types/react"],
     "plugins": [
       {
         "name": "next"

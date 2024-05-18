@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import FlexibleModal from "./FlexibleModal";
+import CarbonErase from "~icons/carbon/erase";
 
 const VotingSession: React.FC = () => {
   const { gameState, decreaseVote, increaseVote, resetVotes } =
@@ -36,7 +37,7 @@ const VotingSession: React.FC = () => {
         <div className="collapse-content">
           <div className="mb-4">
             <button className="btn btn-primary" onClick={resetVotes}>
-              Reset Votes
+              Reset Votes <CarbonErase />
             </button>
           </div>
           {alivePlayers

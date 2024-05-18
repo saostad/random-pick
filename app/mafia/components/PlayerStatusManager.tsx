@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
+import CarbonOutage from "~icons/carbon/outage";
+import CarbonReturn from "~icons/carbon/return";
 
 const PlayerStatusManager: React.FC = () => {
   const { gameState, markPlayerAsDead, markPlayerAsAlive } = useGameContext();
@@ -50,10 +52,10 @@ const PlayerStatusManager: React.FC = () => {
                     {getRoleNameById(player.roleId ?? "")})
                   </span>
                   <button
-                    className="btn btn-primary"
+                    className="btn btn-outline btn-error"
                     onClick={() => handleMarkPlayerAsDead(player.id)}
                   >
-                    Mark as Dead
+                    Mark as Dead <CarbonOutage />
                   </button>
                 </div>
               ))}
@@ -91,10 +93,10 @@ const PlayerStatusManager: React.FC = () => {
                         {getRoleNameById(player.roleId ?? "")})
                       </span>
                       <button
-                        className="btn btn-warning"
+                        className="btn btn-outline btn-success"
                         onClick={() => handleMarkPlayerAsAlive(player.id)}
                       >
-                        Mark as Alive
+                        Mark as Alive <CarbonReturn />
                       </button>
                     </div>
                   ))}
