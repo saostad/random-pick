@@ -126,7 +126,7 @@ const DayActionsControl: React.FC = () => {
         <>
           <h2>Day Actions</h2>
           {allPlayersCompleted ? (
-            <p>All players completed.</p>
+            <p>All players have spoken.</p>
           ) : (
             <>
               {alivePlayers.length > 0 && speakingOrder.length > 0 && (
