@@ -7,6 +7,13 @@ const VotingSession: React.FC = () => {
     useGameContext();
   const [showVoting, setShowVoting] = useState(false);
 
+  // Calculate the maximum votes and the players who have the maximum votes
+  const alivePlayers = gameState.players.filter((p) => p.isAlive);
+  const maxVotes = Math.max(...alivePlayers.map((player) => player.voteCount));
+  const playersWithMaxVotes = alivePlayers.filter(
+    (player) => player.voteCount === maxVotes && maxVotes > 0
+  );
+
   return (
     <div>
       <FlexibleModal modalId="votes-reset">
@@ -27,13 +34,12 @@ const VotingSession: React.FC = () => {
           {showVoting ? "Hide " : "Show "} Voting Session
         </div>
         <div className="collapse-content">
-          <div style={{ marginBottom: "1rem" }}>
+          <div className="mb-4">
             <button className="btn btn-primary" onClick={resetVotes}>
               Reset Votes
             </button>
           </div>
-          {gameState.players
-            .filter((p) => p.isAlive)
+          {alivePlayers
             .sort((a, b) => a.order - b.order)
             .map((player) => (
               <div
@@ -64,6 +70,17 @@ const VotingSession: React.FC = () => {
                 </div>
               </div>
             ))}
+          {playersWithMaxVotes.length > 0 && (
+            <div style={{ marginBottom: "1rem" }}>
+              <h3>Leading Players</h3>
+              {playersWithMaxVotes.map((player) => (
+                <p key={player.id}>
+                  {player.name} with {player.voteCount} vote
+                  {player.voteCount > 1 ? "s" : ""}
+                </p>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
