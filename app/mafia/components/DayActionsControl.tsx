@@ -15,7 +15,18 @@ const DayActionsControl: React.FC = () => {
   const [selectedStartingPlayer, setSelectedStartingPlayer] = useState<string>(
     gameState.startingPlayerId || ""
   );
+  const [selectedChallenger, setSelectedChallenger] = useState<string>("");
+  const [challengeMode, setChallengeMode] = useState<boolean>(false);
   const [speakingOrder, setSpeakingOrder] = useState<number[]>([]);
+  const [challengedPlayers, setChallengedPlayers] = useState<Set<string>>(
+    new Set()
+  );
+  const [currentChallenger, setCurrentChallenger] = useState<string | null>(
+    null
+  );
+  const [speakerChallenged, setSpeakerChallenged] = useState<Set<string>>(
+    new Set()
+  );
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -32,7 +43,7 @@ const DayActionsControl: React.FC = () => {
         clearInterval(timerRef.current);
       }
     };
-  }, [currentSpeakerIndex]);
+  }, [currentSpeakerIndex, challengeMode]);
 
   const handleNextSpeaker = () => {
     const nextIndex = (currentSpeakerIndex + 1) % speakingOrder.length;
@@ -45,6 +56,9 @@ const DayActionsControl: React.FC = () => {
     } else {
       setCurrentSpeakerIndex(nextIndex);
       setElapsedTime(0);
+      setChallengeMode(false);
+      setSelectedChallenger("");
+      setCurrentChallenger(null);
     }
   };
 
@@ -69,6 +83,8 @@ const DayActionsControl: React.FC = () => {
       setCurrentSpeakerIndex(0);
       setElapsedTime(0);
       setAllPlayersCompleted(false);
+      setChallengedPlayers(new Set());
+      setSpeakerChallenged(new Set());
 
       // Update the starting player for the new day
       updateGameState({
@@ -85,11 +101,52 @@ const DayActionsControl: React.FC = () => {
     setSelectedStartingPlayer(e.target.value);
   };
 
+  const handleChallengerChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedChallenger(e.target.value);
+  };
+
+  const handleStartChallenge = () => {
+    setChallengeMode(true);
+    setElapsedTime(0);
+    setChallengedPlayers((prev) => new Set(prev).add(selectedChallenger));
+    setCurrentChallenger(selectedChallenger);
+  };
+
+  const handleEndChallenge = () => {
+    setChallengeMode(false);
+    setSelectedChallenger("");
+    setElapsedTime(0);
+    setSpeakerChallenged((prev) =>
+      new Set(prev).add(
+        gameState.players[speakingOrder[currentSpeakerIndex]].id
+      )
+    );
+  };
+
   const lastStartingPlayer = gameState.players.find(
     (player) => player.id === gameState.startingPlayerId
   );
 
   const alivePlayers = gameState.players.filter((player) => player.isAlive);
+
+  const currentSpeaker =
+    speakingOrder.length > 0
+      ? gameState.players[speakingOrder[currentSpeakerIndex]]
+      : null;
+
+  const availableChallengers = alivePlayers.filter(
+    (player) =>
+      currentSpeaker &&
+      player.id !== currentSpeaker.id &&
+      !challengedPlayers.has(player.id)
+  );
+
+  const currentSpeakerHasChallenged =
+    currentSpeaker && speakerChallenged.has(currentSpeaker.id);
+
+  const currentChallengerName = currentChallenger
+    ? gameState.players.find((player) => player.id === currentChallenger)?.name
+    : null;
 
   return (
     <>
@@ -131,24 +188,69 @@ const DayActionsControl: React.FC = () => {
             <p>All players have spoken.</p>
           ) : (
             <>
-              {alivePlayers.length > 0 && speakingOrder.length > 0 && (
-                <>
-                  <p>
-                    <b>Current Speaker:</b>{" "}
-                    {gameState.players[speakingOrder[currentSpeakerIndex]]
-                      ?.name || "Unknown"}
-                  </p>
-                  <p>
-                    <b>Elapsed Time:</b> {elapsedTime}s
-                  </p>
-                  <button
-                    className="btn btn-primary"
-                    onClick={handleNextSpeaker}
-                  >
-                    Next Speaker <CarbonUserSpeaker />
-                  </button>
-                </>
-              )}
+              {alivePlayers.length > 0 &&
+                speakingOrder.length > 0 &&
+                currentSpeaker && (
+                  <>
+                    <p>
+                      <b>Current Speaker:</b>{" "}
+                      {currentSpeaker?.name || "Unknown"}
+                    </p>
+                    {challengeMode && currentChallengerName && (
+                      <p>
+                        <b>Challenger:</b> {currentChallengerName} is
+                        challenging on the time of {currentSpeaker?.name}
+                      </p>
+                    )}
+                    <p>
+                      <b>Elapsed Time:</b> {elapsedTime}s
+                    </p>
+                    <div className="mb-2">
+                      <label htmlFor="challenger">Select Challenger: </label>
+                      <select
+                        className="select select-secondary w-full max-w-xs"
+                        id="challenger"
+                        value={selectedChallenger}
+                        onChange={handleChallengerChange}
+                        disabled={
+                          challengeMode ||
+                          currentSpeakerHasChallenged ||
+                          availableChallengers.length === 0
+                        }
+                      >
+                        <option value="" disabled>
+                          Select Challenger
+                        </option>
+                        {availableChallengers.map((player) => (
+                          <option key={player.id} value={player.id}>
+                            {player.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <button
+                      className="btn btn-warning mb-2"
+                      onClick={handleStartChallenge}
+                      disabled={challengeMode || !selectedChallenger}
+                    >
+                      Start Challenge
+                    </button>
+                    <button
+                      className="btn btn-success mb-2"
+                      onClick={handleEndChallenge}
+                      disabled={!challengeMode}
+                    >
+                      End Challenge
+                    </button>
+                    <button
+                      className="btn btn-primary"
+                      onClick={handleNextSpeaker}
+                      disabled={challengeMode}
+                    >
+                      Next Speaker <CarbonUserSpeaker />
+                    </button>
+                  </>
+                )}
             </>
           )}
         </>
