@@ -40,14 +40,10 @@ const Main: React.FC<MainProps> = (props) => {
                 gap: "0.5rem",
               }}
             >
-              <ModalButton modalId="Players">
-                Manage Players <CarbonGroup />
-              </ModalButton>
-              <ModalButton modalId="Roles">
-                Manage Roles <CarbonUserRole />
-              </ModalButton>
+              <ModalButton modalId="Players">Manage Players</ModalButton>
+              <ModalButton modalId="Roles">Manage Roles</ModalButton>
               <ModalButton modalId="RoleAssignment">
-                Role Assignment <CarbonUserIdentification />
+                Role Assignment
               </ModalButton>
             </div>
             <PlayerStatusManager />
