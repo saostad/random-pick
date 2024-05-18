@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { GameState, useGameContext } from "../contexts/GameContext";
 import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
-import CarbonPartlyCloudyNight from "~icons/carbon/partly-cloudy-night";
+import CarbonHazeNight from "~icons/carbon/haze-night";
 import CarbonTouchInteraction from "~icons/carbon/touch-interaction";
 
 const handleNightActions = (gameState: GameState): GameState => {
@@ -137,7 +137,7 @@ const NightActionsControl: React.FC = () => {
         </div>
       )}
       <button className="btn btn-accent mt-2" onClick={handleStartNight}>
-        Start Night {gameState.nightCount} <CarbonPartlyCloudyNight />
+        Start Night {gameState.nightCount} <CarbonHazeNight />
       </button>
       <FlexibleModal modalId="night-actions">
         <>
@@ -151,9 +151,12 @@ const NightActionsControl: React.FC = () => {
                 </b>{" "}
                 (Player:{" "}
                 <b>
-                  {rolePlayers[actionableRoles[currentActionIndex].id]?.name}
-                  {!rolePlayers[actionableRoles[currentActionIndex].id]
-                    ?.isAlive && <mark> (Dead)</mark>}
+                  {rolePlayers[actionableRoles[currentActionIndex].id]
+                    ? rolePlayers[actionableRoles[currentActionIndex].id]?.name
+                    : "Unassigned"}
+                  {rolePlayers[actionableRoles[currentActionIndex].id] &&
+                    !rolePlayers[actionableRoles[currentActionIndex].id]
+                      ?.isAlive && <mark> (Dead)</mark>}
                 </b>
                 )
               </p>
