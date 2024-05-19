@@ -29,13 +29,8 @@ const VotingSession: React.FC = () => {
 
   return (
     <div>
-      <FlexibleModal modalId="votes-reset">
-        <>
-          <h2>Vote Reset</h2>
-          <ul>
-            <li>Votes reset successfully</li>
-          </ul>
-        </>
+      <FlexibleModal modalId="votes-reset" title="Vote Reset">
+        Votes reset successfully.
       </FlexibleModal>
       <div className="collapse collapse-arrow bg-base-200">
         <input
@@ -60,7 +55,7 @@ const VotingSession: React.FC = () => {
             )}
             {!votingStarted && votingEnded && (
               <button className="btn btn-primary" onClick={startVoting}>
-                Start Voting Again
+                Start Voting
               </button>
             )}
           </div>
