@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import FlexibleModal from "./FlexibleModal";
-import CarbonErase from "~icons/carbon/erase";
 
 const VotingSession: React.FC = () => {
   const { gameState, decreaseVote, increaseVote, resetVotes } =
     useGameContext();
   const [showVoting, setShowVoting] = useState(false);
+  const [votingStarted, setVotingStarted] = useState(false);
+  const [votingEnded, setVotingEnded] = useState(false);
 
   // Calculate the maximum votes and the players who have the maximum votes
   const alivePlayers = gameState.players.filter((p) => p.isAlive);
@@ -14,6 +15,17 @@ const VotingSession: React.FC = () => {
   const playersWithMaxVotes = alivePlayers.filter(
     (player) => player.voteCount === maxVotes && maxVotes > 0
   );
+
+  const startVoting = () => {
+    resetVotes();
+    setVotingStarted(true);
+    setVotingEnded(false);
+  };
+
+  const endVoting = () => {
+    setVotingStarted(false);
+    setVotingEnded(true);
+  };
 
   return (
     <div>
@@ -36,42 +48,55 @@ const VotingSession: React.FC = () => {
         </div>
         <div className="collapse-content">
           <div className="mb-4">
-            <button className="btn btn-primary" onClick={resetVotes}>
-              Reset Votes <CarbonErase />
-            </button>
+            {!votingStarted && !votingEnded && (
+              <button className="btn btn-primary" onClick={startVoting}>
+                Start Voting
+              </button>
+            )}
+            {votingStarted && (
+              <button className="btn btn-secondary" onClick={endVoting}>
+                End Voting
+              </button>
+            )}
+            {!votingStarted && votingEnded && (
+              <button className="btn btn-primary" onClick={startVoting}>
+                Start Voting Again
+              </button>
+            )}
           </div>
-          {alivePlayers
-            .sort((a, b) => a.order - b.order)
-            .map((player) => (
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 3fr",
-                  gap: "1rem",
-                  alignItems: "center",
-                  paddingBottom: "0.5rem",
-                }}
-                key={player.id}
-              >
-                <span style={{ marginRight: "1rem" }}>{player.name}</span>
-                <div>
-                  <button
-                    className="btn btn-circle btn-outline"
-                    onClick={() => decreaseVote(player.id)}
-                  >
-                    -
-                  </button>
-                  {` Votes: ${player.voteCount} `}
-                  <button
-                    className="btn btn-circle btn-outline"
-                    onClick={() => increaseVote(player.id)}
-                  >
-                    +
-                  </button>
+          {votingStarted &&
+            alivePlayers
+              .sort((a, b) => a.order - b.order)
+              .map((player) => (
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 3fr",
+                    gap: "1rem",
+                    alignItems: "center",
+                    paddingBottom: "0.5rem",
+                  }}
+                  key={player.id}
+                >
+                  <span style={{ marginRight: "1rem" }}>{player.name}</span>
+                  <div>
+                    <button
+                      className="btn btn-circle btn-outline"
+                      onClick={() => decreaseVote(player.id)}
+                    >
+                      -
+                    </button>
+                    {` Votes: ${player.voteCount} `}
+                    <button
+                      className="btn btn-circle btn-outline"
+                      onClick={() => increaseVote(player.id)}
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          {playersWithMaxVotes.length > 0 && (
+              ))}
+          {votingEnded && playersWithMaxVotes.length > 0 && (
             <div style={{ marginBottom: "1rem" }}>
               <h3>Leading Players</h3>
               {playersWithMaxVotes.map((player) => (
