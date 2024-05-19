@@ -32,6 +32,7 @@ export type GameContextType = {
   markPlayerAsDead: (playerId: string) => void;
   markPlayerAsAlive: (playerId: string) => void;
   assignRoleToPlayer: (playerId: string, roleId: string) => void;
+  unassignRoleFromPlayer: (playerId: string) => void;
   resetGameState: () => void;
   increaseVote: (playerId: string) => void;
   decreaseVote: (playerId: string) => void;
@@ -91,6 +92,14 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }));
   };
 
+  const unassignRoleFromPlayer = (playerId: string) => {
+    setGameState((prevState) => ({
+      ...prevState,
+      players: prevState.players.map((player) =>
+        player.id === playerId ? { ...player, roleId: undefined } : player
+      ),
+    }));
+  };
   const resetGameState = () => {
     const initPlayers = gameState.players.map((player) => ({
       ...player,
@@ -164,6 +173,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     markPlayerAsDead,
     markPlayerAsAlive,
     assignRoleToPlayer,
+    unassignRoleFromPlayer,
     resetGameState,
     increaseVote,
     decreaseVote,
