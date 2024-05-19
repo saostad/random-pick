@@ -91,7 +91,6 @@ const Roles: React.FC = () => {
 
   return (
     <div>
-      <h2>Game Roles</h2>
       <div>
         <input
           type="text"

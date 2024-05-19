@@ -24,9 +24,18 @@ const Main: React.FC<MainProps> = (props) => {
       <ModalProvider>
         <GameProvider>
           <div>
-            <FlexibleModal modalId="Players" component={Players} />
-            <FlexibleModal modalId="Roles" component={Roles} />
             <FlexibleModal
+              modalId="Players"
+              component={Players}
+              title="Manage Players"
+            />
+            <FlexibleModal
+              modalId="Roles"
+              component={Roles}
+              title="Manage Roles"
+            />
+            <FlexibleModal
+              title="Role Assignment"
               modalId="RoleAssignment"
               component={RoleAssignment}
             />

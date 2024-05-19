@@ -92,7 +92,6 @@ const Players: React.FC = () => {
 
   return (
     <div>
-      <h2>Players List</h2>
       <div>
         <div
           style={{

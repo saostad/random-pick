@@ -10,7 +10,6 @@ const RoleAssignment: React.FC = () => {
 
   return (
     <>
-      <h2>Assign Roles to Players</h2>
       {gameState.players
         .sort((a, b) => a.order - b.order)
         .map((player) => (

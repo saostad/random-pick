@@ -181,9 +181,8 @@ const DayActionsControl: React.FC = () => {
       >
         Start Day {gameState.dayCount} <CarbonSun />
       </button>
-      <FlexibleModal modalId="day-actions">
+      <FlexibleModal modalId="day-actions" title="Day Actions">
         <>
-          <h2>Day Actions</h2>
           {allPlayersCompleted ? (
             <p>All players have spoken.</p>
           ) : (
