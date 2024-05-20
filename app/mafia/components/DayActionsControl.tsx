@@ -157,9 +157,9 @@ const DayActionsControl: React.FC = () => {
         <p>Last day&apos;s starter was: {lastStartingPlayer.name}</p>
       )}
       <div className="mb-2">
-        <label htmlFor="starting-player">Select Starting Player: </label>
+        <label htmlFor="starting-player">Starting Player: </label>
         <select
-          className="select select-secondary w-full max-w-xs"
+          className="select select-secondary w-full max-w-xs my-2"
           id="starting-player"
           value={selectedStartingPlayer}
           onChange={handleSelectChange}
@@ -198,16 +198,16 @@ const DayActionsControl: React.FC = () => {
                     {challengeMode && currentChallengerName && (
                       <p>
                         <b>Challenger:</b> {currentChallengerName} is
-                        challenging on the time of {currentSpeaker?.name}
+                        challenging {currentSpeaker?.name}
                       </p>
                     )}
                     <p>
                       <b>Elapsed Time:</b> {elapsedTime}s
                     </p>
                     <div className="mb-2">
-                      <label htmlFor="challenger">Select Challenger: </label>
+                      <label htmlFor="challenger">Challenger: </label>
                       <select
-                        className="select select-secondary w-full max-w-xs"
+                        className="select select-secondary w-full max-w-xs my-2"
                         id="challenger"
                         value={selectedChallenger}
                         onChange={handleChallengerChange}
