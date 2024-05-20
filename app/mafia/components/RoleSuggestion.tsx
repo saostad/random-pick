@@ -77,7 +77,7 @@ const RoleSuggestion: React.FC = () => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "2fr 2fr auto",
+            gridTemplateColumns: "2fr 2fr",
             gap: "1rem",
             alignItems: "center",
           }}
@@ -99,6 +99,11 @@ const RoleSuggestion: React.FC = () => {
               +
             </button>
           </div>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <button className="btn btn-primary" onClick={handleSuggestRoles}>
+            Suggest Roles
+          </button>
           <select
             className="select select-bordered select-primary w-full max-w-xs"
             value={gameLevel}
@@ -108,10 +113,6 @@ const RoleSuggestion: React.FC = () => {
             <option value="pro">Pro</option>
           </select>
         </div>
-
-        <button className="btn btn-primary" onClick={handleSuggestRoles}>
-          Suggest Roles
-        </button>
       </div>
       {message && <div className="alert alert-warning">{message}</div>}
       {suggestedRoles.length > 0 && (

@@ -93,30 +93,37 @@ const Roles: React.FC = () => {
 
   return (
     <div>
-      <div role="tablist" className="tabs tabs-boxed mb-4">
-        <a
-          role="tab"
-          className={`tab ${activeTab === "addRole" ? "tab-active" : ""}`}
-          onClick={() => setActiveTab("addRole")}
-        >
-          Add a Role
-        </a>
-        <a
-          role="tab"
-          className={`tab ${activeTab === "suggestRoles" ? "tab-active" : ""}`}
-          onClick={() => setActiveTab("suggestRoles")}
-        >
-          Suggest Roles
-        </a>
-        <a
-          role="tab"
-          className={`tab ${
-            activeTab === "predefinedRoles" ? "tab-active" : ""
+      <div className="join mb-4">
+        <input
+          className={`join-item btn ${
+            activeTab === "addRole" ? "btn-active" : ""
           }`}
-          onClick={() => setActiveTab("predefinedRoles")}
-        >
-          Predefined Roles
-        </a>
+          type="radio"
+          name="options"
+          aria-label="Add a Role"
+          checked={activeTab === "addRole"}
+          onChange={() => setActiveTab("addRole")}
+        />
+        <input
+          className={`join-item btn ${
+            activeTab === "suggestRoles" ? "btn-active" : ""
+          }`}
+          type="radio"
+          name="options"
+          aria-label="Suggest Roles"
+          checked={activeTab === "suggestRoles"}
+          onChange={() => setActiveTab("suggestRoles")}
+        />
+        <input
+          className={`join-item btn ${
+            activeTab === "predefinedRoles" ? "btn-active" : ""
+          }`}
+          type="radio"
+          name="options"
+          aria-label="Predefined Roles"
+          checked={activeTab === "predefinedRoles"}
+          onChange={() => setActiveTab("predefinedRoles")}
+        />
       </div>
 
       {activeTab === "addRole" && (
