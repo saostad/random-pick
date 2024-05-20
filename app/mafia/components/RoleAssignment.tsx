@@ -52,6 +52,22 @@ const RoleAssignment: React.FC = () => {
   const assignedRoles = getAssignedRoles();
   const assignedPlayers = getAssignedPlayers();
 
+  const handleRandomAssignment = () => {
+    // Unassign all roles first
+    gameState.players.forEach((player) => unassignRoleFromPlayer(player.id));
+
+    const availableRoles = [...gameState.gameRoles];
+    const players = [...gameState.players];
+
+    players.forEach((player) => {
+      if (availableRoles.length > 0) {
+        const randomIndex = Math.floor(Math.random() * availableRoles.length);
+        const role = availableRoles.splice(randomIndex, 1)[0];
+        assignRoleToPlayer(player.id, role.id);
+      }
+    });
+  };
+
   return (
     <>
       <div role="tablist" className="tabs tabs-boxed mb-4">
@@ -70,6 +86,10 @@ const RoleAssignment: React.FC = () => {
           Assign by Roles
         </a>
       </div>
+
+      <button className="btn btn-primary mb-4" onClick={handleRandomAssignment}>
+        Randomly Assign Roles
+      </button>
 
       {assignBy === "players"
         ? gameState.players
