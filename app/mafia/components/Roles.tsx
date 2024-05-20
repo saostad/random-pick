@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useGameContext, GameRole } from "../contexts/GameContext";
+import PredefinedRoles from "./PredefinedRoles";
+import RoleSuggestion from "./RoleSuggestion";
 
-// Component for displaying and managing the list of roles
 const Roles: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
   const [newRoleName, setNewRoleName] = useState("");
@@ -126,6 +127,10 @@ const Roles: React.FC = () => {
         </button>
         {error && <div style={{ color: "red" }}>{error}</div>}
       </div>
+      <hr />
+      <PredefinedRoles />
+      <hr />
+      <RoleSuggestion />
       <hr />
       <div
         style={{
