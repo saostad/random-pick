@@ -54,27 +54,21 @@ const RoleAssignment: React.FC = () => {
 
   return (
     <>
-      <div className="form-control mb-4 flex items-center">
-        <label className="label cursor-pointer">
-          <span className="label-text">Assign by Players</span>
-          <input
-            type="radio"
-            name="assignMode"
-            className="radio checked:bg-blue-500 ml-2"
-            checked={assignBy === "players"}
-            onChange={() => setAssignBy("players")}
-          />
-        </label>
-        <label className="label cursor-pointer">
-          <span className="label-text">Assign by Roles</span>
-          <input
-            type="radio"
-            name="assignMode"
-            className="radio checked:bg-blue-500 ml-2"
-            checked={assignBy === "roles"}
-            onChange={() => setAssignBy("roles")}
-          />
-        </label>
+      <div role="tablist" className="tabs tabs-boxed mb-4">
+        <a
+          role="tab"
+          className={`tab ${assignBy === "players" ? "tab-active" : ""}`}
+          onClick={() => setAssignBy("players")}
+        >
+          Assign by Players
+        </a>
+        <a
+          role="tab"
+          className={`tab ${assignBy === "roles" ? "tab-active" : ""}`}
+          onClick={() => setAssignBy("roles")}
+        >
+          Assign by Roles
+        </a>
       </div>
 
       {assignBy === "players"
