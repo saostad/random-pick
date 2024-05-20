@@ -10,6 +10,7 @@ const RoleSuggestion: React.FC = () => {
   const [selectedSuggestedRoles, setSelectedSuggestedRoles] = useState<
     string[]
   >([]);
+  const [message, setMessage] = useState<string>("");
 
   // Function to suggest roles based on player count and game level
   const handleSuggestRoles = () => {
@@ -28,13 +29,29 @@ const RoleSuggestion: React.FC = () => {
           suggested.push({
             ...role,
             id: role.id + "-" + roleCount[role.name],
-            name: role.name + (roleCount[role.name] + 1),
+            name:
+              roleCount[role.name] === 0
+                ? role.name
+                : `${role.name}_${roleCount[role.name] + 1}`,
           });
           roleCount[role.name]++;
         }
       }
     }
+
+    suggested.sort(
+      (a, b) => (a.actionOrder ?? Infinity) - (b.actionOrder ?? Infinity)
+    );
     setSuggestedRoles(suggested.slice(0, numPlayers));
+
+    const generatedCount = suggested.length;
+    if (generatedCount < numPlayers) {
+      setMessage(
+        `Warning: Only ${generatedCount} roles generated out of ${numPlayers} requested. This may be due to a limited number of predefined roles available for the selected game level.`
+      );
+    } else {
+      setMessage(`${generatedCount} roles generated successfully.`);
+    }
   };
 
   // Function to add suggested roles
@@ -50,29 +67,53 @@ const RoleSuggestion: React.FC = () => {
     setSelectedSuggestedRoles([]); // Reset selected roles
   };
 
+  const increasePlayers = () => setNumPlayers(numPlayers + 1);
+  const decreasePlayers = () =>
+    setNumPlayers(numPlayers > 0 ? numPlayers - 1 : 0);
+
   return (
-    <div className="mt-4">
-      <h3>Generate Suggested Roles</h3>
+    <div>
       <div className="grid grid-cols-1 gap-2 mb-4">
-        <input
-          type="number"
-          className="input input-bordered input-primary w-full max-w-xs"
-          value={numPlayers}
-          onChange={(e) => setNumPlayers(Number(e.target.value))}
-          placeholder="Number of Players"
-        />
-        <select
-          className="select select-bordered select-primary w-full max-w-xs"
-          value={gameLevel}
-          onChange={(e) => setGameLevel(e.target.value)}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "2fr 2fr auto",
+            gap: "1rem",
+            alignItems: "center",
+          }}
         >
-          <option value="beginner">Beginner</option>
-          <option value="pro">Pro</option>
-        </select>
+          <span>Number of Players:</span>
+          <div>
+            <button
+              className="btn btn-circle btn-outline"
+              onClick={decreasePlayers}
+            >
+              -
+            </button>
+            <span className="p-5 font-bold">{numPlayers}</span>
+
+            <button
+              className="btn btn-circle btn-outline"
+              onClick={increasePlayers}
+            >
+              +
+            </button>
+          </div>
+          <select
+            className="select select-bordered select-primary w-full max-w-xs"
+            value={gameLevel}
+            onChange={(e) => setGameLevel(e.target.value)}
+          >
+            <option value="beginner">Beginner</option>
+            <option value="pro">Pro</option>
+          </select>
+        </div>
+
         <button className="btn btn-primary" onClick={handleSuggestRoles}>
           Suggest Roles
         </button>
       </div>
+      {message && <div className="alert alert-warning">{message}</div>}
       {suggestedRoles.length > 0 && (
         <div className="mb-4">
           <h4>Suggested Roles:</h4>
@@ -93,7 +134,8 @@ const RoleSuggestion: React.FC = () => {
                 />
                 <span className="ml-2">
                   {role.name} ({role.roleLevel}, {role.side}):{" "}
-                  {role.description}
+                  {role.description.slice(0, 50) +
+                    (role.description.length > 50 ? "..." : "")}
                 </span>
               </label>
             ))}

@@ -9,6 +9,7 @@ const Roles: React.FC = () => {
   const [hasAction, setHasAction] = useState(false);
   const [actionOrder, setActionOrder] = useState<number | undefined>();
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<string>("addRole");
 
   // Function to add a new role
   const handleAddRole = () => {
@@ -92,45 +93,73 @@ const Roles: React.FC = () => {
 
   return (
     <div>
-      <div>
-        <input
-          type="text"
-          className="input input-bordered input-primary w-full max-w-xs mb-2"
-          value={newRoleName}
-          onChange={(e) => setNewRoleName(e.target.value)}
-          placeholder="Role name"
-        />
-        <div className="grid grid-cols-2 gap-2 m-2">
-          <div className="form-control w-32">
-            <label className="cursor-pointer label">
-              <span className="label-text">Action?</span>
-              <input
-                type="checkbox"
-                checked={hasAction}
-                onChange={(e) => setHasAction(e.target.checked)}
-                className="toggle toggle-primary"
-              />
-            </label>
-          </div>
-          {hasAction && (
-            <input
-              type="number"
-              className="input input-bordered input-primary w-full max-w-xs"
-              value={actionOrder ?? ""}
-              onChange={(e) => setActionOrder(Number(e.target.value))}
-              placeholder="Action order"
-            />
-          )}
-        </div>
-        <button className="btn btn-primary" onClick={handleAddRole}>
-          Add Role
-        </button>
-        {error && <div style={{ color: "red" }}>{error}</div>}
+      <div role="tablist" className="tabs tabs-boxed mb-4">
+        <a
+          role="tab"
+          className={`tab ${activeTab === "addRole" ? "tab-active" : ""}`}
+          onClick={() => setActiveTab("addRole")}
+        >
+          Add a Role
+        </a>
+        <a
+          role="tab"
+          className={`tab ${activeTab === "suggestRoles" ? "tab-active" : ""}`}
+          onClick={() => setActiveTab("suggestRoles")}
+        >
+          Suggest Roles
+        </a>
+        <a
+          role="tab"
+          className={`tab ${
+            activeTab === "predefinedRoles" ? "tab-active" : ""
+          }`}
+          onClick={() => setActiveTab("predefinedRoles")}
+        >
+          Predefined Roles
+        </a>
       </div>
-      <hr />
-      <PredefinedRoles />
-      <hr />
-      <RoleSuggestion />
+
+      {activeTab === "addRole" && (
+        <div>
+          <input
+            type="text"
+            className="input input-bordered input-primary w-full max-w-xs mb-2"
+            value={newRoleName}
+            onChange={(e) => setNewRoleName(e.target.value)}
+            placeholder="Role name"
+          />
+          <div className="grid grid-cols-2 gap-2 m-2">
+            <div className="form-control w-32">
+              <label className="cursor-pointer label">
+                <span className="label-text">Action?</span>
+                <input
+                  type="checkbox"
+                  checked={hasAction}
+                  onChange={(e) => setHasAction(e.target.checked)}
+                  className="toggle toggle-primary"
+                />
+              </label>
+            </div>
+            {hasAction && (
+              <input
+                type="number"
+                className="input input-bordered input-primary w-full max-w-xs"
+                value={actionOrder ?? ""}
+                onChange={(e) => setActionOrder(Number(e.target.value))}
+                placeholder="Action order"
+              />
+            )}
+          </div>
+          <button className="btn btn-primary" onClick={handleAddRole}>
+            Add Role
+          </button>
+          {error && <div style={{ color: "red" }}>{error}</div>}
+        </div>
+      )}
+
+      {activeTab === "predefinedRoles" && <PredefinedRoles />}
+      {activeTab === "suggestRoles" && <RoleSuggestion />}
+
       <hr />
       <div
         style={{
