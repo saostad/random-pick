@@ -29,9 +29,6 @@ const VotingSession: React.FC = () => {
 
   return (
     <div>
-      <FlexibleModal modalId="votes-reset" title="Vote Reset">
-        Votes reset successfully.
-      </FlexibleModal>
       <div className="collapse collapse-arrow bg-base-200">
         <input
           type="checkbox"

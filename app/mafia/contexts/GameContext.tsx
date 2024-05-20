@@ -149,8 +149,6 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
       return { ...prev, players: newPlayers };
     });
-
-    handleOpen("votes-reset");
   };
 
   const increaseNightCount = () => {

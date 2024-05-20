@@ -11,9 +11,7 @@ import Roles from "./Roles";
 import VotingSession from "./VotingSession";
 import FlexibleModal from "./FlexibleModal";
 import DayActionsControl from "./DayActionsControl";
-import CarbonGroup from "~icons/carbon/group.jsx";
 import CarbonUserRole from "~icons/carbon/user-role";
-import CarbonUserIdentification from "~icons/carbon/user-identification";
 import PlayerRoleCarousel from "./PlayerRoleCarousel";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
@@ -48,7 +46,9 @@ const Main: React.FC<MainProps> = (props) => {
 
             <div className="flex justify-between">
               <NewGameButton />
-              <ModalButton modalId="RoleViewer">Roles-Players</ModalButton>
+              <ModalButton modalId="RoleViewer">
+                Player&apos;s Role <CarbonUserRole />
+              </ModalButton>
             </div>
 
             <div className="divider" />
