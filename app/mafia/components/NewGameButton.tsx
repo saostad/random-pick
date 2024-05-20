@@ -18,7 +18,7 @@ const NewGameButton: React.FC = () => {
         </div>
       </FlexibleModal>
       <button className="btn btn-secondary" onClick={resetGameState}>
-        Start a New Game
+        New Game
         <CarbonRenew />
       </button>
     </>

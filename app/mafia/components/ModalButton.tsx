@@ -21,7 +21,11 @@ const ModalButton: React.FC<ModalButtonProps> = ({
   };
 
   return (
-    <button className="btn btn-primary" onClick={onClick} {...props}>
+    <button
+      className="btn btn-ghost btn-outline btn-primary"
+      onClick={onClick}
+      {...props}
+    >
       {children}
     </button>
   );

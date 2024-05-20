@@ -14,6 +14,7 @@ import DayActionsControl from "./DayActionsControl";
 import CarbonGroup from "~icons/carbon/group.jsx";
 import CarbonUserRole from "~icons/carbon/user-role";
 import CarbonUserIdentification from "~icons/carbon/user-identification";
+import PlayerRoleCarousel from "./PlayerRoleCarousel";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -39,8 +40,17 @@ const Main: React.FC<MainProps> = (props) => {
               modalId="RoleAssignment"
               component={RoleAssignment}
             />
+            <FlexibleModal
+              title="Role Viewer"
+              modalId="RoleViewer"
+              component={PlayerRoleCarousel}
+            />
 
-            <NewGameButton />
+            <div className="flex justify-between">
+              <NewGameButton />
+              <ModalButton modalId="RoleViewer">Role Viewer</ModalButton>
+            </div>
+
             <div className="divider" />
             <div
               style={{
