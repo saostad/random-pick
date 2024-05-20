@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
-import FlexibleModal from "./FlexibleModal";
+import CarbonOutage from "~icons/carbon/outage";
 
 const VotingSession: React.FC = () => {
-  const { gameState, decreaseVote, increaseVote, resetVotes } =
-    useGameContext();
+  const {
+    gameState,
+    decreaseVote,
+    increaseVote,
+    resetVotes,
+    markPlayerAsDead,
+  } = useGameContext();
   const [showVoting, setShowVoting] = useState(false);
   const [votingStarted, setVotingStarted] = useState(false);
   const [votingEnded, setVotingEnded] = useState(false);
@@ -25,6 +30,10 @@ const VotingSession: React.FC = () => {
   const endVoting = () => {
     setVotingStarted(false);
     setVotingEnded(true);
+  };
+
+  const handleSetPlayerDead = (playerId: string) => {
+    markPlayerAsDead(playerId);
   };
 
   return (
@@ -92,10 +101,21 @@ const VotingSession: React.FC = () => {
             <div style={{ marginBottom: "1rem" }}>
               <h3>Leading Players</h3>
               {playersWithMaxVotes.map((player) => (
-                <p key={player.id}>
-                  {player.name} with {player.voteCount} vote
-                  {player.voteCount > 1 ? "s" : ""}
-                </p>
+                <div
+                  key={player.id}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <p>
+                    {player.name}: {player.voteCount} vote
+                    {player.voteCount > 1 ? "s" : ""}
+                  </p>
+                  <button
+                    className="btn btn-outline btn-error ml-2"
+                    onClick={() => markPlayerAsDead(player.id)}
+                  >
+                    Mark as Dead <CarbonOutage />
+                  </button>
+                </div>
               ))}
             </div>
           )}
