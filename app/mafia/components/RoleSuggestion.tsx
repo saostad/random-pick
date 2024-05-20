@@ -77,9 +77,10 @@ const RoleSuggestion: React.FC = () => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "2fr 2fr",
+            gridTemplateColumns: "2fr 3fr",
             gap: "1rem",
             alignItems: "center",
+            marginBottom: "1rem",
           }}
         >
           <span>Number of Players:</span>
