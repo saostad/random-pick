@@ -48,7 +48,7 @@ const Main: React.FC<MainProps> = (props) => {
 
             <div className="flex justify-between">
               <NewGameButton />
-              <ModalButton modalId="RoleViewer">Role Viewer</ModalButton>
+              <ModalButton modalId="RoleViewer">Roles-Players</ModalButton>
             </div>
 
             <div className="divider" />

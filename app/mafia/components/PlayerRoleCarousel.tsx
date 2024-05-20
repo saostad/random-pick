@@ -4,13 +4,16 @@ import CarbonView from "~icons/carbon/view";
 import CarbonViewOff from "~icons/carbon/view-off";
 import CarbonNextOutline from "~icons/carbon/next-outline";
 import CarbonPreviousOutline from "~icons/carbon/previous-outline";
+import { useSwipeable } from "react-swipeable";
 
 const PlayerRoleCarousel: React.FC = () => {
   const { gameState } = useGameContext();
-  const [showRole, setShowRole] = useState<boolean[]>(
-    new Array(gameState.players.length).fill(false)
-  );
+  const [showRole, setShowRole] = useState<boolean[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    setShowRole(new Array(gameState.players.length).fill(false));
+  }, [gameState.players]);
 
   const handleToggleRole = (index: number) => {
     setShowRole((prevShowRole) => {
@@ -33,12 +36,22 @@ const PlayerRoleCarousel: React.FC = () => {
     );
   };
 
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: handleNext,
+    onSwipedRight: handlePrevious,
+    preventScrollOnSwipe: true,
+    trackMouse: true,
+  });
+
   return (
-    <div className="carousel carousel-center w-full p-4 space-x-4 bg-neutral rounded-box">
+    <div
+      {...swipeHandlers}
+      className="carousel carousel-center w-full p-4 space-x-4 bg-neutral rounded-box"
+    >
       {gameState.players.map((player, index) => (
         <div
           key={player.id}
-          className={`carousel-item w-full ${
+          className={`carousel-item w-full transition-transform duration-500 transform ${
             index === currentIndex ? "block" : "hidden"
           }`}
         >
