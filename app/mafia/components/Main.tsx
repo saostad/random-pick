@@ -15,6 +15,8 @@ import CarbonUserRole from "~icons/carbon/user-role";
 import PlayerRoleCarousel from "./PlayerRoleCarousel";
 import EventTimeline from "./EventTimeline";
 import CarbonEventSchedule from "~icons/carbon/event-schedule";
+import CarbonGroup from "~icons/carbon/group.jsx";
+import CarbonUserIdentification from "~icons/carbon/user-identification";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -51,13 +53,21 @@ const Main: React.FC<MainProps> = (props) => {
               component={EventTimeline}
             />
 
-            <div className="flex justify-between">
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 1fr",
+                gap: "0.5rem",
+              }}
+            >
               <NewGameButton />
               <ModalButton modalId="RoleViewer">
-                Player&apos;s Role <CarbonUserRole />
+                Player&apos;s Role
+                <CarbonUserRole className="hidden sm:block" />
               </ModalButton>
               <ModalButton modalId="EventTimeline">
-                Event Timeline <CarbonEventSchedule />
+                Events Timeline
+                <CarbonEventSchedule className="hidden sm:block" />
               </ModalButton>
             </div>
 
@@ -69,10 +79,16 @@ const Main: React.FC<MainProps> = (props) => {
                 gap: "0.5rem",
               }}
             >
-              <ModalButton modalId="Players">Manage Players</ModalButton>
-              <ModalButton modalId="Roles">Manage Roles</ModalButton>
+              <ModalButton modalId="Players">
+                Manage Players <CarbonGroup className="hidden sm:block" />
+              </ModalButton>
+              <ModalButton modalId="Roles">
+                Manage Roles
+                <CarbonUserRole className="hidden sm:block" />
+              </ModalButton>
               <ModalButton modalId="RoleAssignment">
                 Role Assignment
+                <CarbonUserIdentification className="hidden sm:block" />
               </ModalButton>
             </div>
             <PlayerStatusManager />

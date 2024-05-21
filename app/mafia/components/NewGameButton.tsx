@@ -19,7 +19,7 @@ const NewGameButton: React.FC = () => {
       </FlexibleModal>
       <button className="btn btn-secondary" onClick={resetGameState}>
         New Game
-        <CarbonRenew />
+        <CarbonRenew className="hidden sm:block" />
       </button>
     </>
   );
