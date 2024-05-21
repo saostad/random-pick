@@ -20,7 +20,7 @@ const predefinedRoles = [
     roleLevel: "pro",
     side: "Mafia",
     description:
-      "Leader of the Mafia. Oversees Mafia actions. Appears as 'NOT sided with the Mafia' on investigations, can slaughter a player if guess their role correctly, and doesn't die with the first shot of the Professional.",
+      "Leader of the Mafia. Appears as negative on investigations, can slaughter a player if guess their role correctly, and doesn't die with the first shot of the Professional.",
     timesInGame: 1,
   },
   {
@@ -41,7 +41,7 @@ const predefinedRoles = [
     roleLevel: "pro",
     side: "Mafia",
     description:
-      "Three times during the night, he chooses a member of the Mafia (including Dr. Lecter, the Simple Mafia and himself) or the citizens to reverse that person's inquiry to the detective that night. He can only choose himself once.",
+      "Three times during the night, he chooses a player to reverse that person's inquiry to the detective that night. He can only choose himself once.",
     timesInGame: 1,
   },
   {
@@ -84,7 +84,7 @@ const predefinedRoles = [
     roleLevel: "pro",
     side: "Town",
     description:
-      "Can kill one mafia each night. Can't kill the Godfather with the first shot. Can't be killed with the first shot of the Mafia.",
+      "Can shot during the night for two nights. Can't kill the Godfather with the first shot. Can't be killed with the first shot of the Mafia. if shot a town-person the next day announce as dead",
     timesInGame: 1,
   },
   {
@@ -138,7 +138,7 @@ const predefinedRoles = [
     side: "Town",
     timeInGame: 1,
     description:
-      "In two nights, Can inquiry the numbers of the mafia members. did not go out at night with the first bullet of the Mafia",
+      "In two nights, Can inquiry the numbers of the mafia members. do not go out with the first bullet of the Mafia",
   },
 ];
 
