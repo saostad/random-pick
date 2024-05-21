@@ -1,15 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
 import CarbonSun from "~icons/carbon/sun";
-import CarbonUserSpeaker from "~icons/carbon/user-speaker";
+import Timer from "./Timer";
+import Speaker from "./Speaker";
+import Challenge from "./Challenge";
+import CarbonShuffle from "~icons/carbon/shuffle"; // Assuming you have an icon for shuffle
 
 const DayActionsControl: React.FC = () => {
   const { gameState, updateGameState, increaseDayCount } = useGameContext();
   const { handleOpen } = useModal();
   const [currentSpeakerIndex, setCurrentSpeakerIndex] = useState<number>(0);
-  const [elapsedTime, setElapsedTime] = useState<number>(0);
   const [allPlayersCompleted, setAllPlayersCompleted] =
     useState<boolean>(false);
   const [selectedStartingPlayer, setSelectedStartingPlayer] = useState<string>(
@@ -27,53 +29,30 @@ const DayActionsControl: React.FC = () => {
   const [speakerChallenged, setSpeakerChallenged] = useState<Set<string>>(
     new Set()
   );
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
-
-    timerRef.current = setInterval(() => {
-      setElapsedTime((prevTime) => prevTime + 1);
-    }, 1000);
-
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, [currentSpeakerIndex, challengeMode]);
+  const [resetTrigger, setResetTrigger] = useState<boolean>(false);
 
   const handleNextSpeaker = () => {
     const nextIndex = (currentSpeakerIndex + 1) % speakingOrder.length;
     if (nextIndex === 0) {
       setAllPlayersCompleted(true);
       increaseDayCount();
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
     } else {
       setCurrentSpeakerIndex(nextIndex);
-      setElapsedTime(0);
       setChallengeMode(false);
       setSelectedChallenger("");
       setCurrentChallenger(null);
+      setResetTrigger((prev) => !prev); // Trigger timer reset
     }
   };
 
   const handleStartDay = () => {
-    console.log("Starting day actions");
-
     handleOpen("day-actions");
-
     const alivePlayers = gameState.players.filter((player) => player.isAlive);
     const startingIndex = alivePlayers.findIndex(
       (player) => player.id === selectedStartingPlayer
     );
 
     if (startingIndex !== -1) {
-      // Create the speaking order array for alive players
       const order = [
         ...alivePlayers.slice(startingIndex),
         ...alivePlayers.slice(0, startingIndex),
@@ -81,15 +60,12 @@ const DayActionsControl: React.FC = () => {
 
       setSpeakingOrder(order);
       setCurrentSpeakerIndex(0);
-      setElapsedTime(0);
       setAllPlayersCompleted(false);
       setChallengedPlayers(new Set());
       setSpeakerChallenged(new Set());
 
-      // Update the starting player for the new day
-      updateGameState({
-        startingPlayerId: selectedStartingPlayer,
-      });
+      updateGameState({ startingPlayerId: selectedStartingPlayer });
+      setResetTrigger((prev) => !prev); // Trigger timer reset
     } else {
       console.error(
         "Selected starting player not found in the list of players"
@@ -107,43 +83,47 @@ const DayActionsControl: React.FC = () => {
 
   const handleStartChallenge = () => {
     setChallengeMode(true);
-    setElapsedTime(0);
     setChallengedPlayers((prev) => new Set(prev).add(selectedChallenger));
     setCurrentChallenger(selectedChallenger);
+    setResetTrigger((prev) => !prev); // Trigger timer reset
   };
 
   const handleEndChallenge = () => {
     setChallengeMode(false);
     setSelectedChallenger("");
-    setElapsedTime(0);
     setSpeakerChallenged((prev) =>
       new Set(prev).add(
         gameState.players[speakingOrder[currentSpeakerIndex]].id
       )
     );
+    setResetTrigger((prev) => !prev); // Trigger timer reset
+  };
+
+  const handleRandomSelect = () => {
+    const alivePlayers = gameState.players.filter((player) => player.isAlive);
+    if (alivePlayers.length > 0) {
+      const randomPlayer =
+        alivePlayers[Math.floor(Math.random() * alivePlayers.length)];
+      setSelectedStartingPlayer(randomPlayer.id);
+    }
   };
 
   const lastStartingPlayer = gameState.players.find(
     (player) => player.id === gameState.startingPlayerId
   );
-
   const alivePlayers = gameState.players.filter((player) => player.isAlive);
-
   const currentSpeaker =
     speakingOrder.length > 0
       ? gameState.players[speakingOrder[currentSpeakerIndex]]
       : null;
-
   const availableChallengers = alivePlayers.filter(
     (player) =>
       currentSpeaker &&
       player.id !== currentSpeaker.id &&
       !challengedPlayers.has(player.id)
   );
-
   const currentSpeakerHasChallenged =
     currentSpeaker && speakerChallenged.has(currentSpeaker.id);
-
   const currentChallengerName = currentChallenger
     ? gameState.players.find((player) => player.id === currentChallenger)?.name
     : null;
@@ -156,8 +136,10 @@ const DayActionsControl: React.FC = () => {
       {gameState.dayCount !== 0 && lastStartingPlayer && (
         <p>Last day&apos;s starter was: {lastStartingPlayer.name}</p>
       )}
-      <div className="mb-2">
-        <label htmlFor="starting-player">Starting Player: </label>
+      <div className="mb-2 flex items-center">
+        <label htmlFor="starting-player" className="mr-2">
+          Starting Player:{" "}
+        </label>
         <select
           className="select select-secondary w-full max-w-xs my-2"
           id="starting-player"
@@ -173,6 +155,13 @@ const DayActionsControl: React.FC = () => {
             </option>
           ))}
         </select>
+        <button
+          className="btn btn-secondary ml-2"
+          onClick={handleRandomSelect}
+          title="Randomly select a player"
+        >
+          <CarbonShuffle />
+        </button>
       </div>
       <button
         className="btn btn-accent mb-4"
@@ -191,63 +180,30 @@ const DayActionsControl: React.FC = () => {
                 speakingOrder.length > 0 &&
                 currentSpeaker && (
                   <>
-                    <p>
-                      <b>Current Speaker:</b>{" "}
-                      {currentSpeaker?.name || "Unknown"}
-                    </p>
-                    {challengeMode && currentChallengerName && (
-                      <p>
-                        <b>Challenger:</b> {currentChallengerName} is
-                        challenging {currentSpeaker?.name}
-                      </p>
-                    )}
-                    <p>
-                      <b>Elapsed Time:</b> {elapsedTime}s
-                    </p>
-                    <div className="mb-2">
-                      <label htmlFor="challenger">Challenger: </label>
-                      <select
-                        className="select select-secondary w-full max-w-xs my-2"
-                        id="challenger"
-                        value={selectedChallenger}
-                        onChange={handleChallengerChange}
-                        disabled={
-                          challengeMode ||
-                          currentSpeakerHasChallenged ||
-                          availableChallengers.length === 0
-                        }
-                      >
-                        <option value="" disabled>
-                          Select Challenger
-                        </option>
-                        {availableChallengers.map((player) => (
-                          <option key={player.id} value={player.id}>
-                            {player.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <button
-                      className="btn btn-warning mb-2"
-                      onClick={handleStartChallenge}
-                      disabled={challengeMode || !selectedChallenger}
-                    >
-                      Start Challenge
-                    </button>
-                    <button
-                      className="btn btn-success mb-2 mx-2"
-                      onClick={handleEndChallenge}
-                      disabled={!challengeMode}
-                    >
-                      End Challenge
-                    </button>
-                    <button
-                      className="btn btn-primary"
-                      onClick={handleNextSpeaker}
-                      disabled={challengeMode}
-                    >
-                      Next Speaker <CarbonUserSpeaker />
-                    </button>
+                    <Speaker
+                      currentSpeaker={currentSpeaker}
+                      challengeMode={challengeMode}
+                      currentChallengerName={currentChallengerName ?? null}
+                      handleNextSpeaker={handleNextSpeaker}
+                      challengeModeDisabled={challengeMode}
+                    />
+                    <Challenge
+                      challengeMode={challengeMode}
+                      selectedChallenger={selectedChallenger}
+                      handleChallengerChange={handleChallengerChange}
+                      handleStartChallenge={handleStartChallenge}
+                      handleEndChallenge={handleEndChallenge}
+                      availableChallengers={availableChallengers}
+                      challengeModeDisabled={challengeMode}
+                      speakerHasChallenged={
+                        currentSpeakerHasChallenged ?? false
+                      }
+                    />
+                    <Timer
+                      currentSpeakerIndex={currentSpeakerIndex}
+                      challengeMode={challengeMode}
+                      resetTrigger={resetTrigger}
+                    />
                   </>
                 )}
             </>
