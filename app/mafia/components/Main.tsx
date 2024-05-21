@@ -90,8 +90,8 @@ const Main: React.FC<MainProps> = (props) => {
                 Role Assignment
                 <CarbonUserIdentification className="hidden sm:block" />
               </ModalButton>
+              <PlayerStatusManager />
             </div>
-            <PlayerStatusManager />
             <DayActionsControl />
             <VotingSession />
             <NightActionsControl />

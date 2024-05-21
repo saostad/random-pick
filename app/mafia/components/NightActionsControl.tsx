@@ -18,49 +18,15 @@ const handleNightActions = (gameState: GameState): GameState => {
 };
 
 const NightActionsControl: React.FC = () => {
-  const { handleOpen, handleClose } = useModal();
+  const { handleOpen } = useModal();
   const { gameState, updateGameState, increaseNightCount } = useGameContext();
   const [currentActionIndex, setCurrentActionIndex] = useState<number>(0);
   const [actionableRoles, setActionableRoles] = useState<any[]>([]);
   const [rolePlayers, setRolePlayers] = useState<{
     [key: string]: { name: string; isAlive: boolean };
   }>({});
-  const [unassignedRoles, setUnassignedRoles] = useState<any[]>([]);
-  const [unassignedPlayers, setUnassignedPlayers] = useState<any[]>([]);
+
   const [nightCompleted, setNightCompleted] = useState<boolean>(false);
-
-  useEffect(() => {
-    const mapRoleToPlayer = () => {
-      const roleToPlayerMap: {
-        [key: string]: { name: string; isAlive: boolean };
-      } = {};
-
-      gameState.players.forEach((player) => {
-        if (player.roleId) {
-          roleToPlayerMap[player.roleId] = {
-            name: player.name,
-            isAlive: player.isAlive,
-          };
-        }
-      });
-
-      setRolePlayers(roleToPlayerMap);
-
-      const rolesWithoutPlayers = gameState.gameRoles.filter(
-        (role) => !roleToPlayerMap[role.id]
-      );
-
-      setUnassignedRoles(rolesWithoutPlayers);
-
-      const playersWithoutRoles = gameState.players.filter(
-        (player) => !player.roleId
-      );
-
-      setUnassignedPlayers(playersWithoutRoles);
-    };
-
-    mapRoleToPlayer();
-  }, [gameState]);
 
   const handleStartNight = () => {
     console.log("Starting night actions");
@@ -85,6 +51,22 @@ const NightActionsControl: React.FC = () => {
   };
 
   useEffect(() => {
+    const roleToPlayerMap: {
+      [key: string]: { name: string; isAlive: boolean };
+    } = {};
+
+    gameState.players.forEach((player) => {
+      if (player.roleId) {
+        roleToPlayerMap[player.roleId] = {
+          name: player.name,
+          isAlive: player.isAlive,
+        };
+      }
+    });
+
+    setRolePlayers(roleToPlayerMap);
+  }, [gameState]);
+  useEffect(() => {
     if (
       currentActionIndex >= actionableRoles.length &&
       actionableRoles.length > 0 &&
@@ -102,40 +84,6 @@ const NightActionsControl: React.FC = () => {
 
   return (
     <>
-      <h2>
-        Night Actions <small>(Night {gameState.nightCount})</small>
-      </h2>
-      {unassignedRoles.length > 0 && (
-        <div className="collapse collapse-arrow bg-base-200 mb-2">
-          <input type="checkbox" />
-          <div className="collapse-title">
-            Unassigned Roles ({unassignedRoles.length})
-          </div>
-          <div className="collapse-content">
-            <ul>
-              {unassignedRoles.map((role) => (
-                <li key={role.id}>{role.name}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
-
-      {unassignedPlayers.length > 0 && (
-        <div className="collapse collapse-arrow bg-base-200 mb-2">
-          <input type="checkbox" />
-          <div className="collapse-title">
-            Players without Role ({unassignedPlayers.length})
-          </div>
-          <div className="collapse-content">
-            <ul>
-              {unassignedPlayers.map((player) => (
-                <li key={player.id}>{player.name}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
       <button
         className="btn btn-ghost btn-outline btn-accent mt-2"
         onClick={handleStartNight}
