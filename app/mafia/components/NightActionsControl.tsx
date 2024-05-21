@@ -136,7 +136,10 @@ const NightActionsControl: React.FC = () => {
           </div>
         </div>
       )}
-      <button className="btn btn-accent mt-2" onClick={handleStartNight}>
+      <button
+        className="btn btn-ghost btn-outline btn-accent mt-2"
+        onClick={handleStartNight}
+      >
         Start Night {gameState.nightCount} <CarbonHazeNight />
       </button>
       <FlexibleModal modalId="night-actions" title="Night Actions">

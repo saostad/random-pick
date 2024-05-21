@@ -164,7 +164,7 @@ const DayActionsControl: React.FC = () => {
         </button>
       </div>
       <button
-        className="btn btn-accent mb-4"
+        className="btn btn-ghost btn-outline btn-accent mb-4"
         onClick={handleStartDay}
         disabled={!selectedStartingPlayer}
       >

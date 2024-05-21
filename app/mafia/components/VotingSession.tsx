@@ -50,17 +50,26 @@ const VotingSession: React.FC = () => {
         <div className="collapse-content">
           <div className="mb-4">
             {!votingStarted && !votingEnded && (
-              <button className="btn btn-primary" onClick={startVoting}>
+              <button
+                className="btn btn-ghost btn-outline btn-primary"
+                onClick={startVoting}
+              >
                 Start Voting
               </button>
             )}
             {votingStarted && (
-              <button className="btn btn-secondary" onClick={endVoting}>
+              <button
+                className="btn btn-ghost btn-outline btn-secondary"
+                onClick={endVoting}
+              >
                 End Voting
               </button>
             )}
             {!votingStarted && votingEnded && (
-              <button className="btn btn-primary" onClick={startVoting}>
+              <button
+                className="btn btn-ghost btn-outline btn-primary"
+                onClick={startVoting}
+              >
                 Start Voting
               </button>
             )}
