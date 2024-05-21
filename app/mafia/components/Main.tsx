@@ -13,6 +13,8 @@ import FlexibleModal from "./FlexibleModal";
 import DayActionsControl from "./DayActionsControl";
 import CarbonUserRole from "~icons/carbon/user-role";
 import PlayerRoleCarousel from "./PlayerRoleCarousel";
+import EventTimeline from "./EventTimeline";
+import CarbonEventSchedule from "~icons/carbon/event-schedule";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -43,11 +45,19 @@ const Main: React.FC<MainProps> = (props) => {
               modalId="RoleViewer"
               component={PlayerRoleCarousel}
             />
+            <FlexibleModal
+              title="Event Timeline"
+              modalId="EventTimeline"
+              component={EventTimeline}
+            />
 
             <div className="flex justify-between">
               <NewGameButton />
               <ModalButton modalId="RoleViewer">
                 Player&apos;s Role <CarbonUserRole />
+              </ModalButton>
+              <ModalButton modalId="EventTimeline">
+                Event Timeline <CarbonEventSchedule />
               </ModalButton>
             </div>
 

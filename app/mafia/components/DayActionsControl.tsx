@@ -235,7 +235,7 @@ const DayActionsControl: React.FC = () => {
                       Start Challenge
                     </button>
                     <button
-                      className="btn btn-success mb-2"
+                      className="btn btn-success mb-2 mx-2"
                       onClick={handleEndChallenge}
                       disabled={!challengeMode}
                     >
