@@ -48,14 +48,14 @@ const Challenge: React.FC<ChallengeProps> = ({
         </select>
       </div>
       <button
-        className="btn btn-warning mb-2"
+        className="btn btn-ghost btn-outline btn-warning mb-2"
         onClick={handleStartChallenge}
         disabled={challengeModeDisabled || !selectedChallenger}
       >
         Start Challenge
       </button>
       <button
-        className="btn btn-success mb-2 mx-2"
+        className="btn btn-ghost btn-outline btn-success mb-2 mx-2"
         onClick={handleEndChallenge}
         disabled={!challengeMode}
       >

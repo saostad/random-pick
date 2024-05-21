@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
+import CarbonShuffle from "~icons/carbon/shuffle"; // Assuming you have an icon for shuffle
 
 const RoleAssignment: React.FC = () => {
   const { gameState, assignRoleToPlayer, unassignRoleFromPlayer } =
@@ -87,8 +88,12 @@ const RoleAssignment: React.FC = () => {
         </a>
       </div>
 
-      <button className="btn btn-primary mb-4" onClick={handleRandomAssignment}>
-        Randomly Assign Roles
+      <button
+        className="btn btn-ghost btn-outline btn-secondary mb-2"
+        onClick={handleRandomAssignment}
+        title="Randomly select a player"
+      >
+        Shuffle <CarbonShuffle />
       </button>
 
       {assignBy === "players"

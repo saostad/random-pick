@@ -156,7 +156,7 @@ const DayActionsControl: React.FC = () => {
           ))}
         </select>
         <button
-          className="btn btn-secondary ml-2"
+          className="btn btn-ghost btn-outline btn-secondary ml-2"
           onClick={handleRandomSelect}
           title="Randomly select a player"
         >
@@ -180,6 +180,11 @@ const DayActionsControl: React.FC = () => {
                 speakingOrder.length > 0 &&
                 currentSpeaker && (
                   <>
+                    <Timer
+                      currentSpeakerIndex={currentSpeakerIndex}
+                      challengeMode={challengeMode}
+                      resetTrigger={resetTrigger}
+                    />
                     <Speaker
                       currentSpeaker={currentSpeaker}
                       challengeMode={challengeMode}
@@ -198,11 +203,6 @@ const DayActionsControl: React.FC = () => {
                       speakerHasChallenged={
                         currentSpeakerHasChallenged ?? false
                       }
-                    />
-                    <Timer
-                      currentSpeakerIndex={currentSpeakerIndex}
-                      challengeMode={challengeMode}
-                      resetTrigger={resetTrigger}
                     />
                   </>
                 )}

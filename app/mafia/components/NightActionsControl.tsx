@@ -162,7 +162,10 @@ const NightActionsControl: React.FC = () => {
                 </b>
                 )
               </p>
-              <button className="btn btn-primary" onClick={handleNextAction}>
+              <button
+                className="btn btn-ghost btn-outline btn-primary"
+                onClick={handleNextAction}
+              >
                 Next Action <CarbonTouchInteraction />
               </button>
             </>
