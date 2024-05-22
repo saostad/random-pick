@@ -5,6 +5,7 @@ import CarbonReturn from "~icons/carbon/return";
 import FlexibleModal from "./FlexibleModal";
 import ModalButton from "./ModalButton";
 import MdiDead from "~icons/mdi/dead";
+import PlayerTagsIndicator from "./PlayerTagsIndicator";
 
 const PlayerStatusManager: React.FC = () => {
   const { gameState, markPlayerAsDead, markPlayerAsAlive } = useGameContext();
@@ -53,7 +54,8 @@ const PlayerStatusManager: React.FC = () => {
                 }}
               >
                 <span style={{ marginRight: "1rem" }}>
-                  {player.order}. {player.name}
+                  {player.order}.{" "}
+                  <PlayerTagsIndicator key={player.id} playerId={player.id} />
                 </span>
                 <button
                   className="btn btn-outline btn-error btn-sm"
