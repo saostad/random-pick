@@ -31,7 +31,7 @@ const Main: React.FC<MainProps> = (props) => {
             <FlexibleModal
               modalId="Players"
               component={Players}
-              title="Manage Players"
+              title="Add/Remove Players"
             />
             <FlexibleModal
               modalId="Roles"
@@ -63,7 +63,7 @@ const Main: React.FC<MainProps> = (props) => {
             >
               <NewGameButton />
               <ModalButton modalId="RoleViewer">
-                Player&apos;s Role
+                Player&apos;s Cards
                 <CarbonUserRole className="hidden sm:block" />
               </ModalButton>
               <ModalButton modalId="EventTimeline">
@@ -76,20 +76,20 @@ const Main: React.FC<MainProps> = (props) => {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr",
+                gridTemplateColumns: "1fr 1fr",
                 gap: "0.5rem",
               }}
             >
               <ModalButton modalId="Players">
-                Manage Players <CarbonGroup className="hidden sm:block" />
+                + Players - <CarbonGroup />
               </ModalButton>
               <ModalButton modalId="Roles">
-                Manage Roles
-                <CarbonUserRole className="hidden sm:block" />
+                + Roles -
+                <CarbonUserRole />
               </ModalButton>
               <ModalButton modalId="RoleAssignment">
                 Role Assignment
-                <CarbonUserIdentification className="hidden sm:block" />
+                <CarbonUserIdentification />
               </ModalButton>
               <PlayerStatusManager />
             </div>

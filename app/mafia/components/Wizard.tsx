@@ -3,6 +3,7 @@ import { useGameContext } from "../contexts/GameContext";
 import DayActionsControl from "./DayActionsControl";
 import VotingSession from "./VotingSession";
 import NightActionsControl from "./NightActionsControl";
+import CarbonNextFilled from "~icons/carbon/next-filled";
 
 const Wizard: React.FC = () => {
   const { gameState, setVotingStatus, setCurrentStepIndex } = useGameContext();
@@ -99,19 +100,23 @@ const Wizard: React.FC = () => {
           })}
         </ul>
       </div>
-      <div className="step-content mt-4">{renderStep()}</div>
       {(isCurrentStepFinished() ||
         sequence[currentStepIndex] === "Voting Session") && (
-        <button
-          className="btn btn-primary mt-4"
-          onClick={handleNextPhase}
-          disabled={
-            !isCurrentStepFinished() || currentStepIndex >= sequence.length - 1
-          }
-        >
+        <>
           {getNextPhaseInfo()}
-        </button>
+          <button
+            className="btn btn-ghost btn-outline btn-secondary mt-4 ml-4"
+            onClick={handleNextPhase}
+            disabled={
+              !isCurrentStepFinished() ||
+              currentStepIndex >= sequence.length - 1
+            }
+          >
+            Let&apos;s Go! <CarbonNextFilled />
+          </button>
+        </>
       )}
+      <div className="step-content">{renderStep()}</div>
     </div>
   );
 };

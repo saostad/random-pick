@@ -9,6 +9,7 @@ export default {
       Icons({
         compiler: "jsx",
         jsx: "react",
+        autoInstall: true,
       })
     );
 

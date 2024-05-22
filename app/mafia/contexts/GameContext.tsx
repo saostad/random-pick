@@ -197,6 +197,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       nightCount: 0,
       dayCount: 0,
       events: [],
+      votingStatus: "not_started",
     }));
 
     handleOpen("game-reset");
