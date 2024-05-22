@@ -69,7 +69,14 @@ const Wizard: React.FC = () => {
 
   const getNextPhaseInfo = () => {
     if (currentStepIndex < sequence.length - 1) {
-      return `Next Phase: ${sequence[currentStepIndex + 1]}`;
+      return (
+        <span>
+          <span className="font-bold">Next Phase:</span>
+          <span className="ml-2 underline">
+            {sequence[currentStepIndex + 1]}
+          </span>
+        </span>
+      );
     }
     return "No more phases";
   };

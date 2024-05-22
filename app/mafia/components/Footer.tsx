@@ -5,11 +5,14 @@ interface FooterProps extends HTMLAttributes<HTMLElement> {}
 
 const Footer: React.FC<FooterProps> = (props) => {
   return (
-    <footer className="container" {...props}>
-      <small>
-        Developed by{" "}
-        <a href="https://www.linkedin.com/in/saeidostad/">Saeid Ostad</a>
-      </small>
+    <footer className="footer footer-center text-base-content">
+      <aside>
+        <span>
+          Developed by{" "}
+          <a href="https://www.linkedin.com/in/saeidostad/">Saeid Ostad</a>
+        </span>
+        <span>Copyright © 2024 - All right reserved.</span>
+      </aside>
     </footer>
   );
 };

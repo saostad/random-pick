@@ -141,7 +141,7 @@ const Players: React.FC = () => {
             <React.Fragment key={player.id}>
               <input
                 type="text"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered w-full max-w-xs input-sm"
                 value={player.name}
                 onChange={(e) =>
                   handleUpdatePlayerName(player.id, e.target.value)
@@ -155,7 +155,7 @@ const Players: React.FC = () => {
               </span>
               <input
                 type="number"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered w-full max-w-xs input-sm"
                 value={player.order}
                 onChange={(e) =>
                   handleUpdatePlayerOrder(player.id, Number(e.target.value))
