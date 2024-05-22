@@ -1,105 +1,138 @@
 import React, { useState } from "react";
-import { useGameContext } from "../contexts/GameContext";
+import {
+  TagExpiration,
+  Tags,
+  tagExpirations,
+  tags,
+  useGameContext,
+} from "../contexts/GameContext";
+import * as changeCase from "change-case";
 
-const AssignTagForm: React.FC = () => {
+const TagPlayers: React.FC = () => {
   const { gameState, assignTagToPlayer, unassignTagFromPlayer } =
     useGameContext();
   const [selectedPlayer, setSelectedPlayer] = useState<string>("");
-  const [selectedTag, setSelectedTag] = useState<string>("Shot");
+  const [selectedTag, setSelectedTag] = useState<Tags>("Shot");
   const [assignedBy, setAssignedBy] = useState<string>("");
-  const [expires, setExpires] = useState<string>("this-day");
-  const [actionType, setActionType] = useState<string>("assign");
+  const [expires, setExpires] = useState<TagExpiration>("this-night");
+  const [actionType, setActionType] = useState<string>("");
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (selectedPlayer) {
       if (actionType === "assign" && assignedBy) {
-        assignTagToPlayer(
-          selectedPlayer,
-          selectedTag as "Shot" | "Silenced",
-          assignedBy,
-          expires as
-            | "this-day"
-            | "this-night"
-            | "permanent"
-            | "next-night"
-            | "next-day"
-        );
+        assignTagToPlayer(selectedPlayer, selectedTag, assignedBy, expires);
       } else if (actionType === "unassign") {
-        unassignTagFromPlayer(
-          selectedPlayer,
-          selectedTag as "Shot" | "Silenced"
-        );
+        unassignTagFromPlayer(selectedPlayer, selectedTag);
       }
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label>Action:</label>
+      <label className="form-control w-full max-w-xs">
+        <div className="label">
+          <span className="label-text">Select an Action</span>
+        </div>
         <select
+          className="select select-bordered"
           value={actionType}
           onChange={(e) => setActionType(e.target.value)}
         >
+          <option value="" disabled selected>
+            Pick one
+          </option>
           <option value="assign">Assign Tag</option>
           <option value="unassign">Unassign Tag</option>
         </select>
-      </div>
-      <div>
-        <label>Player:</label>
-        <select
-          value={selectedPlayer}
-          onChange={(e) => setSelectedPlayer(e.target.value)}
-        >
-          <option value="">Select a player</option>
-          {gameState.players.map((player) => (
-            <option key={player.id} value={player.id}>
-              {player.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label>Tag:</label>
-        <select
-          value={selectedTag}
-          onChange={(e) => setSelectedTag(e.target.value)}
-        >
-          <option value="Shot">Shot</option>
-          <option value="Silenced">Silenced</option>
-        </select>
-      </div>
-      {actionType === "assign" && (
+      </label>
+      {actionType && (
         <>
-          <div>
-            <label>Assigned By:</label>
-            <input
-              type="text"
-              value={assignedBy}
-              onChange={(e) => setAssignedBy(e.target.value)}
-            />
-          </div>
-          <div>
-            <label>Expires:</label>
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">Select a Player</span>
+            </div>
             <select
-              value={expires}
-              onChange={(e) => setExpires(e.target.value)}
+              className="select select-bordered"
+              value={selectedPlayer}
+              onChange={(e) => setSelectedPlayer(e.target.value)}
             >
-              <option value="this-day">This Day</option>
-              <option value="this-night">This Night</option>
-              <option value="permanent">Permanent</option>
-              <option value="next-night">Next Night</option>
-              <option value="next-day">Next Day</option>
+              <option value="">Pick one</option>
+              {gameState.players.map((player) => (
+                <option key={player.id} value={player.id}>
+                  {player.name}
+                </option>
+              ))}
             </select>
-          </div>
+          </label>
+          {selectedPlayer && (
+            <>
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text">Tag</span>
+                </div>
+                <select
+                  className="select select-bordered"
+                  value={selectedTag}
+                  onChange={(e) => setSelectedTag(e.target.value as Tags)}
+                >
+                  {tags.map((tag) => (
+                    <option key={tag} value={tag}>
+                      {tag}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              {actionType === "assign" && (
+                <>
+                  <label className="form-control w-full max-w-xs">
+                    <div className="label">
+                      <span className="label-text">Assigned By</span>
+                    </div>
+                    <select
+                      className="select select-bordered"
+                      value={assignedBy}
+                      onChange={(e) => setAssignedBy(e.target.value)}
+                    >
+                      <option value="">Pick one</option>
+                      {gameState.players
+                        .filter((player) => player.id !== selectedPlayer)
+                        .map((player) => (
+                          <option key={player.id} value={player.id}>
+                            {player.name}
+                          </option>
+                        ))}
+                    </select>
+                  </label>
+                  <label className="form-control w-full max-w-xs">
+                    <div className="label">
+                      <span className="label-text">Expires</span>
+                    </div>
+                    <select
+                      className="select select-bordered"
+                      value={expires}
+                      onChange={(e) =>
+                        setExpires(e.target.value as TagExpiration)
+                      }
+                    >
+                      {tagExpirations.map((expiration) => (
+                        <option key={expiration} value={expiration}>
+                          {changeCase.capitalCase(expiration)}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </>
+              )}
+              <button className="btn btn-primary mt-4" type="submit">
+                {actionType === "assign" ? "Assign Tag" : "Unassign Tag"}
+              </button>
+            </>
+          )}
         </>
       )}
-      <button type="submit">
-        {actionType === "assign" ? "Assign Tag" : "Unassign Tag"}
-      </button>
     </form>
   );
 };
 
-export default AssignTagForm;
+export default TagPlayers;

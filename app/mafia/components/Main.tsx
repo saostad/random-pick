@@ -3,14 +3,11 @@ import { ModalProvider } from "../contexts/ModalContext";
 import ModalButton from "./ModalButton";
 import { GameProvider } from "../contexts/GameContext";
 import NewGameButton from "./NewGameButton";
-import NightActionsControl from "./NightActionsControl";
 import PlayerStatusManager from "./PlayerStatusManager";
 import Players from "./Players";
 import RoleAssignment from "./RoleAssignment";
 import Roles from "./Roles";
-import VotingSession from "./VotingSession";
 import FlexibleModal from "./FlexibleModal";
-import DayActionsControl from "./DayActionsControl";
 import CarbonUserRole from "~icons/carbon/user-role";
 import PlayerRoleCarousel from "./PlayerRoleCarousel";
 import EventTimeline from "./EventTimeline";
@@ -19,6 +16,7 @@ import CarbonGroup from "~icons/carbon/group.jsx";
 import CarbonUserIdentification from "~icons/carbon/user-identification";
 import Wizard from "./Wizard";
 import TagPlayers from "./TagPlayers";
+import CarbonTag from "~icons/carbon/tag";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -53,6 +51,11 @@ const Main: React.FC<MainProps> = (props) => {
               title="Event Timeline"
               modalId="EventTimeline"
               component={EventTimeline}
+            />
+            <FlexibleModal
+              title="Tag Players"
+              modalId="TagPlayers"
+              component={TagPlayers}
             />
 
             <div
@@ -92,14 +95,14 @@ const Main: React.FC<MainProps> = (props) => {
                 Role Assignment
                 <CarbonUserIdentification />
               </ModalButton>
+              <ModalButton modalId="TagPlayers">
+                Tag Players
+                <CarbonTag />
+              </ModalButton>
               <PlayerStatusManager />
             </div>
-            {/* <DayActionsControl />
-            <VotingSession />
-            <NightActionsControl /> */}
             <Wizard />
             <div className="divider" />
-            <TagPlayers />
           </div>
         </GameProvider>
       </ModalProvider>

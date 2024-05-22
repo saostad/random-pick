@@ -7,11 +7,11 @@ type PlayerTagsIndicatorProps = {
 
 const positions = [
   "indicator-top indicator-start",
-  "indicator-top indicator-center",
   "indicator-top indicator-end",
   "indicator-bottom indicator-start",
-  "indicator-bottom indicator-center",
   "indicator-bottom indicator-end",
+  "indicator-top indicator-center",
+  "indicator-bottom indicator-center",
 ];
 
 const PlayerTagsIndicator: React.FC<PlayerTagsIndicatorProps> = ({

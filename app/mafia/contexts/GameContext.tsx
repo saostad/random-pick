@@ -1,7 +1,17 @@
 import React, { createContext, useContext, ReactNode } from "react";
 import useLocalStorageState from "use-local-storage-state";
 
-type Tags = "Shot" | "Silenced";
+export const tags = ["Shot", "Silenced", "Saved"] as const;
+export type Tags = (typeof tags)[number];
+
+export const tagExpirations = [
+  "this-night",
+  "next-day",
+  "permanent",
+  "this-day",
+  "next-night",
+] as const;
+export type TagExpiration = (typeof tagExpirations)[number];
 
 export type Player = {
   id: string;
@@ -14,12 +24,7 @@ export type Player = {
     tag: Tags;
     assignedBy: string;
     assignedAt: string;
-    expires:
-      | "this-day"
-      | "this-night"
-      | "permanent"
-      | "next-night"
-      | "next-day";
+    expires: TagExpiration;
   }[];
 };
 
@@ -69,7 +74,7 @@ export type GameContextType = {
     playerId: string,
     tag: Tags,
     assignedBy: string,
-    expires: "this-day" | "this-night" | "permanent" | "next-night" | "next-day"
+    expires: TagExpiration
   ) => void;
   unassignTagFromPlayer: (playerId: string, tag: Tags) => void;
 };
@@ -245,7 +250,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     playerId: string,
     tag: Tags,
     assignedBy: string,
-    expires: "this-day" | "this-night" | "permanent" | "next-night" | "next-day"
+    expires: TagExpiration
   ) => {
     const assignedAt = getCurrentEvent();
     setGameState((prev) => ({

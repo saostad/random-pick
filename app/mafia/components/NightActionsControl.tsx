@@ -4,6 +4,9 @@ import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
 import CarbonHazeNight from "~icons/carbon/haze-night";
 import CarbonTouchInteraction from "~icons/carbon/touch-interaction";
+import ModalButton from "./ModalButton";
+import TagPlayers from "./TagPlayers";
+import CarbonTag from "~icons/carbon/tag";
 
 const handleNightActions = (gameState: GameState): GameState => {
   const actionableRoles = gameState.gameRoles
@@ -90,6 +93,7 @@ const NightActionsControl: React.FC = () => {
       >
         Start Night {gameState.nightCount} <CarbonHazeNight />
       </button>
+      <FlexibleModal modalId="TagPlayerInNight" component={TagPlayers} />
       <FlexibleModal modalId="night-actions" title="Night Actions">
         <>
           {actionableRoles.length > 0 &&
@@ -111,11 +115,14 @@ const NightActionsControl: React.FC = () => {
                 )
               </p>
               <button
-                className="btn btn-ghost btn-outline btn-primary"
+                className="btn btn-ghost btn-outline btn-primary mr-4"
                 onClick={handleNextAction}
               >
                 Next Action <CarbonTouchInteraction />
               </button>
+              <ModalButton modalId="TagPlayerInNight">
+                Tag a Player <CarbonTag />
+              </ModalButton>
             </>
           ) : (
             <>

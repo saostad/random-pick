@@ -87,19 +87,23 @@ const PlayerStatusManager: React.FC = () => {
                         key={player.id}
                         style={{
                           display: "grid",
-                          gridTemplateColumns: "1fr 1fr",
+                          gridTemplateColumns: "2fr 1fr",
                           alignItems: "center",
                           marginBottom: "1rem",
                         }}
                       >
                         <span style={{ marginRight: "1rem" }}>
-                          {player.order}. {player.name}
+                          {player.order}{" "}
+                          <PlayerTagsIndicator
+                            key={player.id}
+                            playerId={player.id}
+                          />
                         </span>
                         <button
                           className="btn btn-outline btn-success btn-sm"
                           onClick={() => handleMarkPlayerAsAlive(player.id)}
                         >
-                          Mark as Alive <CarbonReturn />
+                          Revive <CarbonReturn />
                         </button>
                       </div>
                     ))}
