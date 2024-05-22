@@ -1,22 +1,40 @@
 import React from "react";
-import { useGameContext } from "../contexts/GameContext";
+import { GameEvent, useGameContext } from "../contexts/GameContext";
 
 const EventTimeline: React.FC = () => {
   const { gameState } = useGameContext();
   const { events } = gameState;
 
+  // Group and sort events by day/night number and timestamp
+  const groupedEvents = events.reduce((acc, event) => {
+    const key =
+      event.dayCount !== undefined
+        ? `Day ${event.dayCount}`
+        : `Night ${event.nightCount}`;
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+    acc[key].push(event);
+    return acc;
+  }, {} as Record<string, GameEvent[]>);
+
+  Object.values(groupedEvents).forEach((group) => {
+    group.sort(
+      (a, b) =>
+        new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+    );
+  });
+
   return (
-    <ul className="timeline timeline-vertical">
-      {events.map((event, index) => (
+    <ul className="timeline timeline-snap-icon timeline-compact timeline-vertical">
+      {Object.entries(groupedEvents).map(([key, group], index) => (
         <li key={index}>
-          {index > 0 && <hr />}
-          <div className="timeline-start">{event.type}</div>
           <div className="timeline-middle">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
-              className="w-5 h-5"
+              className="h-5 w-5"
             >
               <path
                 fillRule="evenodd"
@@ -25,7 +43,15 @@ const EventTimeline: React.FC = () => {
               />
             </svg>
           </div>
-          <div className="timeline-end timeline-box">{event.description}</div>
+          <div className="timeline-start md:text-end mb-10">
+            <time className="font-mono italic">{key}</time>
+            <ul>
+              {group.map((event, eventIndex) => (
+                <li key={eventIndex}>{event.description}</li>
+              ))}
+            </ul>
+          </div>
+          <hr />
         </li>
       ))}
     </ul>
