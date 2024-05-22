@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useGameContext, GameRole } from "../contexts/GameContext";
 import PredefinedRoles from "./PredefinedRoles";
 import RoleSuggestion from "./RoleSuggestion";
+import CarbonAdd from "~icons/carbon/add";
 
 const Roles: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
@@ -101,7 +102,7 @@ const Roles: React.FC = () => {
             }`}
             type="radio"
             name="options"
-            aria-label="Add Role"
+            aria-label="Add a Role"
             checked={activeTab === "addRole"}
             onChange={() => setActiveTab("addRole")}
           />
@@ -111,7 +112,7 @@ const Roles: React.FC = () => {
             }`}
             type="radio"
             name="options"
-            aria-label="Suggest"
+            aria-label="Suggest Roles"
             checked={activeTab === "suggestRoles"}
             onChange={() => setActiveTab("suggestRoles")}
           />
@@ -160,7 +161,7 @@ const Roles: React.FC = () => {
             )}
           </div>
           <button className="btn btn-primary" onClick={handleAddRole}>
-            Add Role
+            Add <CarbonAdd />
           </button>
           {error && <div style={{ color: "red" }}>{error}</div>}
         </div>

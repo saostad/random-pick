@@ -81,7 +81,7 @@ const predefinedRoles = [
     name: "Professional",
     hasAction: true,
     actionOrder: 8,
-    roleLevel: "pro",
+    roleLevel: "beginner",
     side: "Town",
     description:
       "Can shot during the night for two nights. Can't kill the Godfather with the first shot. Can't be killed with the first shot of the Mafia. if shot a town-person the next day announce as dead",

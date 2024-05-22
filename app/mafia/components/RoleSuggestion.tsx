@@ -47,7 +47,7 @@ const RoleSuggestion: React.FC = () => {
     const generatedCount = suggested.length;
     if (generatedCount < numPlayers) {
       setMessage(
-        `Warning: Only ${generatedCount} roles generated out of ${numPlayers} requested. This may be due to a limited number of predefined roles available for the selected game level.`
+        `WARNING: Only ${generatedCount} roles generated out of ${numPlayers} requested. This may be due to a limited number of predefined roles available for the selected game level.`
       );
     } else {
       setMessage(`${generatedCount} roles generated successfully.`);
@@ -101,10 +101,8 @@ const RoleSuggestion: React.FC = () => {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-2">
-          <button className="btn btn-primary" onClick={handleSuggestRoles}>
-            Suggest Roles
-          </button>
+        <div className="">
+          <label className="mr-4">Game Level:</label>
           <select
             className="select select-bordered select-primary w-full max-w-xs"
             value={gameLevel}
@@ -114,8 +112,14 @@ const RoleSuggestion: React.FC = () => {
             <option value="pro">Pro</option>
           </select>
         </div>
+        <button
+          className="btn btn-outline btn-ghost btn-secondary mt-4"
+          onClick={handleSuggestRoles}
+        >
+          Suggest some Roles!
+        </button>
       </div>
-      {message && <div className="alert alert-warning">{message}</div>}
+      {message && <div className="alert">{message}</div>}
       {suggestedRoles.length > 0 && (
         <div className="mb-4">
           <h4>Suggested Roles:</h4>
@@ -143,10 +147,10 @@ const RoleSuggestion: React.FC = () => {
             ))}
           </div>
           <button
-            className="btn btn-secondary mt-2"
+            className="btn btn-ghost btn-outline btn-primary mt-2"
             onClick={handleAddSuggestedRoles}
           >
-            Add Selected Suggested Roles
+            Let&apos;s go with selected Roles!
           </button>
         </div>
       )}
