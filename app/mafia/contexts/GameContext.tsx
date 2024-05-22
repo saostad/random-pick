@@ -33,6 +33,8 @@ export type GameState = {
   dayCount: number;
   startingPlayerId: string;
   events: GameEvent[];
+  votingStatus: "not_started" | "in_progress" | "finished";
+  currentStepIndex: number;
 };
 
 export type GameContextType = {
@@ -49,6 +51,8 @@ export type GameContextType = {
   increaseNightCount: () => void;
   increaseDayCount: () => void;
   addEvent: (event: GameEvent) => void;
+  setVotingStatus: (status: "not_started" | "in_progress" | "finished") => void;
+  setCurrentStepIndex: (index: number) => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -63,6 +67,8 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     dayCount: 0,
     startingPlayerId: "",
     events: [],
+    votingStatus: "not_started",
+    currentStepIndex: 0,
   };
 
   const [gameState, setGameState] = useLocalStorageState<GameState>(
@@ -74,6 +80,16 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const updateGameState = (newState: Partial<GameState>) => {
     setGameState((prevState) => ({ ...prevState, ...newState }));
+  };
+
+  const setVotingStatus = (
+    status: "not_started" | "in_progress" | "finished"
+  ) => {
+    setGameState((prevState) => ({ ...prevState, votingStatus: status }));
+  };
+
+  const setCurrentStepIndex = (index: number) => {
+    setGameState((prevState) => ({ ...prevState, currentStepIndex: index }));
   };
 
   const findPlayerNameById = (id: string) => {
@@ -307,6 +323,8 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     increaseNightCount,
     increaseDayCount,
     addEvent,
+    setVotingStatus,
+    setCurrentStepIndex,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

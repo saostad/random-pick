@@ -17,6 +17,7 @@ import EventTimeline from "./EventTimeline";
 import CarbonEventSchedule from "~icons/carbon/event-schedule";
 import CarbonGroup from "~icons/carbon/group.jsx";
 import CarbonUserIdentification from "~icons/carbon/user-identification";
+import Wizard from "./Wizard";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -92,9 +93,10 @@ const Main: React.FC<MainProps> = (props) => {
               </ModalButton>
               <PlayerStatusManager />
             </div>
-            <DayActionsControl />
+            {/* <DayActionsControl />
             <VotingSession />
-            <NightActionsControl />
+            <NightActionsControl /> */}
+            <Wizard />
             <div className="divider" />
           </div>
         </GameProvider>
