@@ -52,6 +52,7 @@ const Players: React.FC = () => {
       order: newPlayerOrder,
       isAlive: true,
       roleId: "", // Add a default role ID or modify as needed
+      tags: [], // Add default tags or modify as needed
     };
     updateGameState({ players: [...gameState.players, newPlayer] });
     setNewPlayerName(""); // Reset input after adding

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, ReactNode } from "react";
 import useLocalStorageState from "use-local-storage-state";
-import { useModal } from "./ModalContext";
+
+type Tags = "Shot" | "Silenced";
 
 export type Player = {
   id: string;
@@ -9,6 +10,17 @@ export type Player = {
   isAlive: boolean;
   voteCount: number;
   order: number;
+  tags: {
+    tag: Tags;
+    assignedBy: string;
+    assignedAt: string;
+    expires:
+      | "this-day"
+      | "this-night"
+      | "permanent"
+      | "next-night"
+      | "next-day";
+  }[];
 };
 
 export type GameRole = {
@@ -53,13 +65,18 @@ export type GameContextType = {
   addEvent: (event: GameEvent) => void;
   setVotingStatus: (status: "not_started" | "in_progress" | "finished") => void;
   setCurrentStepIndex: (index: number) => void;
+  assignTagToPlayer: (
+    playerId: string,
+    tag: Tags,
+    assignedBy: string,
+    expires: "this-day" | "this-night" | "permanent" | "next-night" | "next-day"
+  ) => void;
+  unassignTagFromPlayer: (playerId: string, tag: Tags) => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
 const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const { handleOpen } = useModal();
-
   const initialState: GameState = {
     players: [],
     gameRoles: [],
@@ -73,138 +90,64 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const [gameState, setGameState] = useLocalStorageState<GameState>(
     "gameState",
-    {
-      defaultValue: initialState,
-    }
+    { defaultValue: initialState }
   );
 
+  const getCurrentEvent = (): string => {
+    const { dayCount, nightCount } = gameState;
+    if (dayCount > nightCount) {
+      return `Day${dayCount}`;
+    } else if (nightCount === dayCount) {
+      return `Day${nightCount}`;
+    }
+    return `Night${nightCount}`;
+  };
+
   const updateGameState = (newState: Partial<GameState>) => {
-    setGameState((prevState) => ({ ...prevState, ...newState }));
-  };
-
-  const setVotingStatus = (
-    status: "not_started" | "in_progress" | "finished"
-  ) => {
-    setGameState((prevState) => ({ ...prevState, votingStatus: status }));
-  };
-
-  const setCurrentStepIndex = (index: number) => {
-    setGameState((prevState) => ({ ...prevState, currentStepIndex: index }));
-  };
-
-  const findPlayerNameById = (id: string) => {
-    const player = gameState.players.find((player) => player.id === id);
-    return player ? player.name : "Unknown";
-  };
-
-  const findRoleNameById = (id: string) => {
-    const role = gameState.gameRoles.find((role) => role.id === id);
-    return role ? role.name : "Unknown";
+    setGameState((prev) => ({ ...prev, ...newState }));
   };
 
   const markPlayerAsDead = (playerId: string) => {
-    const playerName = findPlayerNameById(playerId);
     setGameState((prev) => ({
       ...prev,
       players: prev.players.map((player) =>
         player.id === playerId ? { ...player, isAlive: false } : player
       ),
-      events: [
-        ...prev.events,
-        {
-          type: "death",
-          description: `${playerName} died`,
-          timestamp: new Date(),
-          dayCount: prev.dayCount,
-          nightCount: prev.nightCount,
-        },
-      ],
     }));
   };
 
   const markPlayerAsAlive = (playerId: string) => {
-    const playerName = findPlayerNameById(playerId);
     setGameState((prev) => ({
       ...prev,
       players: prev.players.map((player) =>
         player.id === playerId ? { ...player, isAlive: true } : player
       ),
-      events: [
-        ...prev.events,
-        {
-          type: "revival",
-          description: `${playerName} revived`,
-          timestamp: new Date(),
-          dayCount: prev.dayCount,
-          nightCount: prev.nightCount,
-        },
-      ],
     }));
   };
 
   const assignRoleToPlayer = (playerId: string, roleId: string) => {
-    const playerName = findPlayerNameById(playerId);
-    const roleName = findRoleNameById(roleId);
     setGameState((prev) => ({
       ...prev,
       players: prev.players.map((player) =>
         player.id === playerId ? { ...player, roleId } : player
       ),
-      events: [
-        ...prev.events,
-        {
-          type: "roleAssignment",
-          description: `${playerName} assigned to ${roleName}`,
-          timestamp: new Date(),
-          dayCount: prev.dayCount,
-          nightCount: prev.nightCount,
-        },
-      ],
     }));
   };
 
   const unassignRoleFromPlayer = (playerId: string) => {
-    const playerName = findPlayerNameById(playerId);
     setGameState((prev) => ({
       ...prev,
       players: prev.players.map((player) =>
         player.id === playerId ? { ...player, roleId: undefined } : player
       ),
-      events: [
-        ...prev.events,
-        {
-          type: "roleUnassignment",
-          description: `${playerName} unassigned from role`,
-          timestamp: new Date(),
-          dayCount: prev.dayCount,
-          nightCount: prev.nightCount,
-        },
-      ],
     }));
   };
 
   const resetGameState = () => {
-    const initPlayers = gameState.players.map((player) => ({
-      ...player,
-      roleId: undefined,
-      voteCount: 0,
-      isAlive: true,
-    }));
-
-    setGameState((prevState) => ({
-      ...prevState,
-      players: initPlayers,
-      nightCount: 0,
-      dayCount: 0,
-      events: [],
-      votingStatus: "not_started",
-    }));
-
-    handleOpen("game-reset");
+    setGameState(initialState);
   };
 
   const increaseVote = (playerId: string) => {
-    const playerName = findPlayerNameById(playerId);
     setGameState((prev) => ({
       ...prev,
       players: prev.players.map((player) =>
@@ -212,63 +155,35 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           ? { ...player, voteCount: player.voteCount + 1 }
           : player
       ),
-      events: [
-        ...prev.events,
-        {
-          type: "voteIncrease",
-          description: `Vote increased for ${playerName}`,
-          timestamp: new Date(),
-          dayCount: prev.dayCount,
-          nightCount: prev.nightCount,
-        },
-      ],
     }));
   };
 
   const decreaseVote = (playerId: string) => {
-    const playerName = findPlayerNameById(playerId);
     setGameState((prev) => ({
       ...prev,
       players: prev.players.map((player) =>
-        player.id === playerId && player.voteCount > 0
+        player.id === playerId
           ? { ...player, voteCount: player.voteCount - 1 }
           : player
       ),
+    }));
+  };
+
+  const resetVotes = () => {
+    setGameState((prev) => ({
+      ...prev,
+      players: prev.players.map((player) => ({ ...player, voteCount: 0 })),
       events: [
         ...prev.events,
         {
-          type: "voteDecrease",
-          description: `Vote decreased for ${playerName}`,
+          type: "votesReset",
+          description: "Votes reset",
           timestamp: new Date(),
           dayCount: prev.dayCount,
           nightCount: prev.nightCount,
         },
       ],
     }));
-  };
-
-  const resetVotes = () => {
-    setGameState((prev) => {
-      const newPlayers = prev.players.map((player) => ({
-        ...player,
-        voteCount: 0,
-      }));
-
-      return {
-        ...prev,
-        players: newPlayers,
-        events: [
-          ...prev.events,
-          {
-            type: "votesReset",
-            description: "Votes reset",
-            timestamp: new Date(),
-            dayCount: prev.dayCount,
-            nightCount: prev.nightCount,
-          },
-        ],
-      };
-    });
   };
 
   const increaseNightCount = () => {
@@ -310,6 +225,62 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }));
   };
 
+  const setVotingStatus = (
+    status: "not_started" | "in_progress" | "finished"
+  ) => {
+    setGameState((prev) => ({
+      ...prev,
+      votingStatus: status,
+    }));
+  };
+
+  const setCurrentStepIndex = (index: number) => {
+    setGameState((prev) => ({
+      ...prev,
+      currentStepIndex: index,
+    }));
+  };
+
+  const assignTagToPlayer = (
+    playerId: string,
+    tag: Tags,
+    assignedBy: string,
+    expires: "this-day" | "this-night" | "permanent" | "next-night" | "next-day"
+  ) => {
+    const assignedAt = getCurrentEvent();
+    setGameState((prev) => ({
+      ...prev,
+      players: prev.players.map((player) =>
+        player.id === playerId
+          ? {
+              ...player,
+              tags: [...player.tags, { tag, assignedBy, assignedAt, expires }],
+            }
+          : player
+      ),
+    }));
+  };
+
+  const unassignTagFromPlayer = (playerId: string, tag: Tags) => {
+    // remove just the last tag that matches the given tag, leaving other tags intact. This is to handle the case where a tag is assigned multiple times.
+    setGameState((prev) => ({
+      ...prev,
+      players: prev.players.map((player) => {
+        if (player.id === playerId) {
+          const index = player.tags.map((el) => el.tag).indexOf(tag); // Find the first occurrence of the item
+          if (index !== -1) {
+            player.tags.splice(index, 1); // Remove one instance of the item
+            return player;
+          } else {
+            return player;
+          }
+        } else {
+          return player;
+        }
+      }),
+    }));
+  };
+
   const value = {
     gameState,
     updateGameState,
@@ -326,6 +297,8 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     addEvent,
     setVotingStatus,
     setCurrentStepIndex,
+    assignTagToPlayer,
+    unassignTagFromPlayer,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

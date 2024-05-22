@@ -104,7 +104,7 @@ const RoleAssignment: React.FC = () => {
                 key={player.id}
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1fr 3fr 1fr",
+                  gridTemplateColumns: "2fr 3fr 1fr",
                   alignItems: "center",
                   marginBottom: "0.25rem",
                 }}
@@ -161,7 +161,7 @@ const RoleAssignment: React.FC = () => {
               key={role.id}
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 3fr 1fr",
+                gridTemplateColumns: "2fr 3fr 1fr",
                 alignItems: "center",
                 marginBottom: "0.25rem",
               }}
