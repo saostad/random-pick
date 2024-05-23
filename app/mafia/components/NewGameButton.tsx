@@ -4,7 +4,7 @@ import FlexibleModal from "./FlexibleModal";
 import CarbonRenew from "~icons/carbon/renew.jsx";
 
 const NewGameButton: React.FC = () => {
-  const { resetGameState } = useGameContext();
+  const { resetGameState, softResetGameState } = useGameContext();
 
   return (
     <>
@@ -17,10 +17,26 @@ const NewGameButton: React.FC = () => {
           </ul>
         </div>
       </FlexibleModal>
-      <button className="btn btn-secondary" onClick={resetGameState}>
-        New Game
-        <CarbonRenew className="hidden sm:block" />
-      </button>
+      <details className="dropdown">
+        <summary className="btn p4 btn-outline">
+          New <CarbonRenew />
+        </summary>
+        <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-200 rounded-box">
+          <button
+            className="btn btn-ghost btn-outline btn-secondary btn-sm mb-2"
+            onClick={softResetGameState}
+          >
+            Next Round!
+          </button>
+
+          <button
+            className="btn btn-ghost btn-outline btn-secondary btn-sm"
+            onClick={resetGameState}
+          >
+            Hard Reset
+          </button>
+        </ul>
+      </details>
     </>
   );
 };

@@ -62,6 +62,7 @@ export type GameContextType = {
   assignRoleToPlayer: (playerId: string, roleId: string) => void;
   unassignRoleFromPlayer: (playerId: string) => void;
   resetGameState: () => void;
+  softResetGameState: () => void;
   increaseVote: (playerId: string) => void;
   decreaseVote: (playerId: string) => void;
   resetVotes: () => void;
@@ -150,6 +151,25 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const resetGameState = () => {
     setGameState(initialState);
+  };
+
+  /** reset the game state except the player-names and roles */
+  const softResetGameState = () => {
+    setGameState((prev) => ({
+      ...prev,
+      players: prev.players.map((player) => ({
+        ...player,
+        isAlive: true,
+        roleId: undefined,
+        voteCount: 0,
+        tags: [],
+      })),
+      nightCount: 0,
+      dayCount: 0,
+      events: [],
+      votingStatus: "not_started",
+      currentStepIndex: 0,
+    }));
   };
 
   const increaseVote = (playerId: string) => {
@@ -294,6 +314,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     assignRoleToPlayer,
     unassignRoleFromPlayer,
     resetGameState,
+    softResetGameState,
     increaseVote,
     decreaseVote,
     resetVotes,

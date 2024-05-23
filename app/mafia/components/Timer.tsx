@@ -15,7 +15,6 @@ const Timer: React.FC<TimerProps> = ({
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    console.log(`File: Timer.tsx,`, `Line: 14 => `, currentSpeakerIndex);
     if (timerRef.current) {
       clearInterval(timerRef.current);
     }
