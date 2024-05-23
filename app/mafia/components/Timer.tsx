@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 interface TimerProps {
-  currentSpeakerIndex: number;
+  currentSpeakerIndex: number | string;
   challengeMode: boolean;
   resetTrigger: boolean;
 }
@@ -15,6 +15,7 @@ const Timer: React.FC<TimerProps> = ({
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    console.log(`File: Timer.tsx,`, `Line: 14 => `, currentSpeakerIndex);
     if (timerRef.current) {
       clearInterval(timerRef.current);
     }
@@ -33,9 +34,9 @@ const Timer: React.FC<TimerProps> = ({
   }, [currentSpeakerIndex, challengeMode, resetTrigger]);
 
   return (
-    <p>
+    <div>
       <b>Elapsed Time:</b> {elapsedTime}s
-    </p>
+    </div>
   );
 };
 

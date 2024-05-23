@@ -39,7 +39,7 @@ const TagPlayers: React.FC = () => {
           value={actionType}
           onChange={(e) => setActionType(e.target.value)}
         >
-          <option value="" disabled selected>
+          <option value="" disabled>
             Pick one
           </option>
           <option value="assign">Assign Tag</option>

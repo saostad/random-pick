@@ -7,6 +7,7 @@ import CarbonTouchInteraction from "~icons/carbon/touch-interaction";
 import ModalButton from "./ModalButton";
 import TagPlayers from "./TagPlayers";
 import CarbonTag from "~icons/carbon/tag";
+import Timer from "./Timer";
 
 const handleNightActions = (gameState: GameState): GameState => {
   const actionableRoles = gameState.gameRoles
@@ -99,6 +100,11 @@ const NightActionsControl: React.FC = () => {
           {actionableRoles.length > 0 &&
           currentActionIndex < actionableRoles.length ? (
             <>
+              <Timer
+                challengeMode={false}
+                currentSpeakerIndex={actionableRoles[currentActionIndex].id}
+                resetTrigger={true}
+              />
               <p>
                 <b>
                   <u>{actionableRoles[currentActionIndex].name}</u>
