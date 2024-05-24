@@ -33,7 +33,8 @@ const PlayerStatusManager: React.FC = () => {
   return (
     <>
       <ModalButton modalId="playersStatus">
-        Players Status <MdiDead />
+        Players Status
+        <MdiDead />
       </ModalButton>
       <FlexibleModal modalId="playersStatus">
         <div className="text-xl font-bold mb-4">
