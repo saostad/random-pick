@@ -7,6 +7,7 @@ import {
   useGameContext,
 } from "../contexts/GameContext";
 import * as changeCase from "change-case";
+import { useModal } from "../contexts/ModalContext";
 
 const TagPlayers: React.FC = () => {
   const { gameState, assignTagToPlayer, unassignTagFromPlayer } =
@@ -16,14 +17,17 @@ const TagPlayers: React.FC = () => {
   const [assignedBy, setAssignedBy] = useState<string>("");
   const [expires, setExpires] = useState<TagExpiration>("this-night");
   const [actionType, setActionType] = useState<string>("");
+  const { handleClose } = useModal();
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (selectedPlayer) {
       if (actionType === "assign" && assignedBy) {
         assignTagToPlayer(selectedPlayer, selectedTag, assignedBy, expires);
+        handleClose("TagPlayerInNight");
       } else if (actionType === "unassign") {
         unassignTagFromPlayer(selectedPlayer, selectedTag);
+        handleClose("TagPlayerInNight");
       }
     }
   };

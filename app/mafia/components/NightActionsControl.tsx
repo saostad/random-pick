@@ -8,6 +8,9 @@ import ModalButton from "./ModalButton";
 import TagPlayers from "./TagPlayers";
 import CarbonTag from "~icons/carbon/tag";
 import Timer from "./Timer";
+import DropdownButton from "./DropdownButton";
+import PlayerStatusManager from "./PlayerStatusManager";
+import PlayerTagsIndicator from "./PlayerTagsIndicator";
 
 const handleNightActions = (gameState: GameState): GameState => {
   const actionableRoles = gameState.gameRoles
@@ -27,7 +30,7 @@ const NightActionsControl: React.FC = () => {
   const [currentActionIndex, setCurrentActionIndex] = useState<number>(0);
   const [actionableRoles, setActionableRoles] = useState<any[]>([]);
   const [rolePlayers, setRolePlayers] = useState<{
-    [key: string]: { name: string; isAlive: boolean };
+    [key: string]: { name: string; isAlive: boolean; id: string };
   }>({});
 
   const [nightCompleted, setNightCompleted] = useState<boolean>(false);
@@ -56,7 +59,7 @@ const NightActionsControl: React.FC = () => {
 
   useEffect(() => {
     const roleToPlayerMap: {
-      [key: string]: { name: string; isAlive: boolean };
+      [key: string]: { name: string; isAlive: boolean; id: string };
     } = {};
 
     gameState.players.forEach((player) => {
@@ -64,6 +67,7 @@ const NightActionsControl: React.FC = () => {
         roleToPlayerMap[player.roleId] = {
           name: player.name,
           isAlive: player.isAlive,
+          id: player.id,
         };
       }
     });
@@ -105,30 +109,40 @@ const NightActionsControl: React.FC = () => {
                 currentSpeakerIndex={actionableRoles[currentActionIndex].id}
                 resetTrigger={true}
               />
-              <p>
+              <div className="my-4">
                 <b>
                   <u>{actionableRoles[currentActionIndex].name}</u>
                 </b>{" "}
-                (Player:{" "}
+                (Player:
                 <b>
-                  {rolePlayers[actionableRoles[currentActionIndex].id]
-                    ? rolePlayers[actionableRoles[currentActionIndex].id]?.name
-                    : "Unassigned"}
-                  {rolePlayers[actionableRoles[currentActionIndex].id] &&
-                    !rolePlayers[actionableRoles[currentActionIndex].id]
-                      ?.isAlive && <mark> (Dead)</mark>}
+                  {rolePlayers[actionableRoles[currentActionIndex].id] ? (
+                    <PlayerTagsIndicator
+                      key={actionableRoles[currentActionIndex].id}
+                      playerId={
+                        rolePlayers[actionableRoles[currentActionIndex].id].id
+                      }
+                    />
+                  ) : (
+                    "Unassigned"
+                  )}
+
+                  {!rolePlayers[actionableRoles[currentActionIndex].id]
+                    ?.isAlive && <mark> (Dead)</mark>}
                 </b>
                 )
-              </p>
+              </div>
               <button
                 className="btn btn-ghost btn-outline btn-primary mr-4"
                 onClick={handleNextAction}
               >
-                Next Action <CarbonTouchInteraction />
+                Next Role <CarbonTouchInteraction />
               </button>
-              <ModalButton modalId="TagPlayerInNight">
-                Tag a Player <CarbonTag />
-              </ModalButton>
+              <DropdownButton title={<>Actions</>}>
+                <ModalButton modalId="TagPlayerInNight">
+                  Tag a Player <CarbonTag />
+                </ModalButton>
+                <PlayerStatusManager />
+              </DropdownButton>
             </>
           ) : (
             <>

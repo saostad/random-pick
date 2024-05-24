@@ -1,7 +1,7 @@
 import React, { createContext, useContext, ReactNode } from "react";
 import useLocalStorageState from "use-local-storage-state";
 
-export const tags = ["Shot", "Silenced", "Saved"] as const;
+export const tags = ["Shot", "Silenced", "Saved", "Defused"] as const;
 export type Tags = (typeof tags)[number];
 
 export const tagExpirations = [

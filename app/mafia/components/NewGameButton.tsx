@@ -1,26 +1,22 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useGameContext } from "../contexts/GameContext";
 import FlexibleModal from "./FlexibleModal";
 import CarbonRenew from "~icons/carbon/renew.jsx";
 import { useModal } from "../contexts/ModalContext";
+import DropdownButton from "./DropdownButton"; // Import the new DropdownButton component
 
 const NewGameButton: React.FC = () => {
   const { resetGameState, softResetGameState } = useGameContext();
-  const dropdownRef = useRef<HTMLDetailsElement>(null);
   const { handleOpen } = useModal();
 
   const handleSoftReset = () => {
     softResetGameState();
-    if (dropdownRef.current) {
-      dropdownRef.current.open = false;
-    }
+    handleOpen("soft-reset");
   };
 
   const handleHardReset = () => {
     resetGameState();
-    if (dropdownRef.current) {
-      dropdownRef.current.open = false;
-    }
+    handleOpen("hard-reset");
   };
 
   return (
@@ -37,32 +33,27 @@ const NewGameButton: React.FC = () => {
       <FlexibleModal modalId="hard-reset" title="Game Reset">
         Everything cleaned up, Let&apos;s start fresh!
       </FlexibleModal>
-      <details className="dropdown" ref={dropdownRef}>
-        <summary className="btn p4 btn-outline">
-          New <CarbonRenew />
-        </summary>
-        <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-200 rounded-box ">
-          <button
-            className="btn btn-ghost btn-outline btn-secondary btn-sm mb-3"
-            onClick={() => {
-              handleSoftReset();
-              handleOpen("soft-reset");
-            }}
-          >
-            Next Round!
-          </button>
+      <DropdownButton
+        title={
+          <>
+            <CarbonRenew /> New
+          </>
+        }
+      >
+        <button
+          className="btn btn-ghost btn-outline btn-secondary btn-sm mb-3"
+          onClick={handleSoftReset}
+        >
+          Next Round!
+        </button>
 
-          <button
-            className="btn btn-ghost btn-outline btn-secondary btn-sm mb-2"
-            onClick={() => {
-              handleHardReset();
-              handleOpen("hard-reset");
-            }}
-          >
-            Hard Reset
-          </button>
-        </ul>
-      </details>
+        <button
+          className="btn btn-ghost btn-outline btn-secondary btn-sm mb-2"
+          onClick={handleHardReset}
+        >
+          Hard Reset
+        </button>
+      </DropdownButton>
     </>
   );
 };

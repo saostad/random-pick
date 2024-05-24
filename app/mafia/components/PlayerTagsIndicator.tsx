@@ -36,7 +36,7 @@ const PlayerTagsIndicator: React.FC<PlayerTagsIndicatorProps> = ({
           {tag.tag}
         </span>
       ))}
-      <div className="grid min-w-32 min-h-12 place-items-center">
+      <div className="grid min-w-24 min-h-12 place-items-center">
         {player.name}
       </div>
     </div>
