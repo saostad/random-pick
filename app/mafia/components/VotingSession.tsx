@@ -15,7 +15,7 @@ const VotingSession: React.FC = () => {
   } = useGameContext();
   const [votingStarted, setVotingStarted] = useState(false);
   const [votingEnded, setVotingEnded] = useState(false);
-  const { handleOpen } = useModal();
+  const { handleOpen, handleClose } = useModal();
 
   // Calculate the maximum votes and the players who have the maximum votes
   const alivePlayers = gameState.players.filter((p) => p.isAlive);
@@ -115,7 +115,10 @@ const VotingSession: React.FC = () => {
                 </p>
                 <button
                   className="btn btn-outline btn-error ml-2"
-                  onClick={() => markPlayerAsDead(player.id)}
+                  onClick={() => {
+                    markPlayerAsDead(player.id);
+                    handleClose("voting-session");
+                  }}
                 >
                   Mark as Dead <CarbonOutage />
                 </button>

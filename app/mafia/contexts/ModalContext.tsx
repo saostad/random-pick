@@ -36,13 +36,23 @@ const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   // Handle to open a modal by its ID
   const handleOpen = useCallback((modalId: string) => {
     setModals((prev) => ({ ...prev, [modalId]: true }));
-    (document.getElementById(modalId) as HTMLDialogElement)?.showModal();
+    const modalElement = document.getElementById(modalId) as HTMLDialogElement;
+    if (modalElement) {
+      modalElement.showModal();
+    } else {
+    }
   }, []);
 
   // Handle to close a modal by its ID
   const handleClose = useCallback((modalId: string) => {
-    setModals((prev) => ({ ...prev, [modalId]: false }));
-    (document.getElementById(modalId) as HTMLDialogElement)?.close();
+    setModals((prev) => {
+      return { ...prev, [modalId]: false };
+    });
+    const modalElement = document.getElementById(modalId) as HTMLDialogElement;
+    if (modalElement) {
+      modalElement.close();
+    } else {
+    }
   }, []);
 
   // Effect to manage keyboard interactions, specifically the Escape key
