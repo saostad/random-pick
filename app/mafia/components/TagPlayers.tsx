@@ -100,6 +100,7 @@ const TagPlayers: React.FC = () => {
                     >
                       <option value="">Pick one</option>
                       {gameState.players
+                        .filter((player) => player.isAlive)
                         .filter((player) => player.id !== selectedPlayer)
                         .map((player) => (
                           <option key={player.id} value={player.id}>

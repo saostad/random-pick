@@ -23,7 +23,7 @@ export type Player = {
   tags: {
     tag: Tags;
     assignedBy: string;
-    assignedAt: string;
+    AssignedAtIndex: number;
     expires: TagExpiration;
   }[];
 };
@@ -76,6 +76,7 @@ export type GameContextType = {
     expires: TagExpiration
   ) => void;
   unassignTagFromPlayer: (playerId: string, tag: Tags) => void;
+  getCurrentPhaseIndex: () => string;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -259,12 +260,6 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   function getCurrentPhaseIndex(): string {
     const { dayCount, nightCount, votingStatus } = gameState;
 
-    console.log(
-      `File: GameContext.tsx,`,
-      `Line: 276 => `,
-      `dayCount: ${dayCount}, nightCount: ${nightCount}, votingStatus: ${votingStatus}`
-    );
-
     // if dayCount === nightCount, it means the game is in the day phase
     // if dayCount > nightCount, and  voting session is not finished, it means the game is in the voting phase
     // if dayCount > nightCount, and  voting session is finished, it means the game is in the night phase
@@ -295,14 +290,21 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       description: `Player ${playerName} was tagged with ${tag} by ${assignedByName}.`,
     });
 
-    const assignedAt = getCurrentPhaseIndex();
     setGameState((prev) => ({
       ...prev,
       players: prev.players.map((player) =>
         player.id === playerId
           ? {
               ...player,
-              tags: [...player.tags, { tag, assignedBy, assignedAt, expires }],
+              tags: [
+                ...player.tags,
+                {
+                  tag,
+                  assignedBy,
+                  AssignedAtIndex: prev.currentStepIndex,
+                  expires,
+                },
+              ],
             }
           : player
       ),
@@ -347,6 +349,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setCurrentStepIndex,
     assignTagToPlayer,
     unassignTagFromPlayer,
+    getCurrentPhaseIndex,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

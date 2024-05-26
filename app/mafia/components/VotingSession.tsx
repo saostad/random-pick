@@ -41,6 +41,11 @@ const VotingSession: React.FC = () => {
     handleClose("voting-session");
   };
 
+  const endVotingWithoutElimination = () => {
+    setVotingStatus("finished");
+    handleClose("voting-session");
+  };
+
   return (
     <div>
       {votingStatus === "not_started" && (
@@ -131,6 +136,14 @@ const VotingSession: React.FC = () => {
                   </button>
                 </div>
               ))}
+              <button
+                className="btn btn-outline btn-warning"
+                onClick={() => {
+                  endVotingWithoutElimination();
+                }}
+              >
+                End voting without elimination!
+              </button>
             </div>
           )}
       </FlexibleModal>
