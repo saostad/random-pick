@@ -17,7 +17,7 @@ const positions = [
 const PlayerTagsIndicator: React.FC<PlayerTagsIndicatorProps> = ({
   playerId,
 }) => {
-  const { gameState, getCurrentPhaseIndex } = useGameContext();
+  const { gameState } = useGameContext();
   const { players, currentStepIndex } = gameState;
   const player = players.find((p) => p.id === playerId);
 
