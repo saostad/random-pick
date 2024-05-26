@@ -13,6 +13,12 @@ export type VotingStatus =
   | "voting_elimination"
   | "finished";
 
+type AssignedTag = {
+  tag: Tags;
+  AssignedAtIndex: number;
+  expires: TagExpiration;
+};
+
 export type Player = {
   id: string;
   name: string;
@@ -20,12 +26,7 @@ export type Player = {
   isAlive: boolean;
   voteCount: number;
   order: number;
-  tags: {
-    tag: Tags;
-    assignedBy: string;
-    AssignedAtIndex: number;
-    expires: TagExpiration;
-  }[];
+  tags: AssignedTag[];
 };
 
 export type GameRole = {
@@ -72,7 +73,6 @@ export type GameContextType = {
   assignTagToPlayer: (
     playerId: string,
     tag: Tags,
-    assignedBy: string,
     expires: TagExpiration
   ) => void;
   unassignTagFromPlayer: (playerId: string, tag: Tags) => void;
@@ -279,15 +279,13 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const assignTagToPlayer = (
     playerId: string,
     tag: Tags,
-    assignedBy: string,
     expires: TagExpiration
   ) => {
     const playerName = getPlayerNameById(playerId);
-    const assignedByName = getPlayerNameById(assignedBy);
 
     addEvent({
       type: "player-tagged",
-      description: `Player ${playerName} was tagged with ${tag} by ${assignedByName}.`,
+      description: `Player ${playerName} was tagged with ${tag}.`,
     });
 
     setGameState((prev) => ({
@@ -300,7 +298,6 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                 ...player.tags,
                 {
                   tag,
-                  assignedBy,
                   AssignedAtIndex: prev.currentStepIndex,
                   expires,
                 },

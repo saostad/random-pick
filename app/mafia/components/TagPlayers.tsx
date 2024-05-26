@@ -14,7 +14,6 @@ const TagPlayers: React.FC = () => {
     useGameContext();
   const [selectedPlayer, setSelectedPlayer] = useState<string>("");
   const [selectedTag, setSelectedTag] = useState<Tags>("Shot");
-  const [assignedBy, setAssignedBy] = useState<string>("");
   const [expires, setExpires] = useState<TagExpiration>("this-night");
   const [actionType, setActionType] = useState<string>("");
   const { handleClose } = useModal();
@@ -22,8 +21,8 @@ const TagPlayers: React.FC = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (selectedPlayer) {
-      if (actionType === "assign" && assignedBy) {
-        assignTagToPlayer(selectedPlayer, selectedTag, assignedBy, expires);
+      if (actionType === "assign") {
+        assignTagToPlayer(selectedPlayer, selectedTag, expires);
         handleClose("TagPlayerInNight");
       } else if (actionType === "unassign") {
         unassignTagFromPlayer(selectedPlayer, selectedTag);
@@ -89,26 +88,6 @@ const TagPlayers: React.FC = () => {
               </label>
               {actionType === "assign" && (
                 <>
-                  <label className="form-control w-full max-w-xs">
-                    <div className="label">
-                      <span className="label-text">Assigned By</span>
-                    </div>
-                    <select
-                      className="select select-bordered"
-                      value={assignedBy}
-                      onChange={(e) => setAssignedBy(e.target.value)}
-                    >
-                      <option value="">Pick one</option>
-                      {gameState.players
-                        .filter((player) => player.isAlive)
-                        .filter((player) => player.id !== selectedPlayer)
-                        .map((player) => (
-                          <option key={player.id} value={player.id}>
-                            {player.name}
-                          </option>
-                        ))}
-                    </select>
-                  </label>
                   <label className="form-control w-full max-w-xs">
                     <div className="label">
                       <span className="label-text">Expires</span>
