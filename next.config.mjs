@@ -2,7 +2,7 @@
 import Icons from "unplugin-icons/webpack";
 
 /** @type {import('next').NextConfig} */
-export default {
+const nextConfig = {
   reactStrictMode: true,
   webpack(config) {
     config.plugins.push(
@@ -16,3 +16,5 @@ export default {
     return config;
   },
 };
+
+export default nextConfig;

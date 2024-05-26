@@ -6,7 +6,7 @@ import NightActionsControl from "./NightActionsControl";
 import CarbonNextFilled from "~icons/carbon/next-filled";
 
 const Wizard: React.FC = () => {
-  const { gameState, setVotingStatus, setCurrentStepIndex } = useGameContext();
+  const { gameState, setCurrentStepIndex } = useGameContext();
   const { dayCount, nightCount, votingStatus, currentStepIndex } = gameState;
 
   const sequence: string[] = [];
@@ -25,16 +25,6 @@ const Wizard: React.FC = () => {
         stepsContainerRef.current.scrollWidth;
     }
   }, [sequence.length]);
-
-  useEffect(() => {
-    // Reset voting status at the beginning of each voting session
-    if (
-      sequence[currentStepIndex] === "Voting Session" &&
-      votingStatus === "not_started"
-    ) {
-      setVotingStatus("in_progress");
-    }
-  }, [currentStepIndex, sequence, setVotingStatus, votingStatus]);
 
   const handleNextPhase = () => {
     setCurrentStepIndex(Math.min(currentStepIndex + 1, sequence.length - 1));

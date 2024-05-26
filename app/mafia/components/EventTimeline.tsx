@@ -7,10 +7,7 @@ const EventTimeline: React.FC = () => {
 
   // Group and sort events by day/night number and timestamp
   const groupedEvents = events.reduce((acc, event) => {
-    const key =
-      event.dayCount !== undefined
-        ? `Day ${event.dayCount}`
-        : `Night ${event.nightCount}`;
+    const key = event.eventAt;
     if (!acc[key]) {
       acc[key] = [];
     }

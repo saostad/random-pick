@@ -4,14 +4,14 @@ import useLocalStorageState from "use-local-storage-state";
 export const tags = ["Shot", "Silenced", "Saved", "Defused"] as const;
 export type Tags = (typeof tags)[number];
 
-export const tagExpirations = [
-  "this-night",
-  "next-day",
-  "permanent",
-  "this-day",
-  "next-night",
-] as const;
+export const tagExpirations = ["this-night", "next-day", "permanent"] as const;
 export type TagExpiration = (typeof tagExpirations)[number];
+
+export type VotingStatus =
+  | "not_started"
+  | "in_progress"
+  | "voting_elimination"
+  | "finished";
 
 export type Player = {
   id: string;
@@ -39,8 +39,7 @@ export type GameEvent = {
   type: string;
   description: string;
   timestamp: Date;
-  dayCount?: number;
-  nightCount?: number;
+  eventAt: string;
 };
 
 export type GameState = {
@@ -50,7 +49,7 @@ export type GameState = {
   dayCount: number;
   startingPlayerId: string;
   events: GameEvent[];
-  votingStatus: "not_started" | "in_progress" | "finished";
+  votingStatus: VotingStatus;
   currentStepIndex: number;
 };
 
@@ -68,8 +67,7 @@ export type GameContextType = {
   resetVotes: () => void;
   increaseNightCount: () => void;
   increaseDayCount: () => void;
-  addEvent: (event: GameEvent) => void;
-  setVotingStatus: (status: "not_started" | "in_progress" | "finished") => void;
+  setVotingStatus: (status: VotingStatus) => void;
   setCurrentStepIndex: (index: number) => void;
   assignTagToPlayer: (
     playerId: string,
@@ -99,21 +97,24 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     { defaultValue: initialState }
   );
 
-  const getCurrentEvent = (): string => {
-    const { dayCount, nightCount } = gameState;
-    if (dayCount > nightCount) {
-      return `Day${dayCount}`;
-    } else if (nightCount === dayCount) {
-      return `Day${nightCount}`;
-    }
-    return `Night${nightCount}`;
-  };
-
   const updateGameState = (newState: Partial<GameState>) => {
     setGameState((prev) => ({ ...prev, ...newState }));
   };
 
   const markPlayerAsDead = (playerId: string) => {
+    // get the player's name
+    const playerName = gameState.players.find(
+      (player) => player.id === playerId
+    )?.name;
+    if (!playerName) {
+      return;
+    }
+
+    addEvent({
+      type: "player-killed",
+      description: `Player ${playerName} was killed.`,
+    });
+
     setGameState((prev) => ({
       ...prev,
       players: prev.players.map((player) =>
@@ -123,6 +124,13 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const markPlayerAsAlive = (playerId: string) => {
+    const playerName = getPlayerNameById(playerId);
+
+    addEvent({
+      type: "player-resurrected",
+      description: `Player ${playerName} was resurrected`,
+    });
+
     setGameState((prev) => ({
       ...prev,
       players: prev.players.map((player) =>
@@ -198,16 +206,6 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setGameState((prev) => ({
       ...prev,
       players: prev.players.map((player) => ({ ...player, voteCount: 0 })),
-      events: [
-        ...prev.events,
-        {
-          type: "votesReset",
-          description: "Votes reset",
-          timestamp: new Date(),
-          dayCount: prev.dayCount,
-          nightCount: prev.nightCount,
-        },
-      ],
     }));
   };
 
@@ -215,15 +213,6 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setGameState((prevState) => ({
       ...prevState,
       nightCount: prevState.nightCount + 1,
-      events: [
-        ...prevState.events,
-        {
-          type: "nightIncrement",
-          description: "Night count increased",
-          timestamp: new Date(),
-          nightCount: prevState.nightCount + 1,
-        },
-      ],
     }));
   };
 
@@ -231,28 +220,25 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setGameState((prevState) => ({
       ...prevState,
       dayCount: prevState.dayCount + 1,
+      votingStatus: "not_started",
+    }));
+  };
+
+  const addEvent = (event: Omit<GameEvent, "eventAt" | "timestamp">) => {
+    setGameState((prev) => ({
+      ...prev,
       events: [
-        ...prevState.events,
+        ...prev.events,
         {
-          type: "dayIncrement",
-          description: "Day count increased",
+          ...event,
+          eventAt: getCurrentPhaseIndex(),
           timestamp: new Date(),
-          dayCount: prevState.dayCount + 1,
         },
       ],
     }));
   };
 
-  const addEvent = (event: GameEvent) => {
-    setGameState((prev) => ({
-      ...prev,
-      events: [...prev.events, event],
-    }));
-  };
-
-  const setVotingStatus = (
-    status: "not_started" | "in_progress" | "finished"
-  ) => {
+  const setVotingStatus = (status: VotingStatus) => {
     setGameState((prev) => ({
       ...prev,
       votingStatus: status,
@@ -266,13 +252,50 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }));
   };
 
+  function getPlayerNameById(playerId: string) {
+    return gameState.players.find((player) => player.id === playerId)?.name;
+  }
+
+  function getCurrentPhaseIndex(): string {
+    const { dayCount, nightCount, votingStatus } = gameState;
+
+    console.log(
+      `File: GameContext.tsx,`,
+      `Line: 276 => `,
+      `dayCount: ${dayCount}, nightCount: ${nightCount}, votingStatus: ${votingStatus}`
+    );
+
+    // if dayCount === nightCount, it means the game is in the day phase
+    // if dayCount > nightCount, and  voting session is not finished, it means the game is in the voting phase
+    // if dayCount > nightCount, and  voting session is finished, it means the game is in the night phase
+    if (dayCount === nightCount) {
+      return `Day${dayCount}`;
+    } else if (
+      dayCount > nightCount &&
+      (votingStatus === "in_progress" || votingStatus === "voting_elimination")
+    ) {
+      return `Voting${nightCount}`;
+    } else if (dayCount > nightCount && votingStatus === "finished") {
+      return `Night${nightCount}`;
+    }
+    return "Unknown";
+  }
+
   const assignTagToPlayer = (
     playerId: string,
     tag: Tags,
     assignedBy: string,
     expires: TagExpiration
   ) => {
-    const assignedAt = getCurrentEvent();
+    const playerName = getPlayerNameById(playerId);
+    const assignedByName = getPlayerNameById(assignedBy);
+
+    addEvent({
+      type: "player-tagged",
+      description: `Player ${playerName} was tagged with ${tag} by ${assignedByName}.`,
+    });
+
+    const assignedAt = getCurrentPhaseIndex();
     setGameState((prev) => ({
       ...prev,
       players: prev.players.map((player) =>
@@ -320,7 +343,6 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     resetVotes,
     increaseNightCount,
     increaseDayCount,
-    addEvent,
     setVotingStatus,
     setCurrentStepIndex,
     assignTagToPlayer,

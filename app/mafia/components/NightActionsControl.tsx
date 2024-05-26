@@ -13,13 +13,10 @@ import PlayerStatusManager from "./PlayerStatusManager";
 import PlayerTagsIndicator from "./PlayerTagsIndicator";
 
 const handleNightActions = (gameState: GameState): GameState => {
-  const actionableRoles = gameState.gameRoles
+  gameState.gameRoles
+    .map((role) => role) // clone the array to avoid mutation
     .filter((role) => role.hasAction)
     .sort((a, b) => a.actionOrder! - b.actionOrder!);
-
-  actionableRoles.forEach((role) => {
-    console.log(`Processing action for ${role.name}`);
-  });
 
   return gameState;
 };
@@ -36,8 +33,6 @@ const NightActionsControl: React.FC = () => {
   const [nightCompleted, setNightCompleted] = useState<boolean>(false);
 
   const handleStartNight = () => {
-    console.log("Starting night actions");
-
     const rolesWithActions = gameState.gameRoles
       .filter((role) => role.hasAction)
       .sort((a, b) => a.actionOrder! - b.actionOrder!);
