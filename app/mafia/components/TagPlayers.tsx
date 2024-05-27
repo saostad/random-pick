@@ -13,9 +13,9 @@ const TagPlayers: React.FC = () => {
   const { gameState, assignTagToPlayer, unassignTagFromPlayer } =
     useGameContext();
   const [selectedPlayer, setSelectedPlayer] = useState<string>("");
-  const [selectedTag, setSelectedTag] = useState<Tags>("Shot");
+  const [selectedTag, setSelectedTag] = useState<Tags>("Defused");
   const [expires, setExpires] = useState<TagExpiration>("this-night");
-  const [actionType, setActionType] = useState<string>("");
+  const [actionType, setActionType] = useState<"assign" | "unassign">("assign");
   const { handleClose } = useModal();
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -23,10 +23,10 @@ const TagPlayers: React.FC = () => {
     if (selectedPlayer) {
       if (actionType === "assign") {
         assignTagToPlayer(selectedPlayer, selectedTag, expires);
-        handleClose("TagPlayerInNight");
+        handleClose("TagPlayers");
       } else if (actionType === "unassign") {
         unassignTagFromPlayer(selectedPlayer, selectedTag);
-        handleClose("TagPlayerInNight");
+        handleClose("TagPlayers");
       }
     }
   };
@@ -40,7 +40,9 @@ const TagPlayers: React.FC = () => {
         <select
           className="select select-bordered"
           value={actionType}
-          onChange={(e) => setActionType(e.target.value)}
+          onChange={(e) =>
+            setActionType(e.target.value as "assign" | "unassign")
+          }
         >
           <option value="" disabled>
             Pick one
@@ -108,7 +110,10 @@ const TagPlayers: React.FC = () => {
                   </label>
                 </>
               )}
-              <button className="btn btn-primary mt-4" type="submit">
+              <button
+                className="btn btn-ghost btn-outline btn-primary mt-4"
+                type="submit"
+              >
                 {actionType === "assign" ? "Assign Tag" : "Unassign Tag"}
               </button>
             </>

@@ -1,7 +1,17 @@
 import React, { createContext, useContext, ReactNode } from "react";
 import useLocalStorageState from "use-local-storage-state";
 
-export const tags = ["Shot", "Silenced", "Saved", "Defused"] as const;
+export const tags = [
+  // When someone fires a gun
+  "Fired",
+  // When someone got shot with a gun
+  "Wounded",
+  "Silenced",
+  // when a player lost their ability
+  "Defused",
+  // when a magician applied a spell or trick on someone
+  "Enchanted",
+] as const;
 export type Tags = (typeof tags)[number];
 
 export const tagExpirations = ["this-night", "next-day", "permanent"] as const;
