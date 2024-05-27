@@ -48,7 +48,10 @@ const VotingSession: React.FC = () => {
 
   useEffect(() => {
     // if accidentally closed the modal, reopen it by page refresh.
-    if (votingStatus !== "finished") {
+    if (
+      votingStatus === "in_progress" ||
+      votingStatus === "voting_elimination"
+    ) {
       handleOpen("voting-session");
     }
   }, [handleOpen, votingStatus]);
