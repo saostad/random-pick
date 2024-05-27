@@ -93,7 +93,11 @@ const NightActionsControl: React.FC = () => {
       >
         Start Night {gameState.nightCount} <CarbonHazeNight />
       </button>
-      <FlexibleModal modalId="TagPlayerInNight" component={TagPlayers} />
+      <FlexibleModal
+        modalId="TagPlayerInNight"
+        component={TagPlayers}
+        title="Tag Management"
+      />
       <FlexibleModal modalId="night-actions" title="Night Actions">
         <div className="min-h-48">
           {actionableRoles.length > 0 &&
