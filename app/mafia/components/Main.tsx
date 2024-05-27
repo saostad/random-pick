@@ -61,6 +61,7 @@ const Main: React.FC<MainProps> = (props) => {
             <FlexibleModal
               modalId="playersStatus"
               component={PlayerStatusManager}
+              title="Players Status"
             />
 
             <div
