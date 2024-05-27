@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import CarbonOutage from "~icons/carbon/outage";
 import FlexibleModal from "./FlexibleModal";
 import { useModal } from "../contexts/ModalContext";
@@ -45,6 +45,13 @@ const VotingSession: React.FC = () => {
     setVotingStatus("finished");
     handleClose("voting-session");
   };
+
+  useEffect(() => {
+    // if accidentally closed the modal, reopen it by page refresh.
+    if (votingStatus !== "finished") {
+      handleOpen("voting-session");
+    }
+  }, [handleOpen, votingStatus]);
 
   return (
     <div>

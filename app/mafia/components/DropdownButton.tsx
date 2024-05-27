@@ -31,7 +31,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({ title, children }) => {
 
   return (
     <details className="dropdown" ref={dropdownRef}>
-      <summary className="btn p4 btn-outline">{title}</summary>
+      <summary className="btn p4 btn-outline min-w-24">{title}</summary>
       <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-200 rounded-box">
         {clonedChildren}
       </ul>
