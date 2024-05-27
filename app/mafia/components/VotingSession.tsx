@@ -46,16 +46,6 @@ const VotingSession: React.FC = () => {
     handleClose("voting-session");
   };
 
-  useEffect(() => {
-    // if accidentally closed the modal, reopen it by page refresh.
-    if (
-      votingStatus === "in_progress" ||
-      votingStatus === "voting_elimination"
-    ) {
-      handleOpen("voting-session");
-    }
-  }, [handleOpen, votingStatus]);
-
   return (
     <div>
       {votingStatus === "not_started" && (
@@ -69,6 +59,17 @@ const VotingSession: React.FC = () => {
           Start Voting
         </button>
       )}
+      {votingStatus === "in_progress" ||
+      votingStatus === "voting_elimination" ? (
+        <button
+          className="btn btn-ghost btn-outline btn-primary"
+          onClick={() => {
+            handleOpen("voting-session");
+          }}
+        >
+          Resume Voting
+        </button>
+      ) : null}
       <FlexibleModal modalId="voting-session">
         <div className="mb-4">
           {votingStatus === "in_progress" && (
