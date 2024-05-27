@@ -22,7 +22,7 @@ const ModalButton: React.FC<ModalButtonProps> = ({
 
   return (
     <button
-      className="btn btn-ghost btn-outline btn-primary min-w-36 mb-2"
+      className="btn btn-ghost btn-outline btn-primary min-w-32 mb-2"
       onClick={onClick}
       {...props}
     >
