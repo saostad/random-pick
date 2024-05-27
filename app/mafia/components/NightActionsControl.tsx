@@ -9,7 +9,7 @@ import TagPlayers from "./TagPlayers";
 import CarbonTag from "~icons/carbon/tag";
 import Timer from "./Timer";
 import DropdownButton from "./DropdownButton";
-import PlayerStatusManager from "./PlayerStatusManager";
+import MdiDead from "~icons/mdi/dead";
 import PlayerTagsIndicator from "./PlayerTagsIndicator";
 
 const handleNightActions = (gameState: GameState): GameState => {
@@ -95,7 +95,7 @@ const NightActionsControl: React.FC = () => {
       </button>
       <FlexibleModal modalId="TagPlayerInNight" component={TagPlayers} />
       <FlexibleModal modalId="night-actions" title="Night Actions">
-        <>
+        <div className="min-h-48">
           {actionableRoles.length > 0 &&
           currentActionIndex < actionableRoles.length ? (
             <>
@@ -134,9 +134,11 @@ const NightActionsControl: React.FC = () => {
               </button>
               <DropdownButton title={<>Actions</>}>
                 <ModalButton modalId="TagPlayerInNight">
-                  Tag a Player <CarbonTag />
+                  Tag <CarbonTag />
                 </ModalButton>
-                <PlayerStatusManager />
+                <ModalButton modalId="playersStatus">
+                  Kill <MdiDead />
+                </ModalButton>
               </DropdownButton>
             </>
           ) : (
@@ -144,7 +146,7 @@ const NightActionsControl: React.FC = () => {
               <p>All actions completed.</p>
             </>
           )}
-        </>
+        </div>
       </FlexibleModal>
     </>
   );

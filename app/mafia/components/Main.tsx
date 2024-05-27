@@ -17,6 +17,7 @@ import CarbonUserIdentification from "~icons/carbon/user-identification";
 import Wizard from "./Wizard";
 import TagPlayers from "./TagPlayers";
 import CarbonTag from "~icons/carbon/tag";
+import MdiDead from "~icons/mdi/dead";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -57,6 +58,10 @@ const Main: React.FC<MainProps> = (props) => {
               modalId="TagPlayers"
               component={TagPlayers}
             />
+            <FlexibleModal
+              modalId="playersStatus"
+              component={PlayerStatusManager}
+            />
 
             <div
               style={{
@@ -92,14 +97,17 @@ const Main: React.FC<MainProps> = (props) => {
                 <CarbonUserRole />
               </ModalButton>
               <ModalButton modalId="RoleAssignment">
-                Role Assignment
+                Assign Role
                 <CarbonUserIdentification />
               </ModalButton>
               <ModalButton modalId="TagPlayers">
                 Tag Players
                 <CarbonTag />
               </ModalButton>
-              <PlayerStatusManager />
+              <ModalButton modalId="playersStatus">
+                Players Status
+                <MdiDead />
+              </ModalButton>
             </div>
             <Wizard />
             <div className="divider" />

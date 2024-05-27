@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import CarbonOutage from "~icons/carbon/outage";
 import CarbonReturn from "~icons/carbon/return";
-import FlexibleModal from "./FlexibleModal";
-import ModalButton from "./ModalButton";
-import MdiDead from "~icons/mdi/dead";
+
 import PlayerTagsIndicator from "./PlayerTagsIndicator";
 
 const PlayerStatusManager: React.FC = () => {
@@ -32,88 +30,82 @@ const PlayerStatusManager: React.FC = () => {
 
   return (
     <>
-      <ModalButton modalId="playersStatus">
-        Players Status
-        <MdiDead />
-      </ModalButton>
-      <FlexibleModal modalId="playersStatus">
-        <div className="text-xl font-bold mb-4">
-          Players ({alivePlayers.length})
-        </div>
-        <>
-          {alivePlayers
-            .slice() // Create a copy of the players array to avoid mutating the original state
-            .sort((a, b) => a.order - b.order) // Sort players by order
-            .map((player) => (
-              <div
-                key={player.id}
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  alignItems: "center",
-                  marginBottom: "1rem",
-                }}
+      <div className="text-xl font-bold mb-4">
+        Players ({alivePlayers.length})
+      </div>
+      <>
+        {alivePlayers
+          .slice() // Create a copy of the players array to avoid mutating the original state
+          .sort((a, b) => a.order - b.order) // Sort players by order
+          .map((player) => (
+            <div
+              key={player.id}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                alignItems: "center",
+                marginBottom: "1rem",
+              }}
+            >
+              <span style={{ marginRight: "1rem" }}>
+                {player.order}.{" "}
+                <PlayerTagsIndicator key={player.id} playerId={player.id} />
+              </span>
+              <button
+                className="btn btn-outline btn-error btn-sm"
+                onClick={() => handleMarkPlayerAsDead(player.id)}
               >
-                <span style={{ marginRight: "1rem" }}>
-                  {player.order}.{" "}
-                  <PlayerTagsIndicator key={player.id} playerId={player.id} />
-                </span>
-                <button
-                  className="btn btn-outline btn-error btn-sm"
-                  onClick={() => handleMarkPlayerAsDead(player.id)}
-                >
-                  Mark as Dead <CarbonOutage />
-                </button>
-              </div>
-            ))}
-        </>
-        {deadPlayers.length > 0 && (
-          <div className="collapse collapse-arrow bg-base-200 mb-2">
-            <input
-              type="checkbox"
-              defaultChecked={showDeadPlayers}
-              onChange={() => setShowDeadPlayers((prev) => !prev)}
-            />
-            <div className="collapse-title">
-              Dead Players ({deadPlayers.length})
+                Mark as Dead <CarbonOutage />
+              </button>
             </div>
-            <div className="collapse-content">
-              {showDeadPlayers && (
-                <>
-                  {deadPlayers
-                    .slice() // Create a copy of the players array to avoid mutating the original state
-                    .sort((a, b) => a.order - b.order) // Sort players by order
-                    .map((player) => (
-                      <div
-                        key={player.id}
-                        style={{
-                          display: "grid",
-                          gridTemplateColumns: "2fr 1fr",
-                          alignItems: "center",
-                          marginBottom: "1rem",
-                        }}
-                      >
-                        <span style={{ marginRight: "1rem" }}>
-                          {player.order}{" "}
-                          <PlayerTagsIndicator
-                            key={player.id}
-                            playerId={player.id}
-                          />
-                        </span>
-                        <button
-                          className="btn btn-outline btn-success btn-sm"
-                          onClick={() => handleMarkPlayerAsAlive(player.id)}
-                        >
-                          Revive <CarbonReturn />
-                        </button>
-                      </div>
-                    ))}
-                </>
-              )}
-            </div>
+          ))}
+      </>
+      {deadPlayers.length > 0 && (
+        <div className="collapse collapse-arrow bg-base-200 mb-2">
+          <input
+            type="checkbox"
+            defaultChecked={showDeadPlayers}
+            onChange={() => setShowDeadPlayers((prev) => !prev)}
+          />
+          <div className="collapse-title">
+            Dead Players ({deadPlayers.length})
           </div>
-        )}
-      </FlexibleModal>
+          <div className="collapse-content">
+            {showDeadPlayers && (
+              <>
+                {deadPlayers
+                  .slice() // Create a copy of the players array to avoid mutating the original state
+                  .sort((a, b) => a.order - b.order) // Sort players by order
+                  .map((player) => (
+                    <div
+                      key={player.id}
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "2fr 1fr",
+                        alignItems: "center",
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      <span style={{ marginRight: "1rem" }}>
+                        {player.order}{" "}
+                        <PlayerTagsIndicator
+                          key={player.id}
+                          playerId={player.id}
+                        />
+                      </span>
+                      <button
+                        className="btn btn-outline btn-success btn-sm"
+                        onClick={() => handleMarkPlayerAsAlive(player.id)}
+                      >
+                        Revive <CarbonReturn />
+                      </button>
+                    </div>
+                  ))}
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 };
