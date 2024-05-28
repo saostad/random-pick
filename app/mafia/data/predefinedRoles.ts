@@ -4,6 +4,7 @@ const predefinedRoles = [
   {
     id: "13",
     name: "Night-Walker",
+    image: "/mafia/night-walker",
     hasAction: true,
     actionOrder: 1,
     roleLevel: "pro",
@@ -15,6 +16,7 @@ const predefinedRoles = [
   {
     id: "1",
     name: "Godfather",
+    image: "/mafia/godfather",
     hasAction: true,
     actionOrder: 2,
     roleLevel: "pro",
@@ -26,6 +28,7 @@ const predefinedRoles = [
   {
     id: "2",
     name: "Mafia",
+    image: "/mafia/mafia-member",
     hasAction: true,
     actionOrder: 3,
     roleLevel: "beginner",
@@ -36,6 +39,7 @@ const predefinedRoles = [
   {
     id: "12",
     name: "Joker",
+    image: "/mafia/joker",
     hasAction: true,
     actionOrder: 4,
     roleLevel: "pro",
@@ -47,6 +51,7 @@ const predefinedRoles = [
   {
     id: "10",
     name: "Magician",
+    image: "/mafia/magician",
     hasAction: true,
     actionOrder: 5,
     roleLevel: "pro",
@@ -57,6 +62,7 @@ const predefinedRoles = [
   {
     id: "3",
     name: "Doctor",
+    image: "/mafia/doctor",
     hasAction: true,
     actionOrder: 6,
     roleLevel: "beginner",
@@ -68,6 +74,7 @@ const predefinedRoles = [
   {
     id: "4",
     name: "Detective",
+    image: "/mafia/detective",
     hasAction: true,
     actionOrder: 7,
     roleLevel: "beginner",
@@ -79,6 +86,7 @@ const predefinedRoles = [
   {
     id: "5",
     name: "Professional",
+    image: "/mafia/professional",
     hasAction: true,
     actionOrder: 8,
     roleLevel: "beginner",
@@ -90,6 +98,7 @@ const predefinedRoles = [
   {
     id: "6",
     name: "Villager",
+    image: "/mafia/villager",
     hasAction: false,
     actionOrder: undefined,
     roleLevel: "beginner",
@@ -100,6 +109,7 @@ const predefinedRoles = [
   {
     id: "7",
     name: "Constantine",
+    image: "/mafia/constantine",
     hasAction: true,
     actionOrder: 9,
     roleLevel: "pro",
@@ -110,6 +120,7 @@ const predefinedRoles = [
   {
     id: "8",
     name: "Psychologist",
+    image: "/mafia/professional",
     hasAction: true,
     actionOrder: 10,
     roleLevel: "pro",
@@ -120,6 +131,7 @@ const predefinedRoles = [
   {
     id: "9",
     name: "Party Host",
+    image: "/mafia/party-host",
     hasAction: true,
     actionOrder: 11,
     roleLevel: "pro",
@@ -132,6 +144,7 @@ const predefinedRoles = [
   {
     id: "11",
     name: "Die-hard",
+    image: "/mafia/die-hard",
     hasAction: true,
     actionOrder: 12,
     roleLevel: "pro",

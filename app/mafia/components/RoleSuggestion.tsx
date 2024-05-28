@@ -62,6 +62,7 @@ const RoleSuggestion: React.FC = () => {
     const newRoles = rolesToAdd.map((role) => ({
       ...role,
       id: new Date().toISOString() + Math.random(), // Ensure unique ID
+      preDefinedRoleId: role.id,
     }));
     updateGameState({ gameRoles: [...gameState.gameRoles, ...newRoles] });
     setSelectedSuggestedRoles([]); // Reset selected roles

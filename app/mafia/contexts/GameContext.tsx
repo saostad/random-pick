@@ -44,6 +44,7 @@ export type GameRole = {
   name: string;
   hasAction: boolean;
   actionOrder?: number;
+  preDefinedRoleId?: string;
 };
 
 export type GameEvent = {

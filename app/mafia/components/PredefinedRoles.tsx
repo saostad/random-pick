@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGameContext } from "../contexts/GameContext";
+import { GameRole, useGameContext } from "../contexts/GameContext";
 import predefinedRoles from "../data/predefinedRoles";
 
 const PredefinedRoles: React.FC = () => {
@@ -11,9 +11,10 @@ const PredefinedRoles: React.FC = () => {
     const rolesToAdd = predefinedRoles.filter((role) =>
       selectedRoles.includes(role.id)
     );
-    const newRoles = rolesToAdd.map((role) => ({
+    const newRoles: GameRole[] = rolesToAdd.map((role) => ({
       ...role,
       id: new Date().toISOString() + Math.random(), // Ensure unique ID
+      preDefinedRoleId: role.id,
     }));
     updateGameState({ gameRoles: [...gameState.gameRoles, ...newRoles] });
     setSelectedRoles([]); // Reset selected roles

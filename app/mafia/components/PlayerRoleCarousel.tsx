@@ -5,15 +5,18 @@ import CarbonViewOff from "~icons/carbon/view-off";
 import CarbonNextOutline from "~icons/carbon/next-outline";
 import CarbonPreviousOutline from "~icons/carbon/previous-outline";
 import { useSwipeable } from "react-swipeable";
+import predefinedRoles from "../data/predefinedRoles";
+import { CldImage } from "next-cloudinary";
 
 const PlayerRoleCarousel: React.FC = () => {
   const { gameState } = useGameContext();
+  const { players, gameRoles } = gameState;
   const [showRole, setShowRole] = useState<boolean[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    setShowRole(new Array(gameState.players.length).fill(false));
-  }, [gameState.players]);
+    setShowRole(new Array(players.length).fill(false));
+  }, [players]);
 
   const handleToggleRole = (index: number) => {
     setShowRole((prevShowRole) => {
@@ -25,14 +28,14 @@ const PlayerRoleCarousel: React.FC = () => {
   };
 
   const handleNext = () => {
-    setShowRole(new Array(gameState.players.length).fill(false)); // Hide all roles
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % gameState.players.length);
+    setShowRole(new Array(players.length).fill(false)); // Hide all roles
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % players.length);
   };
 
   const handlePrevious = () => {
-    setShowRole(new Array(gameState.players.length).fill(false)); // Hide all roles
+    setShowRole(new Array(players.length).fill(false)); // Hide all roles
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? gameState.players.length - 1 : prevIndex - 1
+      prevIndex === 0 ? players.length - 1 : prevIndex - 1
     );
   };
 
@@ -43,12 +46,41 @@ const PlayerRoleCarousel: React.FC = () => {
     trackMouse: true,
   });
 
+  function getRoleName(roleId: string | undefined) {
+    return (
+      gameRoles.find((role) => role.id === roleId)?.name || "No role assigned"
+    );
+  }
+
+  function getRoleImage(roleId: string | undefined) {
+    const role = gameRoles.find((role) => role.id === roleId);
+    if (!role) return null;
+    const predefRole = predefinedRoles.find(
+      (item) => item.id === role.preDefinedRoleId
+    );
+
+    console.log(`File: PlayerRoleCarousel.tsx,`, `Line: 62 => `, predefRole);
+
+    return predefRole?.image;
+  }
+
+  function getRoleDescription(roleId: string | undefined) {
+    const role = gameRoles.find((role) => role.id === roleId);
+
+    if (!role) return null;
+    const predefRole = predefinedRoles.find(
+      (item) => item.id === role.preDefinedRoleId
+    );
+
+    return predefRole?.description;
+  }
+
   return (
     <div
       {...swipeHandlers}
       className="carousel carousel-center w-full p-4 space-x-4 bg-neutral rounded-box"
     >
-      {gameState.players.map((player, index) => (
+      {players.map((player, index) => (
         <div
           key={player.id}
           className={`carousel-item w-full transition-transform duration-500 transform ${
@@ -57,16 +89,29 @@ const PlayerRoleCarousel: React.FC = () => {
         >
           <div className="card bg-base-100 shadow-xl mx-auto">
             <div className="card-body">
-              <h2 className="card-title">{player.name}</h2>
+              <div className="card-title font-bold text-3xl">{player.name}</div>
               {showRole[index] ? (
                 <>
-                  <p className="font-bold underline">
-                    {player.roleId
-                      ? gameState.gameRoles.find(
-                          (role) => role.id === player.roleId
-                        )?.name
-                      : "No role assigned"}
-                  </p>
+                  <div className="font-bold text-xl underline mt-2">
+                    {getRoleName(player.roleId)}
+                  </div>
+
+                  {!getRoleDescription(player.roleId) ? null : (
+                    <p className="text-lg mt-4">
+                      {getRoleDescription(player.roleId)}
+                    </p>
+                  )}
+
+                  {!getRoleImage(player.roleId) ? null : (
+                    <CldImage
+                      className="m-0"
+                      src={getRoleImage(player.roleId) || ""}
+                      alt={""}
+                      width="214"
+                      height="123"
+                    />
+                  )}
+
                   <button
                     className="btn btn-ghost btn-outline btn-primary mt-4"
                     onClick={() => handleToggleRole(index)}
@@ -87,13 +132,13 @@ const PlayerRoleCarousel: React.FC = () => {
               )}
               <div className="card-actions justify-between mt-4">
                 <button
-                  className="btn btn-ghost btn-outline btn-sm btn-secondary"
+                  className="btn btn-ghost btn-outline min-w-24 btn-secondary"
                   onClick={handlePrevious}
                 >
-                  Previous <CarbonPreviousOutline />
+                  Prev <CarbonPreviousOutline />
                 </button>
                 <button
-                  className="btn btn-ghost btn-outline btn-sm btn-secondary"
+                  className="btn btn-ghost btn-outline min-w-24 btn-secondary"
                   onClick={handleNext}
                 >
                   Next <CarbonNextOutline />
