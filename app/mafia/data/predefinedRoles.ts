@@ -138,7 +138,7 @@ const predefinedRoles = [
     side: "Town",
     timeInGame: 1,
     description:
-      "In two nights, Can inquiry the numbers of the mafia members. do not go out with the first bullet of the Mafia",
+      "In two nights, Can inquiry the numbers of the mafia members from the game coordinator. the next day response will be announce to all players. do not go out with the first bullet of the Mafia",
   },
 ];
 
