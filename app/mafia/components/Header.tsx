@@ -11,7 +11,12 @@ const Header: React.FC<HeaderProps> = (props) => {
       style={{ display: "flex", justifyContent: "space-between" }}
       {...props}
     >
-      <h1>Mafia (Manager)</h1>
+      <div className="flex mb-4">
+        <h1 className="m-0 mr-2 bg-gradient-to-r from-blue-600 via-green-500 to-red-600 text-transparent bg-clip-text">
+          Mafia
+        </h1>
+        <span className="self-end">Manage your Game!</span>
+      </div>
       <ColorSchemeSwitcher className="contrast" />
     </header>
   );
