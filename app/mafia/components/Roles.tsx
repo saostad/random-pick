@@ -10,7 +10,9 @@ const Roles: React.FC = () => {
   const [hasAction, setHasAction] = useState(false);
   const [actionOrder, setActionOrder] = useState<number | undefined>();
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<string>("addRole");
+  const [activeTab, setActiveTab] = useState<
+    "addRole" | "predefinedRoles" | "suggestRoles"
+  >("suggestRoles");
 
   // Function to add a new role
   const handleAddRole = () => {
@@ -112,7 +114,7 @@ const Roles: React.FC = () => {
             }`}
             type="radio"
             name="options"
-            aria-label="Suggest Roles"
+            aria-label="Suggest"
             checked={activeTab === "suggestRoles"}
             onChange={() => setActiveTab("suggestRoles")}
           />

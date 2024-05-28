@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { GameRole, useGameContext } from "../contexts/GameContext";
 import predefinedRoles from "../data/predefinedRoles";
 
@@ -11,6 +11,10 @@ const RoleSuggestion: React.FC = () => {
     string[]
   >([]);
   const [message, setMessage] = useState<string>("");
+
+  useEffect(() => {
+    setNumPlayers(gameState.players.length);
+  }, [gameState.players]);
 
   // Function to suggest roles based on player count and game level
   const handleSuggestRoles = () => {
