@@ -18,7 +18,7 @@ import Wizard from "./Wizard";
 import TagPlayers from "./TagPlayers";
 import CarbonTag from "~icons/carbon/tag";
 import MdiDead from "~icons/mdi/dead";
-
+import { CldImage, CldOgImage } from "next-cloudinary";
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
 
@@ -83,6 +83,14 @@ const Main: React.FC<MainProps> = (props) => {
             </div>
 
             <div className="divider" />
+            <CldImage
+              src="/mafia/die-hard"
+              alt={""}
+              width="200"
+              height="200"
+              sizes="100vw"
+            />
+
             <div
               style={{
                 display: "grid",
