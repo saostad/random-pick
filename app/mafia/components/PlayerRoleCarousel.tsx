@@ -59,8 +59,6 @@ const PlayerRoleCarousel: React.FC = () => {
       (item) => item.id === role.preDefinedRoleId
     );
 
-    console.log(`File: PlayerRoleCarousel.tsx,`, `Line: 62 => `, predefRole);
-
     return predefRole?.image;
   }
 

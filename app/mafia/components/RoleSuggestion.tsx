@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGameContext } from "../contexts/GameContext";
+import { GameRole, useGameContext } from "../contexts/GameContext";
 import predefinedRoles from "../data/predefinedRoles";
 
 const RoleSuggestion: React.FC = () => {
@@ -17,7 +17,7 @@ const RoleSuggestion: React.FC = () => {
     const filteredRoles = predefinedRoles.filter((role) =>
       gameLevel === "pro" ? true : role.roleLevel === gameLevel
     );
-    const suggested = [];
+    const suggested: GameRole[] = [];
     const roleCount: { [key: string]: number } = {
       ...filteredRoles.reduce((acc, role) => ({ ...acc, [role.name]: 0 }), {}),
     };
@@ -29,6 +29,7 @@ const RoleSuggestion: React.FC = () => {
           suggested.push({
             ...role,
             id: role.id + "-" + roleCount[role.name],
+            preDefinedRoleId: role.id,
             name:
               roleCount[role.name] === 0
                 ? role.name
@@ -62,7 +63,7 @@ const RoleSuggestion: React.FC = () => {
     const newRoles = rolesToAdd.map((role) => ({
       ...role,
       id: new Date().toISOString() + Math.random(), // Ensure unique ID
-      preDefinedRoleId: role.id,
+      preDefinedRoleId: role.preDefinedRoleId,
     }));
     updateGameState({ gameRoles: [...gameState.gameRoles, ...newRoles] });
     setSelectedSuggestedRoles([]); // Reset selected roles
