@@ -99,7 +99,7 @@ const NightActionsControl: React.FC = () => {
         title="Tag Management"
       />
       <FlexibleModal modalId="night-actions" title="Night Actions">
-        <div className="min-h-48">
+        <div className="min-h-52">
           {actionableRoles.length > 0 &&
           currentActionIndex < actionableRoles.length ? (
             <>
