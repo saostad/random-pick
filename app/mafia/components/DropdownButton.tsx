@@ -6,14 +6,6 @@ interface DropdownButtonProps {
 }
 
 const DropdownButton: React.FC<DropdownButtonProps> = ({ title, children }) => {
-  const dropdownRef = useRef<HTMLDetailsElement>(null);
-
-  const handleCloseDropdown = () => {
-    if (dropdownRef.current) {
-      dropdownRef.current.open = false;
-    }
-  };
-
   // Cloning children to add onClick handler to close the dropdown
   const clonedChildren = React.Children.map(children, (child) => {
     if (React.isValidElement(child) && child.type === "button") {
@@ -22,7 +14,6 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({ title, children }) => {
           if (child.props.onClick) {
             child.props.onClick(e);
           }
-          handleCloseDropdown();
         },
       });
     }
@@ -30,12 +21,14 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({ title, children }) => {
   });
 
   return (
-    <details className="dropdown" ref={dropdownRef}>
-      <summary className="btn p4 btn-outline min-w-24">{title}</summary>
-      <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-200 rounded-box">
+    <div className="dropdown">
+      <div tabIndex={0} role="button" className="btn btn-info btn-outline">
+        {title}
+      </div>
+      <ul className="p-2 my-1 shadow menu dropdown-content z-[100] bg-base-200 rounded-box">
         {clonedChildren}
       </ul>
-    </details>
+    </div>
   );
 };
 
