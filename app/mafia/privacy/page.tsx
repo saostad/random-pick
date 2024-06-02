@@ -4,13 +4,8 @@ const PrivacyPolicy = () => {
   return (
     <div className="privacy-policy">
       <h1>Privacy Policy</h1>
-      <p>Last updated: [Date]</p>
-      <p>
-        Your privacy is important to us. It is [Your Company Name]&apos;s policy
-        to respect your privacy regarding any information we may collect from
-        you across our website, [Website URL], and other sites we own and
-        operate.
-      </p>
+      <p>Last updated: Jun 1 2024</p>
+      <p>Your privacy is important to us.</p>
 
       <h2>Information We Collect</h2>
       <p>
@@ -97,17 +92,6 @@ const PrivacyPolicy = () => {
         We may update our Privacy Policy from time to time. We will notify you
         of any changes by posting the new Privacy Policy on this page. You are
         advised to review this Privacy Policy periodically for any changes.
-      </p>
-
-      <h2>Contact Us</h2>
-      <p>
-        If you have any questions about this Privacy Policy, please contact us
-        at:
-        <ul>
-          <li>Email: [Your Email Address]</li>
-          <li>Phone: [Your Phone Number]</li>
-          <li>Address: [Your Address]</li>
-        </ul>
       </p>
     </div>
   );
