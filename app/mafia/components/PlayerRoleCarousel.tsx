@@ -52,6 +52,13 @@ const PlayerRoleCarousel: React.FC = () => {
     );
   }
 
+  function getPersianRoleName(roleId: string | undefined) {
+    return (
+      gameRoles.find((role) => role.id === roleId)?.persianName ||
+      "نقشی انتخاب نشده است"
+    );
+  }
+
   function getRoleImage(roleId: string | undefined) {
     const role = gameRoles.find((role) => role.id === roleId);
     if (!role) return null;
@@ -91,7 +98,8 @@ const PlayerRoleCarousel: React.FC = () => {
               {showRole[index] ? (
                 <>
                   <div className="font-bold text-xl underline mt-2">
-                    {getRoleName(player.roleId)}
+                    {getRoleName(player.roleId)} -{" "}
+                    {getPersianRoleName(player.roleId)}
                   </div>
 
                   {!getRoleDescription(player.roleId) ? null : (

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, ReactNode } from "react";
 import useLocalStorageState from "use-local-storage-state";
+import { getPlayerNameById } from "../utils/get-from-fns";
 
 export const tags = [
   // When someone fires a gun
@@ -42,6 +43,7 @@ export type Player = {
 export type GameRole = {
   id: string;
   name: string;
+  persianName: string;
   hasAction: boolean;
   actionOrder?: number;
   preDefinedRoleId?: string;
@@ -136,7 +138,10 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const markPlayerAsAlive = (playerId: string) => {
-    const playerName = getPlayerNameById(playerId);
+    const playerName = getPlayerNameById({
+      playerId,
+      players: gameState.players,
+    });
 
     addEvent({
       type: "player-resurrected",
@@ -264,10 +269,6 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }));
   };
 
-  function getPlayerNameById(playerId: string) {
-    return gameState.players.find((player) => player.id === playerId)?.name;
-  }
-
   function getCurrentPhaseIndex(): string {
     const { dayCount, nightCount, votingStatus } = gameState;
 
@@ -292,7 +293,10 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     tag: Tags,
     expires: TagExpiration
   ) => {
-    const playerName = getPlayerNameById(playerId);
+    const playerName = getPlayerNameById({
+      playerId,
+      players: gameState.players,
+    });
 
     addEvent({
       type: "player-tagged",

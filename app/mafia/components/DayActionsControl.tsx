@@ -7,6 +7,7 @@ import Timer from "./Timer";
 import Speaker from "./Speaker";
 import Challenge from "./Challenge";
 import CarbonShuffle from "~icons/carbon/shuffle"; // Assuming you have an icon for shuffle
+import { getAlivePlayers } from "../utils/get-from-fns";
 
 const DayActionsControl: React.FC = () => {
   const { gameState, updateGameState, increaseDayCount } = useGameContext();
@@ -100,7 +101,7 @@ const DayActionsControl: React.FC = () => {
   };
 
   const handleRandomSelect = () => {
-    const alivePlayers = gameState.players.filter((player) => player.isAlive);
+    const alivePlayers = getAlivePlayers({ players: gameState.players });
     if (alivePlayers.length > 0) {
       const randomPlayer =
         alivePlayers[Math.floor(Math.random() * alivePlayers.length)];
@@ -111,7 +112,7 @@ const DayActionsControl: React.FC = () => {
   const lastStartingPlayer = gameState.players.find(
     (player) => player.id === gameState.startingPlayerId
   );
-  const alivePlayers = gameState.players.filter((player) => player.isAlive);
+  const alivePlayers = getAlivePlayers({ players: gameState.players });
   const currentSpeaker =
     speakingOrder.length > 0
       ? gameState.players[speakingOrder[currentSpeakerIndex]]
