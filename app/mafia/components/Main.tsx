@@ -20,6 +20,8 @@ import CarbonTag from "~icons/carbon/tag";
 import MdiDead from "~icons/mdi/dead";
 import DropdownButton from "./DropdownButton";
 import LucideUserCog from "~icons/lucide/user-cog";
+import Audit from "./Audit";
+import CarbonCloudAuditing from "~icons/carbon/cloud-auditing";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -65,6 +67,7 @@ const Main: React.FC<MainProps> = (props) => {
               component={PlayerStatusManager}
               title="Players Status"
             />
+            <FlexibleModal modalId="audit" component={Audit} title="Audit" />
 
             <div
               style={{
@@ -126,6 +129,10 @@ const Main: React.FC<MainProps> = (props) => {
                 <ModalButton modalId="RoleAssignment">
                   Assign Role
                   <CarbonUserIdentification />
+                </ModalButton>
+                <ModalButton modalId="audit">
+                  Audit
+                  <CarbonCloudAuditing />
                 </ModalButton>
               </DropdownButton>
             </div>
