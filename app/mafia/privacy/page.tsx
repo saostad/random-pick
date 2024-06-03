@@ -2,7 +2,7 @@ import React from "react";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="prose container mx-auto p-4">
+    <div className="prose container mx-auto p-4 my-6">
       <h1>Privacy Policy</h1>
       <p>Last updated: Jun 1 2024</p>
       <p>Your privacy is important to us.</p>
