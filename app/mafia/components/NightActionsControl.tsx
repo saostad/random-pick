@@ -94,7 +94,7 @@ const NightActionsControl: React.FC = () => {
         Start Night {gameState.nightCount} <CarbonHazeNight />
       </button>
       <FlexibleModal
-        modalId="TagPlayerInNight"
+        modalId="TagPlayers"
         component={TagPlayers}
         title="Tag Management"
       />
@@ -137,7 +137,7 @@ const NightActionsControl: React.FC = () => {
                 Next Role <CarbonTouchInteraction />
               </button>
               <DropdownButton title={<>Actions</>}>
-                <ModalButton modalId="TagPlayerInNight">
+                <ModalButton modalId="TagPlayers">
                   Tag <CarbonTag />
                 </ModalButton>
                 <ModalButton modalId="playersStatus">

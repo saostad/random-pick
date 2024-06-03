@@ -18,6 +18,8 @@ import Wizard from "./Wizard";
 import TagPlayers from "./TagPlayers";
 import CarbonTag from "~icons/carbon/tag";
 import MdiDead from "~icons/mdi/dead";
+import DropdownButton from "./DropdownButton";
+import LucideUserCog from "~icons/lucide/user-cog";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -91,27 +93,45 @@ const Main: React.FC<MainProps> = (props) => {
                 gap: "0.5rem",
               }}
             >
-              <ModalButton modalId="Players">
-                + Players - <CarbonGroup />
-              </ModalButton>
-              <ModalButton modalId="Roles">
-                + Roles -
-                <CarbonUserRole />
-              </ModalButton>
-              <ModalButton modalId="RoleAssignment">
-                Assign Role
-                <CarbonUserIdentification />
-              </ModalButton>
-              <ModalButton modalId="TagPlayers">
-                Tag Players
-                <CarbonTag />
-              </ModalButton>
-              <ModalButton modalId="playersStatus">
-                Players Status
-                <MdiDead />
-              </ModalButton>
+              <DropdownButton
+                title={
+                  <>
+                    Manage Players <LucideUserCog />
+                  </>
+                }
+              >
+                <ModalButton modalId="Players">
+                  + Players - <CarbonGroup />
+                </ModalButton>
+                <ModalButton modalId="TagPlayers">
+                  Tag Players
+                  <CarbonTag />
+                </ModalButton>
+                <ModalButton modalId="playersStatus">
+                  Dead/Alive
+                  <MdiDead />
+                </ModalButton>
+              </DropdownButton>
+              <DropdownButton
+                title={
+                  <>
+                    Manage Roles <CarbonUserRole />
+                  </>
+                }
+              >
+                <ModalButton modalId="Roles">
+                  + Roles -
+                  <CarbonUserRole />
+                </ModalButton>
+                <ModalButton modalId="RoleAssignment">
+                  Assign Role
+                  <CarbonUserIdentification />
+                </ModalButton>
+              </DropdownButton>
             </div>
-            <Wizard />
+            <div className="my-6">
+              <Wizard />
+            </div>
             <div className="divider" />
           </div>
         </GameProvider>
