@@ -1,9 +1,8 @@
-// predefinedRoles.ts
-
 const predefinedRoles = [
   {
     id: "13",
     name: "Night-Walker",
+    persianName: "شبگرد",
     image: "/mafia/night-walker",
     hasAction: true,
     actionOrder: 1,
@@ -16,6 +15,7 @@ const predefinedRoles = [
   {
     id: "1",
     name: "Godfather",
+    persianName: "پدرخوانده",
     image: "/mafia/godfather",
     hasAction: true,
     actionOrder: 2,
@@ -28,6 +28,7 @@ const predefinedRoles = [
   {
     id: "2",
     name: "Mafia",
+    persianName: "مافیا",
     image: "/mafia/mafia-member",
     hasAction: true,
     actionOrder: 3,
@@ -39,6 +40,7 @@ const predefinedRoles = [
   {
     id: "12",
     name: "Joker",
+    persianName: "جوکر",
     image: "/mafia/joker",
     hasAction: true,
     actionOrder: 4,
@@ -51,6 +53,7 @@ const predefinedRoles = [
   {
     id: "10",
     name: "Magician",
+    persianName: "جادوگر",
     image: "/mafia/magician",
     hasAction: true,
     actionOrder: 5,
@@ -62,6 +65,7 @@ const predefinedRoles = [
   {
     id: "3",
     name: "Doctor",
+    persianName: "دکتر",
     image: "/mafia/doctor",
     hasAction: true,
     actionOrder: 6,
@@ -74,6 +78,7 @@ const predefinedRoles = [
   {
     id: "4",
     name: "Detective",
+    persianName: "کارآگاه",
     image: "/mafia/detective",
     hasAction: true,
     actionOrder: 7,
@@ -85,7 +90,8 @@ const predefinedRoles = [
   },
   {
     id: "5",
-    name: "Professional",
+    name: "Leon",
+    persianName: "لئون",
     image: "/mafia/professional",
     hasAction: true,
     actionOrder: 8,
@@ -98,6 +104,7 @@ const predefinedRoles = [
   {
     id: "6",
     name: "Villager",
+    persianName: "شهروند ساده",
     image: "/mafia/villager",
     hasAction: false,
     actionOrder: undefined,
@@ -109,6 +116,7 @@ const predefinedRoles = [
   {
     id: "7",
     name: "Constantine",
+    persianName: "کنستانتین",
     image: "/mafia/constantine",
     hasAction: true,
     actionOrder: 9,
@@ -120,6 +128,7 @@ const predefinedRoles = [
   {
     id: "8",
     name: "Psychologist",
+    persianName: "روانشناس",
     image: "/mafia/professional",
     hasAction: true,
     actionOrder: 10,
@@ -131,6 +140,7 @@ const predefinedRoles = [
   {
     id: "9",
     name: "Party Host",
+    persianName: "میزبان مهمانی",
     image: "/mafia/party-host",
     hasAction: true,
     actionOrder: 11,
@@ -140,10 +150,10 @@ const predefinedRoles = [
       "Can wake-up one player each night, if the player is in mafia side, the host will announce as dead next day, if not they can share their knowledge during the night.",
     timesInGame: 1,
   },
-
   {
     id: "11",
     name: "Die-hard",
+    persianName: "جان سخت",
     image: "/mafia/die-hard",
     hasAction: true,
     actionOrder: 12,
