@@ -129,6 +129,8 @@ const DayActionsControl: React.FC = () => {
     ? gameState.players.find((player) => player.id === currentChallenger)?.name
     : null;
 
+  console.log(`File: DayActionsControl.tsx,`, `Line: 132 => `, speakingOrder);
+
   return (
     <>
       <h2>

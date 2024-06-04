@@ -3,6 +3,7 @@ import CarbonOutage from "~icons/carbon/outage";
 import FlexibleModal from "./FlexibleModal";
 import { useModal } from "../contexts/ModalContext";
 import { useGameContext } from "../contexts/GameContext";
+import { getAlivePlayers } from "../utils/get-from-fns";
 
 const VotingSession: React.FC = () => {
   const {
@@ -17,7 +18,7 @@ const VotingSession: React.FC = () => {
   const { votingStatus, players } = gameState;
 
   // Calculate the maximum votes and the players who have the maximum votes
-  const alivePlayers = players.filter((p) => p.isAlive);
+  const alivePlayers = getAlivePlayers({ players });
   const maxVotes = Math.max(...alivePlayers.map((player) => player.voteCount));
   const playersWithMaxVotes = alivePlayers.filter(
     (player) => player.voteCount === maxVotes && maxVotes > 0

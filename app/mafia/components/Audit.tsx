@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
+import { getRolesWithoutPlayers } from "../utils/get-from-fns";
 
 export default function Audit() {
   const { gameState } = useGameContext();
@@ -7,13 +8,10 @@ export default function Audit() {
   const [unassignedPlayers, setUnassignedPlayers] = useState<any[]>([]);
 
   useEffect(() => {
-    const roleToPlayerMap: {
-      [key: string]: { name: string; isAlive: boolean };
-    } = {};
-
-    const rolesWithoutPlayers = gameState.gameRoles.filter(
-      (role) => !roleToPlayerMap[role.id]
-    );
+    const rolesWithoutPlayers = getRolesWithoutPlayers({
+      gameRoles: gameState.gameRoles,
+      players: gameState.players,
+    });
 
     setUnassignedRoles(rolesWithoutPlayers);
 

@@ -12,19 +12,24 @@ export function getPlayerNameById({
 
 export function getRolesWithoutPlayers({
   gameRoles,
+  players,
 }: {
   gameRoles: GameRole[];
+  players: Player[];
 }) {
-  // TODO: I don't know how it works
   const roleToPlayerMap: {
     [key: string]: { name: string; isAlive: boolean };
   } = {};
 
-  const rolesWithoutPlayers = gameRoles.filter(
-    (role) => !roleToPlayerMap[role.id]
-  );
+  players.forEach((player) => {
+    if (!player.roleId) return;
+    roleToPlayerMap[player.roleId] = {
+      name: player.name,
+      isAlive: player.isAlive,
+    };
+  });
 
-  return rolesWithoutPlayers;
+  return gameRoles.filter((role) => !roleToPlayerMap[role.id]);
 }
 
 export function getAlivePlayers({ players }: { players: Player[] }) {
