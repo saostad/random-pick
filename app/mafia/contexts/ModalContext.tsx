@@ -34,14 +34,24 @@ const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [modals, setModals] = useState<Record<string, boolean>>({});
 
   // Handle to open a modal by its ID
-  const handleOpen = useCallback((modalId: string) => {
-    setModals((prev) => ({ ...prev, [modalId]: true }));
-    const modalElement = document.getElementById(modalId) as HTMLDialogElement;
-    if (modalElement) {
-      modalElement.showModal();
-    } else {
-    }
-  }, []);
+  const handleOpen = useCallback(
+    (modalId: string) => {
+      // check if the modal is already open
+      if (modals[modalId] === true) {
+        return;
+      }
+
+      setModals((prev) => ({ ...prev, [modalId]: true }));
+      const modalElement = document.getElementById(
+        modalId
+      ) as HTMLDialogElement;
+      if (modalElement) {
+        modalElement.showModal();
+      } else {
+      }
+    },
+    [modals]
+  );
 
   // Handle to close a modal by its ID
   const handleClose = useCallback((modalId: string) => {

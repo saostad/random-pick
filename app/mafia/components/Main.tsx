@@ -24,6 +24,7 @@ import Audit from "./Audit";
 import CarbonCloudAuditing from "~icons/carbon/cloud-auditing";
 import Tags from "./Tags";
 import CilTags from "~icons/cil/tags";
+import { ActionRecommender } from "./ActionRecommender";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -145,6 +146,7 @@ const Main: React.FC<MainProps> = (props) => {
             <div className="my-6">
               <Wizard />
             </div>
+            {/* <ActionRecommender /> */}
             <div className="divider" />
           </div>
         </GameProvider>
