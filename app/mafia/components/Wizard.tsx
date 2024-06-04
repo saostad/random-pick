@@ -87,7 +87,7 @@ const Wizard: React.FC = () => {
               <li
                 key={index}
                 className={`step ${
-                  index <= currentStepIndex ? "step-info" : "step-error"
+                  index <= currentStepIndex ? "step-primary" : "step-success"
                 }`}
                 data-content={dataContent}
               >
@@ -102,7 +102,7 @@ const Wizard: React.FC = () => {
         <>
           {getNextPhaseInfo()}
           <button
-            className="btn btn-ghost btn-outline btn-secondary mt-4 ml-4"
+            className="btn btn-outline btn-accent mt-4 ml-4"
             onClick={handleNextPhase}
             disabled={
               !isCurrentStepFinished() ||
