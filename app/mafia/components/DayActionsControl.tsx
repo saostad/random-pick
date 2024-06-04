@@ -10,17 +10,18 @@ import CarbonShuffle from "~icons/carbon/shuffle"; // Assuming you have an icon 
 import { getAlivePlayers } from "../utils/get-from-fns";
 
 const DayActionsControl: React.FC = () => {
-  const { gameState, updateGameState, increaseDayCount } = useGameContext();
+  const { gameState, updateGameState, increaseDayCount, setSpeakingOrder } =
+    useGameContext();
+  const { players, speakingOrder, startingPlayerId } = gameState;
   const { handleOpen } = useModal();
   const [currentSpeakerIndex, setCurrentSpeakerIndex] = useState<number>(0);
   const [allPlayersCompleted, setAllPlayersCompleted] =
     useState<boolean>(false);
   const [selectedStartingPlayer, setSelectedStartingPlayer] = useState<string>(
-    gameState.startingPlayerId || ""
+    startingPlayerId || ""
   );
   const [selectedChallenger, setSelectedChallenger] = useState<string>("");
   const [challengeMode, setChallengeMode] = useState<boolean>(false);
-  const [speakingOrder, setSpeakingOrder] = useState<number[]>([]);
   const [challengedPlayers, setChallengedPlayers] = useState<Set<string>>(
     new Set()
   );
@@ -48,7 +49,7 @@ const DayActionsControl: React.FC = () => {
 
   const handleStartDay = () => {
     handleOpen("day-actions");
-    const alivePlayers = gameState.players.filter((player) => player.isAlive);
+    const alivePlayers = getAlivePlayers({ players });
     const startingIndex = alivePlayers.findIndex(
       (player) => player.id === selectedStartingPlayer
     );
@@ -57,7 +58,7 @@ const DayActionsControl: React.FC = () => {
       const order = [
         ...alivePlayers.slice(startingIndex),
         ...alivePlayers.slice(0, startingIndex),
-      ].map((player) => gameState.players.findIndex((p) => p.id === player.id));
+      ].map((player) => players.findIndex((p) => p.id === player.id));
 
       setSpeakingOrder(order);
       setCurrentSpeakerIndex(0);
@@ -128,8 +129,6 @@ const DayActionsControl: React.FC = () => {
   const currentChallengerName = currentChallenger
     ? gameState.players.find((player) => player.id === currentChallenger)?.name
     : null;
-
-  console.log(`File: DayActionsControl.tsx,`, `Line: 132 => `, speakingOrder);
 
   return (
     <>

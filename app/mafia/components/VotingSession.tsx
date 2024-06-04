@@ -15,7 +15,7 @@ const VotingSession: React.FC = () => {
     setVotingStatus,
   } = useGameContext();
   const { handleOpen, handleClose } = useModal();
-  const { votingStatus, players } = gameState;
+  const { votingStatus, players, speakingOrder } = gameState;
 
   // Calculate the maximum votes and the players who have the maximum votes
   const alivePlayers = getAlivePlayers({ players });
@@ -93,8 +93,8 @@ const VotingSession: React.FC = () => {
           )}
         </div>
         {votingStatus === "in_progress" &&
-          alivePlayers
-            .sort((a, b) => a.order - b.order)
+          speakingOrder
+            .map((index) => players[index])
             .map((player) => (
               <div
                 style={{
@@ -125,39 +125,41 @@ const VotingSession: React.FC = () => {
               </div>
             ))}
         {votingStatus === "voting_elimination" &&
-          playersWithMaxVotes.length > 0 && (
-            <div style={{ marginBottom: "1rem" }}>
-              <h3>Leading Players</h3>
-              {playersWithMaxVotes.map((player) => (
-                <div
-                  key={player.id}
-                  style={{ display: "flex", alignItems: "center" }}
-                >
-                  <p>
-                    {player.name}: {player.voteCount} vote
-                    {player.voteCount > 1 ? "s" : ""}
-                  </p>
-                  <button
-                    className="btn btn-outline btn-error ml-2"
-                    onClick={() => {
-                      markPlayerAsDead(player.id);
-                      votingEliminationEnd();
-                    }}
-                  >
-                    Mark as Dead <CarbonOutage />
-                  </button>
-                </div>
-              ))}
-              <button
-                className="btn btn-outline btn-warning"
-                onClick={() => {
-                  endVotingWithoutElimination();
-                }}
+        playersWithMaxVotes.length > 0 ? (
+          <div style={{ marginBottom: "1rem" }}>
+            <h3>Leading Players</h3>
+            {playersWithMaxVotes.map((player) => (
+              <div
+                key={player.id}
+                style={{ display: "flex", alignItems: "center" }}
               >
-                End voting without elimination!
-              </button>
-            </div>
-          )}
+                <p>
+                  {player.name}: {player.voteCount} vote
+                  {player.voteCount > 1 ? "s" : ""}
+                </p>
+                <button
+                  className="btn btn-outline btn-error ml-2"
+                  onClick={() => {
+                    markPlayerAsDead(player.id);
+                    votingEliminationEnd();
+                  }}
+                >
+                  Mark as Dead <CarbonOutage />
+                </button>
+              </div>
+            ))}
+            <button
+              className="btn btn-outline btn-warning"
+              onClick={() => {
+                endVotingWithoutElimination();
+              }}
+            >
+              End voting without elimination!
+            </button>
+          </div>
+        ) : (
+          votingStatus === "finished" && "No player has the most votes!"
+        )}
       </FlexibleModal>
     </div>
   );

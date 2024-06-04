@@ -65,6 +65,7 @@ export type GameState = {
   events: GameEvent[];
   votingStatus: VotingStatus;
   currentStepIndex: number;
+  speakingOrder: number[];
 };
 
 export type GameContextType = {
@@ -90,6 +91,7 @@ export type GameContextType = {
   ) => void;
   unassignTagFromPlayer: (playerId: string, tag: Tags) => void;
   getCurrentPhaseIndex: () => string;
+  setSpeakingOrder: (speakingOrder: number[]) => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -104,6 +106,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     events: [],
     votingStatus: "not_started",
     currentStepIndex: 0,
+    speakingOrder: [],
   };
 
   const [gameState, setGameState] = useLocalStorageState<GameState>(
@@ -194,6 +197,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       events: [],
       votingStatus: "not_started",
       currentStepIndex: 0,
+      speakingOrder: [],
     }));
   };
 
@@ -343,6 +347,13 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }));
   };
 
+  const setSpeakingOrder = (speakingOrder: number[]) => {
+    setGameState((prev) => ({
+      ...prev,
+      speakingOrder,
+    }));
+  };
+
   const value = {
     gameState,
     updateGameState,
@@ -362,6 +373,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     assignTagToPlayer,
     unassignTagFromPlayer,
     getCurrentPhaseIndex,
+    setSpeakingOrder,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
