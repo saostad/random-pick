@@ -8,6 +8,7 @@ const Roles: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
   const [newRoleName, setNewRoleName] = useState("");
   const [hasAction, setHasAction] = useState(false);
+  const [nativeName, setNativeName] = useState("");
   const [actionOrder, setActionOrder] = useState<number | undefined>();
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<
@@ -29,10 +30,12 @@ const Roles: React.FC = () => {
       id: new Date().toISOString(), // Generating a unique ID based on the current time
       name: newRoleName,
       hasAction: hasAction,
+      persianName: nativeName,
       actionOrder: hasAction ? actionOrder : undefined, // Assign actionOrder only if hasAction is true
     };
     updateGameState({ gameRoles: [...gameState.gameRoles, newRole] });
     setNewRoleName(""); // Reset input after adding
+    setNativeName(""); // Reset input after adding
     setHasAction(false); // Reset hasAction
     setActionOrder(undefined); // Reset actionOrder
   };
@@ -139,6 +142,13 @@ const Roles: React.FC = () => {
             value={newRoleName}
             onChange={(e) => setNewRoleName(e.target.value)}
             placeholder="Role name"
+          />
+          <input
+            type="text"
+            className="input input-bordered input-primary w-full max-w-xs mb-2"
+            value={nativeName}
+            onChange={(e) => setNativeName(e.target.value)}
+            placeholder="Role alt name"
           />
           <div className="grid grid-cols-2 gap-2 m-2">
             <div className="form-control w-32">

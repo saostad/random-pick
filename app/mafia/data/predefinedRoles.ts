@@ -174,7 +174,7 @@ const predefinedRoles = [
     roleLevel: "beginner",
     side: "Town",
     description: "Ordinary town-person with no special abilities.",
-    timesInGame: 3,
+    timesInGame: 5,
   },
 ];
 
