@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import {
   TagExpiration,
-  Tags,
   tagExpirations,
-  tags,
   useGameContext,
 } from "../contexts/GameContext";
 import * as changeCase from "change-case";
 import { useModal } from "../contexts/ModalContext";
+import { TagsType } from "../data/predefinedTags";
 
 const TagPlayers: React.FC = () => {
   const { gameState, assignTagToPlayer, unassignTagFromPlayer } =
     useGameContext();
+  const { players, tags } = gameState;
   const [selectedPlayer, setSelectedPlayer] = useState<string>("");
-  const [selectedTag, setSelectedTag] = useState<Tags>("Defused");
+  const [selectedTag, setSelectedTag] = useState<TagsType>("Defused");
   const [expires, setExpires] = useState<TagExpiration>("this-night");
   const [actionType, setActionType] = useState<"assign" | "unassign">("assign");
   const { handleClose } = useModal();
@@ -63,7 +63,7 @@ const TagPlayers: React.FC = () => {
               onChange={(e) => setSelectedPlayer(e.target.value)}
             >
               <option value="">Pick one</option>
-              {gameState.players.map((player) => (
+              {players.map((player) => (
                 <option key={player.id} value={player.id}>
                   {player.name}
                 </option>
@@ -79,7 +79,7 @@ const TagPlayers: React.FC = () => {
                 <select
                   className="select select-bordered"
                   value={selectedTag}
-                  onChange={(e) => setSelectedTag(e.target.value as Tags)}
+                  onChange={(e) => setSelectedTag(e.target.value as TagsType)}
                 >
                   {tags.map((tag) => (
                     <option key={tag} value={tag}>

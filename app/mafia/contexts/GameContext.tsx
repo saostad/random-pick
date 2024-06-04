@@ -1,19 +1,7 @@
 import React, { createContext, useContext, ReactNode } from "react";
 import useLocalStorageState from "use-local-storage-state";
 import { getPlayerNameById } from "../utils/get-from-fns";
-
-export const tags = [
-  // When someone fires a gun
-  "Fired",
-  // When someone got shot with a gun
-  "Wounded",
-  "Silenced",
-  // when a player lost their ability
-  "Defused",
-  // when a magician applied a spell or trick on someone
-  "Enchanted",
-] as const;
-export type Tags = (typeof tags)[number];
+import { TagsType, tags } from "../data/predefinedTags";
 
 export const tagExpirations = ["this-night", "next-day", "permanent"] as const;
 export type TagExpiration = (typeof tagExpirations)[number];
@@ -25,7 +13,7 @@ export type VotingStatus =
   | "finished";
 
 type AssignedTag = {
-  tag: Tags;
+  tag: TagsType;
   AssignedAtIndex: number;
   expires: TagExpiration;
 };
@@ -66,6 +54,7 @@ export type GameState = {
   votingStatus: VotingStatus;
   currentStepIndex: number;
   speakingOrder: number[];
+  tags: TagsType[];
 };
 
 export type GameContextType = {
@@ -86,12 +75,14 @@ export type GameContextType = {
   setCurrentStepIndex: (index: number) => void;
   assignTagToPlayer: (
     playerId: string,
-    tag: Tags,
+    tag: TagsType,
     expires: TagExpiration
   ) => void;
-  unassignTagFromPlayer: (playerId: string, tag: Tags) => void;
+  unassignTagFromPlayer: (playerId: string, tag: TagsType) => void;
   getCurrentPhaseIndex: () => string;
   setSpeakingOrder: (speakingOrder: number[]) => void;
+  addTag: (tag: TagsType) => void;
+  removeTag: (tag: TagsType) => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -107,6 +98,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     votingStatus: "not_started",
     currentStepIndex: 0,
     speakingOrder: [],
+    tags: [...tags],
   };
 
   const [gameState, setGameState] = useLocalStorageState<GameState>(
@@ -294,7 +286,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const assignTagToPlayer = (
     playerId: string,
-    tag: Tags,
+    tag: TagsType,
     expires: TagExpiration
   ) => {
     const playerName = getPlayerNameById({
@@ -327,7 +319,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }));
   };
 
-  const unassignTagFromPlayer = (playerId: string, tag: Tags) => {
+  const unassignTagFromPlayer = (playerId: string, tag: TagsType) => {
     // remove just the last tag that matches the given tag, leaving other tags intact. This is to handle the case where a tag is assigned multiple times.
     setGameState((prev) => ({
       ...prev,
@@ -354,6 +346,20 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }));
   };
 
+  const addTag = (tag: TagsType) => {
+    setGameState((prev) => ({
+      ...prev,
+      tags: [...prev.tags, tag],
+    }));
+  };
+
+  const removeTag = (tag: TagsType) => {
+    setGameState((prev) => ({
+      ...prev,
+      tags: prev.tags.filter((t) => t !== tag),
+    }));
+  };
+
   const value = {
     gameState,
     updateGameState,
@@ -374,6 +380,8 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     unassignTagFromPlayer,
     getCurrentPhaseIndex,
     setSpeakingOrder,
+    addTag,
+    removeTag,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
