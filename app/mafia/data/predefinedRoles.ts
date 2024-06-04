@@ -83,10 +83,9 @@ const predefinedRoles = [
     hasAction: true,
     actionOrder: 7,
     roleLevel: "pro",
-    side: "Town",
+    side: "Mafia",
     timeInGame: 1,
-    description:
-      "In two nights, Can inquiry the numbers of the mafia members from the game coordinator. the next day response will be announce to all players. do not go out with the first bullet of the Mafia",
+    description: "In the nights, can save a mafia member",
   },
   {
     id: "3",
