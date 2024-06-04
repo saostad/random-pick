@@ -35,6 +35,7 @@ export const metadata: Metadata = {
     {
       href: "mafia/safari-pinned-tab.svg",
       rel: "mask-icon",
+      // dark color
       color: "#000000",
       url: "mafia/safari-pinned-tab.svg",
     },
