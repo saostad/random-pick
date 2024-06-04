@@ -39,9 +39,8 @@ export const metadata: Metadata = {
       url: "mafia/safari-pinned-tab.svg",
     },
   ],
-  title: "Mafia Night Online",
-  description:
-    "New to Mafia games? Join us at Mafia Night and dive into a game of trust and treachery. Learn the ropes of social deduction and enjoy a fun, engaging game night with friends.",
+  title: "Mafia Roleplaying Game",
+  description: "A simple mafia roleplaying game.",
 };
 
 export default Mafia;
