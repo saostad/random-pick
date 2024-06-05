@@ -73,6 +73,10 @@ const VotingSession: React.FC = () => {
       ) : null}
       <FlexibleModal modalId="voting-session" title="Voting Session">
         <div className="mb-4">
+          <p className="text-center text-success">
+            {alivePlayers.length} Player{alivePlayers.length > 1 ? "s" : ""} in
+            the game. Count/2 = {Math.ceil(alivePlayers.length / 2)}
+          </p>
           {votingStatus === "in_progress" && (
             <button
               className="btn btn-ghost btn-outline btn-secondary"
@@ -128,10 +132,6 @@ const VotingSession: React.FC = () => {
         playersWithMaxVotes.length > 0 ? (
           <div style={{ marginBottom: "1rem" }}>
             <h3>Leading Players</h3>
-            <p className="text-center text-success">
-              {alivePlayers.length} Player{alivePlayers.length > 1 ? "s" : ""}{" "}
-              in the game. Count/2 = {Math.ceil(alivePlayers.length / 2)}
-            </p>
             {playersWithMaxVotes.map((player) => (
               <div
                 key={player.id}
@@ -153,7 +153,7 @@ const VotingSession: React.FC = () => {
               </div>
             ))}
             <button
-              className="btn btn-outline btn-warning my-4 btn-wide"
+              className="btn btn-outline btn-warning my-4"
               onClick={() => {
                 endVotingWithoutElimination();
               }}
