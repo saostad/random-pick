@@ -1,4 +1,10 @@
-import React, { createContext, useContext, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import useLocalStorageState from "use-local-storage-state";
 import { getPlayerNameById } from "../utils/get-from-fns";
 import { TagsType, tags } from "../data/predefinedTags";
@@ -58,6 +64,7 @@ export type GameState = {
 };
 
 export type GameContextType = {
+  loading: boolean;
   gameState: GameState;
   updateGameState: (newState: Partial<GameState>) => void;
   markPlayerAsDead: (playerId: string) => void;
@@ -105,6 +112,13 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     "gameState",
     { defaultValue: initialState }
   );
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (gameState) {
+      setLoading(false);
+    }
+  }, [gameState]);
 
   const updateGameState = (newState: Partial<GameState>) => {
     setGameState((prev) => ({ ...prev, ...newState }));
@@ -382,6 +396,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setSpeakingOrder,
     addTag,
     removeTag,
+    loading,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

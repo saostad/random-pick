@@ -43,7 +43,7 @@ const Main: React.FC<MainProps> = (props) => {
             <FlexibleModal
               modalId="Roles"
               component={Roles}
-              title="Manage Roles"
+              title="Add/Remove Roles"
             />
             <FlexibleModal
               title="Role Assignment"
@@ -146,7 +146,7 @@ const Main: React.FC<MainProps> = (props) => {
             <div className="my-6">
               <Wizard />
             </div>
-            {/* <ActionRecommender /> */}
+            <ActionRecommender />
             <div className="divider" />
           </div>
         </GameProvider>

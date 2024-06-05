@@ -5,11 +5,12 @@ import { useModal } from "../contexts/ModalContext";
 export function ActionRecommender() {
   const {
     gameState: { players, gameRoles },
+    loading,
   } = useGameContext();
   const { handleOpen, modals } = useModal();
 
   useEffect(() => {
-    console.log(`File: ActionRecommender.tsx, Line: 12 =>`, modals);
+    if (loading) return;
 
     if (players.length === 0) {
       if (!modals.Players) {
@@ -18,20 +19,20 @@ export function ActionRecommender() {
       return;
     }
 
-    // if (gameRoles.length === 0) {
-    //   if (!modals.Roles) {
-    //     handleOpen("Roles");
-    //   }
-    //   return;
-    // }
+    if (gameRoles.length === 0) {
+      if (!modals.Roles) {
+        handleOpen("Roles");
+      }
+      return;
+    }
 
-    // if (players.some((player) => !player.roleId)) {
-    //   if (!modals.RoleAssignment) {
-    //     handleOpen("RoleAssignment");
-    //   }
-    //   return;
-    // }
-  }, [modals]);
+    if (players.some((player) => !player.roleId)) {
+      if (!modals.RoleAssignment) {
+        handleOpen("RoleAssignment");
+      }
+      return;
+    }
+  }, [loading]);
 
   return null;
 }
