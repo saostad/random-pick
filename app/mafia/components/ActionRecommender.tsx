@@ -12,25 +12,22 @@ export function ActionRecommender() {
   useEffect(() => {
     if (loading) return;
 
-    if (players.length === 0) {
-      if (!modals.Players) {
-        handleOpen("Players");
+    if (players.some((player) => !player.roleId)) {
+      if (!modals.RoleAssignment) {
+        handleOpen("RoleAssignment");
       }
-      return;
     }
 
     if (gameRoles.length === 0) {
       if (!modals.Roles) {
         handleOpen("Roles");
       }
-      return;
     }
 
-    if (players.some((player) => !player.roleId)) {
-      if (!modals.RoleAssignment) {
-        handleOpen("RoleAssignment");
+    if (players.length === 0) {
+      if (!modals.Players) {
+        handleOpen("Players");
       }
-      return;
     }
   }, [loading]);
 
