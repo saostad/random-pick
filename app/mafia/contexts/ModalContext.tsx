@@ -36,11 +36,6 @@ const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   // Handle to open a modal by its ID
   const handleOpen = useCallback(
     (modalId: string) => {
-      // check if the modal is already open
-      if (modals[modalId] === true) {
-        return;
-      }
-
       setModals((prev) => ({ ...prev, [modalId]: true }));
       const modalElement = document.getElementById(
         modalId
