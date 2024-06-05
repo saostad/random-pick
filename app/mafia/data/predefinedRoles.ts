@@ -134,7 +134,8 @@ const predefinedRoles = [
     actionOrder: 11,
     roleLevel: "pro",
     side: "Town",
-    description: "Can silence one player each night for the next day.",
+    description:
+      "In two nights, can silence one player each night for the next day.",
     timesInGame: 1,
   },
   {

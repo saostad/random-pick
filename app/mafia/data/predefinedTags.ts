@@ -8,5 +8,7 @@ export const tags = [
   "Defused",
   // when a magician applied a spell or trick on someone
   "Enchanted",
+  // when psychiatrist applied a trick on someone
+  "Treated",
 ] as const;
 export type TagsType = (typeof tags)[number];
