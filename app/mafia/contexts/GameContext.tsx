@@ -8,6 +8,7 @@ import React, {
 import useLocalStorageState from "use-local-storage-state";
 import { getPlayerNameById } from "../utils/get-from-fns";
 import { TagsType, tags } from "../data/predefinedTags";
+import { useModal } from "./ModalContext";
 
 export const tagExpirations = ["this-night", "next-day", "permanent"] as const;
 export type TagExpiration = (typeof tagExpirations)[number];
@@ -113,6 +114,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     { defaultValue: initialState }
   );
   const [loading, setLoading] = useState(true);
+  const { handleOpen } = useModal();
 
   useEffect(() => {
     if (gameState) {
@@ -185,6 +187,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const resetGameState = () => {
     setGameState(initialState);
+    handleOpen("ActionRecommender");
   };
 
   /** reset the game state except the player-names and roles */
@@ -205,6 +208,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       currentStepIndex: 0,
       speakingOrder: [],
     }));
+    handleOpen("ActionRecommender");
   };
 
   const increaseVote = (playerId: string) => {
