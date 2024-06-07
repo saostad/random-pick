@@ -95,6 +95,11 @@ const NightActionsControl: React.FC = () => {
         "/mafia/Whispering20Shadows20ext20v1.2.1.1.1.mp3"
       );
     }
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
   }, []);
 
   const mediaPlayerChange = () => {

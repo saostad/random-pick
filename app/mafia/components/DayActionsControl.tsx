@@ -132,9 +132,9 @@ const DayActionsControl: React.FC = () => {
 
   return (
     <>
-      <h2>
+      <div className="text-2xl font-bold mt-4">
         Day Actions <small>(Day {gameState.dayCount})</small>
-      </h2>
+      </div>
       {gameState.dayCount !== 0 && lastStartingPlayer && (
         <p>Last day&apos;s starter was: {lastStartingPlayer.name}</p>
       )}
