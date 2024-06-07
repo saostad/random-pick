@@ -12,7 +12,7 @@ const Wizard: React.FC = () => {
   const sequence: string[] = [];
   for (let i = 0; i <= nightCount; i++) {
     sequence.push(`Day ${i}`);
-    sequence.push(`Voting Session`);
+    sequence.push(`Voting`);
     sequence.push(`Night ${i}`);
   }
 
@@ -37,7 +37,7 @@ const Wizard: React.FC = () => {
 
     if (currentStep?.startsWith("Day")) {
       return dayCount > currentDayIndex;
-    } else if (currentStep === "Voting Session") {
+    } else if (currentStep === "Voting") {
       return votingStatus === "finished";
     } else if (currentStep?.startsWith("Night")) {
       return nightCount > currentNightIndex;
@@ -49,7 +49,7 @@ const Wizard: React.FC = () => {
     const currentStep = sequence[currentStepIndex];
     if (currentStep?.startsWith("Day")) {
       return isCurrentStepFinished() ? null : <DayActionsControl />;
-    } else if (currentStep === "Voting Session") {
+    } else if (currentStep === "Voting") {
       return <VotingSession />;
     } else if (currentStep?.startsWith("Night")) {
       return isCurrentStepFinished() ? null : <NightActionsControl />;
@@ -97,8 +97,7 @@ const Wizard: React.FC = () => {
           })}
         </ul>
       </div>
-      {(isCurrentStepFinished() ||
-        sequence[currentStepIndex] === "Voting Session") && (
+      {(isCurrentStepFinished() || sequence[currentStepIndex] === "Voting") && (
         <>
           {getNextPhaseInfo()}
           <button

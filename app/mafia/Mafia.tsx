@@ -8,10 +8,16 @@ import Main from "./components/Main";
 export default function Mafia() {
   return (
     <ThemeProvider>
-      <div className="prose container mx-auto p-4">
-        <Header />
-        <Main />
-        <Footer />
+      <div className="flex flex-col prose container mx-auto p-4">
+        <div className="flex-none">
+          <Header />
+        </div>
+        <div className="flex-1">
+          <Main />
+        </div>
+        <div className="flex-none">
+          <Footer />
+        </div>
       </div>
     </ThemeProvider>
   );
