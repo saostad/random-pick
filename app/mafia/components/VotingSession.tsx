@@ -79,7 +79,7 @@ const VotingSession: React.FC = () => {
           </p>
           {votingStatus === "in_progress" && (
             <button
-              className="btn btn-ghost btn-outline btn-secondary"
+              className="btn btn-ghost btn-outline btn-primary"
               onClick={endVoting}
             >
               End Voting
