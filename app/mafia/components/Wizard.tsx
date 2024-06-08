@@ -92,7 +92,7 @@ const Wizard: React.FC = () => {
                 }`}
                 data-content={dataContent}
               >
-                {step}
+                <span className="text-sm">{step}</span>
               </li>
             );
           })}
