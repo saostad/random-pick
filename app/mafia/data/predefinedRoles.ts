@@ -165,8 +165,21 @@ const predefinedRoles = [
       "In two nights, Can inquiry the numbers of the mafia members from the game coordinator. the next day response will be announce to all players. do not go out with the first bullet of the Mafia",
   },
   {
+    id: "15",
+    name: "Serial Killer",
+    persianName: "قاتل سربالی",
+    image: "/mafia/serial-killer",
+    hasAction: true,
+    actionOrder: 14,
+    roleLevel: "pro",
+    side: "ThirdParty",
+    timeInGame: 1,
+    description:
+      "In the nights, can kill one player. can't be killed by the Mafia. win the game if last between last 3 players.",
+  },
+  {
     id: "6",
-    name: "Villager",
+    name: "Civilian",
     persianName: "شهروند ساده",
     image: "/mafia/villager",
     hasAction: false,
