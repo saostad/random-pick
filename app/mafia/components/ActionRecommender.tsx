@@ -4,6 +4,7 @@ import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
 import ModalButton from "./ModalButton";
 import StreamlineStartupSolid from "~icons/streamline/startup-solid";
+import Animation from "./Animation";
 
 interface ActionRecommenderProps extends HTMLAttributes<HTMLElement> {}
 
@@ -46,9 +47,14 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
         {players.length !== 0 &&
         gameRoles.length !== 0 &&
         !players.some((player) => !player.roleId) ? (
-          <div className="text-primary flex">
-            <StreamlineStartupSolid className="mr-2 min-w-12" />
-            Game is READY to begin!
+          <div className="text-primary text-center">
+            <p>Game is READY to begin!</p>
+            <Animation
+              className=""
+              src="mafia/animation/group.lottie"
+              loop={true}
+              autoplay={true}
+            />
           </div>
         ) : null}
       </div>

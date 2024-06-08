@@ -4,6 +4,7 @@ import DayActionsControl from "./DayActionsControl";
 import VotingSession from "./VotingSession";
 import NightActionsControl from "./NightActionsControl";
 import CarbonNextFilled from "~icons/carbon/next-filled";
+import Animation from "./Animation";
 
 const Wizard: React.FC = () => {
   const { gameState, setCurrentStepIndex } = useGameContext();
@@ -73,7 +74,7 @@ const Wizard: React.FC = () => {
 
   return (
     <div>
-      <div ref={stepsContainerRef} className="overflow-x-auto">
+      <div ref={stepsContainerRef} className="overflow-x-auto mb-4">
         <ul className="steps">
           {sequence.map((step, index) => {
             let dataContent = "?";
@@ -97,8 +98,14 @@ const Wizard: React.FC = () => {
           })}
         </ul>
       </div>
-      {(isCurrentStepFinished() || sequence[currentStepIndex] === "Voting") && (
+      {isCurrentStepFinished() && (
         <>
+          <Animation
+            className=""
+            src="mafia/animation/next.lottie"
+            loop={true}
+            autoplay={true}
+          />
           {getNextPhaseInfo()}
           <button
             className="btn btn-outline btn-accent mt-4 ml-4"

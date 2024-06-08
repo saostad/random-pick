@@ -4,6 +4,7 @@ import FlexibleModal from "./FlexibleModal";
 import { useModal } from "../contexts/ModalContext";
 import { useGameContext } from "../contexts/GameContext";
 import { getAlivePlayers } from "../utils/get-from-fns";
+import Animation from "./Animation";
 
 const VotingSession: React.FC = () => {
   const {
@@ -50,15 +51,23 @@ const VotingSession: React.FC = () => {
   return (
     <div>
       {votingStatus === "not_started" && (
-        <button
-          className="btn btn-ghost btn-outline btn-primary"
-          onClick={() => {
-            startVoting();
-            handleOpen("voting-session");
-          }}
-        >
-          Start Voting
-        </button>
+        <>
+          <Animation
+            className=""
+            src="mafia/animation/think.lottie"
+            loop={false}
+            autoplay={true}
+          />
+          <button
+            className="btn btn-ghost btn-outline btn-primary"
+            onClick={() => {
+              startVoting();
+              handleOpen("voting-session");
+            }}
+          >
+            Start Voting
+          </button>
+        </>
       )}
       {votingStatus === "in_progress" ||
       votingStatus === "voting_elimination" ? (
