@@ -1,5 +1,6 @@
 import React from "react";
 import { Player } from "../contexts/GameContext";
+import PlayerTagsIndicator from "./PlayerTagsIndicator";
 
 interface SpeakerProps {
   currentSpeaker: Player | null;
@@ -18,9 +19,16 @@ const Speaker: React.FC<SpeakerProps> = ({
 }) => {
   return (
     <>
-      <p>
-        <b>Current Speaker:</b> {currentSpeaker?.name || "Unknown"}
-      </p>
+      <div className="my-4">
+        <b>Current Speaker:</b>{" "}
+        {currentSpeaker ? (
+          <>
+            <PlayerTagsIndicator playerId={currentSpeaker.id} />
+          </>
+        ) : (
+          "Unknown"
+        )}
+      </div>
       {challengeMode && currentChallengerName && (
         <p>
           <b>Challenger:</b> {currentChallengerName} is challenging{" "}
