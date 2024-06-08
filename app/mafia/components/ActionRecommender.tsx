@@ -1,11 +1,13 @@
-import { useEffect } from "react";
+import { HTMLAttributes, useEffect } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
 import ModalButton from "./ModalButton";
 import StreamlineStartupSolid from "~icons/streamline/startup-solid";
 
-export function ActionRecommender() {
+interface ActionRecommenderProps extends HTMLAttributes<HTMLElement> {}
+
+const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
   const {
     gameState: { players, gameRoles },
     loading,
@@ -52,4 +54,6 @@ export function ActionRecommender() {
       </div>
     </FlexibleModal>
   );
-}
+};
+
+export default ActionRecommender;

@@ -13,6 +13,7 @@ import MdiDead from "~icons/mdi/dead";
 import PlayerTagsIndicator from "./PlayerTagsIndicator";
 import CarbonPlayOutline from "~icons/carbon/play-outline";
 import CarbonPauseOutline from "~icons/carbon/pause-outline";
+import Animation from "./Animation";
 
 const handleNightActions = (gameState: GameState): GameState => {
   gameState.gameRoles
@@ -114,6 +115,12 @@ const NightActionsControl: React.FC = () => {
 
   return (
     <>
+      <Animation
+        className=""
+        src="mafia/animation/night.lottie"
+        loop={false}
+        autoplay={true}
+      />
       <button
         className="btn btn-ghost btn-outline btn-accent mt-2"
         onClick={handleStartNight}

@@ -8,6 +8,7 @@ import Speaker from "./Speaker";
 import Challenge from "./Challenge";
 import CarbonShuffle from "~icons/carbon/shuffle"; // Assuming you have an icon for shuffle
 import { getAlivePlayers } from "../utils/get-from-fns";
+import Animation from "./Animation";
 
 const DayActionsControl: React.FC = () => {
   const { gameState, updateGameState, increaseDayCount, setSpeakingOrder } =
@@ -133,6 +134,12 @@ const DayActionsControl: React.FC = () => {
   return (
     <>
       <div className="text-2xl font-bold mt-4">
+        <Animation
+          className="mask mask-circle"
+          src="mafia/animation/day.lottie"
+          loop={false}
+          autoplay={true}
+        />
         Day Actions <small>(Day {gameState.dayCount})</small>
       </div>
       {gameState.dayCount !== 0 && lastStartingPlayer && (
