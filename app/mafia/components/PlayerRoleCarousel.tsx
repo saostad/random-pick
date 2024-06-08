@@ -97,16 +97,10 @@ const PlayerRoleCarousel: React.FC = () => {
               <div className="card-title font-bold text-3xl">{player.name}</div>
               {showRole[index] ? (
                 <>
-                  <div className="font-bold text-xl underline mt-2">
+                  <div className="font-bold text-xl mt-2">
                     {getRoleName(player.roleId)} -{" "}
                     {getPersianRoleName(player.roleId)}
                   </div>
-
-                  {!getRoleDescription(player.roleId) ? null : (
-                    <p className="text-lg mt-4">
-                      {getRoleDescription(player.roleId)}
-                    </p>
-                  )}
 
                   {!getRoleImage(player.roleId) ? null : (
                     <CldImage
@@ -116,6 +110,18 @@ const PlayerRoleCarousel: React.FC = () => {
                       width="214"
                       height="123"
                     />
+                  )}
+
+                  {!getRoleDescription(player.roleId) ? null : (
+                    <div className="collapse bg-base-200">
+                      <input type="checkbox" />
+                      <div className="collapse-title text-xl font-medium">
+                        Details
+                      </div>
+                      <div className="collapse-content">
+                        {getRoleDescription(player.roleId)}
+                      </div>
+                    </div>
                   )}
 
                   <button
