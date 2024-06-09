@@ -40,7 +40,7 @@ export function getDeadPlayers({ players }: { players: Player[] }) {
   return players.filter((player) => !player.isAlive);
 }
 
-export function getPlayerByRoleIds({
+export function getPlayerByRoleId({
   players,
   roleId,
 }: {
@@ -48,4 +48,14 @@ export function getPlayerByRoleIds({
   roleId: string;
 }) {
   return players.find((player) => player.roleId === roleId);
+}
+
+export function getRoleByPlayerId({
+  player,
+  gameRoles,
+}: {
+  player: Player;
+  gameRoles: GameRole[];
+}) {
+  return gameRoles.find((role) => role.id === player.roleId);
 }
