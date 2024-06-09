@@ -5,16 +5,19 @@ import { TagsType } from "../data/predefinedTags";
 const Tags: React.FC = () => {
   const {
     gameState: { tags },
-    addTag,
-    removeTag,
+    updateGameState,
   } = useGameContext();
   const [newTag, setNewTag] = useState("");
 
   const handleAddTag = () => {
     if (newTag && !tags.includes(newTag as TagsType)) {
-      addTag(newTag as TagsType);
+      updateGameState({ tags: [...tags, newTag as TagsType] });
       setNewTag("");
     }
+  };
+
+  const handleRemoveTag = (tag: TagsType) => {
+    updateGameState({ tags: tags.filter((t) => t !== tag) });
   };
 
   return (
@@ -24,7 +27,7 @@ const Tags: React.FC = () => {
           <li key={index} className="grid grid-cols-2 items-center">
             <span style={{ marginRight: "1rem" }}>{tag}</span>
             <button
-              onClick={() => removeTag(tag)}
+              onClick={() => handleRemoveTag(tag)}
               className="btn btn-circle btn-outline btn-error"
             >
               <svg

@@ -44,6 +44,14 @@ export type GameRole = {
   preDefinedRoleId?: string;
 };
 
+export type LastActType = {
+  id: string;
+  title: string;
+  titleFa: string;
+  description: string;
+  descriptionFa: string;
+};
+
 export type GameEvent = {
   type: string;
   description: string;
@@ -62,6 +70,7 @@ export type GameState = {
   currentStepIndex: number;
   speakingOrder: number[];
   tags: TagsType[];
+  lastActCards: LastActType[];
 };
 
 export type GameContextType = {
@@ -89,8 +98,6 @@ export type GameContextType = {
   unassignTagFromPlayer: (playerId: string, tag: TagsType) => void;
   getCurrentPhaseIndex: () => string;
   setSpeakingOrder: (speakingOrder: number[]) => void;
-  addTag: (tag: TagsType) => void;
-  removeTag: (tag: TagsType) => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -107,6 +114,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     currentStepIndex: 0,
     speakingOrder: [],
     tags: [...tags],
+    lastActCards: [],
   };
 
   const [gameState, setGameState] = useLocalStorageState<GameState>(
@@ -364,20 +372,6 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }));
   };
 
-  const addTag = (tag: TagsType) => {
-    setGameState((prev) => ({
-      ...prev,
-      tags: [...prev.tags, tag],
-    }));
-  };
-
-  const removeTag = (tag: TagsType) => {
-    setGameState((prev) => ({
-      ...prev,
-      tags: prev.tags.filter((t) => t !== tag),
-    }));
-  };
-
   const value = {
     gameState,
     updateGameState,
@@ -398,8 +392,6 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     unassignTagFromPlayer,
     getCurrentPhaseIndex,
     setSpeakingOrder,
-    addTag,
-    removeTag,
     loading,
   };
 
