@@ -5,10 +5,12 @@ import VotingSession from "./VotingSession";
 import NightActionsControl from "./NightActionsControl";
 import CarbonNextFilled from "~icons/carbon/next-filled";
 import Animation from "./Animation";
+import PlayerCounter from "./PlayerCounter";
 
 const Wizard: React.FC = () => {
   const { gameState, setCurrentStepIndex } = useGameContext();
-  const { dayCount, nightCount, votingStatus, currentStepIndex } = gameState;
+  const { dayCount, nightCount, votingStatus, currentStepIndex, players } =
+    gameState;
 
   const sequence: string[] = [];
   for (let i = 0; i <= nightCount; i++) {
@@ -74,6 +76,7 @@ const Wizard: React.FC = () => {
 
   return (
     <div>
+      <PlayerCounter />
       <div ref={stepsContainerRef} className="overflow-x-auto mb-4">
         <ul className="steps">
           {sequence.map((step, index) => {

@@ -50,7 +50,7 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
           <div className="text-primary text-center">
             <p>Game is READY to begin!</p>
             <Animation
-              className=""
+              className="max-w-md mx-auto"
               src="mafia/animation/group.lottie"
               loop={true}
               autoplay={true}
