@@ -25,7 +25,7 @@ import CarbonCloudAuditing from "~icons/carbon/cloud-auditing";
 import Tags from "./Tags";
 import CilTags from "~icons/cil/tags";
 import ActionRecommender from "./ActionRecommender";
-import LastActCards from "./LastActCards";
+import LastActions from "./LastActions";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -76,7 +76,7 @@ const Main: React.FC<MainProps> = (props) => {
             <FlexibleModal
               title="Last Acts"
               modalId="LastActs"
-              component={LastActCards}
+              component={LastActions}
             />
 
             <div
