@@ -1,4 +1,4 @@
-export const predefinedLastActCards = [
+export const predefinedLastActions = [
   {
     id: 1,
     titleFa: "دروغ سیزده",

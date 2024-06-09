@@ -103,7 +103,7 @@ const Roles: React.FC = () => {
         <div className="join mb-4">
           <input
             className={`join-item btn ${
-              activeTab === "addRole" ? "btn-active" : ""
+              activeTab === "addRole" ? "btn-active btn-primary" : ""
             }`}
             type="radio"
             name="options"
@@ -113,7 +113,7 @@ const Roles: React.FC = () => {
           />
           <input
             className={`join-item btn ${
-              activeTab === "suggestRoles" ? "btn-active" : ""
+              activeTab === "suggestRoles" ? "btn-active btn-primary" : ""
             }`}
             type="radio"
             name="options"
@@ -123,7 +123,7 @@ const Roles: React.FC = () => {
           />
           <input
             className={`join-item btn ${
-              activeTab === "predefinedRoles" ? "btn-active" : ""
+              activeTab === "predefinedRoles" ? "btn-active btn-primary" : ""
             }`}
             type="radio"
             name="options"
