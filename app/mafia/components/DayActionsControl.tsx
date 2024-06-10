@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
@@ -9,6 +9,9 @@ import Challenge from "./Challenge";
 import CarbonShuffle from "~icons/carbon/shuffle"; // Assuming you have an icon for shuffle
 import { getAlivePlayers } from "../utils/get-from-fns";
 import Animation from "./Animation";
+
+import CarbonPlayOutline from "~icons/carbon/play-outline";
+import CarbonPauseOutline from "~icons/carbon/pause-outline";
 
 const DayActionsControl: React.FC = () => {
   const { gameState, updateGameState, increaseDayCount, setSpeakingOrder } =
@@ -131,6 +134,32 @@ const DayActionsControl: React.FC = () => {
     ? gameState.players.find((player) => player.id === currentChallenger)?.name
     : null;
 
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio("/mafia/ding-101492.mp3");
+    }
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+  }, []);
+
+  const mediaPlayerChange = () => {
+    if (audioRef.current) {
+      if (audioRef.current.paused) {
+        audioRef.current.play();
+        // TODO: when audio ends, change the icon to play
+        audioRef.current.onended = () => {
+          // Change the icon to play
+        };
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  };
   return (
     <>
       <div className="text-2xl font-bold mt-4">
@@ -189,11 +218,23 @@ const DayActionsControl: React.FC = () => {
                 speakingOrder.length > 0 &&
                 currentSpeaker && (
                   <>
-                    <Timer
-                      currentSpeakerIndex={currentSpeakerIndex}
-                      challengeMode={challengeMode}
-                      resetTrigger={resetTrigger}
-                    />
+                    <div className="grid grid-cols-2">
+                      <Timer
+                        currentSpeakerIndex={currentSpeakerIndex}
+                        challengeMode={challengeMode}
+                        resetTrigger={resetTrigger}
+                      />
+                      <label className="swap">
+                        <input type="checkbox" onChange={mediaPlayerChange} />
+                        <div className="swap-on">
+                          <CarbonPauseOutline className="min-h-8 min-w-10" />
+                        </div>
+                        <div className="swap-off">
+                          <CarbonPlayOutline className="min-h-8 min-w-10" />
+                        </div>
+                      </label>
+                    </div>
+
                     <Speaker
                       currentSpeaker={currentSpeaker}
                       challengeMode={challengeMode}
