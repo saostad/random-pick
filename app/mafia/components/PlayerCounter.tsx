@@ -9,10 +9,10 @@ const PlayerCounter: React.FC = () => {
 
   return (
     <div className="grid grid-flow-col justify-center gap-5 text-center auto-cols-max">
-      <div className="flex flex-col p-2 bg-primary rounded-box text-primary-content justify-items-center">
-        <span className="countdown font-mono text-2xl">
+      <div className="flex flex-col p-2 bg-primary rounded-box text-primary-content">
+        <span className="countdown font-mono text-3xl">
           <span
-            className="m-auto"
+            className="m-auto my-2"
             style={
               {
                 "--value": alivePlayers.length,
