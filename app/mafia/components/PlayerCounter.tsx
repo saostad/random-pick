@@ -20,7 +20,6 @@ const PlayerCounter: React.FC = () => {
             }
           ></span>
         </span>
-        Players
       </div>
     </div>
   );
