@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = (props) => {
     >
       <div className="flex mb-4">
         <h1 className="m-0 mr-2 ">Mafia</h1>
-        <span className="self-end">Manage your Game!</span>
+        <span className="self-end font-mono">Manage your Game!</span>
       </div>
       <ColorSchemeSwitcher className="contrast" />
     </header>

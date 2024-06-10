@@ -10,7 +10,8 @@ const PlayerCounter: React.FC = () => {
   return (
     <div className="m-auto my-4 text-center w-full">
       <span className="text-xl font-mono">
-        {alivePlayers.length} Players in the game!
+        {alivePlayers.length} Players in the game.{" "}
+        <small>({players.length - alivePlayers.length} out!)</small>
       </span>
     </div>
   );
