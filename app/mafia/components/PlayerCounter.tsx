@@ -12,7 +12,7 @@ const PlayerCounter: React.FC = () => {
       <div className="flex flex-col p-2 bg-primary rounded-box text-primary-content">
         <span className="countdown font-mono text-3xl">
           <span
-            className="m-auto my-2"
+            className="m-auto my-3"
             style={
               {
                 "--value": alivePlayers.length,
