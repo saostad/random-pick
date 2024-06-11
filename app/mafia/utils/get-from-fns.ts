@@ -1,4 +1,4 @@
-import type { GameRole, Player } from "../contexts/GameContext";
+import type { GameRole, GameState, Player } from "../contexts/GameContext";
 
 export function getPlayerNameById({
   playerId,
@@ -58,4 +58,54 @@ export function getRoleByPlayerId({
   gameRoles: GameRole[];
 }) {
   return gameRoles.find((role) => role.id === player.roleId);
+}
+
+export function getAuditProblems(gameState: GameState) {
+  let isAuditFailed = false;
+  const errors: { message: string; code: number }[] = [];
+
+  const rolesWithoutPlayers = getRolesWithoutPlayers({
+    gameRoles: gameState.gameRoles,
+    players: gameState.players,
+  });
+
+  const playersWithoutRoles = gameState.players.filter(
+    (player) => !player.roleId
+  );
+
+  if (gameState.players.length === 0) {
+    isAuditFailed = true;
+    errors.push({
+      code: 30,
+      message: "No players found.",
+    });
+  }
+
+  if (gameState.gameRoles.length === 0) {
+    isAuditFailed = true;
+    errors.push({
+      code: 40,
+      message: "No roles found.",
+    });
+  }
+
+  if (rolesWithoutPlayers.length > 0 || playersWithoutRoles.length > 0) {
+    isAuditFailed = true;
+    errors.push({
+      code: 10,
+      message: "Roles without players or players without roles.",
+    });
+  } else if (rolesWithoutPlayers.length !== playersWithoutRoles.length) {
+    isAuditFailed = true;
+    errors.push({
+      code: 20,
+      message: `Roles and players count mismatch. Roles: ${gameState.gameRoles.length}, Players: ${gameState.players.length}`,
+    });
+  }
+
+  return {
+    isAuditFailed,
+    errors,
+    problems: { rolesWithoutPlayers, playersWithoutRoles },
+  };
 }

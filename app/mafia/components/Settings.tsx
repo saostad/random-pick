@@ -8,8 +8,11 @@ import MdiDead from "~icons/mdi/dead";
 import CarbonCloudAuditing from "~icons/carbon/cloud-auditing";
 import CilTags from "~icons/cil/tags";
 import CarbonUserRole from "~icons/carbon/user-role";
+import { getAuditProblems } from "../utils/get-from-fns";
+import { useGameContext } from "../contexts/GameContext";
 
 const Settings = () => {
+  const { gameState } = useGameContext();
   return (
     <>
       <div className="divider divider-info">Players</div>
@@ -75,7 +78,10 @@ const Settings = () => {
         }}
       >
         <ModalButton modalId="EventTimeline">Event Timeline</ModalButton>
-        <ModalButton modalId="audit" animate={true}>
+        <ModalButton
+          modalId="audit"
+          animate={getAuditProblems(gameState).isAuditFailed}
+        >
           Audit
           <CarbonCloudAuditing />
         </ModalButton>

@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
-import { getRolesWithoutPlayers } from "../utils/get-from-fns";
+import { getAuditProblems } from "../utils/get-from-fns";
+import ModalButton from "./ModalButton";
+
+import CarbonUserIdentification from "~icons/carbon/user-identification";
+import CarbonGroup from "~icons/carbon/group.jsx";
+import CarbonUserRole from "~icons/carbon/user-role";
 
 export default function Audit() {
   const { gameState } = useGameContext();
@@ -8,22 +13,44 @@ export default function Audit() {
   const [unassignedPlayers, setUnassignedPlayers] = useState<any[]>([]);
 
   useEffect(() => {
-    const rolesWithoutPlayers = getRolesWithoutPlayers({
-      gameRoles: gameState.gameRoles,
-      players: gameState.players,
-    });
+    const { isAuditFailed, problems } = getAuditProblems(gameState);
 
-    setUnassignedRoles(rolesWithoutPlayers);
-
-    const playersWithoutRoles = gameState.players.filter(
-      (player) => !player.roleId
-    );
-
-    setUnassignedPlayers(playersWithoutRoles);
+    if (isAuditFailed) {
+      setUnassignedRoles(problems.rolesWithoutPlayers);
+      setUnassignedPlayers(problems.playersWithoutRoles);
+    } else {
+      setUnassignedRoles([]);
+      setUnassignedPlayers([]);
+    }
   }, [gameState]);
 
   return (
     <>
+      {getAuditProblems(gameState).errors.map((error) => (
+        <div
+          className="text-error p-4 flex items-center justify-between"
+          key={error.code}
+        >
+          <span># {error.message} </span>
+          {error.code === 10 && (
+            <ModalButton modalId="RoleAssignment">
+              Assign Role
+              <CarbonUserIdentification />
+            </ModalButton>
+          )}
+          {error.code === 30 && (
+            <ModalButton modalId="Players">
+              + Players - <CarbonGroup />
+            </ModalButton>
+          )}
+          {error.code === 40 && (
+            <ModalButton modalId="Roles">
+              + Roles -
+              <CarbonUserRole />
+            </ModalButton>
+          )}
+        </div>
+      ))}
       {unassignedRoles.length > 0 && (
         <div className="collapse collapse-arrow bg-base-200 mb-2">
           <input type="checkbox" />
@@ -56,7 +83,7 @@ export default function Audit() {
         </div>
       )}
 
-      {unassignedRoles.length === 0 && unassignedPlayers.length === 0 && (
+      {!getAuditProblems(gameState).isAuditFailed && (
         <div className="alert alert-success">
           <div className="flex-1">
             <svg
@@ -74,6 +101,7 @@ export default function Audit() {
               />
             </svg>
           </div>
+
           <div className="flex-1">
             <label>Game is ready to start!</label>
           </div>
