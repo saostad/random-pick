@@ -54,7 +54,7 @@ const VotingSession: React.FC = () => {
             autoplay={true}
           />
           <button
-            className="btn btn-ghost btn-outline btn-primary"
+            className="btn btn-ghost btn-outline btn-accent"
             onClick={() => {
               startVoting();
               handleOpen("voting-session");
@@ -67,7 +67,7 @@ const VotingSession: React.FC = () => {
       {votingStatus === "in_progress" ||
       votingStatus === "voting_elimination" ? (
         <button
-          className="btn btn-ghost btn-outline btn-primary"
+          className="btn btn-ghost btn-outline btn-accent"
           onClick={() => {
             handleOpen("voting-session");
           }}
@@ -83,7 +83,7 @@ const VotingSession: React.FC = () => {
           </p>
           {votingStatus === "in_progress" && (
             <button
-              className="btn btn-ghost btn-outline btn-primary"
+              className="btn btn-ghost btn-outline btn-accent"
               onClick={endVoting}
             >
               End Voting

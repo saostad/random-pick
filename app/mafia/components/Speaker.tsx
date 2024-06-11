@@ -36,7 +36,7 @@ const Speaker: React.FC<SpeakerProps> = ({
         </p>
       )}
       <button
-        className="btn btn-ghost btn-outline btn-primary"
+        className="btn btn-ghost btn-outline btn-accent"
         onClick={handleNextSpeaker}
         disabled={challengeModeDisabled}
       >

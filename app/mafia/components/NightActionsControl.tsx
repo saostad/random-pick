@@ -176,7 +176,7 @@ const NightActionsControl: React.FC = () => {
                 )
               </div>
               <button
-                className="btn btn-ghost btn-outline btn-primary mr-4"
+                className="btn btn-ghost btn-outline btn-accent mr-4"
                 onClick={handleNextAction}
               >
                 Next Role <CarbonTouchInteraction />
