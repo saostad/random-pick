@@ -237,7 +237,10 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       ...prev,
       players: prev.players.map((player) =>
         player.id === playerId
-          ? { ...player, voteCount: player.voteCount - 1 }
+          ? {
+              ...player,
+              voteCount: player.voteCount === 0 ? 0 : player.voteCount - 1,
+            }
           : player
       ),
     }));
