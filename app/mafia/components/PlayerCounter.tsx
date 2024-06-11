@@ -8,11 +8,27 @@ const PlayerCounter: React.FC = () => {
   const alivePlayers = getAlivePlayers({ players });
 
   return (
-    <div className="m-auto my-4 text-center w-full">
-      <span className="font-mono">
-        {alivePlayers.length} Players in the game.{" "}
-        <small>({players.length - alivePlayers.length} out!)</small>
-      </span>
+    <div className="grid grid-flow-col gap-5 text-center auto-cols-max justify-center my-4">
+      <div className="flex flex-col p-2 bg-primary rounded-box text-primary-content">
+        <span className="countdown font-mono text-5xl">
+          <span
+            style={{ "--value": alivePlayers.length } as React.CSSProperties}
+          ></span>
+        </span>
+        Players
+      </div>
+      <div className="flex flex-col p-2 bg-primary rounded-box text-primary-content">
+        <span className="countdown font-mono text-5xl">
+          <span
+            style={
+              {
+                "--value": players.length - alivePlayers.length,
+              } as React.CSSProperties
+            }
+          ></span>
+        </span>
+        Dead
+      </div>
     </div>
   );
 };
