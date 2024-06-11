@@ -182,7 +182,8 @@ const Roles: React.FC = () => {
       {activeTab === "predefinedRoles" && <PredefinedRoles />}
       {activeTab === "suggestRoles" && <RoleSuggestion />}
 
-      <hr />
+      <div className="divider"></div>
+
       <div
         style={{
           display: "grid",

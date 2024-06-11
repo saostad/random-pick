@@ -48,7 +48,7 @@ const EventTimeline: React.FC = () => {
               ))}
             </ul>
           </div>
-          <hr />
+          <div className="divider"></div>
         </li>
       ))}
     </ul>

@@ -126,7 +126,8 @@ const Players: React.FC = () => {
         </button>
         {error && <div style={{ color: "red" }}>{error}</div>}
       </div>
-      <hr />
+      <div className="divider"></div>
+
       <div
         style={{
           display: "grid",
