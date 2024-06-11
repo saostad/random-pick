@@ -5,7 +5,6 @@ import VotingSession from "./VotingSession";
 import NightActionsControl from "./NightActionsControl";
 import CarbonNextFilled from "~icons/carbon/next-filled";
 import Animation from "./Animation";
-import PlayerCounter from "./PlayerCounter";
 
 const Wizard: React.FC = () => {
   const { gameState, setCurrentStepIndex } = useGameContext();
