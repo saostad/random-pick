@@ -5,7 +5,7 @@ interface FooterProps extends HTMLAttributes<HTMLElement> {}
 
 const Footer: React.FC<FooterProps> = (props) => {
   return (
-    <div {...props} className="btm-nav container mx-auto">
+    <div {...props} className="btm-nav container mx-auto max-w-md">
       <button className="text-primary">
         <svg
           xmlns="http://www.w3.org/2000/svg"
