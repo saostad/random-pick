@@ -172,8 +172,9 @@ const DayActionsControl: React.FC = () => {
         Day Actions <small>(Day {gameState.dayCount})</small>
       </div>
       {gameState.dayCount !== 0 && lastStartingPlayer && (
-        <p className="my-3">
-          Last day&apos;s starter was: {lastStartingPlayer.name}
+        <p className="my-4">
+          Last day&apos;s starter was:{" "}
+          <span className="font-bold">{lastStartingPlayer.name}</span>
         </p>
       )}
       <div className="mb-2 flex items-center">
@@ -204,7 +205,7 @@ const DayActionsControl: React.FC = () => {
         </button>
       </div>
       <button
-        className="btn btn-ghost btn-outline btn-accent mb-4"
+        className="btn btn-ghost btn-outline btn-accent mb-4 my-3"
         onClick={handleStartDay}
         disabled={!selectedStartingPlayer}
       >
