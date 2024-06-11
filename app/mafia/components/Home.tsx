@@ -1,5 +1,6 @@
 import { useGameContext } from "../contexts/GameContext";
 import { getAuditProblems } from "../utils/get-from-fns";
+import GameStats from "./GameStats";
 import ModalButton from "./ModalButton";
 import NewGameButton from "./NewGameButton";
 import Wizard from "./Wizard";
@@ -32,7 +33,10 @@ const Home = () => {
         </ModalButton>
       </div>
 
-      <div className="divider" />
+      <GameStats />
+
+      <div className="mb-2" />
+
       <Wizard />
     </>
   );

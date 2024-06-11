@@ -73,7 +73,7 @@ const Main: React.FC<MainProps> = (props) => {
       />
 
       <ActionRecommender />
-      <div className="my-4" />
+      <div className="my-24" />
     </div>
   );
 };

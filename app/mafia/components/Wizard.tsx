@@ -76,8 +76,7 @@ const Wizard: React.FC = () => {
 
   return (
     <div>
-      <PlayerCounter />
-      <div ref={stepsContainerRef} className="overflow-x-auto mb-4">
+      <div ref={stepsContainerRef} className="overflow-x-auto pb-4">
         <ul className="steps">
           {sequence.map((step, index) => {
             let dataContent: string = "?";

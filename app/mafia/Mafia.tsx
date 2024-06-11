@@ -12,11 +12,11 @@ export default function Mafia() {
     <ThemeProvider>
       <ModalProvider>
         <GameProvider>
-          <div className="flex flex-col min-h-screen container mx-auto max-w-lg">
+          <div className="flex flex-col container mx-auto max-w-lg">
             <header className="flex-none">
               <Header />
             </header>
-            <main className="flex-1">
+            <main className="flex-1 overflow-y-scroll">
               <Main />
             </main>
             <footer className="flex-none">
