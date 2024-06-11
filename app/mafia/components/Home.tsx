@@ -33,9 +33,10 @@ const Home = () => {
         </ModalButton>
       </div>
 
+      <div className="divider my-1"></div>
       <GameStats />
 
-      <div className="mb-2" />
+      <div className="divider my-2"></div>
 
       <Wizard />
     </>
