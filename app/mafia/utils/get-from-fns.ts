@@ -89,17 +89,19 @@ export function getAuditProblems(gameState: GameState) {
     });
   }
 
+  if (gameState.players.length !== gameState.gameRoles.length) {
+    isAuditFailed = true;
+    errors.push({
+      code: 20,
+      message: `Roles and players count mismatch. Roles: ${gameState.gameRoles.length}, Players: ${gameState.players.length}`,
+    });
+  }
+
   if (rolesWithoutPlayers.length > 0 || playersWithoutRoles.length > 0) {
     isAuditFailed = true;
     errors.push({
       code: 10,
       message: "Roles without players or players without roles.",
-    });
-  } else if (rolesWithoutPlayers.length !== playersWithoutRoles.length) {
-    isAuditFailed = true;
-    errors.push({
-      code: 20,
-      message: `Roles and players count mismatch. Roles: ${gameState.gameRoles.length}, Players: ${gameState.players.length}`,
     });
   }
 

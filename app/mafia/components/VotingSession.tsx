@@ -46,7 +46,7 @@ const VotingSession: React.FC = () => {
   return (
     <div>
       {votingStatus === "not_started" && (
-        <>
+        <div className="flex flex-col items-center mt-6">
           <Animation
             className=""
             src="mafia/animation/think.lottie"
@@ -54,7 +54,7 @@ const VotingSession: React.FC = () => {
             autoplay={true}
           />
           <button
-            className="btn btn-ghost btn-outline btn-accent"
+            className="btn btn-ghost btn-outline btn-accent mt-6"
             onClick={() => {
               startVoting();
               handleOpen("voting-session");
@@ -62,22 +62,30 @@ const VotingSession: React.FC = () => {
           >
             Start Voting
           </button>
-        </>
+        </div>
       )}
       {votingStatus === "in_progress" ||
       votingStatus === "voting_elimination" ? (
-        <button
-          className="btn btn-ghost btn-outline btn-accent"
-          onClick={() => {
-            handleOpen("voting-session");
-          }}
-        >
-          Resume Voting
-        </button>
+        <div className="flex flex-col items-center mt-6">
+          <Animation
+            className=""
+            src="mafia/animation/think.lottie"
+            loop={false}
+            autoplay={true}
+          />
+          <button
+            className="btn btn-ghost btn-outline btn-accent mt-6"
+            onClick={() => {
+              handleOpen("voting-session");
+            }}
+          >
+            Resume Voting
+          </button>
+        </div>
       ) : null}
       <FlexibleModal modalId="voting-session" title="Voting Session">
         <div className="mb-4">
-          <p className="text-center text-success">
+          <p className="text-center text-success my-4">
             {alivePlayers.length} Player{alivePlayers.length > 1 ? "s" : ""} in
             the game. Count/2 = {Math.ceil(alivePlayers.length / 2)}
           </p>
@@ -135,7 +143,7 @@ const VotingSession: React.FC = () => {
         {votingStatus === "voting_elimination" &&
         playersWithMaxVotes.length > 0 ? (
           <div style={{ marginBottom: "1rem" }}>
-            <h3>Leading Players</h3>
+            <h3 className="font-semibold text-xl my-4">Leading Players</h3>
             {playersWithMaxVotes.map((player) => (
               <div
                 key={player.id}

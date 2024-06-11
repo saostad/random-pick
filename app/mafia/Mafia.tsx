@@ -16,7 +16,7 @@ export default function Mafia() {
             <header className="flex-none">
               <Header />
             </header>
-            <main className="flex-1 overflow-y-scroll">
+            <main className="flex-1">
               <Main />
             </main>
             <footer className="flex-none">

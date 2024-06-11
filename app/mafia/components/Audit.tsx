@@ -38,6 +38,17 @@ export default function Audit() {
               <CarbonUserIdentification />
             </ModalButton>
           )}
+          {error.code === 20 && (
+            <>
+              <ModalButton modalId="Players">
+                + Players - <CarbonGroup />
+              </ModalButton>
+              <ModalButton modalId="Roles">
+                + Roles -
+                <CarbonUserRole />
+              </ModalButton>
+            </>
+          )}
           {error.code === 30 && (
             <ModalButton modalId="Players">
               + Players - <CarbonGroup />

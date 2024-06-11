@@ -221,7 +221,7 @@ const DayActionsControl: React.FC = () => {
                 speakingOrder.length > 0 &&
                 currentSpeaker && (
                   <>
-                    <div className="grid grid-cols-2">
+                    <div className="flex justify-between">
                       <Timer
                         currentSpeakerIndex={currentSpeakerIndex}
                         challengeMode={challengeMode}
