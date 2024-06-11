@@ -71,7 +71,7 @@ export type GameState = {
   speakingOrder: number[];
   tags: TagsType[];
   lastActCards: LastActType[];
-  activeTab: string;
+  activeTab: "home" | "settings";
 };
 
 export type GameContextType = {
