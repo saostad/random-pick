@@ -162,7 +162,7 @@ const DayActionsControl: React.FC = () => {
   };
   return (
     <>
-      <div className="text-2xl font-bold mt-4">
+      <div className="text-2xl text-center font-bold mt-4">
         <Animation
           className="mask mask-circle"
           src="mafia/animation/day.lottie"
@@ -172,7 +172,9 @@ const DayActionsControl: React.FC = () => {
         Day Actions <small>(Day {gameState.dayCount})</small>
       </div>
       {gameState.dayCount !== 0 && lastStartingPlayer && (
-        <p>Last day&apos;s starter was: {lastStartingPlayer.name}</p>
+        <p className="my-3">
+          Last day&apos;s starter was: {lastStartingPlayer.name}
+        </p>
       )}
       <div className="mb-2 flex items-center">
         <label htmlFor="starting-player" className="mr-2">

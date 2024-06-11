@@ -80,7 +80,7 @@ const Wizard: React.FC = () => {
       <div ref={stepsContainerRef} className="overflow-x-auto mb-4">
         <ul className="steps">
           {sequence.map((step, index) => {
-            let dataContent = "?";
+            let dataContent: string = "?";
             if (index < currentStepIndex) {
               dataContent = "✓";
             } else if (index === currentStepIndex) {
@@ -91,7 +91,10 @@ const Wizard: React.FC = () => {
               <li
                 key={index}
                 className={`step ${
-                  index <= currentStepIndex ? "step-primary" : "step-success"
+                  index === currentStepIndex
+                    ? "step-warning"
+                    : (index >= currentStepIndex && "step-neutral") ||
+                      "step-success"
                 }`}
                 data-content={dataContent}
               >
