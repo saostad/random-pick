@@ -1,12 +1,27 @@
-import React, { HTMLAttributes } from "react";
+import React from "react";
+import { useGameContext } from "../contexts/GameContext";
 
-// Define the props expected by the Footer component, extending standard HTML attributes for <footer>
-interface FooterProps extends HTMLAttributes<HTMLElement> {}
+interface FooterProps {}
 
-const Footer: React.FC<FooterProps> = (props) => {
+const Footer: React.FC<FooterProps> = () => {
+  const { updateGameState, gameState } = useGameContext();
+
+  const onNavigate = (tab: string) => {
+    updateGameState({ ...gameState, activeTab: tab });
+  };
+
+  const { activeTab } = gameState;
+
   return (
-    <div {...props} className="btm-nav container mx-auto max-w-md">
-      <button className="text-primary">
+    <div className="btm-nav container mx-auto max-w-lg">
+      <button
+        onClick={() => onNavigate("home")}
+        className={`text-primary ${
+          activeTab === "home" ? "active" : ""
+        } transition duration-500 ease-in-out transform ${
+          activeTab === "home" ? "scale-110" : "scale-100"
+        }`}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"
@@ -22,7 +37,14 @@ const Footer: React.FC<FooterProps> = (props) => {
           />
         </svg>
       </button>
-      <button className="text-primary active">
+      <button
+        onClick={() => onNavigate("about")}
+        className={`text-primary ${
+          activeTab === "about" ? "active" : ""
+        } transition duration-500 ease-in-out transform ${
+          activeTab === "about" ? "scale-110" : "scale-100"
+        }`}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"
@@ -38,7 +60,14 @@ const Footer: React.FC<FooterProps> = (props) => {
           />
         </svg>
       </button>
-      <button className="text-primary">
+      <button
+        onClick={() => onNavigate("contact")}
+        className={`text-primary ${
+          activeTab === "contact" ? "active" : ""
+        } transition duration-500 ease-in-out transform ${
+          activeTab === "contact" ? "scale-110" : "scale-100"
+        }`}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"
@@ -55,15 +84,6 @@ const Footer: React.FC<FooterProps> = (props) => {
         </svg>
       </button>
     </div>
-    // <footer className="footer footer-center text-base-content">
-    //   <aside>
-    //     <span>
-    //       Developed by{" "}
-    //       <a href="https://www.linkedin.com/in/saeidostad/">Saeid Ostad</a>
-    //     </span>
-    //     <span>Copyright © 2024 - All right reserved.</span>
-    //   </aside>
-    // </footer>
   );
 };
 

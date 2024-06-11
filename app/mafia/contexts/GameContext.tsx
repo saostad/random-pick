@@ -71,6 +71,7 @@ export type GameState = {
   speakingOrder: number[];
   tags: TagsType[];
   lastActCards: LastActType[];
+  activeTab: string;
 };
 
 export type GameContextType = {
@@ -115,6 +116,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     speakingOrder: [],
     tags: [...tags],
     lastActCards: [],
+    activeTab: "home",
   };
 
   const [gameState, setGameState] = useLocalStorageState<GameState>(
