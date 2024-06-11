@@ -75,7 +75,7 @@ const Settings = () => {
         }}
       >
         <ModalButton modalId="EventTimeline">Event Timeline</ModalButton>
-        <ModalButton modalId="audit">
+        <ModalButton modalId="audit" animate={true}>
           Audit
           <CarbonCloudAuditing />
         </ModalButton>
