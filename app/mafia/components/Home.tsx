@@ -2,7 +2,7 @@ import ModalButton from "./ModalButton";
 import NewGameButton from "./NewGameButton";
 import Wizard from "./Wizard";
 
-import CarbonUserRole from "~icons/carbon/user-role";
+import CarbonCloudAuditing from "~icons/carbon/cloud-auditing";
 import CarbonEventSchedule from "~icons/carbon/event-schedule";
 
 const Home = () => {
@@ -16,9 +16,9 @@ const Home = () => {
         }}
       >
         <NewGameButton />
-        <ModalButton modalId="RoleViewer">
-          Player&apos;s Cards
-          <CarbonUserRole className="hidden sm:block" />
+        <ModalButton modalId="audit">
+          Audit
+          <CarbonCloudAuditing />
         </ModalButton>
         <ModalButton modalId="EventTimeline">
           Timeline

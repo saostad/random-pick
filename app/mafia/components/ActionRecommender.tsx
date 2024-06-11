@@ -3,8 +3,9 @@ import { useGameContext } from "../contexts/GameContext";
 import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
 import ModalButton from "./ModalButton";
-import StreamlineStartupSolid from "~icons/streamline/startup-solid";
 import Animation from "./Animation";
+
+import CarbonUserRole from "~icons/carbon/user-role";
 
 interface ActionRecommenderProps extends HTMLAttributes<HTMLElement> {}
 
@@ -55,6 +56,11 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
               loop={true}
               autoplay={true}
             />
+
+            <ModalButton modalId="RoleViewer">
+              Do you want to show the Player&apos;s Cards
+              <CarbonUserRole className="hidden sm:block" />
+            </ModalButton>
           </div>
         ) : null}
       </div>

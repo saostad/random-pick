@@ -14,6 +14,7 @@ import ActionRecommender from "./ActionRecommender";
 import LastActions from "./LastActions";
 import { useGameContext } from "../contexts/GameContext";
 import Home from "./Home";
+import About from "./About";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -64,6 +65,7 @@ const Main: React.FC<MainProps> = (props) => {
       />
       <FlexibleModal modalId="audit" component={Audit} title="Audit" />
       <FlexibleModal title="Tags" modalId="Tags" component={Tags} />
+      <FlexibleModal title="About" modalId="About" component={About} />
       <FlexibleModal
         title="Last Acts"
         modalId="LastActs"

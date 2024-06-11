@@ -5,7 +5,6 @@ import CarbonGroup from "~icons/carbon/group.jsx";
 import CarbonUserIdentification from "~icons/carbon/user-identification";
 import CarbonTag from "~icons/carbon/tag";
 import MdiDead from "~icons/mdi/dead";
-import LucideUserCog from "~icons/lucide/user-cog";
 import CarbonCloudAuditing from "~icons/carbon/cloud-auditing";
 import CilTags from "~icons/cil/tags";
 import CarbonUserRole from "~icons/carbon/user-role";
@@ -52,6 +51,7 @@ const Settings = () => {
           <CarbonUserIdentification />
         </ModalButton>
       </div>
+
       <div className="divider divider-info">Other</div>
       <div
         style={{
@@ -63,12 +63,33 @@ const Settings = () => {
         <ModalButton modalId="Tags">
           + Tags - <CilTags />
         </ModalButton>
-        <ModalButton modalId="LastActs">+ Last Acts -</ModalButton>
+        <ModalButton modalId="LastActs">+ Last Actions -</ModalButton>
+      </div>
 
+      <div className="divider divider-info">Auditing</div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "0.5rem",
+        }}
+      >
+        <ModalButton modalId="EventTimeline">Event Timeline</ModalButton>
         <ModalButton modalId="audit">
           Audit
           <CarbonCloudAuditing />
         </ModalButton>
+      </div>
+
+      <div className="divider divider-info">About Me!</div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "0.5rem",
+        }}
+      >
+        <ModalButton modalId="About">About Us</ModalButton>
       </div>
     </>
   );
