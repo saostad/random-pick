@@ -12,13 +12,7 @@ const Home = () => {
   const { gameState } = useGameContext();
   return (
     <>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
-          gap: "0.5rem",
-        }}
-      >
+      <div className="flex justify-between items-center">
         <NewGameButton />
         <ModalButton
           modalId="audit"
@@ -26,10 +20,6 @@ const Home = () => {
         >
           Audit
           <CarbonCloudAuditing />
-        </ModalButton>
-        <ModalButton modalId="EventTimeline">
-          Timeline
-          <CarbonEventSchedule className="hidden sm:block" />
         </ModalButton>
       </div>
 

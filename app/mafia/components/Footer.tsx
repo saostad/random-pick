@@ -1,6 +1,8 @@
 import React from "react";
 import { useGameContext } from "../contexts/GameContext";
 
+import CarbonCloudAuditing from "~icons/carbon/cloud-auditing";
+
 interface FooterProps {}
 
 const Footer: React.FC<FooterProps> = () => {
@@ -16,7 +18,7 @@ const Footer: React.FC<FooterProps> = () => {
     <div className="btm-nav container mx-auto max-w-lg">
       <button
         onClick={() => onNavigate("home")}
-        className={`text-primary ${
+        className={`textarea-info ${
           activeTab === "home" ? "active" : ""
         } transition duration-500 ease-in-out transform ${
           activeTab === "home" ? "scale-110" : "scale-100"
@@ -39,8 +41,19 @@ const Footer: React.FC<FooterProps> = () => {
         Game
       </button>
       <button
+        onClick={() => onNavigate("timeline")}
+        className={`textarea-info ${
+          activeTab === "timeline" ? "active" : ""
+        } transition duration-500 ease-in-out transform ${
+          activeTab === "timeline" ? "scale-110" : "scale-100"
+        }`}
+      >
+        <CarbonCloudAuditing />
+        Timeline
+      </button>
+      <button
         onClick={() => onNavigate("settings")}
-        className={`text-primary ${
+        className={`textarea-info ${
           activeTab === "settings" ? "active" : ""
         } transition duration-500 ease-in-out transform ${
           activeTab === "settings" ? "scale-110" : "scale-100"

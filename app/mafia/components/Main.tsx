@@ -26,6 +26,7 @@ const Main: React.FC<MainProps> = (props) => {
   return (
     <div className="px-4" {...props}>
       {activeTab === "settings" && <Settings />}
+      {activeTab === "timeline" && <EventTimeline />}
       {activeTab === "home" && <Home />}
 
       <FlexibleModal
