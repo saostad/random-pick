@@ -200,7 +200,6 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     handleOpen("ActionRecommender");
   };
 
-  /** reset the game state except the player-names and roles */
   const softResetGameState = () => {
     setGameState((prev) => ({
       ...prev,

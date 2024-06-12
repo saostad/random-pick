@@ -229,19 +229,13 @@ const Roles: React.FC = () => {
                       handleUpdateActionOrder(role.id, Number(e.target.value))
                     }
                     placeholder="Enter action order"
-                    style={{ marginLeft: "1rem" }}
+                    style={{ marginLeft: "0.5rem" }}
                   />
                 )}
               </div>
               <button
                 onClick={() => handleRemoveRole(role.id)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "red",
-                  cursor: "pointer",
-                  fontSize: "1rem",
-                }}
+                className="btn btn-circle btn-outline btn-error btn-sm"
               >
                 &#x2715;
               </button>

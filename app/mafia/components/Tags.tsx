@@ -9,55 +9,56 @@ const Tags: React.FC = () => {
   } = useGameContext();
   const [newTag, setNewTag] = useState("");
 
-  const handleAddTag = () => {
+  const handleAdd = () => {
     if (newTag && !tags.includes(newTag as TagsType)) {
       updateGameState({ tags: [...tags, newTag as TagsType] });
       setNewTag("");
     }
   };
 
-  const handleRemoveTag = (tag: TagsType) => {
+  const handleRemove = (tag: TagsType) => {
     updateGameState({ tags: tags.filter((t) => t !== tag) });
   };
 
+  function handleUpdate(tag: TagsType, value: string): void {
+    const updatedTags = tags.map((t) => (t === tag ? value : t));
+    updateGameState({ tags: updatedTags as TagsType[] });
+  }
   return (
-    <div>
-      <ul>
-        {tags.map((tag, index) => (
-          <li key={index} className="grid grid-cols-2 items-center">
-            <span style={{ marginRight: "1rem" }}>{tag}</span>
-            <button
-              onClick={() => handleRemoveTag(tag)}
-              className="btn btn-circle btn-outline btn-error"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </li>
-        ))}
-      </ul>
+    <>
       <input
         type="text"
+        placeholder="Enter a new tag"
         className="input input-bordered input-primary w-full max-w-xs mb-2"
         value={newTag}
         onChange={(e) => setNewTag(e.target.value as TagsType)}
       />
-      <button className="btn btn-primary btn-outline" onClick={handleAddTag}>
+      <button className="btn btn-primary btn-outline" onClick={handleAdd}>
         Add Tag
       </button>
-    </div>
+      <div className="divider"></div>
+
+      <div className="grid grid-cols-2 gap-4">
+        {tags.map((tag, index) => (
+          <>
+            <input
+              type="text"
+              className="input input-bordered w-full max-w-xs input-sm"
+              value={tag}
+              onChange={(e) => handleUpdate(tag, e.target.value)}
+              placeholder="Tag name"
+            />
+
+            <button
+              onClick={() => handleRemove(tag)}
+              className="btn btn-circle btn-outline btn-error btn-sm"
+            >
+              &#x2715;
+            </button>
+          </>
+        ))}
+      </div>
+    </>
   );
 };
 
