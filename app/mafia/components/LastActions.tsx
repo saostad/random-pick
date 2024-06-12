@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { LastActType, useGameContext } from "../contexts/GameContext";
 import PredefinedLastActions from "./PredefinedLastActions";
+import LastActionsSuggestion from "./LastActionsSuggestion";
 
 interface LastActCardsProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -106,13 +107,7 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
 
       {activeTab === "predefinedItems" && <PredefinedLastActions />}
 
-      {activeTab === "suggestItems" && (
-        <div>
-          <p className="text-sm text-gray-500">
-            Suggest a last act to be added to the list
-          </p>
-        </div>
-      )}
+      {activeTab === "suggestItems" && <LastActionsSuggestion />}
 
       <div className="divider"></div>
 
