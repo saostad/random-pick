@@ -70,7 +70,7 @@ const NewGameButton: React.FC = () => {
       <DropdownButton
         title={
           <>
-            <CarbonRenew /> New
+            <CarbonRenew /> Reset Game
           </>
         }
       >

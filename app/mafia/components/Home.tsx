@@ -6,19 +6,18 @@ import NewGameButton from "./NewGameButton";
 import Wizard from "./Wizard";
 
 import CarbonCloudAuditing from "~icons/carbon/cloud-auditing";
-import CarbonEventSchedule from "~icons/carbon/event-schedule";
 
 const Home = () => {
   const { gameState } = useGameContext();
   return (
     <>
-      <div className="flex justify-around items-center">
+      <div className="flex justify-between items-center">
         <NewGameButton />
         <ModalButton
           modalId="audit"
           animate={getAuditProblems(gameState).isAuditFailed}
         >
-          Audit
+          Audit Status
           <CarbonCloudAuditing />
         </ModalButton>
       </div>
