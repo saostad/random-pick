@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { GameState, useGameContext } from "../contexts/GameContext";
 import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
-import CarbonHazeNight from "~icons/carbon/haze-night";
-import CarbonTouchInteraction from "~icons/carbon/touch-interaction";
 import ModalButton from "./ModalButton";
 import TagPlayers from "./TagPlayers";
 import CarbonTag from "~icons/carbon/tag";
@@ -14,6 +12,7 @@ import PlayerTagsIndicator from "./PlayerTagsIndicator";
 import CarbonPlayOutline from "~icons/carbon/play-outline";
 import CarbonPauseOutline from "~icons/carbon/pause-outline";
 import Animation from "./Animation";
+import MediaPlayer from "./MediaPlayer";
 
 const handleNightActions = (gameState: GameState): GameState => {
   gameState.gameRoles
@@ -88,31 +87,6 @@ const NightActionsControl: React.FC = () => {
     nightCompleted,
   ]);
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    if (!audioRef.current) {
-      audioRef.current = new Audio(
-        "/mafia/Whispering20Shadows20ext20v1.2.1.1.1.mp3"
-      );
-    }
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
-    };
-  }, []);
-
-  const mediaPlayerChange = () => {
-    if (audioRef.current) {
-      if (audioRef.current.paused) {
-        audioRef.current.play();
-      } else {
-        audioRef.current.pause();
-      }
-    }
-  };
-
   return (
     <div className="flex flex-col items-center mt-6">
       <Animation
@@ -145,15 +119,10 @@ const NightActionsControl: React.FC = () => {
                   currentSpeakerIndex={actionableRoles[currentActionIndex].id}
                   resetTrigger={true}
                 />
-                <label className="swap">
-                  <input type="checkbox" onChange={mediaPlayerChange} />
-                  <div className="swap-on">
-                    <CarbonPauseOutline className="min-h-8 min-w-10" />
-                  </div>
-                  <div className="swap-off">
-                    <CarbonPlayOutline className="min-h-8 min-w-10" />
-                  </div>
-                </label>
+                <MediaPlayer
+                  loop={true}
+                  mediaUrl="/mafia/Whispering20Shadows20ext20v1.2.1.1.1.mp3"
+                />
               </div>
               <div className="my-4">
                 <b>

@@ -113,7 +113,7 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
 
       <div className="grid grid-cols-2 gap-4">
         {lastActCards.map((lastAct, index) => (
-          <>
+          <div key={lastAct.id}>
             <input
               type="text"
               className="input input-bordered w-full max-w-xs"
@@ -128,7 +128,7 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
             >
               &#x2715;
             </button>
-          </>
+          </div>
         ))}
       </div>
     </div>

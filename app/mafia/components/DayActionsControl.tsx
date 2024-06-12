@@ -12,6 +12,7 @@ import Animation from "./Animation";
 
 import CarbonPlayOutline from "~icons/carbon/play-outline";
 import CarbonPauseOutline from "~icons/carbon/pause-outline";
+import MediaPlayer from "./MediaPlayer";
 
 const DayActionsControl: React.FC = () => {
   const { gameState, updateGameState, increaseDayCount, setSpeakingOrder } =
@@ -134,32 +135,6 @@ const DayActionsControl: React.FC = () => {
     ? gameState.players.find((player) => player.id === currentChallenger)?.name
     : null;
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    if (!audioRef.current) {
-      audioRef.current = new Audio("/mafia/ding-101492.mp3");
-    }
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
-    };
-  }, []);
-
-  const mediaPlayerChange = () => {
-    if (audioRef.current) {
-      if (audioRef.current.paused) {
-        audioRef.current.play();
-        // TODO: when audio ends, change the icon to play
-        audioRef.current.onended = () => {
-          // Change the icon to play
-        };
-      } else {
-        audioRef.current.pause();
-      }
-    }
-  };
   return (
     <>
       <div className="text-2xl text-center font-bold mt-4">
@@ -229,15 +204,7 @@ const DayActionsControl: React.FC = () => {
                         challengeMode={challengeMode}
                         resetTrigger={resetTrigger}
                       />
-                      <label className="swap">
-                        <input type="checkbox" onChange={mediaPlayerChange} />
-                        <div className="swap-on">
-                          <CarbonPauseOutline className="min-h-8 min-w-10" />
-                        </div>
-                        <div className="swap-off">
-                          <CarbonPlayOutline className="min-h-8 min-w-10" />
-                        </div>
-                      </label>
+                      <MediaPlayer mediaUrl="/mafia/ding-101492.mp3" />
                     </div>
 
                     <Speaker

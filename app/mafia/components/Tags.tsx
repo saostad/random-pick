@@ -42,7 +42,7 @@ const Tags: React.FC<Props> = (props) => {
 
       <div className="grid grid-cols-2 gap-4">
         {tags.map((tag, index) => (
-          <>
+          <div key={tag}>
             <input
               type="text"
               className="input input-bordered w-full max-w-xs"
@@ -57,7 +57,7 @@ const Tags: React.FC<Props> = (props) => {
             >
               &#x2715;
             </button>
-          </>
+          </div>
         ))}
       </div>
     </div>
