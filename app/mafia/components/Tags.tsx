@@ -45,7 +45,7 @@ const Tags: React.FC<Props> = (props) => {
           <>
             <input
               type="text"
-              className="input input-bordered w-full max-w-xs input-sm"
+              className="input input-bordered w-full max-w-xs"
               value={tag}
               onChange={(e) => handleUpdate(tag, e.target.value)}
               placeholder="Tag name"
@@ -53,7 +53,7 @@ const Tags: React.FC<Props> = (props) => {
 
             <button
               onClick={() => handleRemove(tag)}
-              className="btn btn-circle btn-outline btn-error btn-sm"
+              className="btn btn-circle btn-outline btn-error"
             >
               &#x2715;
             </button>

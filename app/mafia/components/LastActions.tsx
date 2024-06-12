@@ -121,7 +121,7 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
           <>
             <input
               type="text"
-              className="input input-bordered w-full max-w-xs input-sm"
+              className="input input-bordered w-full max-w-xs"
               value={lastAct.title}
               onChange={(e) => handleUpdate(lastAct, e.target.value)}
               placeholder="Tag name"
@@ -129,7 +129,7 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
 
             <button
               onClick={() => handleRemove(lastAct)}
-              className="btn btn-circle btn-outline btn-error btn-sm"
+              className="btn btn-circle btn-outline btn-error"
             >
               &#x2715;
             </button>
