@@ -12,7 +12,7 @@ const Home = () => {
   const { gameState } = useGameContext();
   return (
     <>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-around items-center">
         <NewGameButton />
         <ModalButton
           modalId="audit"
