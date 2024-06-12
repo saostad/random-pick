@@ -22,7 +22,9 @@ const EventTimeline: React.FC = () => {
     );
   });
 
-  return (
+  return events.length === 0 ? (
+    <p>No events to show</p>
+  ) : (
     <ul className="timeline timeline-snap-icon timeline-compact timeline-vertical">
       {Object.entries(groupedEvents).map(([key, group], index) => (
         <li key={index}>
