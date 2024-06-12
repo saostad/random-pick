@@ -72,6 +72,10 @@ export type GameState = {
   tags: TagsType[];
   lastActCards: LastActType[];
   activeTab: "home" | "settings" | "timeline";
+  challengeTime: number;
+  challengeTimeEnabled: boolean;
+  speakingTime: number;
+  speakingTimeEnabled: boolean;
 };
 
 export type GameContextType = {
@@ -117,6 +121,10 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     tags: [...tags],
     lastActCards: [],
     activeTab: "home",
+    challengeTime: 30,
+    challengeTimeEnabled: false,
+    speakingTime: 60,
+    speakingTimeEnabled: true,
   };
 
   const [gameState, setGameState] = useLocalStorageState<GameState>(

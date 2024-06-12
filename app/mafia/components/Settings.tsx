@@ -55,7 +55,7 @@ const Settings = () => {
         </ModalButton>
       </div>
 
-      <div className="divider divider-info">Other</div>
+      <div className="divider divider-info">Actions</div>
       <div
         style={{
           display: "grid",
@@ -69,7 +69,18 @@ const Settings = () => {
         <ModalButton modalId="LastActs">+ Last Actions -</ModalButton>
       </div>
 
-      <div className="divider divider-info">Auditing</div>
+      <div className="divider divider-info">Timer</div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "0.5rem",
+        }}
+      >
+        <ModalButton modalId="TimerSettings">Timer</ModalButton>
+      </div>
+
+      <div className="divider divider-info">Audit</div>
       <div
         style={{
           display: "grid",
