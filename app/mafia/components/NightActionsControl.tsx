@@ -114,7 +114,7 @@ const NightActionsControl: React.FC = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col items-center mt-6">
       <Animation
         className=""
         src="mafia/animation/night.lottie"
@@ -122,10 +122,12 @@ const NightActionsControl: React.FC = () => {
         autoplay={true}
       />
       <button
-        className="btn btn-ghost btn-outline btn-accent mt-2"
+        className="btn mt-2 relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
         onClick={handleStartNight}
       >
-        Start Night {gameState.nightCount} <CarbonHazeNight />
+        <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+          Start Night {gameState.nightCount}
+        </span>
       </button>
       <FlexibleModal
         modalId="TagPlayers"
@@ -176,10 +178,12 @@ const NightActionsControl: React.FC = () => {
                 )
               </div>
               <button
-                className="btn btn-ghost btn-outline btn-accent mr-4"
+                className="btn mr-4 relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
                 onClick={handleNextAction}
               >
-                Next Role <CarbonTouchInteraction />
+                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                  Next Role
+                </span>
               </button>
               <DropdownButton title={<>Actions</>}>
                 <ModalButton modalId="TagPlayers">
@@ -197,7 +201,7 @@ const NightActionsControl: React.FC = () => {
           )}
         </div>
       </FlexibleModal>
-    </>
+    </div>
   );
 };
 

@@ -54,13 +54,15 @@ const VotingSession: React.FC = () => {
             autoplay={true}
           />
           <button
-            className="btn btn-ghost btn-outline btn-accent mt-6"
+            className="btn mt-6 relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
             onClick={() => {
               startVoting();
               handleOpen("voting-session");
             }}
           >
-            Start Voting
+            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+              Start Voting
+            </span>
           </button>
         </div>
       )}
@@ -74,12 +76,14 @@ const VotingSession: React.FC = () => {
             autoplay={true}
           />
           <button
-            className="btn btn-ghost btn-outline btn-accent mt-6"
+            className="btn mt-6 relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
             onClick={() => {
               handleOpen("voting-session");
             }}
           >
-            Resume Voting
+            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+              Resume Voting
+            </span>
           </button>
         </div>
       ) : null}
@@ -91,21 +95,31 @@ const VotingSession: React.FC = () => {
           </p>
           {votingStatus === "in_progress" && (
             <button
-              className="btn btn-ghost btn-outline btn-accent"
+              className="btn relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
               onClick={endVoting}
             >
-              End Voting
+              <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                End Voting
+              </span>
             </button>
           )}
           {votingStatus === "voting_elimination" && (
-            <>
+            <div className="grid grid-cols-2 gap-4 my-4">
               <button
                 className="btn btn-ghost btn-outline btn-primary"
                 onClick={startVoting}
               >
-                Start Voting Again!
+                Start Again!
               </button>
-            </>
+              <button
+                className="btn btn-outline btn-warning"
+                onClick={() => {
+                  votingEliminationEnd();
+                }}
+              >
+                End without elimination!
+              </button>
+            </div>
           )}
         </div>
         {votingStatus === "in_progress" &&
@@ -147,7 +161,7 @@ const VotingSession: React.FC = () => {
             {playersWithMaxVotes.map((player) => (
               <div
                 key={player.id}
-                style={{ display: "flex", alignItems: "center" }}
+                className="flex items-center justify-between my-2"
               >
                 <p>
                   {player.name}: {player.voteCount} vote
@@ -164,14 +178,6 @@ const VotingSession: React.FC = () => {
                 </button>
               </div>
             ))}
-            <button
-              className="btn btn-outline btn-warning my-4"
-              onClick={() => {
-                votingEliminationEnd();
-              }}
-            >
-              End voting without elimination!
-            </button>
           </div>
         ) : (
           votingStatus === "finished" && "No player has the most votes!"
