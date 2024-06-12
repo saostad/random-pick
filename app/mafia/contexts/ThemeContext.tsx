@@ -32,7 +32,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const systemPrefersColorScheme = usePrefersColorScheme();
   const defaultTheme = systemPrefersColorScheme || "light";
   const [selectedTheme, setSelectedTheme] = useLocalStorageState<string | null>(
-    "picoColorScheme",
+    "theme",
     {
       defaultValue: null,
     }

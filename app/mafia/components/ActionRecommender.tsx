@@ -57,8 +57,8 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
               autoplay={true}
             />
 
-            <ModalButton modalId="RoleViewer">
-              Do you want to show the Player&apos;s Cards
+            <ModalButton modalId="RoleViewer" animate={true}>
+              Show the Player&apos;s Cards
               <CarbonUserRole className="hidden sm:block" />
             </ModalButton>
           </div>
