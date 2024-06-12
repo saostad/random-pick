@@ -35,11 +35,19 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
     setNewLastAct("");
   };
 
-  const handleRemoveLastAct = (lastAct: LastActType) => {
+  const handleRemove = (lastAct: LastActType) => {
     updateGameState({
       lastActCards: lastActCards.filter((act) => act.id !== lastAct.id),
     });
   };
+
+  function handleUpdate(lastAct: LastActType, value: string): void {
+    const updatedLastAct = { ...lastAct, title: value };
+    const updatedLastActCards = lastActCards.map((act) =>
+      act.id === lastAct.id ? updatedLastAct : act
+    );
+    updateGameState({ lastActCards: updatedLastActCards });
+  }
 
   return (
     <div {...props}>
@@ -97,32 +105,37 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
       )}
 
       {activeTab === "predefinedItems" && <PredefinedLastActions />}
-      <ul>
+
+      {activeTab === "suggestItems" && (
+        <div>
+          <p className="text-sm text-gray-500">
+            Suggest a last act to be added to the list
+          </p>
+        </div>
+      )}
+
+      <div className="divider"></div>
+
+      <div className="grid grid-cols-2 gap-4">
         {lastActCards.map((lastAct, index) => (
-          <li key={index} className="grid grid-cols-2 items-center">
-            <span style={{ marginRight: "1rem" }}>{lastAct.title}</span>
+          <>
+            <input
+              type="text"
+              className="input input-bordered w-full max-w-xs input-sm"
+              value={lastAct.title}
+              onChange={(e) => handleUpdate(lastAct, e.target.value)}
+              placeholder="Tag name"
+            />
+
             <button
-              onClick={() => handleRemoveLastAct(lastAct)}
-              className="btn btn-circle btn-outline btn-error"
+              onClick={() => handleRemove(lastAct)}
+              className="btn btn-circle btn-outline btn-error btn-sm"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              &#x2715;
             </button>
-          </li>
+          </>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

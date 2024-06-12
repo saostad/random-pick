@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import { TagsType } from "../data/predefinedTags";
 
-const Tags: React.FC = () => {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {}
+
+const Tags: React.FC<Props> = (props) => {
   const {
     gameState: { tags },
     updateGameState,
@@ -25,7 +27,7 @@ const Tags: React.FC = () => {
     updateGameState({ tags: updatedTags as TagsType[] });
   }
   return (
-    <>
+    <div {...props}>
       <input
         type="text"
         placeholder="Enter a new tag"
@@ -58,7 +60,7 @@ const Tags: React.FC = () => {
           </>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
