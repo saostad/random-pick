@@ -1,15 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import DayActionsControl from "./DayActionsControl";
 import VotingSession from "./VotingSession";
 import NightActionsControl from "./NightActionsControl";
-import CarbonNextFilled from "~icons/carbon/next-filled";
 import Animation from "./Animation";
 
 const Wizard: React.FC = () => {
   const { gameState, setCurrentStepIndex } = useGameContext();
-  const { dayCount, nightCount, votingStatus, currentStepIndex, players } =
-    gameState;
+  const { dayCount, nightCount, votingStatus, currentStepIndex } = gameState;
 
   const sequence: string[] = [];
   for (let i = 0; i <= nightCount; i++) {
