@@ -8,6 +8,13 @@ const GameStats: React.FC = () => {
   const [items, setItems] = useState<string[]>([]);
   const { handleOpen } = useModal();
   const { gameState } = useGameContext();
+  const {
+    challengeTime,
+    challengeTimeEnabled,
+    speakingTime,
+    speakingTimeEnabled,
+    players,
+  } = gameState;
   return (
     <>
       <FlexibleModal modalId="StatList">
@@ -34,18 +41,14 @@ const GameStats: React.FC = () => {
           <div
             className="stat-value text-primary"
             onClick={() => {
-              setItems(
-                getAlivePlayers({ players: gameState.players }).map(
-                  (p) => p.name
-                )
-              );
+              setItems(getAlivePlayers({ players }).map((p) => p.name));
               handleOpen("StatList");
             }}
           >
-            {getAlivePlayers({ players: gameState.players }).length}
+            {getAlivePlayers({ players }).length}
           </div>
           <div className="stat-desc">
-            <span>out of {gameState.players.length}</span>
+            <span>out of {players.length}</span>
           </div>
         </div>
 
@@ -54,18 +57,30 @@ const GameStats: React.FC = () => {
           <div
             className="stat-value text-warning"
             onClick={() => {
-              setItems(
-                getDeadPlayers({ players: gameState.players }).map(
-                  (p) => p.name
-                )
-              );
+              setItems(getDeadPlayers({ players }).map((p) => p.name));
               handleOpen("StatList");
             }}
           >
-            {getDeadPlayers({ players: gameState.players }).length}
+            {getDeadPlayers({ players }).length}
           </div>
           <div className="stat-desc">
-            <span>out of {gameState.players.length}</span>
+            <span>out of {players.length}</span>
+          </div>
+        </div>
+
+        <div className="stat">
+          <div className="stat-title">Timers</div>
+          <div
+            onClick={() => {
+              handleOpen("TimerSettings");
+            }}
+            className="stat-desc text-info"
+          >
+            {speakingTimeEnabled && (
+              <p className="my-4">Speaker: {speakingTime}s</p>
+            )}
+            {challengeTimeEnabled && <p>Challenge: {challengeTime}s</p>}
+            {!speakingTimeEnabled && !challengeTimeEnabled && "Not timer set"}
           </div>
         </div>
       </div>
