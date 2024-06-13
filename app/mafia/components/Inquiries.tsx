@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
-import { getRoleByPlayerId } from "../utils/get-from-fns";
-import PlayerTagsIndicator from "./PlayerTagsIndicator";
+import { getDeadPlayers, getRoleByPlayerId } from "../utils/get-from-fns";
 
 const Inquiries: React.FC = () => {
   const { gameState, decreaseInquiries } = useGameContext();
-  const { inquiries } = gameState;
+  const { inquiries, players } = gameState;
 
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const deadPlayers = gameState.players.filter((player) => !player.isAlive);
+  const deadPlayers = getDeadPlayers({ players });
 
   return (
     <div>
