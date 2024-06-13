@@ -172,7 +172,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const decreaseInquiries = () => {
     setGameState((prev) => ({
       ...prev,
-      inquiries: prev.inquiries - 1,
+      inquiries: prev.inquiries === 0 ? 0 : prev.inquiries - 1,
     }));
   };
 
@@ -234,6 +234,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       votingStatus: "not_started",
       currentStepIndex: 0,
       speakingOrder: [],
+      inquiries: 2,
     }));
     handleOpen("ActionRecommender");
   };

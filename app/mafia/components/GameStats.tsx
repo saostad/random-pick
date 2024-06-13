@@ -73,7 +73,7 @@ const GameStats: React.FC = () => {
           <div
             className="stat-value text-success"
             onClick={() => {
-              handleOpen("InquiriesSetting");
+              handleOpen("Inquiries");
             }}
           >
             {gameState.inquiries}
