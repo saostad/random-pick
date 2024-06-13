@@ -9,8 +9,6 @@ import Timer from "./Timer";
 import DropdownButton from "./DropdownButton";
 import MdiDead from "~icons/mdi/dead";
 import PlayerTagsIndicator from "./PlayerTagsIndicator";
-import CarbonPlayOutline from "~icons/carbon/play-outline";
-import CarbonPauseOutline from "~icons/carbon/pause-outline";
 import Animation from "./Animation";
 import MediaPlayer from "./MediaPlayer";
 
@@ -22,7 +20,6 @@ const handleNightActions = (gameState: GameState): GameState => {
 
   return gameState;
 };
-
 const NightActionsControl: React.FC = () => {
   const { handleOpen } = useModal();
   const { gameState, updateGameState, increaseNightCount } = useGameContext();
@@ -31,8 +28,8 @@ const NightActionsControl: React.FC = () => {
   const [rolePlayers, setRolePlayers] = useState<{
     [key: string]: { name: string; isAlive: boolean; id: string };
   }>({});
-
   const [nightCompleted, setNightCompleted] = useState<boolean>(false);
+  const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
 
   const handleStartNight = () => {
     const rolesWithActions = gameState.gameRoles
@@ -43,6 +40,7 @@ const NightActionsControl: React.FC = () => {
     handleOpen("night-actions");
 
     setCurrentActionIndex(0);
+    setIsTimerRunning(true);
 
     const updatedState = handleNightActions(gameState);
     updateGameState({ ...updatedState });
@@ -52,6 +50,10 @@ const NightActionsControl: React.FC = () => {
 
   const handleNextAction = () => {
     setCurrentActionIndex((prevIndex) => prevIndex + 1);
+    setIsTimerRunning(false);
+    setTimeout(() => {
+      setIsTimerRunning(true);
+    }, 0);
   };
 
   useEffect(() => {
@@ -71,6 +73,7 @@ const NightActionsControl: React.FC = () => {
 
     setRolePlayers(roleToPlayerMap);
   }, [gameState]);
+
   useEffect(() => {
     if (
       currentActionIndex >= actionableRoles.length &&
@@ -114,11 +117,7 @@ const NightActionsControl: React.FC = () => {
           currentActionIndex < actionableRoles.length ? (
             <>
               <div className="flex justify-between">
-                <Timer
-                  challengeMode={false}
-                  currentSpeakerIndex={actionableRoles[currentActionIndex].id}
-                  resetTrigger={true}
-                />
+                <Timer isRunning={isTimerRunning} />
                 <MediaPlayer
                   loop={true}
                   mediaUrl="/mafia/Whispering20Shadows20ext20v1.2.1.1.1.mp3"

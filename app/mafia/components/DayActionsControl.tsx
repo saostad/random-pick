@@ -1,17 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
-import CarbonSun from "~icons/carbon/sun";
 import Timer from "./Timer";
 import Speaker from "./Speaker";
 import Challenge from "./Challenge";
-import CarbonShuffle from "~icons/carbon/shuffle"; // Assuming you have an icon for shuffle
+import CarbonShuffle from "~icons/carbon/shuffle";
 import { getAlivePlayers } from "../utils/get-from-fns";
 import Animation from "./Animation";
-
-import CarbonPlayOutline from "~icons/carbon/play-outline";
-import CarbonPauseOutline from "~icons/carbon/pause-outline";
 import MediaPlayer from "./MediaPlayer";
 
 const DayActionsControl: React.FC = () => {
@@ -38,17 +34,23 @@ const DayActionsControl: React.FC = () => {
   );
   const [resetTrigger, setResetTrigger] = useState<boolean>(false);
 
+  const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
+
   const handleNextSpeaker = () => {
     const nextIndex = (currentSpeakerIndex + 1) % speakingOrder.length;
     if (nextIndex === 0) {
       setAllPlayersCompleted(true);
       increaseDayCount();
+      setIsTimerRunning(false);
     } else {
       setCurrentSpeakerIndex(nextIndex);
       setChallengeMode(false);
       setSelectedChallenger("");
       setCurrentChallenger(null);
-      setResetTrigger((prev) => !prev); // Trigger timer reset
+      setIsTimerRunning(false);
+      setTimeout(() => {
+        setIsTimerRunning(true);
+      }, 0);
     }
   };
 
@@ -70,9 +72,9 @@ const DayActionsControl: React.FC = () => {
       setAllPlayersCompleted(false);
       setChallengedPlayers(new Set());
       setSpeakerChallenged(new Set());
+      setIsTimerRunning(true);
 
       updateGameState({ startingPlayerId: selectedStartingPlayer });
-      setResetTrigger((prev) => !prev); // Trigger timer reset
     } else {
       console.error(
         "Selected starting player not found in the list of players"
@@ -92,7 +94,10 @@ const DayActionsControl: React.FC = () => {
     setChallengeMode(true);
     setChallengedPlayers((prev) => new Set(prev).add(selectedChallenger));
     setCurrentChallenger(selectedChallenger);
-    setResetTrigger((prev) => !prev); // Trigger timer reset
+    setIsTimerRunning(false);
+    setTimeout(() => {
+      setIsTimerRunning(true);
+    }, 0);
   };
 
   const handleEndChallenge = () => {
@@ -103,7 +108,10 @@ const DayActionsControl: React.FC = () => {
         gameState.players[speakingOrder[currentSpeakerIndex]].id
       )
     );
-    setResetTrigger((prev) => !prev); // Trigger timer reset
+    setIsTimerRunning(false);
+    setTimeout(() => {
+      setIsTimerRunning(true);
+    }, 0);
   };
 
   const handleRandomSelect = () => {
@@ -199,11 +207,7 @@ const DayActionsControl: React.FC = () => {
                 currentSpeaker && (
                   <>
                     <div className="flex justify-between">
-                      <Timer
-                        currentSpeakerIndex={currentSpeakerIndex}
-                        challengeMode={challengeMode}
-                        resetTrigger={resetTrigger}
-                      />
+                      <Timer isRunning={isTimerRunning} />
                       <MediaPlayer mediaUrl="/mafia/ding-101492.mp3" />
                     </div>
 
