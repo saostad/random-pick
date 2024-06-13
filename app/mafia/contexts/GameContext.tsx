@@ -77,6 +77,7 @@ export type GameState = {
   speakingTime: number;
   speakingTimeEnabled: boolean;
   inquiries: number;
+  offerInquiries: boolean;
 };
 
 export type GameContextType = {
@@ -128,6 +129,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     speakingTime: 60,
     speakingTimeEnabled: true,
     inquiries: 2,
+    offerInquiries: true,
   };
 
   const [gameState, setGameState] = useLocalStorageState<GameState>(

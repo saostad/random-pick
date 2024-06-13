@@ -4,10 +4,19 @@ import DayActionsControl from "./DayActionsControl";
 import VotingSession from "./VotingSession";
 import NightActionsControl from "./NightActionsControl";
 import Animation from "./Animation";
+import { useModal } from "../contexts/ModalContext";
 
 const Wizard: React.FC = () => {
   const { gameState, setCurrentStepIndex } = useGameContext();
-  const { dayCount, nightCount, votingStatus, currentStepIndex } = gameState;
+  const {
+    dayCount,
+    nightCount,
+    votingStatus,
+    currentStepIndex,
+    offerInquiries,
+  } = gameState;
+
+  const { handleOpen } = useModal();
 
   const sequence: string[] = [];
   for (let i = 0; i <= nightCount; i++) {
@@ -64,6 +73,17 @@ const Wizard: React.FC = () => {
           <span className="font-bold">Next Phase:</span>
           <span className="ml-2 underline">
             {sequence[currentStepIndex + 1]}
+            {offerInquiries &&
+              sequence[currentStepIndex + 1]?.startsWith("Day") && (
+                <div className="flex justify-center">
+                  <button
+                    className="btn btn-info btn-outline my-4"
+                    onClick={() => handleOpen("Inquiries")}
+                  >
+                    Do you want to inquiry?
+                  </button>
+                </div>
+              )}
           </span>
         </span>
       );
