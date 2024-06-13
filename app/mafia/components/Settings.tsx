@@ -67,6 +67,7 @@ const Settings = () => {
           + Tags - <CilTags />
         </ModalButton>
         <ModalButton modalId="LastActs">+ Last Actions -</ModalButton>
+        <ModalButton modalId="InquiriesSetting">Inquiries Setting</ModalButton>
       </div>
 
       <div className="divider divider-info">Timer</div>

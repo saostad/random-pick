@@ -76,6 +76,7 @@ export type GameState = {
   challengeTimeEnabled: boolean;
   speakingTime: number;
   speakingTimeEnabled: boolean;
+  inquiries: number;
 };
 
 export type GameContextType = {
@@ -103,6 +104,7 @@ export type GameContextType = {
   unassignTagFromPlayer: (playerId: string, tag: TagsType) => void;
   getCurrentPhaseIndex: () => string;
   setSpeakingOrder: (speakingOrder: number[]) => void;
+  decreaseInquiries: () => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -122,9 +124,10 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     lastActCards: [],
     activeTab: "home",
     challengeTime: 30,
-    challengeTimeEnabled: false,
+    challengeTimeEnabled: true,
     speakingTime: 60,
     speakingTimeEnabled: true,
+    inquiries: 2,
   };
 
   const [gameState, setGameState] = useLocalStorageState<GameState>(
@@ -163,6 +166,13 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       players: prev.players.map((player) =>
         player.id === playerId ? { ...player, isAlive: false } : player
       ),
+    }));
+  };
+
+  const decreaseInquiries = () => {
+    setGameState((prev) => ({
+      ...prev,
+      inquiries: prev.inquiries - 1,
     }));
   };
 
@@ -405,6 +415,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     getCurrentPhaseIndex,
     setSpeakingOrder,
     loading,
+    decreaseInquiries,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

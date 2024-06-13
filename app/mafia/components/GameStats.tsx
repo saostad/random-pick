@@ -69,6 +69,19 @@ const GameStats: React.FC = () => {
         </div>
 
         <div className="stat">
+          <div className="stat-title">Inquiry</div>
+          <div
+            className="stat-value text-success"
+            onClick={() => {
+              handleOpen("InquiriesSetting");
+            }}
+          >
+            {gameState.inquiries}
+          </div>
+          <div className="stat-desc">left.</div>
+        </div>
+
+        <div className="stat">
           <div className="stat-title">Timers</div>
           <div
             onClick={() => {
@@ -79,7 +92,7 @@ const GameStats: React.FC = () => {
             {speakingTimeEnabled && (
               <p className="my-4">Speaker: {speakingTime}s</p>
             )}
-            {challengeTimeEnabled && <p>Challenge: {challengeTime}s</p>}
+            {challengeTimeEnabled && <p>Challenger: {challengeTime}s</p>}
             {!speakingTimeEnabled && !challengeTimeEnabled && "Not timer set"}
           </div>
         </div>

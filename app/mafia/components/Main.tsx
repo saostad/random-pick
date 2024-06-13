@@ -16,6 +16,7 @@ import { useGameContext } from "../contexts/GameContext";
 import Home from "./Home";
 import About from "./About";
 import TimerSettings from "./TimerSettings";
+import InquiriesSetting from "./InquiriesSetting";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -30,6 +31,11 @@ const Main: React.FC<MainProps> = (props) => {
       {activeTab === "timeline" && <EventTimeline />}
       {activeTab === "home" && <Home />}
 
+      <FlexibleModal
+        modalId="InquiriesSetting"
+        component={InquiriesSetting}
+        title="Inquiries Setting"
+      />
       <FlexibleModal
         modalId="TimerSettings"
         component={TimerSettings}
