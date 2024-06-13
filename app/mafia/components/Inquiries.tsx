@@ -13,7 +13,9 @@ const Inquiries: React.FC = () => {
     <div>
       {!isVisible ? (
         <>
-          <p className="my-4 text-info ">{inquiries} inquiry left.</p>
+          <p className="my-4 text-info ">
+            {inquiries} inquiry left. do you want to use one?
+          </p>
           <button
             className="btn btn-primary btn-outline"
             onClick={() => {
