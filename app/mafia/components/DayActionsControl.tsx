@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
@@ -8,12 +8,20 @@ import Challenge from "./Challenge";
 import CarbonShuffle from "~icons/carbon/shuffle";
 import { getAlivePlayers } from "../utils/get-from-fns";
 import Animation from "./Animation";
-import MediaPlayer from "./MediaPlayer";
+import MediaPlayer, { MediaPlayerRef } from "./MediaPlayer";
 
 const DayActionsControl: React.FC = () => {
   const { gameState, updateGameState, increaseDayCount, setSpeakingOrder } =
     useGameContext();
-  const { players, speakingOrder, startingPlayerId } = gameState;
+  const {
+    players,
+    speakingOrder,
+    startingPlayerId,
+    speakingTime,
+    speakingTimeEnabled,
+    challengeTime,
+    challengeTimeEnabled,
+  } = gameState;
   const { handleOpen } = useModal();
   const [currentSpeakerIndex, setCurrentSpeakerIndex] = useState<number>(0);
   const [allPlayersCompleted, setAllPlayersCompleted] =
@@ -32,8 +40,7 @@ const DayActionsControl: React.FC = () => {
   const [speakerChallenged, setSpeakerChallenged] = useState<Set<string>>(
     new Set()
   );
-  const [resetTrigger, setResetTrigger] = useState<boolean>(false);
-
+  const [elapsedTime, setElapsedTime] = useState<number>(0);
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
 
   const handleNextSpeaker = () => {
@@ -143,6 +150,33 @@ const DayActionsControl: React.FC = () => {
     ? gameState.players.find((player) => player.id === currentChallenger)?.name
     : null;
 
+  const mediaPlayerRef = useRef<MediaPlayerRef>(null);
+
+  const handleStartAudio = () => {
+    if (mediaPlayerRef.current) {
+      mediaPlayerRef.current.play();
+    }
+  };
+
+  useEffect(() => {
+    if (challengeMode) {
+      if (challengeTimeEnabled && elapsedTime === challengeTime) {
+        handleStartAudio();
+      }
+    } else {
+      if (speakingTimeEnabled && elapsedTime === speakingTime) {
+        handleStartAudio();
+      }
+    }
+  }, [
+    elapsedTime,
+    speakingTimeEnabled,
+    speakingTime,
+    challengeTimeEnabled,
+    challengeTime,
+    challengeMode,
+  ]);
+
   return (
     <>
       <div className="text-2xl text-center font-bold mt-4">
@@ -207,8 +241,15 @@ const DayActionsControl: React.FC = () => {
                 currentSpeaker && (
                   <>
                     <div className="flex justify-between">
-                      <Timer isRunning={isTimerRunning} />
-                      <MediaPlayer mediaUrl="/mafia/ding-101492.mp3" />
+                      <Timer
+                        isRunning={isTimerRunning}
+                        onElapsedTimeChange={setElapsedTime}
+                      />
+                      <MediaPlayer
+                        mediaUrl="/mafia/ding-101492.mp3"
+                        loop={false}
+                        ref={mediaPlayerRef}
+                      />
                     </div>
 
                     <Speaker

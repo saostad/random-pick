@@ -52,30 +52,7 @@ const TimerSettings: React.FC = () => {
     <div>
       <div className="form-control">
         <label className="label cursor-pointer">
-          <span className="label-text">Challenge Timer</span>
-          <input
-            type="checkbox"
-            checked={challengeTimeEnabled}
-            onChange={handleChallengeTimeToggle}
-            className="checkbox checkbox-primary"
-          />
-        </label>
-      </div>
-      <label className="input input-bordered flex items-center gap-2">
-        Seconds
-        <input
-          type="number"
-          className="grow"
-          placeholder="seconds"
-          value={challengeTime.toString()}
-          onChange={handleChallengeTimeChange}
-          disabled={!challengeTimeEnabled}
-        />
-      </label>
-
-      <div className="form-control">
-        <label className="label cursor-pointer">
-          <span className="label-text">Speaking Timer</span>
+          <span className="label-text">Play sound in speaking time</span>
           <input
             type="checkbox"
             checked={speakingTimeEnabled}
@@ -93,6 +70,29 @@ const TimerSettings: React.FC = () => {
           value={speakingTime.toString()}
           onChange={handleSpeakingTimeChange}
           disabled={!speakingTimeEnabled}
+        />
+      </label>
+      <div className="divider"></div>
+      <div className="form-control">
+        <label className="label cursor-pointer">
+          <span className="label-text">Play sound in challenge mode</span>
+          <input
+            type="checkbox"
+            checked={challengeTimeEnabled}
+            onChange={handleChallengeTimeToggle}
+            className="checkbox checkbox-primary"
+          />
+        </label>
+      </div>
+      <label className="input input-bordered flex items-center gap-2">
+        Seconds
+        <input
+          type="number"
+          className="grow"
+          placeholder="seconds"
+          value={challengeTime.toString()}
+          onChange={handleChallengeTimeChange}
+          disabled={!challengeTimeEnabled}
         />
       </label>
     </div>
