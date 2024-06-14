@@ -36,7 +36,7 @@ const Main: React.FC<MainProps> = (props) => {
       <FlexibleModal
         modalId="InquiriesSetting"
         component={InquiriesSetting}
-        title="Inquiries Setting"
+        title="Inquiries"
       />
       <FlexibleModal
         modalId="LastActionPlayer"
