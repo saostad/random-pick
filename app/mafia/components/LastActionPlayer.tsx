@@ -12,7 +12,14 @@ const LastActionPlayer: React.FC = () => {
       cards in the game:
       <ul>
         {lastActions.map((action, index) => (
-          <li key={action.id}>{action.title}</li>
+          <li key={action.id}>
+            <div
+              className="tooltip tooltip-right"
+              data-tip={action.description}
+            >
+              {action.title}
+            </div>
+          </li>
         ))}
       </ul>
       <div className="divider"></div>
@@ -31,8 +38,8 @@ const LastActionPlayer: React.FC = () => {
       </button>
       {randomCard && (
         <div className="my-4">
-          <p>Random card assigned:</p>
-          <p>{randomCard.title}</p>
+          <p className="font-bold text-xl">{randomCard.title}</p>
+          <p>{randomCard.description}</p>
         </div>
       )}
     </>
