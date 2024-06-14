@@ -1,17 +1,23 @@
 import { useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import { getDeadPlayers, getRoleByPlayerId } from "../utils/get-from-fns";
+import { useModal } from "../contexts/ModalContext";
 
 const Inquiries: React.FC = () => {
   const { gameState, decreaseInquiries } = useGameContext();
   const { inquiries, players } = gameState;
+
+  const { handleClose } = useModal();
 
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const deadPlayers = getDeadPlayers({ players });
 
   return (
     <div>
-      {!isVisible ? (
+      {inquiries === 0 && (
+        <p className="my-4 text-info">You have no inquiries left.</p>
+      )}
+      {!isVisible && inquiries > 0 ? (
         <>
           <p className="my-4 text-info ">
             {inquiries} inquiry left. do you want to use one?
@@ -33,6 +39,7 @@ const Inquiries: React.FC = () => {
             className="btn btn-primary btn-outline"
             onClick={() => {
               setIsVisible(false);
+              handleClose("Inquiries");
             }}
           >
             Got it, CLose! 🚪

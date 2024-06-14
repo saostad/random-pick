@@ -157,6 +157,7 @@ const NightActionsControl: React.FC = () => {
                 <ModalButton modalId="TagPlayers">
                   Tag <CarbonTag />
                 </ModalButton>
+                <div className="my-2"></div>
                 <ModalButton modalId="playersStatus">
                   Kill <MdiDead />
                 </ModalButton>

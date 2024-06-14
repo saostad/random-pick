@@ -46,6 +46,8 @@ const VotingSession: React.FC = () => {
       } else {
         setVotingStatus("finished");
       }
+    } else {
+      setVotingStatus("finished");
     }
     handleClose("voting-session");
   };
