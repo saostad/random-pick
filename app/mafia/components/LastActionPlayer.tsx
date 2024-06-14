@@ -30,7 +30,7 @@ const LastActionPlayer: React.FC = () => {
         Shuffle cards and assign one
       </button>
       {randomCard && (
-        <div>
+        <div className="my-4">
           <p>Random card assigned:</p>
           <p>{randomCard.title}</p>
         </div>
