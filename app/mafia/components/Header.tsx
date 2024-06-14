@@ -12,7 +12,7 @@ const Header: React.FC<HeaderProps> = (props) => {
           <span className="">Mafia</span>
         </h1>
         <span className="font-mono self-end max-sm:text-xs">
-          Manage you Game!
+          Manage your Game!
         </span>
       </div>
       <ColorSchemeSwitcher className="contrast flex-none p-4" />
