@@ -37,10 +37,8 @@ const PlayerStatusManager: React.FC = () => {
             }}
           >
             <PlayerTagsIndicator key={player.id} playerId={player.id} />(
-            {
-              getRoleByPlayerId({ player, gameRoles: gameState.gameRoles })
-                ?.name
-            }
+            {getRoleByPlayerId({ player, gameRoles: gameState.gameRoles })
+              ?.name ?? "Unknown"}
             )
             <button
               className="btn btn-outline btn-error btn-sm"
@@ -68,10 +66,8 @@ const PlayerStatusManager: React.FC = () => {
                 }}
               >
                 <PlayerTagsIndicator key={player.id} playerId={player.id} />(
-                {
-                  getRoleByPlayerId({ player, gameRoles: gameState.gameRoles })
-                    ?.name
-                }
+                {getRoleByPlayerId({ player, gameRoles: gameState.gameRoles })
+                  ?.name ?? "Unknown"}
                 )
                 <button
                   className="btn btn-outline btn-success btn-sm"

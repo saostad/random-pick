@@ -33,18 +33,20 @@ const VotingSession: React.FC = () => {
     if (playersWithMaxVotes.length === 0) {
       setVotingStatus("finished");
     } else {
-      setVotingStatus("voting_elimination");
+      setVotingStatus("ousting");
     }
   };
 
-  const votingEliminationEnd = (playerId?: string) => {
+  const votingOustingEnd = (playerId?: string) => {
     if (playerId) {
       markPlayerAsDead(playerId);
       if (lastActionsActive) {
+        setVotingStatus("lastAction");
         handleOpen("LastActionPlayer");
       }
+    } else {
+      setVotingStatus("finished");
     }
-    setVotingStatus("finished");
     handleClose("voting-session");
   };
 
@@ -71,8 +73,7 @@ const VotingSession: React.FC = () => {
           </button>
         </div>
       )}
-      {votingStatus === "in_progress" ||
-      votingStatus === "voting_elimination" ? (
+      {votingStatus === "in_progress" || votingStatus === "ousting" ? (
         <div className="flex flex-col items-center mt-6">
           <Animation
             className=""
@@ -92,6 +93,24 @@ const VotingSession: React.FC = () => {
           </button>
         </div>
       ) : null}
+      {votingStatus === "lastAction" && (
+        <div className="flex flex-col items-center mt-6">
+          <Animation
+            className=""
+            src="mafia/animation/last-act.lottie"
+            loop={false}
+            autoplay={true}
+          />
+          <button
+            className="btn btn-ghost btn-outline btn-primary"
+            onClick={() => {
+              handleOpen("LastActionPlayer");
+            }}
+          >
+            Resume Last Action!
+          </button>
+        </div>
+      )}
 
       <FlexibleModal modalId="voting-session" title="Voting Session">
         <div className="mb-4">
@@ -109,7 +128,7 @@ const VotingSession: React.FC = () => {
               </span>
             </button>
           )}
-          {votingStatus === "voting_elimination" && (
+          {votingStatus === "ousting" && (
             <div className="grid grid-cols-2 gap-4 my-4">
               <button
                 className="btn btn-ghost btn-outline btn-primary"
@@ -120,10 +139,10 @@ const VotingSession: React.FC = () => {
               <button
                 className="btn btn-outline btn-warning"
                 onClick={() => {
-                  votingEliminationEnd();
+                  votingOustingEnd();
                 }}
               >
-                End without elimination!
+                End without Ousting!
               </button>
             </div>
           )}
@@ -160,8 +179,7 @@ const VotingSession: React.FC = () => {
                 </div>
               </div>
             ))}
-        {votingStatus === "voting_elimination" &&
-        playersWithMaxVotes.length > 0 ? (
+        {votingStatus === "ousting" && playersWithMaxVotes.length > 0 ? (
           <div style={{ marginBottom: "1rem" }}>
             <h3 className="font-semibold text-xl my-4">Leading Players</h3>
             {playersWithMaxVotes.map((player) => (
@@ -176,7 +194,7 @@ const VotingSession: React.FC = () => {
                 <button
                   className="btn btn-outline btn-error ml-2"
                   onClick={() => {
-                    votingEliminationEnd(player.id);
+                    votingOustingEnd(player.id);
                   }}
                 >
                   Mark as Dead <CarbonOutage />

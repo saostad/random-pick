@@ -16,7 +16,8 @@ export type TagExpiration = (typeof tagExpirations)[number];
 export type VotingStatus =
   | "not_started"
   | "in_progress"
-  | "voting_elimination"
+  | "ousting"
+  | "lastAction"
   | "finished";
 
 type AssignedTag = {
@@ -328,7 +329,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       return `Day${dayCount}`;
     } else if (
       dayCount > nightCount &&
-      (votingStatus === "in_progress" || votingStatus === "voting_elimination")
+      (votingStatus === "in_progress" || votingStatus === "ousting")
     ) {
       return `Voting${nightCount}`;
     } else if (dayCount > nightCount && votingStatus === "finished") {
