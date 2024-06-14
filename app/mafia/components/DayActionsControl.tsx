@@ -181,7 +181,7 @@ const DayActionsControl: React.FC = () => {
     <>
       <div className="text-2xl text-center font-bold mt-4">
         <Animation
-          className="mask mask-circle"
+          className="mask mask-circle max-w-48 max-h-48 m-auto"
           src="mafia/animation/day.lottie"
           loop={false}
           autoplay={true}

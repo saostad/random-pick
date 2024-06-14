@@ -43,9 +43,9 @@ const VotingSession: React.FC = () => {
       if (lastActionsActive) {
         setVotingStatus("lastAction");
         handleOpen("LastActionPlayer");
+      } else {
+        setVotingStatus("finished");
       }
-    } else {
-      setVotingStatus("finished");
     }
     handleClose("voting-session");
   };
