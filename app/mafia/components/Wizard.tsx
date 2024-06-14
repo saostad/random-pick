@@ -14,6 +14,7 @@ const Wizard: React.FC = () => {
     votingStatus,
     currentStepIndex,
     offerInquiries,
+    inquiries,
   } = gameState;
 
   const { handleOpen } = useModal();
@@ -74,6 +75,7 @@ const Wizard: React.FC = () => {
           <span className="ml-2 underline">
             {sequence[currentStepIndex + 1]}
             {offerInquiries &&
+              inquiries > 0 &&
               sequence[currentStepIndex + 1]?.startsWith("Day") && (
                 <div className="flex justify-center">
                   <button
