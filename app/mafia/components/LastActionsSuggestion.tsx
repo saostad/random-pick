@@ -48,7 +48,7 @@ const LastActionsSuggestion: React.FC = () => {
   return (
     <div>
       {numPlayers <= 3 && (
-        <div className="alert alert-warning">
+        <div className="alert alert-warning my-4">
           <span>At least 4 players needed to suggest last actions.</span>
         </div>
       )}

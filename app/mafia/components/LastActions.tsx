@@ -132,12 +132,12 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
 
           <div className="divider"></div>
 
-          <div className="grid grid-cols-2 gap-4">
-            {lastActions.map((lastAct, index) => (
-              <div key={lastAct.id}>
+          {lastActions.map((lastAct, index) => (
+            <div key={lastAct.id}>
+              <div className="flex justify-between my-2">
                 <input
                   type="text"
-                  className="input input-bordered w-full max-w-xs"
+                  className="input input-bordered w-full max-w-sm mr-4"
                   value={lastAct.title}
                   onChange={(e) => handleUpdate(lastAct, e.target.value)}
                   placeholder="Tag name"
@@ -150,8 +150,8 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
                   &#x2715;
                 </button>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </>
       )}
     </div>
