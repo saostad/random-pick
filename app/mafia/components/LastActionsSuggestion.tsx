@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { predefinedLastActions } from "../data/predefinedLastActions";
 import { useGameContext } from "../contexts/GameContext";
 
@@ -11,11 +11,13 @@ const LastActionsSuggestion: React.FC = () => {
   const [selectedLastActions, setSelectedLastActions] = useState<number[]>([]);
 
   const handleSuggestLastActions = () => {
-    const numCards = players.length - 3;
+    const numCards = numPlayers - 3;
     const shuffledActions = predefinedLastActions.sort(
       () => 0.5 - Math.random()
     );
+
     const suggested = shuffledActions.slice(0, numCards);
+
     setSuggestedLastActions(suggested);
   };
 
@@ -45,6 +47,11 @@ const LastActionsSuggestion: React.FC = () => {
 
   return (
     <div>
+      {numPlayers <= 3 && (
+        <div className="alert alert-warning">
+          <span>At least 4 players needed to suggest last actions.</span>
+        </div>
+      )}
       <div className="grid grid-cols-1 gap-2 mb-4">
         <div
           style={{

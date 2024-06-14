@@ -14,8 +14,8 @@ const VotingSession: React.FC = () => {
     markPlayerAsDead,
     setVotingStatus,
   } = useGameContext();
+  const { votingStatus, players, speakingOrder, lastActionsActive } = gameState;
   const { handleOpen, handleClose } = useModal();
-  const { votingStatus, players, speakingOrder } = gameState;
 
   // Calculate the maximum votes and the players who have the maximum votes
   const alivePlayers = getAlivePlayers({ players });
@@ -37,7 +37,13 @@ const VotingSession: React.FC = () => {
     }
   };
 
-  const votingEliminationEnd = () => {
+  const votingEliminationEnd = (playerId?: string) => {
+    if (playerId) {
+      markPlayerAsDead(playerId);
+      if (lastActionsActive) {
+        handleOpen("LastActionPlayer");
+      }
+    }
     setVotingStatus("finished");
     handleClose("voting-session");
   };
@@ -86,6 +92,7 @@ const VotingSession: React.FC = () => {
           </button>
         </div>
       ) : null}
+
       <FlexibleModal modalId="voting-session" title="Voting Session">
         <div className="mb-4">
           <p className="text-center text-success my-4">
@@ -169,8 +176,7 @@ const VotingSession: React.FC = () => {
                 <button
                   className="btn btn-outline btn-error ml-2"
                   onClick={() => {
-                    markPlayerAsDead(player.id);
-                    votingEliminationEnd();
+                    votingEliminationEnd(player.id);
                   }}
                 >
                   Mark as Dead <CarbonOutage />
