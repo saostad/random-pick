@@ -7,7 +7,7 @@ interface LastActCardsProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const LastActCards: React.FC<LastActCardsProps> = (props) => {
   const { gameState, updateGameState } = useGameContext();
-  const { lastActCards } = gameState;
+  const { lastActions } = gameState;
   const [newLastAct, setNewLastAct] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<
@@ -21,8 +21,8 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
     }
 
     updateGameState({
-      lastActCards: [
-        ...lastActCards,
+      lastActions: [
+        ...lastActions,
         {
           title: newLastAct,
           description: "",
@@ -38,16 +38,16 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
 
   const handleRemove = (lastAct: LastActType) => {
     updateGameState({
-      lastActCards: lastActCards.filter((act) => act.id !== lastAct.id),
+      lastActions: lastActions.filter((act) => act.id !== lastAct.id),
     });
   };
 
   function handleUpdate(lastAct: LastActType, value: string): void {
     const updatedLastAct = { ...lastAct, title: value };
-    const updatedLastActCards = lastActCards.map((act) =>
+    const updatedLastActCards = lastActions.map((act) =>
       act.id === lastAct.id ? updatedLastAct : act
     );
-    updateGameState({ lastActCards: updatedLastActCards });
+    updateGameState({ lastActions: updatedLastActCards });
   }
 
   return (
@@ -112,7 +112,7 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
       <div className="divider"></div>
 
       <div className="grid grid-cols-2 gap-4">
-        {lastActCards.map((lastAct, index) => (
+        {lastActions.map((lastAct, index) => (
           <div key={lastAct.id}>
             <input
               type="text"

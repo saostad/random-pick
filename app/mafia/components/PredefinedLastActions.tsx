@@ -14,7 +14,7 @@ const PredefinedLastActions: React.FC = () => {
       ...item,
       id: new Date().toISOString(),
     }));
-    updateGameState({ lastActCards: [...gameState.lastActCards, ...newItems] });
+    updateGameState({ lastActions: [...gameState.lastActions, ...newItems] });
     setSelectedItems([]);
   };
 

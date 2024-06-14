@@ -70,7 +70,8 @@ export type GameState = {
   currentStepIndex: number;
   speakingOrder: number[];
   tags: TagsType[];
-  lastActCards: LastActType[];
+  lastActions: LastActType[];
+  lastActionsActive: boolean;
   activeTab: "home" | "settings" | "timeline";
   challengeTime: number;
   challengeTimeEnabled: boolean;
@@ -122,7 +123,8 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     currentStepIndex: 0,
     speakingOrder: [],
     tags: [...tags],
-    lastActCards: [],
+    lastActions: [],
+    lastActionsActive: false,
     activeTab: "home",
     challengeTime: 30,
     challengeTimeEnabled: true,

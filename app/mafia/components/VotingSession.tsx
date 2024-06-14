@@ -1,4 +1,3 @@
-import React, { use, useEffect, useState } from "react";
 import CarbonOutage from "~icons/carbon/outage";
 import FlexibleModal from "./FlexibleModal";
 import { useModal } from "../contexts/ModalContext";

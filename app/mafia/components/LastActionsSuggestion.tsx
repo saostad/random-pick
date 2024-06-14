@@ -33,7 +33,7 @@ const LastActionsSuggestion: React.FC = () => {
     );
     // Logic to add the selected last actions to your game state
     updateGameState({
-      lastActCards: [...gameState.lastActCards, ...selectedActions],
+      lastActions: [...gameState.lastActions, ...selectedActions],
     });
 
     setSelectedLastActions([]);
