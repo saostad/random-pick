@@ -56,7 +56,7 @@ export type LastActType = {
 export type GameEvent = {
   type: string;
   description: string;
-  timestamp: Date;
+  timestamp: string;
   eventAt: string;
 };
 
@@ -116,6 +116,7 @@ export type GameContextType = {
   setSpeakingOrder: (speakingOrder: number[]) => void;
   decreaseInquiries: () => void;
   addEvent: (event: Omit<GameEvent, "eventAt" | "timestamp">) => void;
+  getEventsByPhase: (phase: string) => GameEvent[];
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -352,7 +353,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         {
           ...event,
           eventAt: getCurrentPhaseIndex(),
-          timestamp: new Date(),
+          timestamp: new Date().toDateString(),
         },
       ],
     }));
@@ -453,6 +454,10 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }));
   };
 
+  const getEventsByPhase = (phase: string) => {
+    return gameState.events.filter((event) => event.eventAt === phase);
+  };
+
   const value = {
     gameState,
     updateGameState,
@@ -476,6 +481,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     loading,
     decreaseInquiries,
     addEvent,
+    getEventsByPhase,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

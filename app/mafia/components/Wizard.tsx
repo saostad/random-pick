@@ -7,7 +7,7 @@ import Animation from "./Animation";
 import { useModal } from "../contexts/ModalContext";
 
 const Wizard: React.FC = () => {
-  const { gameState, setCurrentStepIndex } = useGameContext();
+  const { gameState, setCurrentStepIndex, getEventsByPhase } = useGameContext();
   const {
     dayCount,
     nightCount,
@@ -74,24 +74,16 @@ const Wizard: React.FC = () => {
           <span className="font-bold">Next Phase:</span>
           <span className="ml-2 underline">
             {sequence[currentStepIndex + 1]}
-            {offerInquiries &&
-              inquiries > 0 &&
-              sequence[currentStepIndex + 1]?.startsWith("Day") && (
-                <div className="flex justify-center">
-                  <button
-                    className="btn btn-info btn-outline my-4"
-                    onClick={() => handleOpen("Inquiries")}
-                  >
-                    Do you want to inquiry?
-                  </button>
-                </div>
-              )}
           </span>
         </span>
       );
     }
-    return "No more phases";
+    return "No more phases!";
   };
+
+  // remove the space between sequence[currentStepIndex] like "Night 1" -> "Night1"
+  const sequenceTrimmed = sequence[currentStepIndex]?.replace(/\s/g, "");
+  const sequenceEvents = getEventsByPhase(sequenceTrimmed);
 
   return (
     <div>
@@ -122,14 +114,55 @@ const Wizard: React.FC = () => {
           })}
         </ul>
       </div>
+
       {isCurrentStepFinished() && (
         <>
           <Animation
-            className=""
+            className="max-w-56 max-h-56 m-auto"
             src="mafia/animation/next.lottie"
             loop={true}
             autoplay={true}
           />
+          {isCurrentStepFinished() &&
+            sequence[currentStepIndex]?.startsWith("Night") && (
+              <div className="my-4">
+                {sequenceEvents.length > 0 ? (
+                  <div className="flex flex-col">
+                    <div className="text-xl font-bold">Last Night Events:</div>
+                    <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
+                      {sequenceEvents.map((event) => (
+                        <li key={event.timestamp} className="flex items-center">
+                          <svg
+                            className="w-3.5 h-3.5 me-2 text-green-500 dark:text-green-400 flex-shrink-0"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                          </svg>
+                          {event.description}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <div>No events happened last night</div>
+                )}
+              </div>
+            )}
+          {offerInquiries &&
+            inquiries > 0 &&
+            sequence[currentStepIndex + 1]?.startsWith("Day") && (
+              <div className="flex justify-center">
+                <button
+                  className="btn btn-info btn-outline my-4"
+                  onClick={() => handleOpen("Inquiries")}
+                >
+                  Do you want to inquiry?
+                </button>
+              </div>
+            )}
           {getNextPhaseInfo()}
           <button
             className="btn relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 mt-4 ml-4"

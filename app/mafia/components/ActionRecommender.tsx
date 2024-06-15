@@ -14,7 +14,7 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
     gameState: { players, gameRoles },
     loading,
   } = useGameContext();
-  const { handleOpen, modals } = useModal();
+  const { handleOpen } = useModal();
 
   useEffect(() => {
     if (loading) return;
