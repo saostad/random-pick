@@ -56,11 +56,13 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
               loop={true}
               autoplay={true}
             />
-
-            <ModalButton modalId="RoleViewer" animate={true}>
-              Show the Player&apos;s Cards
-              <CarbonUserRole className="hidden sm:block" />
-            </ModalButton>
+            <div className="my-4 text-success">Suggested Steps:</div>
+            <div className=" grid grid-flow-col gap-4">
+              <ModalButton modalId="RoleViewer">
+                Player&apos;s Cards
+                <CarbonUserRole className="hidden sm:block" />
+              </ModalButton>
+            </div>
           </div>
         ) : null}
       </div>
