@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@lottiefiles/dotlottie-react": "^0.6.3",
+    "@lottiefiles/dotlottie-react": "^0.6.4",
     "@picocss/pico": "^2.0.6",
     "@tailwindcss/typography": "^0.5.13",
     "change-case": "^5.4.4",
@@ -24,7 +24,7 @@
   "devDependencies": {
     "@iconify-json/carbon": "^1.1.35",
     "@iconify-json/cil": "^1.1.8",
-    "@iconify-json/lucide": "^1.1.191",
+    "@iconify-json/lucide": "^1.1.192",
     "@iconify-json/mdi": "^1.1.66",
     "@iconify-json/streamline": "^1.1.8",
     "@svgr/core": "^8.1.0",
