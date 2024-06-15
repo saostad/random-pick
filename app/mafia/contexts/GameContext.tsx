@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import useLocalStorageState from "use-local-storage-state";
-import { getPlayerNameById } from "../utils/get-from-fns";
+import { getAlivePlayers, getPlayerNameById } from "../utils/get-from-fns";
 import { TagsType, tags } from "../data/predefinedTags";
 import { useModal } from "./ModalContext";
 
@@ -268,7 +268,14 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       ...prev,
       players: prev.players.map((player) =>
         player.id === playerId
-          ? { ...player, voteCount: player.voteCount + 1 }
+          ? {
+              ...player,
+              voteCount:
+                player.voteCount ===
+                getAlivePlayers({ players: gameState.players }).length
+                  ? player.voteCount
+                  : player.voteCount + 1,
+            }
           : player
       ),
     }));

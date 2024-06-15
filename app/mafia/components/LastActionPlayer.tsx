@@ -33,7 +33,7 @@ const LastActionPlayer: React.FC = () => {
 
       // remove action from available actions in game state
       updateGameState({
-        playedLastActions: [...gameState.playedLastActions, randomCard.id],
+        playedLastActions: [...playedLastActions, randomCard.id],
       });
     }, 3000);
   }
@@ -77,15 +77,17 @@ const LastActionPlayer: React.FC = () => {
       {stillInGameLastActions.length === 0 ? (
         <div className="flex flex-col gap-4">
           <span>No action card available!</span>
-          <button
-            className="btn btn-info btn-outline"
-            onClick={() => {
-              setVotingStatus("finished");
-              handleClose("LastActionPlayer");
-            }}
-          >
-            Go to next step
-          </button>
+          <div className="grid">
+            <button
+              className="btn btn-info btn-outline"
+              onClick={() => {
+                setVotingStatus("finished");
+                handleClose("LastActionPlayer");
+              }}
+            >
+              Go to next step
+            </button>
+          </div>
         </div>
       ) : (
         <button
