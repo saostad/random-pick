@@ -109,6 +109,7 @@ export type GameContextType = {
   getCurrentPhaseIndex: () => string;
   setSpeakingOrder: (speakingOrder: number[]) => void;
   decreaseInquiries: () => void;
+  addEvent: (event: Omit<GameEvent, "eventAt" | "timestamp">) => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -425,6 +426,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setSpeakingOrder,
     loading,
     decreaseInquiries,
+    addEvent,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
