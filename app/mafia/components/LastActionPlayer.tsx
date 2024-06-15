@@ -2,6 +2,7 @@ import { useState } from "react";
 import { LastActType, useGameContext } from "../contexts/GameContext";
 import Animation from "./Animation";
 import { useModal } from "../contexts/ModalContext";
+import ModalButton from "./ModalButton";
 
 const LastActionPlayer: React.FC = () => {
   const { gameState, setVotingStatus, updateGameState } = useGameContext();
@@ -30,11 +31,6 @@ const LastActionPlayer: React.FC = () => {
     setTimeout(() => {
       setAnimationVisible(false);
       setRandomCardVisible(true);
-
-      // remove action from available actions in game state
-      updateGameState({
-        playedLastActions: [...playedLastActions, randomCard.id],
-      });
     }, 3000);
   }
 
@@ -42,6 +38,14 @@ const LastActionPlayer: React.FC = () => {
     setAnimationVisible(false);
     setRandomCardVisible(false);
     setVotingStatus("finished");
+
+    // Update the gameState to trigger a re-render
+    if (randomCard) {
+      updateGameState({
+        playedLastActions: [...playedLastActions, randomCard.id],
+      });
+    }
+
     handleClose("LastActionPlayer");
   }
 
@@ -54,7 +58,7 @@ const LastActionPlayer: React.FC = () => {
           onChange={() => {}}
         />
         <div className="collapse-title text-xl font-medium">
-          Available Cards
+          Available Actions
         </div>
         <div className="collapse-content">
           <ul>
@@ -77,7 +81,8 @@ const LastActionPlayer: React.FC = () => {
       {stillInGameLastActions.length === 0 ? (
         <div className="flex flex-col gap-4">
           <span>No action card available!</span>
-          <div className="grid">
+          <div className="grid grid-cols-2 gap-4">
+            <ModalButton modalId="LastActs">+ Last Actions -</ModalButton>
             <button
               className="btn btn-info btn-outline"
               onClick={() => {
