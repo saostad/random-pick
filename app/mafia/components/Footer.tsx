@@ -9,7 +9,7 @@ const Footer: React.FC<FooterProps> = () => {
   const { updateGameState, gameState } = useGameContext();
 
   const onNavigate = (tab: (typeof gameState)["activeTab"]) => {
-    updateGameState({ ...gameState, activeTab: tab });
+    updateGameState({ activeTab: tab });
   };
 
   const { activeTab } = gameState;

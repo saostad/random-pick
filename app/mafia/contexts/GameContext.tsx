@@ -110,6 +110,7 @@ export type GameContextType = {
   setSpeakingOrder: (speakingOrder: number[]) => void;
   decreaseInquiries: () => void;
   addEvent: (event: Omit<GameEvent, "eventAt" | "timestamp">) => void;
+  oustPlayerByVote: (playerId: string) => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -175,6 +176,20 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         player.id === playerId ? { ...player, isAlive: false } : player
       ),
     }));
+  };
+  const oustPlayerByVote = (playerId: string) => {
+    updateGameState({
+      players: gameState.players.map((player) =>
+        player.id === playerId ? { ...player, isAlive: false } : player
+      ),
+    });
+
+    addEvent({
+      type: "player-oust",
+      description: `${
+        gameState.players.find((player) => player.id === playerId)?.name
+      } was ousted by vote!`,
+    });
   };
 
   const decreaseInquiries = () => {
@@ -427,6 +442,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     loading,
     decreaseInquiries,
     addEvent,
+    oustPlayerByVote,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

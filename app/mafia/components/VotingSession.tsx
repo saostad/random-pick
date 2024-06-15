@@ -11,9 +11,8 @@ const VotingSession: React.FC = () => {
     decreaseVote,
     increaseVote,
     resetVotes,
-    updateGameState,
+    oustPlayerByVote,
     setVotingStatus,
-    addEvent,
   } = useGameContext();
   const { votingStatus, players, speakingOrder, lastActionsActive } = gameState;
   const { handleOpen, handleClose } = useModal();
@@ -38,25 +37,9 @@ const VotingSession: React.FC = () => {
     }
   };
 
-  const oustPlayer = (playerId: string) => {
-    updateGameState({
-      players: players.map((player) =>
-        player.id === playerId ? { ...player, alive: false } : player
-      ),
-    });
-
-    addEvent({
-      type: "player-oust",
-      description: `${
-        players.find((player) => player.id === playerId)?.name
-      } was ousted by vote!`,
-    });
-  };
-
   const votingOustingEnd = (playerId?: string) => {
     if (playerId) {
-      // mark player as dead
-      oustPlayer(playerId);
+      oustPlayerByVote(playerId);
 
       if (lastActionsActive) {
         setVotingStatus("lastAction");
