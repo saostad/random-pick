@@ -156,7 +156,7 @@ const Wizard: React.FC = () => {
             sequence[currentStepIndex + 1]?.startsWith("Day") && (
               <div className="flex justify-center">
                 <button
-                  className="btn btn-info btn-outline my-4"
+                  className="btn btn-success btn-outline my-4"
                   onClick={() => handleOpen("Inquiries")}
                 >
                   Do you want to inquiry?
