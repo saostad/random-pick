@@ -4,8 +4,8 @@ import Animation from "./Animation";
 import { useModal } from "../contexts/ModalContext";
 
 const LastActionPlayer: React.FC = () => {
-  const { gameState, setVotingStatus } = useGameContext();
-  const { lastActions } = gameState;
+  const { gameState, setVotingStatus, updateGameState } = useGameContext();
+  const { lastActions, playedLastActions } = gameState;
 
   const { handleClose } = useModal();
 
@@ -13,6 +13,10 @@ const LastActionPlayer: React.FC = () => {
   const [animationVisible, setAnimationVisible] = useState(false);
 
   const [randomCard, setRandomCard] = useState<LastActType>();
+
+  const stillInGameLastActions = lastActions.filter(
+    (action) => !playedLastActions.includes(action.id)
+  );
 
   return (
     <>
@@ -30,7 +34,7 @@ const LastActionPlayer: React.FC = () => {
         </div>
         <div className="collapse-content">
           <ul>
-            {lastActions.map((action) => (
+            {stillInGameLastActions.map((action) => (
               <li key={action.id}>
                 <div
                   className="tooltip tooltip-right"
@@ -46,26 +50,49 @@ const LastActionPlayer: React.FC = () => {
 
       <div className="divider"></div>
 
-      <button
-        className="btn btn-secondary btn-outline"
-        disabled={randomCardVisible}
-        onClick={() => {
-          // shuffle cards and assign one
-          const [randomCard] = lastActions
-            .map((el) => el)
-            .sort(() => 0.5 - Math.random());
+      {stillInGameLastActions.length === 0 ? (
+        <div className="flex flex-col gap-4">
+          <span>No action card available!</span>
+          <button
+            className="btn btn-info btn-outline"
+            onClick={() => {
+              setVotingStatus("finished");
+              handleClose("LastActionPlayer");
+            }}
+          >
+            Go to next step
+          </button>
+        </div>
+      ) : (
+        <button
+          className="btn btn-secondary btn-outline"
+          disabled={randomCardVisible}
+          onClick={() => {
+            // shuffle cards and assign one
+            const [randomCard] = stillInGameLastActions
+              .map((el) => el)
+              .sort(() => 0.5 - Math.random());
 
-          setRandomCard(randomCard);
+            setRandomCard(randomCard);
 
-          setAnimationVisible(true);
-          setTimeout(() => {
-            setAnimationVisible(false);
-            setRandomCardVisible(true);
-          }, 3000);
-        }}
-      >
-        Shuffle Cards
-      </button>
+            setAnimationVisible(true);
+            setTimeout(() => {
+              setAnimationVisible(false);
+              setRandomCardVisible(true);
+
+              // remove action from available actions in game state
+              updateGameState({
+                playedLastActions: [
+                  ...gameState.playedLastActions,
+                  randomCard.id,
+                ],
+              });
+            }, 3000);
+          }}
+        >
+          Shuffle Cards
+        </button>
+      )}
       {animationVisible && (
         <Animation
           className=""
@@ -84,6 +111,8 @@ const LastActionPlayer: React.FC = () => {
           <button
             className="btn btn-primary"
             onClick={() => {
+              setAnimationVisible(false);
+              setRandomCardVisible(false);
               setVotingStatus("finished");
               handleClose("LastActionPlayer");
             }}

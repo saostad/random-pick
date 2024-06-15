@@ -72,6 +72,7 @@ export type GameState = {
   speakingOrder: number[];
   tags: TagsType[];
   lastActions: LastActType[];
+  playedLastActions: string[];
   lastActionsActive: boolean;
   activeTab: "home" | "settings" | "timeline";
   challengeTime: number;
@@ -125,6 +126,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     speakingOrder: [],
     tags: [...tags],
     lastActions: [],
+    playedLastActions: [],
     lastActionsActive: false,
     activeTab: "home",
     challengeTime: 30,
@@ -240,6 +242,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       currentStepIndex: 0,
       speakingOrder: [],
       inquiries: 2,
+      playedLastActions: [],
     }));
     handleOpen("ActionRecommender");
   };

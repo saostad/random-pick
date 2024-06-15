@@ -112,7 +112,7 @@ const NightActionsControl: React.FC = () => {
         title="Tag Management"
       />
       <FlexibleModal modalId="night-actions" title="Night Actions">
-        <div className="min-h-52">
+        <div className="min-h-64">
           {actionableRoles.length > 0 &&
           currentActionIndex < actionableRoles.length ? (
             <>
@@ -123,12 +123,12 @@ const NightActionsControl: React.FC = () => {
                   mediaUrl="/mafia/Whispering20Shadows20ext20v1.2.1.1.1.mp3"
                 />
               </div>
-              <div className="my-4">
-                <b>
-                  <u>{actionableRoles[currentActionIndex].name}</u>
-                </b>{" "}
-                (Player:
-                <b>
+              <div className="flex flex-col my-6">
+                <b className="text-2xl">
+                  {actionableRoles[currentActionIndex].name}
+                </b>
+                <div className="self-center">
+                  (Player:
                   {rolePlayers[actionableRoles[currentActionIndex].id] ? (
                     <PlayerTagsIndicator
                       key={actionableRoles[currentActionIndex].id}
@@ -139,11 +139,10 @@ const NightActionsControl: React.FC = () => {
                   ) : (
                     "Unassigned"
                   )}
-
                   {!rolePlayers[actionableRoles[currentActionIndex].id]
                     ?.isAlive && <mark> (Dead)</mark>}
-                </b>
-                )
+                  )
+                </div>
               </div>
               <button
                 className="btn mr-4 relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
@@ -153,7 +152,7 @@ const NightActionsControl: React.FC = () => {
                   Next Role
                 </span>
               </button>
-              <DropdownButton title={<>Actions</>}>
+              <DropdownButton title="Actions">
                 <ModalButton modalId="TagPlayers">
                   Tag <CarbonTag />
                 </ModalButton>
