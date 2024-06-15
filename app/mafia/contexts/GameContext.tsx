@@ -87,7 +87,13 @@ export type GameContextType = {
   loading: boolean;
   gameState: GameState;
   updateGameState: (newState: Partial<GameState>) => void;
-  markPlayerAsDead: (playerId: string) => void;
+  markPlayerAsDead: ({
+    playerId,
+    reason,
+  }: {
+    playerId: string;
+    reason?: "vote" | "breaking game rules";
+  }) => void;
   markPlayerAsAlive: (playerId: string) => void;
   assignRoleToPlayer: (playerId: string, roleId: string) => void;
   unassignRoleFromPlayer: (playerId: string) => void;
@@ -110,7 +116,6 @@ export type GameContextType = {
   setSpeakingOrder: (speakingOrder: number[]) => void;
   decreaseInquiries: () => void;
   addEvent: (event: Omit<GameEvent, "eventAt" | "timestamp">) => void;
-  oustPlayerByVote: (playerId: string) => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -156,19 +161,55 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setGameState((prev) => ({ ...prev, ...newState }));
   };
 
-  const markPlayerAsDead = (playerId: string) => {
+  const markPlayerAsDead = ({
+    playerId,
+    reason,
+  }: {
+    playerId: string;
+    reason?: "vote" | "breaking game rules";
+  }) => {
+    // find player index id
+    const playerIndex = getAlivePlayers({
+      players: gameState.players,
+    }).findIndex((player) => player.id === playerId);
+
+    // remove player from speaking order
+    const speakingOrder = gameState.speakingOrder.filter(
+      (order) => order !== playerIndex
+    );
+
+    // update speaking order
+    setSpeakingOrder(speakingOrder);
+
     // get the player's name
     const playerName = gameState.players.find(
       (player) => player.id === playerId
     )?.name;
     if (!playerName) {
-      return;
+      console.error(`Player ${playerId} not found to mark as dead.`);
     }
 
-    addEvent({
-      type: "player-killed",
-      description: `Player ${playerName} was killed.`,
-    });
+    switch (reason) {
+      case "vote":
+        addEvent({
+          type: "player-ousted",
+          description: `Player ${playerName} was ousted by vote.`,
+        });
+        break;
+      case "breaking game rules":
+        // TODO: implement the UI for this
+        addEvent({
+          type: "player-ousted",
+          description: `Player ${playerName} was ousted for breaking game rules.`,
+        });
+        break;
+      default:
+        addEvent({
+          type: "player-killed",
+          description: `Player ${playerName} was killed.`,
+        });
+        break;
+    }
 
     setGameState((prev) => ({
       ...prev,
@@ -176,20 +217,6 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         player.id === playerId ? { ...player, isAlive: false } : player
       ),
     }));
-  };
-  const oustPlayerByVote = (playerId: string) => {
-    updateGameState({
-      players: gameState.players.map((player) =>
-        player.id === playerId ? { ...player, isAlive: false } : player
-      ),
-    });
-
-    addEvent({
-      type: "player-oust",
-      description: `${
-        gameState.players.find((player) => player.id === playerId)?.name
-      } was ousted by vote!`,
-    });
   };
 
   const decreaseInquiries = () => {
@@ -449,7 +476,6 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     loading,
     decreaseInquiries,
     addEvent,
-    oustPlayerByVote,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

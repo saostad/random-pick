@@ -11,7 +11,7 @@ const VotingSession: React.FC = () => {
     decreaseVote,
     increaseVote,
     resetVotes,
-    oustPlayerByVote,
+    markPlayerAsDead,
     setVotingStatus,
   } = useGameContext();
   const { votingStatus, players, speakingOrder, lastActionsActive } = gameState;
@@ -39,7 +39,7 @@ const VotingSession: React.FC = () => {
 
   const votingOustingEnd = (playerId?: string) => {
     if (playerId) {
-      oustPlayerByVote(playerId);
+      markPlayerAsDead({ playerId, reason: "vote" });
 
       if (lastActionsActive) {
         setVotingStatus("lastAction");

@@ -13,7 +13,7 @@ const PlayerStatusManager: React.FC = () => {
   const deadPlayers = gameState.players.filter((player) => !player.isAlive);
 
   const handleMarkPlayerAsDead = (playerId: string) => {
-    markPlayerAsDead(playerId);
+    markPlayerAsDead({ playerId });
   };
 
   const handleMarkPlayerAsAlive = (playerId: string) => {
