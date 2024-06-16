@@ -72,7 +72,7 @@ const Roles: React.FC = () => {
   };
 
   const renderRole = (role: GameRole, index: number) => (
-    <div className="flex justify-between items-center w-full">
+    <div className="flex justify-between items-center">
       <input
         type="text"
         className="input input-sm input-primary max-w-xs"
