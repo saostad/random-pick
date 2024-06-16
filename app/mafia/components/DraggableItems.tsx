@@ -74,7 +74,7 @@ const DraggableItem: React.FC<DraggableItemProps> = ({
 
   return (
     <div ref={dropRef} style={{ opacity: isDragging ? 0.5 : 1 }}>
-      <div className="cursor-move flex">
+      <div className="cursor-move flex items-center my-2">
         <div ref={dragRef}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

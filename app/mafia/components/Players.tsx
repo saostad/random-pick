@@ -86,7 +86,7 @@ const Players: React.FC = () => {
   };
 
   const renderPlayer = (player: Player, index: number) => (
-    <div className="grid grid-cols-6 gap-4 w-full mb-2">
+    <div className="grid grid-cols-6 gap-4 w-full">
       <input
         type="text"
         className="input input-sm input-bordered w-full max-w-xs col-span-3"

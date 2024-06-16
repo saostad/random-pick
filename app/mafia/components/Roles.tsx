@@ -72,7 +72,7 @@ const Roles: React.FC = () => {
   };
 
   const renderRole = (role: GameRole, index: number) => (
-    <div className="flex justify-between items-center w-full mb-2">
+    <div className="flex justify-between items-center w-full">
       <input
         type="text"
         className="input input-sm input-primary max-w-xs"
@@ -80,20 +80,16 @@ const Roles: React.FC = () => {
         onChange={(e) => handleUpdateRoleName(role.id, e.target.value)}
         placeholder="Role name"
       />
-      <div className="flex items-center">
-        <small>
-          <label>
-            <input
-              type="checkbox"
-              className="checkbox checkbox-sx"
-              checked={role.hasAction}
-              onChange={(e) =>
-                handleUpdateRoleAction(role.id, e.target.checked)
-              }
-            />
-            Action?
-          </label>
-        </small>
+      <div className="form-control">
+        <label className="cursor-pointer label">
+          <input
+            type="checkbox"
+            className="checkbox checkbox-sx"
+            checked={role.hasAction}
+            onChange={(e) => handleUpdateRoleAction(role.id, e.target.checked)}
+          />
+          <span className="label-text">Action?</span>
+        </label>
       </div>
       <button
         onClick={() => handleRemoveRole(role.id)}
