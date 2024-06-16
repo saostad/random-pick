@@ -191,7 +191,7 @@ const Roles: React.FC = () => {
           return a.actionOrder - b.actionOrder;
         })}
         moveItem={moveRole}
-        renderItem={renderRole}
+        renderItem={renderRole as any}
       />
     </div>
   );

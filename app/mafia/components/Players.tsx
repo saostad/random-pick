@@ -148,7 +148,7 @@ const Players: React.FC = () => {
       <DraggableItems
         items={gameState.players.slice().sort((a, b) => a.order - b.order)}
         moveItem={movePlayer}
-        renderItem={renderPlayer}
+        renderItem={renderPlayer as any}
       />
     </div>
   );
