@@ -116,7 +116,7 @@ const Wizard: React.FC = () => {
       </div>
 
       {isCurrentStepFinished() && (
-        <>
+        <div className="">
           <Animation
             className="max-w-56 max-h-56 m-auto"
             src="mafia/animation/next.lottie"
@@ -176,7 +176,7 @@ const Wizard: React.FC = () => {
               Let&apos;s Go!
             </span>
           </button>
-        </>
+        </div>
       )}
       <div className="step-content">{renderStep()}</div>
     </div>

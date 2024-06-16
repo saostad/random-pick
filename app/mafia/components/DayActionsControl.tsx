@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
@@ -9,6 +9,7 @@ import CarbonShuffle from "~icons/carbon/shuffle";
 import { getAlivePlayers } from "../utils/get-from-fns";
 import Animation from "./Animation";
 import MediaPlayer, { MediaPlayerRef } from "./MediaPlayer";
+import { ToastContext } from "../contexts/ToastContext";
 
 const DayActionsControl: React.FC = () => {
   const { gameState, updateGameState, increaseDayCount, setSpeakingOrder } =
@@ -23,6 +24,7 @@ const DayActionsControl: React.FC = () => {
     challengeTimeEnabled,
   } = gameState;
   const { handleOpen } = useModal();
+  const { addToast } = useContext(ToastContext);
   const [currentSpeakerIndex, setCurrentSpeakerIndex] = useState<number>(0);
   const [allPlayersCompleted, setAllPlayersCompleted] =
     useState<boolean>(false);
@@ -64,7 +66,7 @@ const DayActionsControl: React.FC = () => {
   const handleStartDay = () => {
     handleOpen("day-actions");
     const alivePlayers = getAlivePlayers({ players });
-    const startingIndex = alivePlayers.findIndex(
+    let startingIndex = alivePlayers.findIndex(
       (player) => player.id === selectedStartingPlayer
     );
 
@@ -84,7 +86,7 @@ const DayActionsControl: React.FC = () => {
       updateGameState({ startingPlayerId: selectedStartingPlayer });
     } else {
       console.error(
-        "Selected starting player not found in the list of players"
+        `Selected starting player ${selectedStartingPlayer} not found in the list of players`
       );
     }
   };
@@ -127,8 +129,25 @@ const DayActionsControl: React.FC = () => {
       const randomPlayer =
         alivePlayers[Math.floor(Math.random() * alivePlayers.length)];
       setSelectedStartingPlayer(randomPlayer.id);
+      addToast({
+        message: "Random player selected as starting player.",
+        type: "info",
+      });
     }
   };
+
+  useEffect(() => {
+    const alivePlayers = getAlivePlayers({ players });
+    let startingIndex = alivePlayers.findIndex(
+      (player) => player.id === selectedStartingPlayer
+    );
+
+    if (startingIndex === -1) {
+      // it means the selected player is not alive
+      // randomly select a player
+      handleRandomSelect();
+    }
+  }, [selectedStartingPlayer]);
 
   const lastStartingPlayer = gameState.players.find(
     (player) => player.id === gameState.startingPlayerId
