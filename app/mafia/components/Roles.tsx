@@ -5,6 +5,7 @@ import RoleSuggestion from "./RoleSuggestion";
 import CarbonAdd from "~icons/carbon/add";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { TouchBackend } from "react-dnd-touch-backend";
+import DraggableItems from "./DraggableItems";
 
 const ROLE_TYPE = "ROLE";
 
@@ -73,6 +74,39 @@ const Roles: React.FC = () => {
 
     updateGameState({ gameRoles: updatedRoles });
   };
+
+  const renderRole = (role: GameRole, index: number) => (
+    <div className="flex justify-between items-center w-full mb-2">
+      <input
+        type="text"
+        className="input input-sm input-primary max-w-xs"
+        value={role.name}
+        onChange={(e) => handleUpdateRoleName(role.id, e.target.value)}
+        placeholder="Role name"
+      />
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <small>
+          <label>
+            <input
+              type="checkbox"
+              className="checkbox checkbox-sx"
+              checked={role.hasAction}
+              onChange={(e) =>
+                handleUpdateRoleAction(role.id, e.target.checked)
+              }
+            />
+            Action?
+          </label>
+        </small>
+      </div>
+      <button
+        onClick={() => handleRemoveRole(role.id)}
+        className="btn btn-circle btn-outline btn-error btn-sm"
+      >
+        &#x2715;
+      </button>
+    </div>
+  );
 
   return (
     <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
@@ -153,104 +187,19 @@ const Roles: React.FC = () => {
 
         <div className="divider"></div>
 
-        <div className="flex flex-col">
-          {gameState.gameRoles
-            .slice()
-            .sort((a, b) => {
-              if (a.actionOrder === b.actionOrder)
-                return a.name.localeCompare(b.name);
-              if (a.actionOrder === undefined || b.actionOrder === undefined)
-                return 1;
-              return a.actionOrder - b.actionOrder;
-            })
-            .map((role, index) => (
-              <DraggableRole
-                key={role.id}
-                role={role}
-                index={index}
-                moveRole={moveRole}
-                handleUpdateRoleName={handleUpdateRoleName}
-                handleUpdateRoleAction={handleUpdateRoleAction}
-                handleRemoveRole={handleRemoveRole}
-              />
-            ))}
-        </div>
+        <DraggableItems
+          items={gameState.gameRoles.slice().sort((a, b) => {
+            if (a.actionOrder === b.actionOrder)
+              return a.name.localeCompare(b.name);
+            if (a.actionOrder === undefined || b.actionOrder === undefined)
+              return 1;
+            return a.actionOrder - b.actionOrder;
+          })}
+          moveItem={moveRole}
+          renderItem={renderRole}
+        />
       </div>
     </DndProvider>
-  );
-};
-
-const DraggableRole: React.FC<{
-  role: GameRole;
-  index: number;
-  moveRole: (dragIndex: number, hoverIndex: number) => void;
-  handleUpdateRoleName: (roleId: string, newName: string) => void;
-  handleUpdateRoleAction: (roleId: string, hasAction: boolean) => void;
-  handleRemoveRole: (roleId: string) => void;
-}> = ({
-  role,
-  index,
-  moveRole,
-  handleUpdateRoleName,
-  handleUpdateRoleAction,
-  handleRemoveRole,
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [{ isDragging }, drag] = useDrag({
-    type: ROLE_TYPE,
-    item: { id: role.id, index },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
-
-  const [, drop] = useDrop({
-    accept: ROLE_TYPE,
-    hover(item: { id: string; index: number }) {
-      if (item.id !== role.id) {
-        moveRole(item.index, index);
-        item.index = index;
-      }
-    },
-  });
-
-  drag(drop(ref));
-
-  return (
-    <div
-      className="flex justify-between items-center mb-2"
-      ref={ref}
-      style={{ opacity: isDragging ? 0.5 : 1 }}
-    >
-      <input
-        type="text"
-        className="input input-sm input-primary  max-w-xs"
-        value={role.name}
-        onChange={(e) => handleUpdateRoleName(role.id, e.target.value)}
-        placeholder="Role name"
-      />
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <small>
-          <label>
-            <input
-              type="checkbox"
-              className="checkbox checkbox-sx"
-              checked={role.hasAction}
-              onChange={(e) =>
-                handleUpdateRoleAction(role.id, e.target.checked)
-              }
-            />
-            Action?
-          </label>
-        </small>
-      </div>
-      <button
-        onClick={() => handleRemoveRole(role.id)}
-        className="btn btn-circle btn-outline btn-error btn-sm"
-      >
-        &#x2715;
-      </button>
-    </div>
   );
 };
 
