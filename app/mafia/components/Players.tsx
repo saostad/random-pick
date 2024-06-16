@@ -86,7 +86,7 @@ const Players: React.FC = () => {
   };
 
   const renderPlayer = (player: Player, index: number) => (
-    <div className="grid grid-cols-5 gap-4 w-full mb-2">
+    <div className="grid grid-cols-6 gap-4 w-full mb-2">
       <input
         type="text"
         className="input input-sm input-bordered w-full max-w-xs col-span-3"
@@ -94,7 +94,7 @@ const Players: React.FC = () => {
         onChange={(e) => handleUpdatePlayerName(player.id, e.target.value)}
         placeholder="Player's name"
       />
-      <span>
+      <span className="col-span-2">
         <small>
           {playerRoles[player.id] ? `${playerRoles[player.id]}` : ""}
         </small>
