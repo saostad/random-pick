@@ -72,10 +72,10 @@ const Roles: React.FC = () => {
   };
 
   const renderRole = (role: GameRole, index: number) => (
-    <div className="flex justify-between items-center">
+    <div className="grid grid-cols-5 gap-4 w-full content-center">
       <input
         type="text"
-        className="input input-sm input-primary max-w-xs"
+        className="input input-sm input-primary max-w-xs col-span-3"
         value={role.name}
         onChange={(e) => handleUpdateRoleName(role.id, e.target.value)}
         placeholder="Role name"
