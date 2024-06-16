@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useGameContext, Player } from "../contexts/GameContext";
+import DraggableItems from "./DraggableItems";
 
-// Component for displaying and managing the list of players
 const Players: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
   const [newPlayerName, setNewPlayerName] = useState("");
@@ -38,7 +38,6 @@ const Players: React.FC = () => {
     setNewPlayerOrder(highestOrder + 1);
   }, [gameState.players]);
 
-  // Function to add a new player
   const handleAddPlayer = () => {
     if (gameState.players.some((player) => player.order === newPlayerOrder)) {
       setError("Duplicate seat number");
@@ -46,27 +45,25 @@ const Players: React.FC = () => {
     }
     setError(null);
     const newPlayer: Player = {
-      id: new Date().toISOString(), // Generating a unique ID based on the current time
+      id: new Date().toISOString(),
       name: newPlayerName,
       voteCount: 0,
       order: newPlayerOrder,
       isAlive: true,
-      roleId: "", // Add a default role ID or modify as needed
-      tags: [], // Add default tags or modify as needed
+      roleId: "",
+      tags: [],
     };
     updateGameState({ players: [...gameState.players, newPlayer] });
-    setNewPlayerName(""); // Reset input after adding
-    setNewPlayerOrder((prev) => prev + 1); // Increment order for the next player
+    setNewPlayerName("");
+    setNewPlayerOrder((prev) => prev + 1);
   };
 
-  // Function to remove a player by ID
   const handleRemovePlayer = (playerId: string) => {
     updateGameState({
       players: gameState.players.filter((player) => player.id !== playerId),
     });
   };
 
-  // Function to update a player's name
   const handleUpdatePlayerName = (playerId: string, newName: string) => {
     const updatedPlayers = gameState.players.map((player) =>
       player.id === playerId ? { ...player, name: newName } : player
@@ -74,22 +71,42 @@ const Players: React.FC = () => {
     updateGameState({ players: updatedPlayers });
   };
 
-  // Function to update a player's order
-  const handleUpdatePlayerOrder = (playerId: string, newOrder: number) => {
-    if (
-      gameState.players.some(
-        (player) => player.id !== playerId && player.order === newOrder
-      )
-    ) {
-      setError("Duplicate seat number");
-      return;
-    }
-    setError(null);
-    const updatedPlayers = gameState.players.map((player) =>
-      player.id === playerId ? { ...player, order: newOrder } : player
-    );
+  const movePlayer = (dragIndex: number, hoverIndex: number) => {
+    const draggedPlayer = gameState.players[dragIndex];
+    const updatedPlayers = [...gameState.players];
+    updatedPlayers.splice(dragIndex, 1);
+    updatedPlayers.splice(hoverIndex, 0, draggedPlayer);
+
+    // Update the order for each player based on its new position
+    updatedPlayers.forEach((player, index) => {
+      player.order = index + 1;
+    });
+
     updateGameState({ players: updatedPlayers });
   };
+
+  const renderPlayer = (player: Player, index: number) => (
+    <div className="grid grid-cols-5 gap-4 w-full mb-2">
+      <input
+        type="text"
+        className="input input-sm input-bordered w-full max-w-xs col-span-3"
+        value={player.name}
+        onChange={(e) => handleUpdatePlayerName(player.id, e.target.value)}
+        placeholder="Player's name"
+      />
+      <span>
+        <small>
+          {playerRoles[player.id] ? `${playerRoles[player.id]}` : ""}
+        </small>
+      </span>
+      <button
+        onClick={() => handleRemovePlayer(player.id)}
+        className="btn btn-circle btn-outline btn-error btn-sm"
+      >
+        &#x2715;
+      </button>
+    </div>
+  );
 
   return (
     <div>
@@ -128,51 +145,11 @@ const Players: React.FC = () => {
       </div>
       <div className="divider"></div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "3fr 2fr 2fr auto",
-          gap: "0.75rem",
-          alignItems: "center",
-        }}
-      >
-        {gameState.players
-          .slice() // Create a copy of the players array to avoid mutating the original state
-          .sort((a, b) => a.order - b.order) // Sort players by order
-          .map((player) => (
-            <React.Fragment key={player.id}>
-              <input
-                type="text"
-                className="input input-bordered w-full max-w-xs input-sm"
-                value={player.name}
-                onChange={(e) =>
-                  handleUpdatePlayerName(player.id, e.target.value)
-                }
-                placeholder="Player's name"
-              />
-              <span>
-                <small>
-                  {playerRoles[player.id] ? `${playerRoles[player.id]}` : ""}
-                </small>
-              </span>
-              <input
-                type="number"
-                className="input input-bordered w-full max-w-xs input-sm"
-                value={player.order}
-                onChange={(e) =>
-                  handleUpdatePlayerOrder(player.id, Number(e.target.value))
-                }
-                placeholder="Seat number"
-              />
-              <button
-                onClick={() => handleRemovePlayer(player.id)}
-                className="btn btn-circle btn-outline btn-error btn-sm"
-              >
-                &#x2715;
-              </button>
-            </React.Fragment>
-          ))}
-      </div>
+      <DraggableItems
+        items={gameState.players.slice().sort((a, b) => a.order - b.order)}
+        moveItem={movePlayer}
+        renderItem={renderPlayer}
+      />
     </div>
   );
 };

@@ -1,13 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useGameContext, GameRole } from "../contexts/GameContext";
 import PredefinedRoles from "./PredefinedRoles";
 import RoleSuggestion from "./RoleSuggestion";
 import CarbonAdd from "~icons/carbon/add";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
-import { TouchBackend } from "react-dnd-touch-backend";
 import DraggableItems from "./DraggableItems";
-
-const ROLE_TYPE = "ROLE";
 
 const Roles: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
@@ -84,7 +80,7 @@ const Roles: React.FC = () => {
         onChange={(e) => handleUpdateRoleName(role.id, e.target.value)}
         placeholder="Role name"
       />
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div className="flex items-center">
         <small>
           <label>
             <input
@@ -109,97 +105,95 @@ const Roles: React.FC = () => {
   );
 
   return (
-    <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
-      <div>
-        <div className="flex justify-center">
-          <div className="join mb-4">
-            <input
-              className={`join-item btn ${
-                activeTab === "addRole" ? "btn-active btn-primary" : ""
-              }`}
-              type="radio"
-              name="options"
-              aria-label="Add a Role"
-              checked={activeTab === "addRole"}
-              onChange={() => setActiveTab("addRole")}
-            />
-            <input
-              className={`join-item btn ${
-                activeTab === "suggestRoles" ? "btn-active btn-primary" : ""
-              }`}
-              type="radio"
-              name="options"
-              aria-label="Suggest"
-              checked={activeTab === "suggestRoles"}
-              onChange={() => setActiveTab("suggestRoles")}
-            />
-            <input
-              className={`join-item btn ${
-                activeTab === "predefinedRoles" ? "btn-active btn-primary" : ""
-              }`}
-              type="radio"
-              name="options"
-              aria-label="Predefined"
-              checked={activeTab === "predefinedRoles"}
-              onChange={() => setActiveTab("predefinedRoles")}
-            />
-          </div>
+    <div>
+      <div className="flex justify-center">
+        <div className="join mb-4">
+          <input
+            className={`join-item btn ${
+              activeTab === "addRole" ? "btn-active btn-primary" : ""
+            }`}
+            type="radio"
+            name="options"
+            aria-label="Add a Role"
+            checked={activeTab === "addRole"}
+            onChange={() => setActiveTab("addRole")}
+          />
+          <input
+            className={`join-item btn ${
+              activeTab === "suggestRoles" ? "btn-active btn-primary" : ""
+            }`}
+            type="radio"
+            name="options"
+            aria-label="Suggest"
+            checked={activeTab === "suggestRoles"}
+            onChange={() => setActiveTab("suggestRoles")}
+          />
+          <input
+            className={`join-item btn ${
+              activeTab === "predefinedRoles" ? "btn-active btn-primary" : ""
+            }`}
+            type="radio"
+            name="options"
+            aria-label="Predefined"
+            checked={activeTab === "predefinedRoles"}
+            onChange={() => setActiveTab("predefinedRoles")}
+          />
         </div>
-
-        {activeTab === "addRole" && (
-          <div>
-            <input
-              type="text"
-              className="input input-bordered input-primary w-full max-w-xs mb-2"
-              value={newRoleName}
-              onChange={(e) => setNewRoleName(e.target.value)}
-              placeholder="Role name"
-            />
-            <input
-              type="text"
-              className="input input-bordered input-primary w-full max-w-xs mb-2"
-              value={nativeName}
-              onChange={(e) => setNativeName(e.target.value)}
-              placeholder="Role alt name"
-            />
-            <div className="grid grid-cols-2 gap-2 m-2">
-              <div className="form-control w-32">
-                <label className="cursor-pointer label">
-                  <span className="label-text">Action?</span>
-                  <input
-                    type="checkbox"
-                    checked={hasAction}
-                    onChange={(e) => setHasAction(e.target.checked)}
-                    className="toggle toggle-primary"
-                  />
-                </label>
-              </div>
-            </div>
-            <button className="btn btn-primary" onClick={handleAddRole}>
-              Add <CarbonAdd />
-            </button>
-            {error && <div style={{ color: "red" }}>{error}</div>}
-          </div>
-        )}
-
-        {activeTab === "predefinedRoles" && <PredefinedRoles />}
-        {activeTab === "suggestRoles" && <RoleSuggestion />}
-
-        <div className="divider"></div>
-
-        <DraggableItems
-          items={gameState.gameRoles.slice().sort((a, b) => {
-            if (a.actionOrder === b.actionOrder)
-              return a.name.localeCompare(b.name);
-            if (a.actionOrder === undefined || b.actionOrder === undefined)
-              return 1;
-            return a.actionOrder - b.actionOrder;
-          })}
-          moveItem={moveRole}
-          renderItem={renderRole}
-        />
       </div>
-    </DndProvider>
+
+      {activeTab === "addRole" && (
+        <div>
+          <input
+            type="text"
+            className="input input-bordered input-primary w-full max-w-xs mb-2"
+            value={newRoleName}
+            onChange={(e) => setNewRoleName(e.target.value)}
+            placeholder="Role name"
+          />
+          <input
+            type="text"
+            className="input input-bordered input-primary w-full max-w-xs mb-2"
+            value={nativeName}
+            onChange={(e) => setNativeName(e.target.value)}
+            placeholder="Role alt name"
+          />
+          <div className="grid grid-cols-2 gap-2 m-2">
+            <div className="form-control w-32">
+              <label className="cursor-pointer label">
+                <span className="label-text">Action?</span>
+                <input
+                  type="checkbox"
+                  checked={hasAction}
+                  onChange={(e) => setHasAction(e.target.checked)}
+                  className="toggle toggle-primary"
+                />
+              </label>
+            </div>
+          </div>
+          <button className="btn btn-primary" onClick={handleAddRole}>
+            Add <CarbonAdd />
+          </button>
+          {error && <div style={{ color: "red" }}>{error}</div>}
+        </div>
+      )}
+
+      {activeTab === "predefinedRoles" && <PredefinedRoles />}
+      {activeTab === "suggestRoles" && <RoleSuggestion />}
+
+      <div className="divider"></div>
+
+      <DraggableItems
+        items={gameState.gameRoles.slice().sort((a, b) => {
+          if (a.actionOrder === b.actionOrder)
+            return a.name.localeCompare(b.name);
+          if (a.actionOrder === undefined || b.actionOrder === undefined)
+            return 1;
+          return a.actionOrder - b.actionOrder;
+        })}
+        moveItem={moveRole}
+        renderItem={renderRole}
+      />
+    </div>
   );
 };
 
