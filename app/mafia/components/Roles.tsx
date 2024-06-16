@@ -4,7 +4,7 @@ import PredefinedRoles from "./PredefinedRoles";
 import RoleSuggestion from "./RoleSuggestion";
 import CarbonAdd from "~icons/carbon/add";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { TouchBackend } from "react-dnd-touch-backend";
 
 const ROLE_TYPE = "ROLE";
 
@@ -75,7 +75,7 @@ const Roles: React.FC = () => {
   };
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
       <div>
         <div className="flex justify-center">
           <div className="join mb-4">
