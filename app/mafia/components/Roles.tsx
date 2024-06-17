@@ -72,15 +72,17 @@ const Roles: React.FC = () => {
   };
 
   const renderRole = (role: GameRole, index: number) => (
-    <div className="grid grid-cols-5 gap-4 w-full content-center">
-      <input
-        type="text"
-        className="input input-sm input-primary max-w-xs col-span-3"
-        value={role.name}
-        onChange={(e) => handleUpdateRoleName(role.id, e.target.value)}
-        placeholder="Role name"
-      />
-      <div className="form-control">
+    <div className="grid grid-cols-6 gap-4 content-center">
+      <div className="col-span-3 flex items-center">
+        <input
+          type="text"
+          className="input input-sm input-primary w-full"
+          value={role.name}
+          onChange={(e) => handleUpdateRoleName(role.id, e.target.value)}
+          placeholder="Role name"
+        />
+      </div>
+      <div className="form-control col-span-2">
         <label className="cursor-pointer label">
           <input
             type="checkbox"
@@ -88,15 +90,17 @@ const Roles: React.FC = () => {
             checked={role.hasAction}
             onChange={(e) => handleUpdateRoleAction(role.id, e.target.checked)}
           />
-          <span className="label-text">Action?</span>
+          <span className="label-text text-xs ml-2">Has action?</span>
         </label>
       </div>
-      <button
-        onClick={() => handleRemoveRole(role.id)}
-        className="btn btn-circle btn-outline btn-error btn-sm"
-      >
-        &#x2715;
-      </button>
+      <div className="flex items-center">
+        <button
+          onClick={() => handleRemoveRole(role.id)}
+          className="btn btn-circle btn-outline btn-error btn-sm"
+        >
+          &#x2715;
+        </button>
+      </div>
     </div>
   );
 
@@ -153,10 +157,10 @@ const Roles: React.FC = () => {
             onChange={(e) => setNativeName(e.target.value)}
             placeholder="Role alt name"
           />
-          <div className="grid grid-cols-2 gap-2 m-2">
-            <div className="form-control w-32">
+          <div className="m-2">
+            <div className="form-control">
               <label className="cursor-pointer label">
-                <span className="label-text">Action?</span>
+                <span className="label-text">Has action?</span>
                 <input
                   type="checkbox"
                   checked={hasAction}
