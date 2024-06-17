@@ -1,5 +1,6 @@
 import React from "react";
 import { GameEvent, useGameContext } from "../contexts/GameContext";
+import Animation from "./Animation";
 
 const EventTimeline: React.FC = () => {
   const { gameState } = useGameContext();
@@ -23,7 +24,15 @@ const EventTimeline: React.FC = () => {
   });
 
   return events.length === 0 ? (
-    <p>No events to show</p>
+    <div className="flex flex-col items-center mt-10">
+      <p className="text-xl font-bold my-4">No events to show</p>
+      <Animation
+        className=""
+        src="mafia/animation/bored.lottie"
+        loop={true}
+        autoplay={true}
+      />
+    </div>
   ) : (
     <ul className="timeline timeline-snap-icon timeline-compact timeline-vertical">
       {Object.entries(groupedEvents).map(([key, group], index) => (
