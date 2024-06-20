@@ -144,13 +144,13 @@ const PlayerRoleCarousel: React.FC = () => {
               )}
               <div className="card-actions justify-between mt-4">
                 <button
-                  className="btn btn-ghost btn-outline min-w-24 btn-secondary"
+                  className="btn btn-ghost btn-outline md:min-w-24 btn-secondary"
                   onClick={handlePrevious}
                 >
                   Prev <CarbonPreviousOutline />
                 </button>
                 <button
-                  className="btn btn-ghost btn-outline min-w-24 btn-secondary"
+                  className="btn btn-ghost btn-outline md:min-w-24 btn-secondary"
                   onClick={handleNext}
                 >
                   Next <CarbonNextOutline />

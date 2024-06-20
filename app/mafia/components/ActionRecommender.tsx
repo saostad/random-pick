@@ -4,15 +4,16 @@ import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
 import ModalButton from "./ModalButton";
 import Animation from "./Animation";
+import GameMode from "./GameMode";
 
 import CarbonUserRole from "~icons/carbon/user-role";
-import GameMode from "./GameMode";
+import CilTags from "~icons/cil/tags";
 
 interface ActionRecommenderProps extends HTMLAttributes<HTMLElement> {}
 
 const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
   const {
-    gameState: { players, gameRoles },
+    gameState: { players, gameRoles, gameMode },
     loading,
   } = useGameContext();
   const { handleOpen, handleClose } = useModal();
@@ -41,6 +42,8 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
       !players.some((player) => !player.roleId)
     );
   }
+
+  console.log(`File: ActionRecommender.tsx,`, `Line: 46 => `, gameMode);
 
   return (
     <FlexibleModal modalId="ActionRecommender" title="Setup your Game">
@@ -72,12 +75,28 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
               Game is READY to begin!
             </button>
             <div className="mt-4 text-warning">Suggested Steps:</div>
-            <div className=" grid grid-flow-col gap-4">
-              <ModalButton modalId="RoleViewer">
-                Show Player&apos;s Cards
-                <CarbonUserRole className="hidden sm:block" />
-              </ModalButton>
-            </div>
+            {gameMode === "beginner" && (
+              <div className="flex flex-col gap-4">
+                <ModalButton modalId="RoleViewer">
+                  Show Player&apos;s Cards
+                  <CarbonUserRole />
+                </ModalButton>
+              </div>
+            )}
+            {gameMode === "pro" && (
+              <div className="flex flex-col gap-4">
+                <ModalButton modalId="RoleViewer">
+                  Show Player&apos;s Cards
+                  <CarbonUserRole />
+                </ModalButton>
+                <ModalButton modalId="TimerSettings">Timer</ModalButton>
+                <ModalButton modalId="Tags">
+                  + Tags - <CilTags />
+                </ModalButton>
+                <ModalButton modalId="LastActs">+ Last Actions -</ModalButton>
+                <ModalButton modalId="InquiriesSetting">Inquiries</ModalButton>
+              </div>
+            )}
           </>
         ) : null}
       </div>
