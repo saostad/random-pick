@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GameMode, GameRole, useGameContext } from "../contexts/GameContext";
 import predefinedRoles from "../data/predefinedRoles";
 
@@ -24,7 +24,6 @@ const RoleSuggestion: React.FC = () => {
     setGameLevel(gameState.gameMode ?? "beginner");
   }, [gameState.gameMode, loading]);
 
-  // Function to suggest roles based on player count and game level
   const handleSuggestRoles = () => {
     const filteredRoles = predefinedRoles.filter((role) =>
       gameLevel === "pro" ? true : role.roleLevel === gameLevel
@@ -74,18 +73,20 @@ const RoleSuggestion: React.FC = () => {
     );
     const newRoles = rolesToAdd.map((role) => ({
       ...role,
-      id: new Date().toISOString() + Math.random(), // Ensure unique ID
+      id: new Date().toISOString() + Math.random(),
       preDefinedRoleId: role.preDefinedRoleId,
     }));
     updateGameState({ gameRoles: [...gameState.gameRoles, ...newRoles] });
-    setSelectedSuggestedRoles([]); // Reset selected roles
+
+    // Clear the suggestion section
+    setSuggestedRoles([]);
+    setSelectedSuggestedRoles([]);
+    setMessage("");
   };
 
   const increasePlayers = () => setNumPlayers(numPlayers + 1);
   const decreasePlayers = () =>
     setNumPlayers(numPlayers > 0 ? numPlayers - 1 : 0);
-
-  console.log(`File: RoleSuggestion.tsx,`, `Line: 82 => `, gameState.gameMode);
 
   return (
     <div>
@@ -108,7 +109,6 @@ const RoleSuggestion: React.FC = () => {
               -
             </button>
             <span className="p-5 font-bold">{numPlayers}</span>
-
             <button
               className="btn btn-circle btn-outline"
               onClick={increasePlayers}
