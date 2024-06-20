@@ -1,11 +1,13 @@
 import React, { use, useEffect, useState } from "react";
-import { GameRole, useGameContext } from "../contexts/GameContext";
+import { GameMode, GameRole, useGameContext } from "../contexts/GameContext";
 import predefinedRoles from "../data/predefinedRoles";
 
 const RoleSuggestion: React.FC = () => {
-  const { gameState, updateGameState } = useGameContext();
+  const { gameState, updateGameState, loading } = useGameContext();
   const [numPlayers, setNumPlayers] = useState<number>(0);
-  const [gameLevel, setGameLevel] = useState<string>("beginner");
+  const [gameLevel, setGameLevel] = useState<GameMode>(
+    gameState.gameMode ?? "beginner"
+  );
   const [suggestedRoles, setSuggestedRoles] = useState<any[]>([]);
   const [selectedSuggestedRoles, setSelectedSuggestedRoles] = useState<
     string[]
@@ -15,6 +17,12 @@ const RoleSuggestion: React.FC = () => {
   useEffect(() => {
     setNumPlayers(gameState.players.length);
   }, [gameState.players]);
+
+  useEffect(() => {
+    if (loading) return;
+
+    setGameLevel(gameState.gameMode ?? "beginner");
+  }, [gameState.gameMode, loading]);
 
   // Function to suggest roles based on player count and game level
   const handleSuggestRoles = () => {
@@ -77,6 +85,8 @@ const RoleSuggestion: React.FC = () => {
   const decreasePlayers = () =>
     setNumPlayers(numPlayers > 0 ? numPlayers - 1 : 0);
 
+  console.log(`File: RoleSuggestion.tsx,`, `Line: 82 => `, gameState.gameMode);
+
   return (
     <div>
       <div className="grid grid-cols-1 gap-2 mb-4">
@@ -112,7 +122,7 @@ const RoleSuggestion: React.FC = () => {
           <select
             className="select select-bordered select-primary w-full max-w-xs"
             value={gameLevel}
-            onChange={(e) => setGameLevel(e.target.value)}
+            onChange={(e) => setGameLevel(e.target.value as GameMode)}
           >
             <option value="beginner">Beginner</option>
             <option value="pro">Pro</option>

@@ -7,16 +7,15 @@ import Animation from "./Animation";
 
 import CarbonUserRole from "~icons/carbon/user-role";
 import GameMode from "./GameMode";
-import { CldImage } from "next-cloudinary";
 
 interface ActionRecommenderProps extends HTMLAttributes<HTMLElement> {}
 
 const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
   const {
-    gameState: { players, gameRoles, gameMode },
+    gameState: { players, gameRoles },
     loading,
   } = useGameContext();
-  const { handleOpen } = useModal();
+  const { handleOpen, handleClose } = useModal();
 
   useEffect(() => {
     if (loading) return;
@@ -35,17 +34,18 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
     }
   }, [loading]);
 
+  function isGameReady() {
+    return (
+      players.length !== 0 &&
+      gameRoles.length !== 0 &&
+      !players.some((player) => !player.roleId)
+    );
+  }
+
   return (
-    <FlexibleModal modalId="ActionRecommender" title="Action Recommender">
+    <FlexibleModal modalId="ActionRecommender" title="Setup your Game">
       <div className="grid gap-6">
-        <CldImage
-          className="m-0 justify-self-center"
-          src="mafia/all-roles"
-          alt="all-roles"
-          width="300"
-          height="200"
-        />
-        {gameMode === undefined && <GameMode />}
+        {!isGameReady() && <GameMode />}
         {players.length === 0 ? (
           <ModalButton modalId="Players">+ Players -</ModalButton>
         ) : null}
@@ -55,25 +55,30 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
         {players.some((player) => !player.roleId && gameRoles.length !== 0) ? (
           <ModalButton modalId="RoleAssignment">Assign Roles</ModalButton>
         ) : null}
-        {players.length !== 0 &&
-        gameRoles.length !== 0 &&
-        !players.some((player) => !player.roleId) ? (
-          <div className="text-primary text-center">
-            <p>Game is READY to begin!</p>
+        {isGameReady() ? (
+          <>
             <Animation
               className="max-w-md mx-auto"
               src="mafia/animation/group.lottie"
               loop={true}
               autoplay={true}
             />
-            <div className="my-4 text-success">Suggested Steps:</div>
+            <button
+              className="btn btn-success"
+              onClick={() => {
+                handleClose("ActionRecommender");
+              }}
+            >
+              Game is READY to begin!
+            </button>
+            <div className="my-4 text-warning">Suggested Steps:</div>
             <div className=" grid grid-flow-col gap-4">
               <ModalButton modalId="RoleViewer">
-                Player&apos;s Cards
+                Show Player&apos;s Cards
                 <CarbonUserRole className="hidden sm:block" />
               </ModalButton>
             </div>
-          </div>
+          </>
         ) : null}
       </div>
     </FlexibleModal>

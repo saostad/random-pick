@@ -1,34 +1,51 @@
 import { CldImage } from "next-cloudinary";
+import { useGameContext } from "../contexts/GameContext";
 
 const GameMode: React.FC = () => {
-  return (
-    <div className="flex justify-center">
-      <label className="swap swap-flip text-lg">
-        {/* this hidden checkbox controls the state */}
-        <input
-          type="checkbox"
-          onChange={(e) => {
-            if (e.target.checked) {
-              // set game mode to pro
-              console.log(
-                `File: GameMode.tsx,`,
-                `Line: 13 => `,
-                `Game mode set to pro`
-              );
-            } else {
-              // set game mode to nob
-              console.log(
-                `File: GameMode.tsx,`,
-                `Line: 17 => `,
-                `Game mode set to nob`
-              );
-            }
-          }}
-        />
+  const { gameState, updateGameState } = useGameContext();
+  const { gameMode } = gameState;
 
-        <div className="swap-on">Pro 😈</div>
-        <div className="swap-off">Nob 😇</div>
-      </label>
+  return (
+    <div className="flex flex-col justify-center">
+      <div className="flex gap-4 my-4">
+        <span>Game Level:</span>
+        <label className="swap swap-flip">
+          {/* this hidden checkbox controls the state */}
+          <input
+            type="checkbox"
+            checked={gameMode === "pro" ? true : false}
+            onChange={(e) => {
+              if (e.target.checked) {
+                // set game mode to pro
+                updateGameState({ gameMode: "pro" });
+              } else {
+                // set game mode to nob
+                updateGameState({ gameMode: "beginner" });
+              }
+            }}
+          />
+
+          <div className="swap-on">Pro 😈</div>
+          <div className="swap-off">Simple 😇</div>
+        </label>
+      </div>
+      {gameMode === "pro" ? (
+        <CldImage
+          className="m-0 self-center"
+          src="mafia/all-roles"
+          alt="all-roles"
+          width="300"
+          height="200"
+        />
+      ) : (
+        <CldImage
+          className="m-0 self-center"
+          src="mafia/all-roles-beginner"
+          alt="all-roles"
+          width="300"
+          height="200"
+        />
+      )}
     </div>
   );
 };
