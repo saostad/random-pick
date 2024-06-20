@@ -13,6 +13,8 @@ import { useModal } from "./ModalContext";
 export const tagExpirations = ["this-night", "next-day", "permanent"] as const;
 export type TagExpiration = (typeof tagExpirations)[number];
 
+export type GameMode = "pro" | "beginner" | undefined;
+
 export type VotingStatus =
   | "not_started"
   | "in_progress"
@@ -81,6 +83,7 @@ export type GameState = {
   speakingTimeEnabled: boolean;
   inquiries: number;
   offerInquiries: boolean;
+  gameMode: GameMode;
 };
 
 export type GameContextType = {
@@ -143,6 +146,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     speakingTimeEnabled: true,
     inquiries: 2,
     offerInquiries: true,
+    gameMode: undefined,
   };
 
   const [gameState, setGameState] = useLocalStorageState<GameState>(

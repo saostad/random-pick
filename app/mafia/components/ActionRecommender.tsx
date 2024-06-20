@@ -6,12 +6,14 @@ import ModalButton from "./ModalButton";
 import Animation from "./Animation";
 
 import CarbonUserRole from "~icons/carbon/user-role";
+import GameMode from "./GameMode";
+import { CldImage } from "next-cloudinary";
 
 interface ActionRecommenderProps extends HTMLAttributes<HTMLElement> {}
 
 const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
   const {
-    gameState: { players, gameRoles },
+    gameState: { players, gameRoles, gameMode },
     loading,
   } = useGameContext();
   const { handleOpen } = useModal();
@@ -36,6 +38,14 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
   return (
     <FlexibleModal modalId="ActionRecommender" title="Action Recommender">
       <div className="grid gap-6">
+        <CldImage
+          className="m-0 justify-self-center"
+          src="mafia/all-roles"
+          alt="all-roles"
+          width="300"
+          height="200"
+        />
+        {gameMode === undefined && <GameMode />}
         {players.length === 0 ? (
           <ModalButton modalId="Players">+ Players -</ModalButton>
         ) : null}
