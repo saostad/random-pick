@@ -6,9 +6,11 @@ import ModalButton from "./ModalButton";
 import CarbonUserIdentification from "~icons/carbon/user-identification";
 import CarbonGroup from "~icons/carbon/group.jsx";
 import CarbonUserRole from "~icons/carbon/user-role";
+import { useModal } from "../contexts/ModalContext";
 
 export default function Audit() {
   const { gameState } = useGameContext();
+  const { handleClose } = useModal();
   const [unassignedRoles, setUnassignedRoles] = useState<any[]>([]);
   const [unassignedPlayers, setUnassignedPlayers] = useState<any[]>([]);
 
@@ -95,22 +97,29 @@ export default function Audit() {
       )}
 
       {!getAuditProblems(gameState).isAuditFailed && (
-        <div className="flex justify-center alert alert-success">
-          <label>Game is ready!</label>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        <div className="flex justify-center">
+          <button
+            className="btn btn-success"
+            onClick={() => {
+              handleClose("audit");
+            }}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M5 13l4 4L19 7"
-            />
-          </svg>
+            Game is ready!
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          </button>
         </div>
       )}
     </>

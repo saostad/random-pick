@@ -71,7 +71,7 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
             >
               Game is READY to begin!
             </button>
-            <div className="my-4 text-warning">Suggested Steps:</div>
+            <div className="mt-4 text-warning">Suggested Steps:</div>
             <div className=" grid grid-flow-col gap-4">
               <ModalButton modalId="RoleViewer">
                 Show Player&apos;s Cards
