@@ -157,7 +157,7 @@ const VotingSession: React.FC = () => {
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1fr 3fr",
+                  gridTemplateColumns: "2fr 4fr",
                   gap: "1rem",
                   alignItems: "center",
                   paddingBottom: "0.5rem",
