@@ -11,6 +11,11 @@ const LastActionsSuggestion: React.FC = () => {
   const [selectedLastActions, setSelectedLastActions] = useState<number[]>([]);
 
   const handleSuggestLastActions = () => {
+    if (numPlayers <= 3) {
+      setSuggestedLastActions([]);
+      return;
+    }
+
     const numCards = numPlayers - 3;
     const shuffledActions = predefinedLastActions.sort(
       () => 0.5 - Math.random()
@@ -33,7 +38,6 @@ const LastActionsSuggestion: React.FC = () => {
     const selectedActions = suggestedLastActions.filter((action) =>
       selectedLastActions.includes(action.id)
     );
-    // Logic to add the selected last actions to your game state
     updateGameState({
       lastActions: [...gameState.lastActions, ...selectedActions],
     });
@@ -47,21 +51,8 @@ const LastActionsSuggestion: React.FC = () => {
 
   return (
     <div>
-      {numPlayers <= 3 && (
-        <div className="alert alert-warning my-4">
-          <span>At least 4 players needed to suggest last actions.</span>
-        </div>
-      )}
       <div className="grid grid-cols-1 gap-2 mb-4">
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "2fr 3fr",
-            gap: "1rem",
-            alignItems: "center",
-            marginBottom: "1rem",
-          }}
-        >
+        <div className="grid grid-cols-2 gap-4 items-center mb-4">
           <span>Number of Players:</span>
           <div>
             <button
@@ -79,12 +70,18 @@ const LastActionsSuggestion: React.FC = () => {
             </button>
           </div>
         </div>
-        <button
-          className="btn btn-outline btn-ghost btn-secondary mt-4"
-          onClick={handleSuggestLastActions}
-        >
-          Suggest Last Actions!
-        </button>
+        {numPlayers <= 3 ? (
+          <div className="alert alert-warning">
+            <span>At least 4 players needed to suggest last actions.</span>
+          </div>
+        ) : (
+          <button
+            className="btn btn-outline btn-ghost btn-secondary mt-4"
+            onClick={handleSuggestLastActions}
+          >
+            Suggest Last Actions!
+          </button>
+        )}
       </div>
       {suggestedLastActions.length > 0 && (
         <div className="mb-4">

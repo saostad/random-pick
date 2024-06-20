@@ -40,12 +40,12 @@ const Tags: React.FC<Props> = (props) => {
       </button>
       <div className="divider"></div>
 
-      <div className="grid grid-cols-2 gap-4">
-        {tags.map((tag, index) => (
-          <div key={tag}>
+      <div>
+        {tags.map((tag) => (
+          <div key={tag} className="grid grid-cols-4 gap-4 my-2">
             <input
               type="text"
-              className="input input-bordered w-full max-w-xs"
+              className="input input-bordered w-full max-w-xs col-span-3"
               value={tag}
               onChange={(e) => handleUpdate(tag, e.target.value)}
               placeholder="Tag name"

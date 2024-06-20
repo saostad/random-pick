@@ -111,7 +111,7 @@ const Settings = () => {
           gap: "0.5rem",
         }}
       >
-        <ModalButton modalId="About">About Us</ModalButton>
+        <ModalButton modalId="About">About Me!</ModalButton>
       </div>
     </>
   );
