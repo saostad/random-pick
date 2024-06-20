@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, KeyboardEvent } from "react";
 import { useGameContext, Player } from "../contexts/GameContext";
 import DraggableItems from "./DraggableItems";
 
@@ -56,6 +56,12 @@ const Players: React.FC = () => {
     updateGameState({ players: [...gameState.players, newPlayer] });
     setNewPlayerName("");
     setNewPlayerOrder((prev) => prev + 1);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && newPlayerName.trim()) {
+      handleAddPlayer();
+    }
   };
 
   const handleRemovePlayer = (playerId: string) => {
@@ -124,6 +130,7 @@ const Players: React.FC = () => {
             className="input input-bordered w-full max-w-xs"
             value={newPlayerName}
             onChange={(e) => setNewPlayerName(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="Player's name"
           />
           <input
