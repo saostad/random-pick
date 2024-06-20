@@ -2,7 +2,7 @@ import { CldImage } from "next-cloudinary";
 import { useGameContext } from "../contexts/GameContext";
 
 const GameMode: React.FC = () => {
-  const { gameState, updateGameState } = useGameContext();
+  const { gameState, setGameMode } = useGameContext();
   const { gameMode } = gameState;
 
   return (
@@ -17,10 +17,10 @@ const GameMode: React.FC = () => {
             onChange={(e) => {
               if (e.target.checked) {
                 // set game mode to pro
-                updateGameState({ gameMode: "pro" });
+                setGameMode("pro");
               } else {
                 // set game mode to nob
-                updateGameState({ gameMode: "beginner" });
+                setGameMode("beginner");
               }
             }}
           />

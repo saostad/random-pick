@@ -120,6 +120,7 @@ export type GameContextType = {
   decreaseInquiries: () => void;
   addEvent: (event: Omit<GameEvent, "eventAt" | "timestamp">) => void;
   getEventsByPhase: (phase: string) => GameEvent[];
+  setGameMode: (mode: GameMode) => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -462,6 +463,30 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     return gameState.events.filter((event) => event.eventAt === phase);
   };
 
+  const setGameMode = (mode: GameMode) => {
+    if (mode === "beginner") {
+      setGameState((prev) => ({
+        ...prev,
+        gameMode: mode,
+        speakingTimeEnabled: false,
+        challengeTimeEnabled: false,
+        offerInquiries: false,
+        lastActionsActive: false,
+      }));
+    } else if (mode === "pro") {
+      setGameState((prev) => ({
+        ...prev,
+        gameMode: mode,
+        speakingTimeEnabled: true,
+        challengeTimeEnabled: true,
+        offerInquiries: true,
+        lastActionsActive: true,
+      }));
+    } else {
+      console.error(`Invalid game mode ${mode} provided.`);
+    }
+  };
+
   const value = {
     gameState,
     updateGameState,
@@ -486,6 +511,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     decreaseInquiries,
     addEvent,
     getEventsByPhase,
+    setGameMode,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
