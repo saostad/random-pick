@@ -1,6 +1,8 @@
 import React, { useState, useEffect, KeyboardEvent } from "react";
 import { useGameContext, Player } from "../contexts/GameContext";
 import DraggableItems from "./DraggableItems";
+import GeneratePlayerNames from "./GeneratePlayerNames";
+import CarbonAdd from "~icons/carbon/add";
 
 const Players: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
@@ -8,11 +10,13 @@ const Players: React.FC = () => {
   const [newPlayerOrder, setNewPlayerOrder] = useState<number>(1);
   const [playerRoles, setPlayerRoles] = useState<{ [key: string]: string }>({});
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<"addPlayer" | "generatePlayers">(
+    "addPlayer"
+  );
 
   useEffect(() => {
     const mapPlayerRoles = () => {
       const rolesMap: { [key: string]: string } = {};
-
       gameState.players.forEach((player) => {
         if (player.roleId) {
           const role = gameState.gameRoles.find(
@@ -23,10 +27,8 @@ const Players: React.FC = () => {
           }
         }
       });
-
       setPlayerRoles(rolesMap);
     };
-
     mapPlayerRoles();
   }, [gameState]);
 
@@ -82,12 +84,9 @@ const Players: React.FC = () => {
     const updatedPlayers = [...gameState.players];
     updatedPlayers.splice(dragIndex, 1);
     updatedPlayers.splice(hoverIndex, 0, draggedPlayer);
-
-    // Update the order for each player based on its new position
     updatedPlayers.forEach((player, index) => {
       player.order = index + 1;
     });
-
     updateGameState({ players: updatedPlayers });
   };
 
@@ -116,40 +115,81 @@ const Players: React.FC = () => {
 
   return (
     <div>
-      <div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "2fr 1fr",
-            columnGap: "0.75rem",
-            paddingBottom: "0.75rem",
-          }}
-        >
+      <div className="flex justify-center">
+        <div className="join mb-4">
           <input
-            type="text"
-            className="input input-bordered w-full max-w-xs"
-            value={newPlayerName}
-            onChange={(e) => setNewPlayerName(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Player's name"
+            className={`join-item btn ${
+              activeTab === "addPlayer" ? "btn-active btn-primary" : ""
+            }`}
+            type="radio"
+            name="options"
+            aria-label="Add a Player"
+            checked={activeTab === "addPlayer"}
+            onChange={() => setActiveTab("addPlayer")}
           />
           <input
-            type="number"
-            className="input input-bordered w-full max-w-xs"
-            value={newPlayerOrder}
-            onChange={(e) => setNewPlayerOrder(Number(e.target.value))}
-            placeholder="Seat number"
+            className={`join-item btn ${
+              activeTab === "generatePlayers" ? "btn-active btn-primary" : ""
+            }`}
+            type="radio"
+            name="options"
+            aria-label="Generate Players"
+            checked={activeTab === "generatePlayers"}
+            onChange={() => setActiveTab("generatePlayers")}
           />
         </div>
-        <button
-          className="btn btn-primary"
-          onClick={handleAddPlayer}
-          disabled={!newPlayerName.trim()}
-        >
-          Add Player
-        </button>
-        {error && <div style={{ color: "red" }}>{error}</div>}
       </div>
+
+      {activeTab === "addPlayer" && (
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
+            <label className="form-control w-full max-w-xs">
+              <div className="label">
+                <span className="label-text">Player&apos;s Name</span>
+              </div>
+              <input
+                type="text"
+                placeholder="Type player's name"
+                className="input input-bordered w-full max-w-xs"
+                value={newPlayerName}
+                onChange={(e) => setNewPlayerName(e.target.value)}
+                onKeyDown={handleKeyDown}
+              />
+              <div className="label">
+                <span className="label-text-alt">Press Enter to add</span>
+              </div>
+            </label>
+
+            <label className="form-control w-full max-w-xs">
+              <div className="label">
+                <span className="label-text">Seat Number</span>
+                <span className="label-text-alt">Player&apos;s order</span>
+              </div>
+              <input
+                type="number"
+                placeholder="Enter seat number"
+                className="input input-bordered w-full max-w-xs"
+                value={newPlayerOrder}
+                onChange={(e) => setNewPlayerOrder(Number(e.target.value))}
+              />
+              <div className="label">
+                <span className="label-text-alt">Unique seat number</span>
+              </div>
+            </label>
+          </div>
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={handleAddPlayer}
+            disabled={!newPlayerName.trim()}
+          >
+            Add Player <CarbonAdd />
+          </button>
+          {error && <div className="text-error mt-2">{error}</div>}
+        </div>
+      )}
+
+      {activeTab === "generatePlayers" && <GeneratePlayerNames />}
+
       <div className="divider"></div>
 
       <DraggableItems
