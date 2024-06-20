@@ -6,7 +6,7 @@ import Timer from "./Timer";
 import Speaker from "./Speaker";
 import Challenge from "./Challenge";
 import CarbonShuffle from "~icons/carbon/shuffle";
-import { getAlivePlayers } from "../utils/get-from-fns";
+import { getAlivePlayers, getPlayerNameById } from "../utils/get-from-fns";
 import Animation from "./Animation";
 import MediaPlayer, { MediaPlayerRef } from "./MediaPlayer";
 import { ToastContext } from "../contexts/ToastContext";
@@ -130,7 +130,10 @@ const DayActionsControl: React.FC = () => {
         alivePlayers[Math.floor(Math.random() * alivePlayers.length)];
       setSelectedStartingPlayer(randomPlayer.id);
       addToast({
-        message: "Random player selected as starting player.",
+        message: `${getPlayerNameById({
+          playerId: randomPlayer.id,
+          players,
+        })} selected as starting player.`,
         type: "info",
       });
     }

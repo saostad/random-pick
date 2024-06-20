@@ -19,6 +19,7 @@ import TimerSettings from "./TimerSettings";
 import InquiriesSetting from "./InquiriesSetting";
 import Inquiries from "./Inquiries";
 import LastActionPlayer from "./LastActionPlayer";
+import GameMode from "./GameMode";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -37,6 +38,11 @@ const Main: React.FC<MainProps> = (props) => {
         modalId="InquiriesSetting"
         component={InquiriesSetting}
         title="Inquiries"
+      />
+      <FlexibleModal
+        modalId="GameMode"
+        component={GameMode}
+        title="Game Mode"
       />
       <FlexibleModal
         modalId="LastActionPlayer"

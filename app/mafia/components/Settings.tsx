@@ -71,6 +71,7 @@ const Settings = () => {
         </ModalButton>
         <ModalButton modalId="LastActs">+ Last Actions -</ModalButton>
         <ModalButton modalId="InquiriesSetting">Inquiries</ModalButton>
+        <ModalButton modalId="GameMode">GameMode</ModalButton>
       </div>
 
       <div className="divider divider-info">Timer</div>

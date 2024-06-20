@@ -41,15 +41,16 @@ export default function Audit() {
             </ModalButton>
           )}
           {error.code === 20 && (
-            <>
+            <div className="flex flex-col gap4">
               <ModalButton modalId="Players">
                 + Players - <CarbonGroup />
               </ModalButton>
+              <div className="my-1"></div>
               <ModalButton modalId="Roles">
                 + Roles -
                 <CarbonUserRole />
               </ModalButton>
-            </>
+            </div>
           )}
           {error.code === 30 && (
             <ModalButton modalId="Players">
