@@ -90,7 +90,7 @@ const Roles: React.FC = () => {
             checked={role.hasAction}
             onChange={(e) => handleUpdateRoleAction(role.id, e.target.checked)}
           />
-          <span className="label-text text-xs ml-2">Has action?</span>
+          <span className="label-text text-xs ml-2">Night action?</span>
         </label>
       </div>
       <div className="flex items-center">
@@ -160,7 +160,7 @@ const Roles: React.FC = () => {
           <div className="m-2">
             <div className="form-control">
               <label className="cursor-pointer label">
-                <span className="label-text">Has action?</span>
+                <span className="label-text">Night action?</span>
                 <input
                   type="checkbox"
                   checked={hasAction}
