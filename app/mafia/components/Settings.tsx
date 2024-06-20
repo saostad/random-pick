@@ -1,4 +1,3 @@
-import DropdownButton from "./DropdownButton";
 import ModalButton from "./ModalButton";
 
 import CarbonGroup from "~icons/carbon/group.jsx";
@@ -34,6 +33,10 @@ const Settings = () => {
         <ModalButton modalId="playersStatus">
           Dead/Alive
           <MdiDead />
+        </ModalButton>
+        <ModalButton modalId="RoleViewer">
+          Player&apos;s Cards
+          <CarbonUserRole className="hidden sm:block" />
         </ModalButton>
       </div>
 
