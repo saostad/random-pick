@@ -104,13 +104,15 @@ const ToastContainer: React.FC = () => {
       {toasts.map((toast) => (
         <div key={toast.id} className={`toast ${toast.location}`}>
           <div className={`alert max-w-screen-md ${getAlertClass(toast.type)}`}>
-            <span className="text-sm">{toast.message}</span>
-            <button
-              className="btn btn-sm btn-circle btn-ghost"
-              onClick={() => removeToast(toast.id)}
-            >
-              ✕
-            </button>
+            <div className="flex items-center">
+              <span className="text-sm">{toast.message}</span>
+              <button
+                className="btn btn-sm btn-circle btn-ghost"
+                onClick={() => removeToast(toast.id)}
+              >
+                ✕
+              </button>
+            </div>
           </div>
         </div>
       ))}
