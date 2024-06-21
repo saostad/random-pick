@@ -100,7 +100,7 @@ export default function Audit() {
       {!getAuditProblems(gameState).isAuditFailed && (
         <div className="flex justify-center">
           <button
-            className="btn btn-success"
+            className="btn btn-success btn-wide"
             onClick={() => {
               handleClose("audit");
             }}
