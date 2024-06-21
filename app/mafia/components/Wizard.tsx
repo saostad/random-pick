@@ -158,7 +158,7 @@ const Wizard: React.FC = () => {
                             </div>
                           )}
                       </div>
-                      <div className="flex flex-col mb-4">
+                      <div className="flex flex-col my-4">
                         <div className="text-xl font-bold">
                           Last Night Events:
                         </div>
