@@ -126,13 +126,12 @@ const Wizard: React.FC = () => {
                 !isCurrentStepFinished() ||
                 currentStepIndex >= sequence.length - 1
               }
-              className=""
             >
               Let&apos;s Go! <span className="ml-2">🚀</span>
             </GlowingButton>
           </div>
           <Animation
-            className="max-w-72 max-h-72 m-auto"
+            className="max-w-64 max-h-64 m-auto"
             src="mafia/animation/next.lottie"
             loop={true}
             autoplay={true}
@@ -142,10 +141,10 @@ const Wizard: React.FC = () => {
             sequence[currentStepIndex + 1]?.startsWith("Day") && (
               <div className="flex justify-center">
                 <button
-                  className="btn btn-success btn-outline my-4"
+                  className="btn btn-warning btn-outline btn-wide"
                   onClick={() => handleOpen("Inquiries")}
                 >
-                  Do you want to inquiry?
+                  Want an inquiry? 🕵️‍♂️ ({inquiries} left)
                 </button>
               </div>
             )}

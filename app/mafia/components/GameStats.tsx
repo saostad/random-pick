@@ -58,7 +58,7 @@ const GameStats: React.FC = () => {
       </FlexibleModal>
 
       <div className="stats container max-w-lg">
-        <div className="stat px-4">
+        <div className="stat px-3">
           <div className="stat-title">Players</div>
           <div
             className="stat-value text-primary"
@@ -74,7 +74,7 @@ const GameStats: React.FC = () => {
           </div>
         </div>
 
-        <div className="stat px-4">
+        <div className="stat px-3">
           <div className="stat-title">Dead</div>
           <div
             className="stat-value text-warning"
@@ -90,7 +90,7 @@ const GameStats: React.FC = () => {
           </div>
         </div>
 
-        <div className="stat px-4">
+        <div className="stat px-3">
           <div className="stat-title">Inquiry</div>
           <div
             className="stat-value text-success"
@@ -103,7 +103,7 @@ const GameStats: React.FC = () => {
           <div className="stat-desc">left.</div>
         </div>
 
-        <div className="stat px-4">
+        <div className="stat px-3">
           <div className="stat-title">Timers</div>
           <div
             onClick={() => {
