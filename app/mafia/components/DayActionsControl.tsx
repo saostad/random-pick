@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useGameContext } from "../contexts/GameContext";
 import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
@@ -63,33 +69,53 @@ const DayActionsControl: React.FC = () => {
     }
   };
 
-  const handleStartDay = () => {
-    handleOpen("day-actions");
+  const handleRandomSelect = () => {
+    const alivePlayers = getAlivePlayers({ players: gameState.players });
+    if (alivePlayers.length > 0) {
+      const randomPlayer =
+        alivePlayers[Math.floor(Math.random() * alivePlayers.length)];
+      setSelectedStartingPlayer(randomPlayer.id);
+      addToast({
+        message: `${getPlayerNameById({
+          playerId: randomPlayer.id,
+          players,
+        })} selected as starting player.`,
+        type: "info",
+      });
+    }
+  };
+
+  const handleStartDay = useCallback(() => {
     const alivePlayers = getAlivePlayers({ players });
     let startingIndex = alivePlayers.findIndex(
       (player) => player.id === selectedStartingPlayer
     );
 
     if (startingIndex !== -1) {
+      handleOpen("day-actions");
       const order = [
         ...alivePlayers.slice(startingIndex),
         ...alivePlayers.slice(0, startingIndex),
       ].map((player) => players.findIndex((p) => p.id === player.id));
 
-      setSpeakingOrder(order);
+      updateGameState({
+        speakingOrder: order,
+        startingPlayerId: selectedStartingPlayer,
+      });
+
       setCurrentSpeakerIndex(0);
       setAllPlayersCompleted(false);
       setChallengedPlayers(new Set());
       setSpeakerChallenged(new Set());
       setIsTimerRunning(true);
-
-      updateGameState({ startingPlayerId: selectedStartingPlayer });
     } else {
-      console.error(
-        `Selected starting player ${selectedStartingPlayer} not found in the list of players`
-      );
+      addToast({
+        message: `Error: Selected starting player not found. Please select again.`,
+        type: "error",
+      });
+      handleRandomSelect();
     }
-  };
+  }, [players, selectedStartingPlayer, handleOpen, updateGameState, addToast]);
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedStartingPlayer(e.target.value);
@@ -121,22 +147,6 @@ const DayActionsControl: React.FC = () => {
     setTimeout(() => {
       setIsTimerRunning(true);
     }, 0);
-  };
-
-  const handleRandomSelect = () => {
-    const alivePlayers = getAlivePlayers({ players: gameState.players });
-    if (alivePlayers.length > 0) {
-      const randomPlayer =
-        alivePlayers[Math.floor(Math.random() * alivePlayers.length)];
-      setSelectedStartingPlayer(randomPlayer.id);
-      addToast({
-        message: `${getPlayerNameById({
-          playerId: randomPlayer.id,
-          players,
-        })} selected as starting player.`,
-        type: "info",
-      });
-    }
   };
 
   useEffect(() => {
