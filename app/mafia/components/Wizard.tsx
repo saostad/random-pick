@@ -137,6 +137,18 @@ const Wizard: React.FC = () => {
             loop={true}
             autoplay={true}
           />
+          {offerInquiries &&
+            inquiries > 0 &&
+            sequence[currentStepIndex + 1]?.startsWith("Day") && (
+              <div className="flex justify-center">
+                <button
+                  className="btn btn-success btn-outline my-4"
+                  onClick={() => handleOpen("Inquiries")}
+                >
+                  Do you want to inquiry?
+                </button>
+              </div>
+            )}
           {isCurrentStepFinished() &&
             sequence[currentStepIndex]?.startsWith("Night") && (
               <div className="my-4">
@@ -163,18 +175,6 @@ const Wizard: React.FC = () => {
                 ) : (
                   <div>No events happened last night</div>
                 )}
-              </div>
-            )}
-          {offerInquiries &&
-            inquiries > 0 &&
-            sequence[currentStepIndex + 1]?.startsWith("Day") && (
-              <div className="flex justify-center">
-                <button
-                  className="btn btn-success btn-outline my-4"
-                  onClick={() => handleOpen("Inquiries")}
-                >
-                  Do you want to inquiry?
-                </button>
               </div>
             )}
         </div>
