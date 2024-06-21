@@ -12,6 +12,7 @@ import PlayerTagsIndicator from "./PlayerTagsIndicator";
 import Animation from "./Animation";
 import MediaPlayer from "./MediaPlayer";
 import GlowingButton from "./GlowingButton";
+import MaterialSymbolsChipExtraction from "~icons/material-symbols/chip-extraction";
 
 const handleNightActions = (gameState: GameState): GameState => {
   gameState.gameRoles
@@ -175,7 +176,10 @@ const NightActionsControl: React.FC = () => {
                 </div>
               </div>
               <GlowingButton onClick={handleNextAction} className="mr-4">
-                Next Role
+                <div className="flex">
+                  <span className="mr-2">Next Role</span>
+                  <MaterialSymbolsChipExtraction />
+                </div>
               </GlowingButton>
               <DropdownButton title="Actions">
                 <ModalButton modalId="TagPlayers">

@@ -5,6 +5,7 @@ import { useGameContext } from "../contexts/GameContext";
 import { getAlivePlayers } from "../utils/get-from-fns";
 import Animation from "./Animation";
 import GlowingButton from "./GlowingButton";
+import IconoirEmojiPuzzled from "~icons/iconoir/emoji-puzzled";
 
 const VotingSession: React.FC = () => {
   const {
@@ -65,7 +66,10 @@ const VotingSession: React.FC = () => {
               handleOpen("voting-session");
             }}
           >
-            Start Voting
+            <div className="flex">
+              <span className="mr-4">Start Voting</span>
+              <IconoirEmojiPuzzled />
+            </div>
           </GlowingButton>
           <Animation
             className=""

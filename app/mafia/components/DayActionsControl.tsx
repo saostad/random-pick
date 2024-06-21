@@ -212,21 +212,14 @@ const DayActionsControl: React.FC = () => {
 
   return (
     <>
-      <div className="text-2xl text-center font-bold my-4">
+      <div className="text-center my-4">
         <GlowingButton
           onClick={handleStartDay}
           disabled={!selectedStartingPlayer}
           className="my-4 btn-wide"
         >
-          Start Day {gameState.dayCount}
+          Start Day 🌞 {gameState.dayCount}
         </GlowingButton>
-        <Animation
-          className="mask mask-circle max-w-48 max-h-48 m-auto"
-          src="mafia/animation/day.lottie"
-          loop={false}
-          autoplay={true}
-        />
-        Day Actions <small>(Day {gameState.dayCount})</small>
       </div>
       {gameState.dayCount !== 0 && lastStartingPlayer && (
         <p className="my-4">
@@ -261,6 +254,12 @@ const DayActionsControl: React.FC = () => {
           <CarbonShuffle />
         </button>
       </div>
+      <Animation
+        className="mask mask-circle max-w-48 max-h-48 m-auto"
+        src="mafia/animation/day.lottie"
+        loop={false}
+        autoplay={true}
+      />
 
       <FlexibleModal modalId="day-actions" title="Day Actions">
         <>

@@ -6,6 +6,7 @@ import NightActionsControl from "./NightActionsControl";
 import Animation from "./Animation";
 import { useModal } from "../contexts/ModalContext";
 import GlowingButton from "./GlowingButton";
+import MaterialSymbolsLightNightSightAutoOffRounded from "~icons/material-symbols-light/night-sight-auto-off-rounded";
 
 const Wizard: React.FC = () => {
   const { gameState, setCurrentStepIndex, getEventsByPhase } = useGameContext();
@@ -136,44 +137,75 @@ const Wizard: React.FC = () => {
             loop={true}
             autoplay={true}
           />
-          {offerInquiries &&
-            inquiries > 0 &&
-            sequence[currentStepIndex + 1]?.startsWith("Day") && (
-              <div className="flex justify-center">
-                <button
-                  className="btn btn-warning btn-outline btn-wide"
-                  onClick={() => handleOpen("Inquiries")}
-                >
-                  Want an inquiry? 🕵️‍♂️ ({inquiries} left)
-                </button>
-              </div>
-            )}
+
           {isCurrentStepFinished() &&
             sequence[currentStepIndex]?.startsWith("Night") && (
-              <div className="my-4">
-                {sequenceEvents.length > 0 ? (
-                  <div className="flex flex-col">
-                    <div className="text-xl font-bold">Last Night Events:</div>
-                    <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
-                      {sequenceEvents.map((event) => (
-                        <li key={event.timestamp} className="flex items-center">
-                          <svg
-                            className="w-3.5 h-3.5 me-2 text-green-500 dark:text-green-400 flex-shrink-0"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-                          </svg>
-                          {event.description}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <div>No events happened last night</div>
-                )}
+              <div>
+                <div className="my-4">
+                  {sequenceEvents.length > 0 ? (
+                    <>
+                      <div>
+                        {offerInquiries &&
+                          inquiries > 0 &&
+                          sequence[currentStepIndex + 1]?.startsWith("Day") && (
+                            <div className="flex justify-center">
+                              <button
+                                className="btn btn-warning btn-outline btn-wide"
+                                onClick={() => handleOpen("Inquiries")}
+                              >
+                                Want an inquiry? 🕵️‍♂️ ({inquiries} left)
+                              </button>
+                            </div>
+                          )}
+                      </div>
+                      <div className="flex flex-col">
+                        <div className="text-xl font-bold">
+                          Last Night Events:
+                        </div>
+                        <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
+                          {sequenceEvents.map((event) => (
+                            <li
+                              key={event.timestamp}
+                              className="flex items-center"
+                            >
+                              <svg
+                                className="w-3.5 h-3.5 me-2 text-green-500 dark:text-green-400 flex-shrink-0"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                              >
+                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                              </svg>
+                              {event.description}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </>
+                  ) : (
+                    <div
+                      role="alert"
+                      className="flex alert alert-info max-w-64 m-auto"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        className="stroke-current shrink-0 w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path>
+                      </svg>
+                      <span className="text-sm">Quite Night! </span>
+                      <MaterialSymbolsLightNightSightAutoOffRounded />
+                    </div>
+                  )}
+                </div>
               </div>
             )}
         </div>
