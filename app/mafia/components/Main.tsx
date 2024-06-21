@@ -98,7 +98,7 @@ const Main: React.FC<MainProps> = (props) => {
       <FlexibleModal title="Tags" modalId="Tags" component={Tags} />
       <FlexibleModal title="About" modalId="About" component={About} />
       <FlexibleModal
-        title="Last Acts"
+        title="Last Actions"
         modalId="LastActs"
         component={LastActions}
       />

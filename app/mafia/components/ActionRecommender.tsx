@@ -43,8 +43,6 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
     );
   }
 
-  console.log(`File: ActionRecommender.tsx,`, `Line: 46 => `, gameMode);
-
   return (
     <FlexibleModal modalId="ActionRecommender" title="Setup your Game">
       <div className="grid gap-6">

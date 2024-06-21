@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { predefinedLastActions } from "../data/predefinedLastActions";
 import { useGameContext } from "../contexts/GameContext";
 
@@ -9,6 +9,10 @@ const LastActionsSuggestion: React.FC = () => {
   const [numPlayers, setNumPlayers] = useState<number>(players.length);
   const [suggestedLastActions, setSuggestedLastActions] = useState<any[]>([]);
   const [selectedLastActions, setSelectedLastActions] = useState<number[]>([]);
+
+  useEffect(() => {
+    setNumPlayers(players.length);
+  }, [players.length]);
 
   const handleSuggestLastActions = () => {
     if (numPlayers <= 3) {
@@ -43,6 +47,7 @@ const LastActionsSuggestion: React.FC = () => {
     });
 
     setSelectedLastActions([]);
+    setSuggestedLastActions([]);
   };
 
   const increasePlayers = () => setNumPlayers(numPlayers + 1);
@@ -54,7 +59,7 @@ const LastActionsSuggestion: React.FC = () => {
       <div className="grid grid-cols-1 gap-2 mb-4">
         <div className="grid grid-cols-2 gap-4 items-center mb-4">
           <span>Number of Players:</span>
-          <div>
+          <div className="flex items-center">
             <button
               className="btn btn-circle btn-outline"
               onClick={decreasePlayers}
