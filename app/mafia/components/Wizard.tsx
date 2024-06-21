@@ -132,7 +132,7 @@ const Wizard: React.FC = () => {
             </GlowingButton>
           </div>
           <Animation
-            className="max-w-56 max-h-56 m-auto"
+            className="max-w-72 max-h-72 m-auto"
             src="mafia/animation/next.lottie"
             loop={true}
             autoplay={true}
