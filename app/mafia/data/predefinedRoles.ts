@@ -1,4 +1,17 @@
-const predefinedRoles = [
+export type PredefinedRole = {
+  id: string;
+  name: string;
+  persianName: string;
+  image: string;
+  hasAction: boolean;
+  actionOrder: number | undefined;
+  roleLevel: string;
+  side: "Town" | "Mafia" | "ThirdParty";
+  timesInGame: number;
+  description: string;
+};
+
+const predefinedRoles: PredefinedRole[] = [
   {
     id: "13",
     name: "Night-Walker",
@@ -8,7 +21,7 @@ const predefinedRoles = [
     actionOrder: 1,
     roleLevel: "pro",
     side: "Town",
-    timeInGame: 1,
+    timesInGame: 1,
     description:
       "one night can use the power to walk in the night, on that night, the Mafia can not shot. The next day, the player announce as dead.",
   },
@@ -35,7 +48,7 @@ const predefinedRoles = [
     roleLevel: "beginner",
     side: "Mafia",
     description: "Works with the Godfather to eliminate others.",
-    timesInGame: 2,
+    timesInGame: 3,
   },
   {
     id: "12",
@@ -84,7 +97,7 @@ const predefinedRoles = [
     actionOrder: 7,
     roleLevel: "pro",
     side: "Mafia",
-    timeInGame: 1,
+    timesInGame: 1,
     description: "In the nights, can save a mafia member",
   },
   {
@@ -160,7 +173,7 @@ const predefinedRoles = [
     actionOrder: 13,
     roleLevel: "pro",
     side: "Town",
-    timeInGame: 1,
+    timesInGame: 1,
     description:
       "In two nights, Can inquiry the numbers of the mafia members from the game coordinator. the next day response will be announce to all players. do not go out with the first bullet of the Mafia",
   },
@@ -173,7 +186,7 @@ const predefinedRoles = [
     actionOrder: 14,
     roleLevel: "pro",
     side: "ThirdParty",
-    timeInGame: 1,
+    timesInGame: 1,
     description:
       "In the nights, can kill one player. can't be killed by the Mafia. win the game if last between last 3 players.",
   },

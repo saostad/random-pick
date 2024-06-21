@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GameMode, GameRole, useGameContext } from "../contexts/GameContext";
-import predefinedRoles from "../data/predefinedRoles";
+import predefinedRoles, { PredefinedRole } from "../data/predefinedRoles";
 
 const RoleSuggestion: React.FC = () => {
   const { gameState, updateGameState, loading } = useGameContext();
@@ -25,44 +25,108 @@ const RoleSuggestion: React.FC = () => {
   }, [gameState.gameMode, loading]);
 
   const handleSuggestRoles = () => {
-    const filteredRoles = predefinedRoles.filter((role) =>
-      gameLevel === "pro" ? true : role.roleLevel === gameLevel
-    );
-    const suggested: GameRole[] = [];
-    const roleCount: { [key: string]: number } = {
-      ...filteredRoles.reduce((acc, role) => ({ ...acc, [role.name]: 0 }), {}),
-    };
+    const canAddThirdParty = gameLevel === "pro" && numPlayers >= 8;
+    const mafiaCount = Math.max(1, Math.floor(numPlayers / 4)); // At least 1 mafia, then 1 per 4 players
+    const thirdPartyCount = canAddThirdParty ? Math.floor(numPlayers / 10) : 0; // 1 third party per 10 players if allowed and pro level
 
-    for (let i = 0; i < numPlayers; i++) {
-      for (let role of filteredRoles) {
-        if (suggested.length >= numPlayers) break;
-        if (roleCount[role.name] < (role.timesInGame || 1)) {
-          suggested.push({
-            ...role,
-            id: role.id + "-" + roleCount[role.name],
-            preDefinedRoleId: role.id,
-            name:
-              roleCount[role.name] === 0
-                ? role.name
-                : `${role.name}_${roleCount[role.name] + 1}`,
-          });
-          roleCount[role.name]++;
+    const filteredRoles = predefinedRoles.filter(
+      (role) =>
+        (gameLevel === "pro" ? true : role.roleLevel === "beginner") &&
+        (canAddThirdParty ? true : role.side !== "ThirdParty")
+    );
+
+    const suggested: PredefinedRole[] = [];
+    const roleCount: { [key: string]: number } = {};
+
+    function addRoleToSuggested(role: PredefinedRole) {
+      if (!(role.name in roleCount)) {
+        roleCount[role.name] = 0;
+      }
+
+      if (
+        roleCount[role.name] < role.timesInGame &&
+        suggested.length < numPlayers
+      ) {
+        suggested.push({
+          ...role,
+          id: `${role.id}-${roleCount[role.name]}`,
+          name:
+            roleCount[role.name] === 0
+              ? role.name
+              : `${role.name}_${roleCount[role.name] + 1}`,
+        });
+        roleCount[role.name]++;
+        return true;
+      }
+      return false;
+    }
+
+    // Assign Mafia roles
+    const mafiaRoles = filteredRoles.filter((role) => role.side === "Mafia");
+    for (let i = 0; i < mafiaCount; i++) {
+      const availableMafiaRoles = mafiaRoles.filter(
+        (role) => (roleCount[role.name] || 0) < role.timesInGame
+      );
+      if (availableMafiaRoles.length > 0) {
+        addRoleToSuggested(
+          availableMafiaRoles[
+            Math.floor(Math.random() * availableMafiaRoles.length)
+          ]
+        );
+      }
+    }
+
+    // Assign Third Party roles if allowed (only in pro level)
+    if (canAddThirdParty) {
+      const thirdPartyRoles = filteredRoles.filter(
+        (role) => role.side === "ThirdParty"
+      );
+      for (let i = 0; i < thirdPartyCount; i++) {
+        const availableThirdPartyRoles = thirdPartyRoles.filter(
+          (role) => (roleCount[role.name] || 0) < role.timesInGame
+        );
+        if (availableThirdPartyRoles.length > 0) {
+          addRoleToSuggested(
+            availableThirdPartyRoles[
+              Math.floor(Math.random() * availableThirdPartyRoles.length)
+            ]
+          );
         }
       }
     }
 
+    // Assign Town roles
+    const townRoles = filteredRoles.filter((role) => role.side === "Town");
+    while (suggested.length < numPlayers) {
+      const availableTownRoles = townRoles.filter(
+        (role) => (roleCount[role.name] || 0) < role.timesInGame
+      );
+      if (availableTownRoles.length > 0) {
+        addRoleToSuggested(
+          availableTownRoles[
+            Math.floor(Math.random() * availableTownRoles.length)
+          ]
+        );
+      } else {
+        break; // No more available town roles
+      }
+    }
+
+    // Sort roles by action order
     suggested.sort(
       (a, b) => (a.actionOrder ?? Infinity) - (b.actionOrder ?? Infinity)
     );
-    setSuggestedRoles(suggested.slice(0, numPlayers));
 
-    const generatedCount = suggested.length;
-    if (generatedCount < numPlayers) {
+    setSuggestedRoles(suggested);
+
+    if (suggested.length < numPlayers) {
       setMessage(
-        `WARNING: Only ${generatedCount} roles generated out of ${numPlayers} requested. This may be due to a limited number of predefined roles available for the selected game level.`
+        `WARNING: Only ${suggested.length} roles generated out of ${numPlayers} requested. This may be due to a limited number of predefined roles available for the selected game level.`
       );
     } else {
-      setMessage(`${generatedCount} roles generated successfully.`);
+      setMessage(
+        `${suggested.length} roles generated successfully. Mafia: ${mafiaCount}, Third Party: ${thirdPartyCount}`
+      );
     }
   };
 
