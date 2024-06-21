@@ -1,9 +1,9 @@
 import React from "react";
 import { useGameContext } from "../contexts/GameContext";
 
-import CarbonCloudAuditing from "~icons/carbon/cloud-auditing";
 import CarbonSettingsCheck from "~icons/carbon/settings-check";
 import IconParkOutlineGamePs from "~icons/icon-park-outline/game-ps";
+import IcOutlineHistoryToggleOff from "~icons/ic/outline-history-toggle-off";
 
 interface FooterProps {}
 
@@ -37,7 +37,7 @@ const Footer: React.FC<FooterProps> = () => {
           activeTab === "timeline" ? "scale-110" : "scale-100"
         }`}
       >
-        <CarbonCloudAuditing />
+        <IcOutlineHistoryToggleOff />
         Timeline
       </button>
       <button

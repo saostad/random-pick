@@ -9,6 +9,10 @@ import CilTags from "~icons/cil/tags";
 import CarbonUserRole from "~icons/carbon/user-role";
 import { getAuditProblems } from "../utils/get-from-fns";
 import { useGameContext } from "../contexts/GameContext";
+import CarbonTimer from "~icons/carbon/timer";
+import HugeiconsValidationApproval from "~icons/hugeicons/validation-approval";
+import MdiProfessionalHexagon from "~icons/mdi/professional-hexagon";
+import IcOutlineHistoryToggleOff from "~icons/ic/outline-history-toggle-off";
 
 const Settings = () => {
   const { gameState } = useGameContext();
@@ -36,7 +40,7 @@ const Settings = () => {
         </ModalButton>
         <ModalButton modalId="RoleViewer">
           Player&apos;s Cards
-          <CarbonUserRole className="hidden sm:block" />
+          <CarbonUserRole />
         </ModalButton>
       </div>
 
@@ -70,8 +74,12 @@ const Settings = () => {
           + Tags - <CilTags />
         </ModalButton>
         <ModalButton modalId="LastActs">+ Last Actions -</ModalButton>
-        <ModalButton modalId="InquiriesSetting">Inquiries</ModalButton>
-        <ModalButton modalId="GameMode">GameMode</ModalButton>
+        <ModalButton modalId="InquiriesSetting">
+          Inquiries <HugeiconsValidationApproval />
+        </ModalButton>
+        <ModalButton modalId="GameMode">
+          GameMode <MdiProfessionalHexagon />
+        </ModalButton>
       </div>
 
       <div className="divider divider-info">Timer</div>
@@ -82,7 +90,9 @@ const Settings = () => {
           gap: "0.5rem",
         }}
       >
-        <ModalButton modalId="TimerSettings">Timer</ModalButton>
+        <ModalButton modalId="TimerSettings">
+          Timers <CarbonTimer />
+        </ModalButton>
       </div>
 
       <div className="divider divider-info">Audit</div>
@@ -93,7 +103,9 @@ const Settings = () => {
           gap: "0.5rem",
         }}
       >
-        <ModalButton modalId="EventTimeline">Event Timeline</ModalButton>
+        <ModalButton modalId="EventTimeline">
+          Event Timeline <IcOutlineHistoryToggleOff />
+        </ModalButton>
         <ModalButton
           modalId="audit"
           animate={getAuditProblems(gameState).isAuditFailed}

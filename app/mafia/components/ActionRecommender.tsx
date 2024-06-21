@@ -8,6 +8,8 @@ import GameMode from "./GameMode";
 
 import CarbonUserRole from "~icons/carbon/user-role";
 import CilTags from "~icons/cil/tags";
+import CarbonTimer from "~icons/carbon/timer";
+import HugeiconsValidationApproval from "~icons/hugeicons/validation-approval";
 
 interface ActionRecommenderProps extends HTMLAttributes<HTMLElement> {}
 
@@ -87,12 +89,16 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
                   Show Player&apos;s Cards
                   <CarbonUserRole />
                 </ModalButton>
-                <ModalButton modalId="TimerSettings">Timer</ModalButton>
+                <ModalButton modalId="TimerSettings">
+                  Timers <CarbonTimer />
+                </ModalButton>
                 <ModalButton modalId="Tags">
                   + Tags - <CilTags />
                 </ModalButton>
                 <ModalButton modalId="LastActs">+ Last Actions -</ModalButton>
-                <ModalButton modalId="InquiriesSetting">Inquiries</ModalButton>
+                <ModalButton modalId="InquiriesSetting">
+                  Inquiries <HugeiconsValidationApproval />
+                </ModalButton>
               </div>
             )}
           </>
