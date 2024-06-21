@@ -124,9 +124,42 @@ const NightActionsControl: React.FC = () => {
                 />
               </div>
               <div className="flex flex-col my-6">
-                <b className="text-2xl">
-                  {actionableRoles[currentActionIndex].name}
-                </b>
+                <div className="flex">
+                  <b className="text-2xl flex-none">
+                    {actionableRoles[currentActionIndex].name}
+                  </b>
+                  <div className="grow dropdown dropdown-end ">
+                    <div
+                      tabIndex={0}
+                      role="button"
+                      className="btn btn-circle btn-ghost btn-xs text-info"
+                    >
+                      <svg
+                        tabIndex={0}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        className="w-4 h-4 stroke-current"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div
+                      tabIndex={0}
+                      className="card compact dropdown-content z-[1] shadow bg-base-100 rounded-box w-64"
+                    >
+                      <div tabIndex={0} className="card-body">
+                        <p>{actionableRoles[currentActionIndex].description}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="self-center">
                   (Player:
                   {rolePlayers[actionableRoles[currentActionIndex].id] ? (
