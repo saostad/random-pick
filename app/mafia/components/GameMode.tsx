@@ -21,7 +21,7 @@ const GameMode: React.FC = () => {
         <div className="flex flex-col">
           <div className="form-control w-52">
             <label className="cursor-pointer label">
-              <span className="label-text">Professional Mode</span>
+              <span className="label-text">Professional mode</span>
               <input
                 type="checkbox"
                 className="toggle toggle-primary"
