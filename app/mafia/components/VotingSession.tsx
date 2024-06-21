@@ -4,6 +4,7 @@ import { useModal } from "../contexts/ModalContext";
 import { useGameContext } from "../contexts/GameContext";
 import { getAlivePlayers } from "../utils/get-from-fns";
 import Animation from "./Animation";
+import GlowingButton from "./GlowingButton";
 
 const VotingSession: React.FC = () => {
   const {
@@ -57,43 +58,39 @@ const VotingSession: React.FC = () => {
     <div>
       {votingStatus === "not_started" && (
         <div className="flex flex-col items-center mt-6">
-          <Animation
-            className=""
-            src="mafia/animation/think.lottie"
-            loop={false}
-            autoplay={true}
-          />
-          <button
-            className="btn mt-6 relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
+          <GlowingButton
+            className="btn-wide"
             onClick={() => {
               startVoting();
               handleOpen("voting-session");
             }}
           >
-            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-              Start Voting
-            </span>
-          </button>
-        </div>
-      )}
-      {votingStatus === "in_progress" || votingStatus === "ousting" ? (
-        <div className="flex flex-col items-center mt-6">
+            Start Voting
+          </GlowingButton>
           <Animation
             className=""
             src="mafia/animation/think.lottie"
             loop={false}
             autoplay={true}
           />
-          <button
-            className="btn mt-6 relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
+        </div>
+      )}
+      {votingStatus === "in_progress" || votingStatus === "ousting" ? (
+        <div className="flex flex-col items-center mt-6">
+          <GlowingButton
             onClick={() => {
               handleOpen("voting-session");
             }}
+            className="btn-wide"
           >
-            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-              Resume Voting
-            </span>
-          </button>
+            Resume Voting
+          </GlowingButton>
+          <Animation
+            className=""
+            src="mafia/animation/think.lottie"
+            loop={false}
+            autoplay={true}
+          />
         </div>
       ) : null}
       {votingStatus === "lastAction" && (
@@ -116,20 +113,15 @@ const VotingSession: React.FC = () => {
       )}
 
       <FlexibleModal modalId="voting-session" title="Voting Session">
-        <div className="mb-4">
+        <div className="mb-5 grid place-items-center">
           <p className="text-center text-success my-4">
             {alivePlayers.length} Player{alivePlayers.length > 1 ? "s" : ""} in
             the game. Count/2 = {Math.ceil(alivePlayers.length / 2)}
           </p>
           {votingStatus === "in_progress" && (
-            <button
-              className="btn relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
-              onClick={endVoting}
-            >
-              <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                End Voting
-              </span>
-            </button>
+            <GlowingButton onClick={endVoting} className="btn-wide">
+              End Voting
+            </GlowingButton>
           )}
           {votingStatus === "ousting" && (
             <div className="grid grid-cols-2 gap-4 my-4">

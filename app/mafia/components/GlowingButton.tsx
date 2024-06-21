@@ -16,7 +16,7 @@ const GlowingButton: React.FC<GlowingButtonProps> = ({
   return (
     <button
       className={`
-      btn btn-outline 
+      btn btn-outline
       relative overflow-hidden
       shadow-[0_0_15px_5px_rgba(59,130,246,0.5)]
       animate-pulse

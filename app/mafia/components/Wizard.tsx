@@ -117,7 +117,20 @@ const Wizard: React.FC = () => {
       </div>
 
       {isCurrentStepFinished() && (
-        <div className="">
+        <div>
+          <div className="grid grid-cols-2 place-items-center mt-8">
+            <span className="">{getNextPhaseInfo()}</span>
+            <GlowingButton
+              onClick={handleNextPhase}
+              disabled={
+                !isCurrentStepFinished() ||
+                currentStepIndex >= sequence.length - 1
+              }
+              className=""
+            >
+              Let&apos;s Go! <span className="ml-2">🚀</span>
+            </GlowingButton>
+          </div>
           <Animation
             className="max-w-56 max-h-56 m-auto"
             src="mafia/animation/next.lottie"
@@ -164,17 +177,6 @@ const Wizard: React.FC = () => {
                 </button>
               </div>
             )}
-          {getNextPhaseInfo()}
-          <GlowingButton
-            onClick={handleNextPhase}
-            disabled={
-              !isCurrentStepFinished() ||
-              currentStepIndex >= sequence.length - 1
-            }
-            className="mt-4 ml-4"
-          >
-            Let&apos;s Go!
-          </GlowingButton>
         </div>
       )}
       <div className="step-content">{renderStep()}</div>
