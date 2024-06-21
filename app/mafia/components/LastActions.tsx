@@ -26,7 +26,7 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
         {
           title: newLastAct,
           description: "",
-          descriptionFa: ``,
+          descriptionFa: "",
           id: Date.now().toString(),
           titleFa: "",
         },
@@ -79,7 +79,7 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
                 }`}
                 type="radio"
                 name="options"
-                aria-label="Add an Action"
+                aria-label="Add Action"
                 checked={activeTab === "addItem"}
                 onChange={() => setActiveTab("addItem")}
               />
@@ -120,7 +120,7 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
                 className="btn btn-primary btn-outline"
                 onClick={handleAddLastAct}
               >
-                Add Last Act
+                Add Action
               </button>
               {error && <p className="text-error">{error}</p>}
             </div>

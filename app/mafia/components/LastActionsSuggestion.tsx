@@ -84,7 +84,7 @@ const LastActionsSuggestion: React.FC = () => {
             className="btn btn-outline btn-ghost btn-secondary mt-4"
             onClick={handleSuggestLastActions}
           >
-            Suggest Last Actions!
+            Suggest Actions!
           </button>
         )}
       </div>
