@@ -450,6 +450,14 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         }
       }),
     }));
+
+    addEvent({
+      type: "player-untagged",
+      description: `Player ${getPlayerNameById({
+        playerId,
+        players: gameState.players,
+      })} was untagged from ${tag}.`,
+    });
   };
 
   const setSpeakingOrder = (speakingOrder: number[]) => {
