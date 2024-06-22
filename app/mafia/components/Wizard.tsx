@@ -184,15 +184,12 @@ const Wizard: React.FC = () => {
                       </div>
                     </>
                   ) : (
-                    <div
-                      role="alert"
-                      className="flex alert alert-info max-w-64 m-auto"
-                    >
+                    <div role="alert" className="flex alert shadow-lg">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        className="stroke-current shrink-0 w-6 h-6"
+                        className="stroke-info shrink-0 w-6 h-6"
                       >
                         <path
                           strokeLinecap="round"
@@ -201,8 +198,15 @@ const Wizard: React.FC = () => {
                           d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                         ></path>
                       </svg>
-                      <span className="text-sm">Quite Night! </span>
-                      <MaterialSymbolsLightNightSightAutoOffRounded />
+
+                      <span className="">Quite Night!</span>
+
+                      <Animation
+                        className="max-w-36 max-h-36 m-auto"
+                        src="mafia/animation/sleepy-cat.lottie"
+                        loop={true}
+                        autoplay={true}
+                      />
                     </div>
                   )}
                 </div>
