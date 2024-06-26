@@ -1,5 +1,5 @@
 "use client";
 
-import Meals from "./Meals";
+import { Main } from "./Main";
 
-export default Meals;
+export default Main;
