@@ -5,6 +5,17 @@ import { useGameContext } from "./GameContext";
 export const Plate: React.FC = () => {
   const { grabbedFoods } = useGameContext();
 
+  const totals = grabbedFoods.reduce(
+    (acc, food) => {
+      acc.calories += food.calories;
+      acc.fiber += food.fiber;
+      acc.protein += food.protein;
+      acc.cholesterol += food.cholesterol;
+      return acc;
+    },
+    { calories: 0, fiber: 0, protein: 0, cholesterol: 0 }
+  );
+
   return (
     <div className="absolute bottom-0 left-0 right-0 h-32 bg-gray-200 rounded-t-xl overflow-hidden">
       <div className="h-full overflow-y-auto p-2">
@@ -33,6 +44,13 @@ export const Plate: React.FC = () => {
                 <td className="p-1 text-center">{food.cholesterol}mg</td>
               </tr>
             ))}
+            <tr className="bg-gray-300 font-bold">
+              <td className="p-1">Total</td>
+              <td className="p-1 text-center">{totals.calories}</td>
+              <td className="p-1 text-center">{totals.fiber}g</td>
+              <td className="p-1 text-center">{totals.protein}g</td>
+              <td className="p-1 text-center">{totals.cholesterol}mg</td>
+            </tr>
           </tbody>
         </table>
       </div>
