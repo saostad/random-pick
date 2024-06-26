@@ -1,7 +1,7 @@
 // GameContext.tsx
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { mealTypes } from "./mealTypes";
-import { Food, MealTypes } from "./types";
+import { mealTypes } from "../data/mealTypes";
+import { MealTypes, Food } from "../types/types";
 
 interface GameContextType {
   mealType: keyof MealTypes | null;
@@ -18,6 +18,8 @@ interface GameContextType {
   setIsGameOver: (isOver: boolean) => void;
   handleGrab: (food: Food) => void;
   restartGame: () => void;
+  lastFoodScore: number;
+  setLastFoodScore: (score: number) => void;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -39,6 +41,7 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
   const [grabbedFoods, setGrabbedFoods] = useState<Food[]>([]);
   const [feedback, setFeedback] = useState<Food | null>(null);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [lastFoodScore, setLastFoodScore] = useState(0);
 
   const handleGrab = (food: Food) => {
     if (isGameOver || !mealType) return;
@@ -49,6 +52,8 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
     setGrabbedFoods((prevFoods) => [...prevFoods, food].slice(-5));
     setFeedback(food);
     setTimeout(() => setFeedback(null), 1000);
+
+    setLastFoodScore(food.score);
 
     if (newTotalCalories >= mealTypes[mealType].calorieLimit) {
       setIsGameOver(true);
@@ -80,6 +85,8 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
         setIsGameOver,
         handleGrab,
         restartGame,
+        lastFoodScore,
+        setLastFoodScore,
       }}
     >
       {children}

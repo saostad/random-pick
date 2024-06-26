@@ -1,4 +1,4 @@
-import { MealTypes } from "./types";
+import { MealTypes } from "../types/types";
 
 // mealTypes.ts
 export const mealTypes: MealTypes = {

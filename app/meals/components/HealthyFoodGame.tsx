@@ -1,13 +1,14 @@
 // HealthyFoodGame.tsx
 import React, { useTransition, useState, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/web";
-import { useGameContext } from "./GameContext";
-import { mealTypes } from "./mealTypes";
 import { FoodItem } from "./FoodItem";
 import { Plate } from "./Plate";
 import { FeedbackMessage } from "./FeedbackMessage";
 import { GameOver } from "./GameOver";
 import { MealSelection } from "./MealSelection";
+import { useGameContext } from "../context/GameContext";
+import { mealTypes } from "../data/mealTypes";
+import { GameCharacter } from "./GameCharacter";
 
 export const HealthyFoodGame: React.FC = () => {
   const { mealType, score, totalCalories, feedback, isGameOver, setMealType } =
@@ -71,6 +72,7 @@ export const HealthyFoodGame: React.FC = () => {
             <FeedbackMessage food={feedback} />
           </animated.div>
         )}
+        <GameCharacter />
         <Plate />
         {isGameOver && <GameOver />}
       </div>

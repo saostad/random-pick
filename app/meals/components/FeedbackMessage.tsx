@@ -1,6 +1,6 @@
 // FeedbackMessage.tsx
 import React from "react";
-import { Food } from "./types";
+import { Food } from "../types/types";
 
 const getFeedbackInfo = (
   score: number

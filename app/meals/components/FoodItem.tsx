@@ -1,8 +1,8 @@
 // FoodItem.tsx
 import React, { useEffect } from "react";
 import { useSpring, animated } from "@react-spring/web";
-import { useGameContext } from "./GameContext";
-import { Food } from "./types";
+import { useGameContext } from "../context/GameContext";
+import { Food } from "../types/types";
 
 interface FoodItemProps {
   food: Food;

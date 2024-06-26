@@ -1,5 +1,5 @@
 import React from "react";
-import { mealTypes } from "./mealTypes";
+import { mealTypes } from "../data/mealTypes";
 
 interface MealSelectionProps {
   onSelectMeal: (meal: keyof typeof mealTypes) => void;

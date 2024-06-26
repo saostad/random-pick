@@ -1,6 +1,6 @@
 // Plate.tsx
 import React from "react";
-import { useGameContext } from "./GameContext";
+import { useGameContext } from "../context/GameContext";
 
 export const Plate: React.FC = () => {
   const { grabbedFoods } = useGameContext();

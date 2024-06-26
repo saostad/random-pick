@@ -1,5 +1,5 @@
 "use client";
 
-import { Main } from "./Main";
+import { Main } from "./components/Main";
 
 export default Main;

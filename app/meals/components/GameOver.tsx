@@ -1,6 +1,6 @@
 // GameOver.tsx
 import React from "react";
-import { useGameContext } from "./GameContext";
+import { useGameContext } from "../context/GameContext";
 
 export const GameOver: React.FC = () => {
   const { score, totalCalories, restartGame } = useGameContext();
