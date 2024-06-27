@@ -1,3 +1,4 @@
+"use client";
 import { GameProvider } from "../context/GameContext";
 import { HealthyFoodGame } from "./HealthyFoodGame";
 

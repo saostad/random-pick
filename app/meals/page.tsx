@@ -1,5 +1,3 @@
-"use client";
-
 import { Main } from "./components/Main";
 import { Metadata } from "next";
 
