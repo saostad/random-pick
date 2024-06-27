@@ -20,6 +20,8 @@ interface GameContextType {
   restartGame: () => void;
   lastFoodScore: number;
   setLastFoodScore: (score: number) => void;
+  trainingMode: boolean;
+  setTrainingMode: (mode: boolean) => void;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -42,6 +44,7 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
   const [feedback, setFeedback] = useState<Food | null>(null);
   const [isGameOver, setIsGameOver] = useState(false);
   const [lastFoodScore, setLastFoodScore] = useState(0);
+  const [trainingMode, setTrainingMode] = useState(false);
 
   const handleGrab = (food: Food) => {
     if (isGameOver || !mealType) return;
@@ -87,6 +90,8 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
         restartGame,
         lastFoodScore,
         setLastFoodScore,
+        trainingMode,
+        setTrainingMode,
       }}
     >
       {children}

@@ -6,6 +6,12 @@ export interface Food {
   fiber: number;
   protein: number;
   cholesterol: number;
+  carbohydrates: number;
+  fat: number;
+  vitamins: { [key: string]: number };
+  minerals: { [key: string]: number };
+  description: string;
+  healthBenefits: string[];
 }
 
 export interface MealType {

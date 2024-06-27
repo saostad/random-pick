@@ -9,10 +9,19 @@ import { MealSelection } from "./MealSelection";
 import { useGameContext } from "../context/GameContext";
 import { mealTypes } from "../data/mealTypes";
 import { GameCharacter } from "./GameCharacter";
+import { EducationalTips } from "./EducationalTips";
 
 export const HealthyFoodGame: React.FC = () => {
-  const { mealType, score, totalCalories, feedback, isGameOver, setMealType } =
-    useGameContext();
+  const {
+    mealType,
+    score,
+    totalCalories,
+    feedback,
+    isGameOver,
+    setMealType,
+    trainingMode,
+    setTrainingMode,
+  } = useGameContext();
   const [isPending, startTransition] = useTransition();
   const [showFeedback, setShowFeedback] = useState(false);
 
@@ -51,6 +60,17 @@ export const HealthyFoodGame: React.FC = () => {
           <h1 className="text-2xl font-bold text-indigo-600 mb-2">
             HEALTHY {mealType.toUpperCase()} GAME
           </h1>
+          <div className="form-control w-52">
+            <label className="label cursor-pointer">
+              <span className="label-text">Training mode</span>
+              <input
+                type="checkbox"
+                className="toggle toggle-primary"
+                checked={trainingMode}
+                onChange={() => setTrainingMode(!trainingMode)}
+              />
+            </label>
+          </div>
           <p className="text-gray-600 mb-4">
             Grab the healthy foods and avoid the unhealthy ones!
           </p>
@@ -72,9 +92,11 @@ export const HealthyFoodGame: React.FC = () => {
             <FeedbackMessage food={feedback} />
           </animated.div>
         )}
-        <GameCharacter />
         <Plate />
         {isGameOver && <GameOver />}
+      </div>
+      <div className="w-full max-w-md mt-8">
+        <EducationalTips />
       </div>
     </div>
   );
