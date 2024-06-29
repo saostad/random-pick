@@ -37,7 +37,7 @@ export type Player = {
   order: number;
   tags: AssignedTag[];
 };
-
+export type RoleSide = "Town" | "Mafia" | "ThirdParty";
 export type GameRole = {
   id: string;
   name: string;
@@ -45,6 +45,7 @@ export type GameRole = {
   hasAction: boolean;
   actionOrder?: number;
   preDefinedRoleId?: string;
+  side: RoleSide; // New property
 };
 
 export type LastActType = {

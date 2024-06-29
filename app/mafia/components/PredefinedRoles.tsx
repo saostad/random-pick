@@ -6,18 +6,17 @@ const PredefinedRoles: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
   const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
 
-  // Function to add predefined roles
   const handleAddPredefinedRoles = () => {
     const rolesToAdd = predefinedRoles.filter((role) =>
       selectedRoles.includes(role.id)
     );
     const newRoles: GameRole[] = rolesToAdd.map((role) => ({
       ...role,
-      id: new Date().toISOString() + Math.random(), // Ensure unique ID
+      id: new Date().toISOString() + Math.random(),
       preDefinedRoleId: role.id,
     }));
     updateGameState({ gameRoles: [...gameState.gameRoles, ...newRoles] });
-    setSelectedRoles([]); // Reset selected roles
+    setSelectedRoles([]);
   };
 
   return (

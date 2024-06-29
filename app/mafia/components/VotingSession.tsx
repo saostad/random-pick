@@ -1,7 +1,8 @@
+import React from "react";
+import { useGameContext } from "../contexts/GameContext";
 import CarbonOutage from "~icons/carbon/outage";
 import FlexibleModal from "./FlexibleModal";
 import { useModal } from "../contexts/ModalContext";
-import { useGameContext } from "../contexts/GameContext";
 import { getAlivePlayers } from "../utils/get-from-fns";
 import Animation from "./Animation";
 import GlowingButton from "./GlowingButton";
@@ -19,11 +20,9 @@ const VotingSession: React.FC = () => {
   const { votingStatus, players, speakingOrder, lastActionsActive } = gameState;
   const { handleOpen, handleClose } = useModal();
 
-  // Calculate the maximum votes and the players who have the maximum votes
   const alivePlayers = getAlivePlayers({ players });
-  const maxVotes = Math.max(...alivePlayers.map((player) => player.voteCount));
-  const playersWithMaxVotes = alivePlayers.filter(
-    (player) => player.voteCount === maxVotes && maxVotes > 0
+  const sortedPlayers = [...alivePlayers].sort(
+    (a, b) => b.voteCount - a.voteCount
   );
 
   const startVoting = () => {
@@ -32,11 +31,7 @@ const VotingSession: React.FC = () => {
   };
 
   const endVoting = () => {
-    if (playersWithMaxVotes.length === 0) {
-      setVotingStatus("finished");
-    } else {
-      setVotingStatus("ousting");
-    }
+    setVotingStatus("ousting");
   };
 
   const votingOustingEnd = (playerId?: string) => {
@@ -79,7 +74,7 @@ const VotingSession: React.FC = () => {
           />
         </div>
       )}
-      {votingStatus === "in_progress" || votingStatus === "ousting" ? (
+      {(votingStatus === "in_progress" || votingStatus === "ousting") && (
         <div className="flex flex-col items-center mt-6">
           <GlowingButton
             onClick={() => {
@@ -96,7 +91,7 @@ const VotingSession: React.FC = () => {
             autoplay={true}
           />
         </div>
-      ) : null}
+      )}
       {votingStatus === "lastAction" && (
         <div className="flex flex-col items-center mt-6">
           <Animation
@@ -178,17 +173,17 @@ const VotingSession: React.FC = () => {
                 </div>
               </div>
             ))}
-        {votingStatus === "ousting" && playersWithMaxVotes.length > 0 ? (
+        {votingStatus === "ousting" && (
           <div style={{ marginBottom: "1rem" }}>
-            <h3 className="font-semibold text-xl my-4">Leading Players</h3>
-            {playersWithMaxVotes.map((player) => (
+            <h3 className="font-semibold text-xl my-4">Voting Results</h3>
+            {sortedPlayers.map((player) => (
               <div
                 key={player.id}
                 className="flex items-center justify-between my-2"
               >
                 <p>
                   {player.name}: {player.voteCount} vote
-                  {player.voteCount > 1 ? "s" : ""}
+                  {player.voteCount !== 1 ? "s" : ""}
                 </p>
                 <button
                   className="btn btn-outline btn-error ml-2"
@@ -201,8 +196,6 @@ const VotingSession: React.FC = () => {
               </div>
             ))}
           </div>
-        ) : (
-          votingStatus === "finished" && "No player has the most votes!"
         )}
       </FlexibleModal>
     </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGameContext, GameRole } from "../contexts/GameContext";
+import { useGameContext, GameRole, RoleSide } from "../contexts/GameContext";
 import PredefinedRoles from "./PredefinedRoles";
 import RoleSuggestion from "./RoleSuggestion";
 import CarbonAdd from "~icons/carbon/add";
@@ -10,6 +10,7 @@ const Roles: React.FC = () => {
   const [newRoleName, setNewRoleName] = useState("");
   const [hasAction, setHasAction] = useState(false);
   const [nativeName, setNativeName] = useState("");
+  const [side, setSide] = useState<RoleSide>("Town");
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<
     "addRole" | "predefinedRoles" | "suggestRoles"
@@ -23,12 +24,14 @@ const Roles: React.FC = () => {
       name: newRoleName,
       hasAction: hasAction,
       persianName: nativeName,
-      actionOrder: gameState.gameRoles.length + 1, // Assign the next available actionOrder
+      actionOrder: gameState.gameRoles.length + 1,
+      side: side,
     };
     updateGameState({ gameRoles: [...gameState.gameRoles, newRole] });
     setNewRoleName("");
     setNativeName("");
     setHasAction(false);
+    setSide("Town");
   };
 
   const handleRemoveRole = (roleId: string) => {
@@ -57,6 +60,13 @@ const Roles: React.FC = () => {
     updateGameState({ gameRoles: updatedRoles });
   };
 
+  const handleUpdateRoleSide = (roleId: string, newSide: RoleSide) => {
+    const updatedRoles = gameState.gameRoles.map((role) =>
+      role.id === roleId ? { ...role, side: newSide } : role
+    );
+    updateGameState({ gameRoles: updatedRoles });
+  };
+
   const moveRole = (dragIndex: number, hoverIndex: number) => {
     const draggedRole = gameState.gameRoles[dragIndex];
     const updatedRoles = [...gameState.gameRoles];
@@ -72,7 +82,7 @@ const Roles: React.FC = () => {
   };
 
   const renderRole = (role: GameRole, index: number) => (
-    <div className="grid grid-cols-6 gap-4 content-center">
+    <div className="grid grid-cols-10 gap-2 content-center">
       <div className="col-span-3 flex items-center">
         <input
           type="text"
@@ -82,18 +92,35 @@ const Roles: React.FC = () => {
           placeholder="Role name"
         />
       </div>
-      <div className="form-control col-span-2">
-        <label className="cursor-pointer label">
-          <input
-            type="checkbox"
-            className="checkbox checkbox-sx"
-            checked={role.hasAction}
-            onChange={(e) => handleUpdateRoleAction(role.id, e.target.checked)}
-          />
-          <span className="label-text text-xs ml-2">Night action?</span>
-        </label>
+      <div className="col-span-3 flex items-center">
+        <select
+          className="select select-sm select-primary w-full"
+          value={role.side}
+          onChange={(e) =>
+            handleUpdateRoleSide(role.id, e.target.value as RoleSide)
+          }
+        >
+          <option value="Town">Town</option>
+          <option value="Mafia">Mafia</option>
+          <option value="ThirdParty">Third Party</option>
+        </select>
       </div>
-      <div className="flex items-center">
+      <div className="col-span-3 flex items-center">
+        <div className="form-control">
+          <label className="cursor-pointer label">
+            <input
+              type="checkbox"
+              className="checkbox checkbox-sx"
+              checked={role.hasAction}
+              onChange={(e) =>
+                handleUpdateRoleAction(role.id, e.target.checked)
+              }
+            />
+            <span className="label-text text-xs ml-2">Night action?</span>
+          </label>
+        </div>
+      </div>
+      <div className="col-span-1 flex items-center">
         <button
           onClick={() => handleRemoveRole(role.id)}
           className="btn btn-circle btn-outline btn-error btn-sm"
@@ -157,6 +184,15 @@ const Roles: React.FC = () => {
             onChange={(e) => setNativeName(e.target.value)}
             placeholder="Role alt name"
           />
+          <select
+            className="select select-bordered select-primary w-full max-w-xs mb-2"
+            value={side}
+            onChange={(e) => setSide(e.target.value as RoleSide)}
+          >
+            <option value="Town">Town</option>
+            <option value="Mafia">Mafia</option>
+            <option value="ThirdParty">Third Party</option>
+          </select>
           <div className="m-2">
             <div className="form-control">
               <label className="cursor-pointer label">
@@ -176,7 +212,6 @@ const Roles: React.FC = () => {
           {error && <div style={{ color: "red" }}>{error}</div>}
         </div>
       )}
-
       {activeTab === "predefinedRoles" && <PredefinedRoles />}
       {activeTab === "suggestRoles" && <RoleSuggestion />}
 
