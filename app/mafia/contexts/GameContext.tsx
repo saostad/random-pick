@@ -38,6 +38,7 @@ export type Player = {
   tags: AssignedTag[];
 };
 export type RoleSide = "Town" | "Mafia" | "ThirdParty";
+
 export type GameRole = {
   id: string;
   name: string;

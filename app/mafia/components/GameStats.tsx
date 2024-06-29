@@ -100,7 +100,7 @@ const GameStats: React.FC = () => {
           >
             {gameState.inquiries}
           </div>
-          <div className="stat-desc">left.</div>
+          <div className="stat-desc">left</div>
         </div>
 
         <div className="stat px-3">
