@@ -130,15 +130,16 @@ const RoleSuggestion: React.FC = () => {
     }
   };
 
-  // Function to add suggested roles
   const handleAddSuggestedRoles = () => {
     const rolesToAdd = suggestedRoles.filter((role) =>
       selectedSuggestedRoles.includes(role.id)
     );
-    const newRoles = rolesToAdd.map((role) => ({
+    const newRoles: GameRole[] = rolesToAdd.map((role) => ({
       ...role,
       id: new Date().toISOString() + Math.random(),
       preDefinedRoleId: role.preDefinedRoleId,
+      image: role.image,
+      description: role.description,
     }));
     updateGameState({ gameRoles: [...gameState.gameRoles, ...newRoles] });
 

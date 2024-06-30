@@ -61,23 +61,17 @@ const PlayerRoleCarousel: React.FC = () => {
 
   function getRoleImage(roleId: string | undefined) {
     const role = gameRoles.find((role) => role.id === roleId);
-    if (!role) return null;
-    const predefRole = predefinedRoles.find(
-      (item) => item.id === role.preDefinedRoleId
-    );
+    if (!role || !role.image) return null;
 
-    return predefRole?.image;
+    return role.image;
   }
 
   function getRoleDescription(roleId: string | undefined) {
     const role = gameRoles.find((role) => role.id === roleId);
 
-    if (!role) return null;
-    const predefRole = predefinedRoles.find(
-      (item) => item.id === role.preDefinedRoleId
-    );
+    if (!role || !role.description) return null;
 
-    return predefRole?.description;
+    return role.description;
   }
 
   return (

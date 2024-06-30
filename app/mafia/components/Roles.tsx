@@ -15,6 +15,8 @@ const Roles: React.FC = () => {
   const [activeTab, setActiveTab] = useState<
     "addRole" | "predefinedRoles" | "suggestRoles"
   >("suggestRoles");
+  const [image, setImage] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleAddRole = () => {
     if (!newRoleName.trim()) return;
@@ -26,12 +28,16 @@ const Roles: React.FC = () => {
       persianName: nativeName,
       actionOrder: gameState.gameRoles.length + 1,
       side: side,
+      image: image,
+      description: description,
     };
     updateGameState({ gameRoles: [...gameState.gameRoles, newRole] });
     setNewRoleName("");
     setNativeName("");
     setHasAction(false);
     setSide("Town");
+    setImage("");
+    setDescription("");
   };
 
   const handleRemoveRole = (roleId: string) => {
@@ -187,12 +193,27 @@ const Roles: React.FC = () => {
           <select
             className="select select-bordered select-primary w-full max-w-xs mb-2"
             value={side}
-            onChange={(e) => setSide(e.target.value as RoleSide)}
+            onChange={(e) =>
+              setSide(e.target.value as "Town" | "Mafia" | "ThirdParty")
+            }
           >
             <option value="Town">Town</option>
             <option value="Mafia">Mafia</option>
             <option value="ThirdParty">Third Party</option>
           </select>
+          <input
+            type="text"
+            className="input input-bordered input-primary w-full max-w-xs mb-2"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            placeholder="Image URL"
+          />
+          <textarea
+            className="textarea textarea-bordered textarea-primary w-full max-w-xs mb-2"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Role description"
+          />
           <div className="m-2">
             <div className="form-control">
               <label className="cursor-pointer label">

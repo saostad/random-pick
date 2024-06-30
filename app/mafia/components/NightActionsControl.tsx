@@ -13,6 +13,7 @@ import Animation from "./Animation";
 import MediaPlayer from "./MediaPlayer";
 import GlowingButton from "./GlowingButton";
 import MaterialSymbolsChipExtraction from "~icons/material-symbols/chip-extraction";
+import { CldImage } from "next-cloudinary";
 
 const handleNightActions = (gameState: GameState): GameState => {
   gameState.gameRoles
@@ -157,6 +158,15 @@ const NightActionsControl: React.FC = () => {
                     </div>
                   </div>
                 </div>
+                {!actionableRoles[currentActionIndex].image ? null : (
+                  <CldImage
+                    className="m-0 self-center"
+                    src={actionableRoles[currentActionIndex].image || ""}
+                    alt={""}
+                    width="214"
+                    height="123"
+                  />
+                )}
 
                 <div className="self-center">
                   (Player:

@@ -14,6 +14,8 @@ const PredefinedRoles: React.FC = () => {
       ...role,
       id: new Date().toISOString() + Math.random(),
       preDefinedRoleId: role.id,
+      image: role.image,
+      description: role.description,
     }));
     updateGameState({ gameRoles: [...gameState.gameRoles, ...newRoles] });
     setSelectedRoles([]);

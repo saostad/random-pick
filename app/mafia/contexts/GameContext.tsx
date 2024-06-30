@@ -46,7 +46,9 @@ export type GameRole = {
   hasAction: boolean;
   actionOrder?: number;
   preDefinedRoleId?: string;
-  side: RoleSide; // New property
+  side: RoleSide;
+  image?: string;
+  description?: string;
 };
 
 export type LastActType = {
