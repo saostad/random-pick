@@ -5,7 +5,7 @@ import CarbonViewOff from "~icons/carbon/view-off";
 import CarbonNextOutline from "~icons/carbon/next-outline";
 import CarbonPreviousOutline from "~icons/carbon/previous-outline";
 import { useSwipeable } from "react-swipeable";
-import predefinedRoles from "../data/predefinedRoles";
+import Image from "next/image";
 import { CldImage } from "next-cloudinary";
 
 const PlayerRoleCarousel: React.FC = () => {
@@ -53,10 +53,7 @@ const PlayerRoleCarousel: React.FC = () => {
   }
 
   function getPersianRoleName(roleId: string | undefined) {
-    return (
-      gameRoles.find((role) => role.id === roleId)?.persianName ||
-      "نقشی انتخاب نشده است"
-    );
+    return gameRoles.find((role) => role.id === roleId)?.persianName || null;
   }
 
   function getRoleImage(roleId: string | undefined) {
@@ -97,13 +94,28 @@ const PlayerRoleCarousel: React.FC = () => {
                   </div>
 
                   {!getRoleImage(player.roleId) ? null : (
-                    <CldImage
-                      className="m-0 self-center"
-                      src={getRoleImage(player.roleId) || ""}
-                      alt={""}
-                      width="214"
-                      height="123"
-                    />
+                    <>
+                      {getRoleImage(player.roleId)!.startsWith("http") ? (
+                        <Image
+                          className="m-0 self-center"
+                          src={getRoleImage(player.roleId)!}
+                          loader={() => {
+                            return getRoleImage(player.roleId)!;
+                          }}
+                          alt={""}
+                          width={214}
+                          height={123}
+                        />
+                      ) : (
+                        <CldImage
+                          className="m-0 self-center"
+                          src={getRoleImage(player.roleId)!}
+                          alt={""}
+                          width={214}
+                          height={123}
+                        />
+                      )}
+                    </>
                   )}
 
                   {!getRoleDescription(player.roleId) ? null : (

@@ -14,6 +14,7 @@ import MediaPlayer from "./MediaPlayer";
 import GlowingButton from "./GlowingButton";
 import MaterialSymbolsChipExtraction from "~icons/material-symbols/chip-extraction";
 import { CldImage } from "next-cloudinary";
+import Image from "next/image";
 
 const handleNightActions = (gameState: GameState): GameState => {
   gameState.gameRoles
@@ -159,13 +160,30 @@ const NightActionsControl: React.FC = () => {
                   </div>
                 </div>
                 {!actionableRoles[currentActionIndex].image ? null : (
-                  <CldImage
-                    className="m-0 self-center"
-                    src={actionableRoles[currentActionIndex].image || ""}
-                    alt={""}
-                    width="214"
-                    height="123"
-                  />
+                  <>
+                    {actionableRoles[currentActionIndex].image.startsWith(
+                      "http"
+                    ) ? (
+                      <Image
+                        className="m-0 self-center"
+                        src={actionableRoles[currentActionIndex].image}
+                        loader={() => {
+                          return actionableRoles[currentActionIndex].image;
+                        }}
+                        alt={""}
+                        width={214}
+                        height={123}
+                      />
+                    ) : (
+                      <CldImage
+                        className="m-0 self-center"
+                        src={actionableRoles[currentActionIndex].image || ""}
+                        alt={""}
+                        width={214}
+                        height={123}
+                      />
+                    )}
+                  </>
                 )}
 
                 <div className="self-center">
