@@ -8,12 +8,18 @@ export default async function RootLayout({
 }) {
   const locale = await getLocale();
 
+  let direction = "ltr";
+
+  if (locale === "fa") {
+    direction = "rtl";
+  }
+
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} dir={direction}>
       <body>
         <NextIntlClientProvider messages={messages}>
           {children}
