@@ -1,13 +1,6 @@
 import React, { useState, useTransition } from "react";
 import { setUserLocale } from "../utils/locale";
-import { Locale } from "../i18n";
-
-// Assuming you have a similar structure for languages as in the Svelte example
-const langs = [
-  { code: "en", name: "English" },
-  { code: "fa", name: "فارسی" },
-  // Add more languages as needed
-];
+import { Locale, langs } from "../i18n";
 
 export const LangSelector: React.FC = () => {
   const [isPending, startTransition] = useTransition();
@@ -52,7 +45,7 @@ export const LangSelector: React.FC = () => {
       </div>
       <div
         tabIndex={0}
-        className="dropdown-content bg-base-200 text-base-content rounded-box top-px mt-16 max-h-[calc(100vh-10rem)] w-56 overflow-y-auto border border-white/5 shadow-2xl outline outline-1 outline-black/5"
+        className="dropdown-content bg-base-200 text-base-content rounded-box top-px mt-16 max-h-[calc(100vh-10rem)] w-56 overflow-y-auto border border-white/5 shadow-2xl outline outline-1 outline-black/5 z-50"
       >
         <ul className="menu menu-sm gap-1">
           {langs.map((lang) => (
