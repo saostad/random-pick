@@ -1,5 +1,6 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import { langs } from "./i18n";
 
 export default async function RootLayout({
   children,
@@ -10,9 +11,13 @@ export default async function RootLayout({
 
   let direction = "ltr";
 
-  if (locale === "fa") {
-    direction = "rtl";
-  }
+  langs.find((lang) => {
+    if (lang.code === locale) {
+      direction = lang.direction;
+      return true;
+    }
+    return false;
+  });
 
   // Providing all messages to the client
   // side is the easiest way to get started
