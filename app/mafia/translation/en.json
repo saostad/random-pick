@@ -46,8 +46,8 @@
       "suggestedSteps": "Suggested Steps:",
       "showPlayerCards": "Show Player's Cards",
       "timers": "Timers",
-      "tags": "+ Tags -",
-      "lastActions": "+ Last Actions -",
+      "tags": "Tags",
+      "lastActions": "Last Actions",
       "inquiries": "Inquiries"
     },
     "DayActions": {
@@ -78,18 +78,14 @@
     "NightActions": {
       "startNight": "Start Night",
       "nightActions": "Night Actions",
-      "gameReady": "Game is READY to begin!",
       "allActionsCompleted": "All actions completed.",
       "nextRole": "Next Role",
       "actions": "Actions",
       "tag": "Tag",
       "kill": "Kill",
-      "player": "Player:",
-      "unassigned": "Unassigned",
-      "dead": "(Dead)"
+      "unassigned": "Unassigned"
     },
     "GameStats": {
-      "players": "Players",
       "dead": "Dead",
       "inquiry": "Inquiry",
       "timers": "Timers",
@@ -97,13 +93,10 @@
       "deadPlayers": "Dead Players",
       "outOf": "out of",
       "left": "left",
-      "speaker": "Speaker:",
-      "challenger": "Challenger:"
+      "speaker": "Speaker:"
     },
     "PlayerStatusManager": {
-      "players": "Players",
       "deadPlayers": "Dead Players",
-      "dead": "Dead",
       "revive": "Revive"
     },
     "Roles": {
@@ -189,6 +182,13 @@
       "playSoundInSpeakingTime": "Play sound in speaking time",
       "playSoundInChallengeMode": "Play sound in challenge mode",
       "seconds": "Seconds"
+    },
+    "Audit": {
+      "audit": "Audit",
+      "unassignedRoles": "Unassigned Roles",
+      "playersWithoutRole": "Players without Role",
+      "gameIsReady": "Game is ready!"
     }
-  }
+  },
+  "selectChallenger": "Select Challenger"
 }

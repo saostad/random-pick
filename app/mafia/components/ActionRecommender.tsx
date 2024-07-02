@@ -10,10 +10,13 @@ import CarbonUserRole from "~icons/carbon/user-role";
 import CilTags from "~icons/cil/tags";
 import CarbonTimer from "~icons/carbon/timer";
 import HugeiconsValidationApproval from "~icons/hugeicons/validation-approval";
+import { useTranslations } from "next-intl";
 
 interface ActionRecommenderProps extends HTMLAttributes<HTMLElement> {}
 
 const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
+  const t = useTranslations("Mafia");
+
   const {
     gameState: { players, gameRoles, gameMode },
     loading,
@@ -50,13 +53,17 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
       <div className="grid gap-6">
         {!isGameReady() && <GameMode />}
         {players.length === 0 ? (
-          <ModalButton modalId="Players">+ Players -</ModalButton>
+          <ModalButton modalId="Players">
+            + {t("Settings.players")} -
+          </ModalButton>
         ) : null}
         {gameRoles.length === 0 ? (
-          <ModalButton modalId="Roles">+ Roles -</ModalButton>
+          <ModalButton modalId="Roles">+ {t("Settings.roles")} -</ModalButton>
         ) : null}
         {players.some((player) => !player.roleId && gameRoles.length !== 0) ? (
-          <ModalButton modalId="RoleAssignment">Assign Roles</ModalButton>
+          <ModalButton modalId="RoleAssignment">
+            {t("Settings.assignRoles")}
+          </ModalButton>
         ) : null}
         {isGameReady() ? (
           <>
@@ -72,13 +79,13 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
                 handleClose("ActionRecommender");
               }}
             >
-              Game is READY to begin!
+              {t("Home.gameReady")}
             </button>
-            <div className="mt-4 text-warning">Suggested Steps:</div>
+            <div className="mt-4 text-warning">{t("Home.suggestedSteps")}</div>
             {gameMode === "beginner" && (
               <div className="flex flex-col gap-4">
                 <ModalButton modalId="RoleViewer">
-                  Show Player&apos;s Cards
+                  {t("Home.showPlayerCards")}
                   <CarbonUserRole />
                 </ModalButton>
               </div>
@@ -86,18 +93,20 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
             {gameMode === "pro" && (
               <div className="flex flex-col gap-4">
                 <ModalButton modalId="RoleViewer">
-                  Show Player&apos;s Cards
+                  {t("Home.showPlayerCards")}
                   <CarbonUserRole />
                 </ModalButton>
                 <ModalButton modalId="TimerSettings">
-                  Timers <CarbonTimer />
+                  {t("Home.timers")} <CarbonTimer />
                 </ModalButton>
                 <ModalButton modalId="Tags">
-                  + Tags - <CilTags />
+                  + {t("Home.tags")} - <CilTags />
                 </ModalButton>
-                <ModalButton modalId="LastActs">+ Last Actions -</ModalButton>
+                <ModalButton modalId="LastActs">
+                  + {t("Home.lastActions")} -
+                </ModalButton>
                 <ModalButton modalId="InquiriesSetting">
-                  Inquiries <HugeiconsValidationApproval />
+                  {t("Home.inquiries")} <HugeiconsValidationApproval />
                 </ModalButton>
               </div>
             )}

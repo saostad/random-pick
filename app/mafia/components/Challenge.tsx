@@ -1,5 +1,6 @@
 import React from "react";
 import { Player } from "../contexts/GameContext";
+import { useTranslations } from "next-intl";
 
 interface ChallengeProps {
   challengeMode: boolean;
@@ -22,10 +23,12 @@ const Challenge: React.FC<ChallengeProps> = ({
   challengeModeDisabled,
   speakerHasChallenged,
 }) => {
+  const t = useTranslations("Mafia");
+
   return (
     <>
       <div className="my-4">
-        <label htmlFor="challenger">Challenger: </label>
+        <label htmlFor="challenger">{t("DayActions.challenger")}</label>
         <select
           className="select select-secondary w-full max-w-xs my-2"
           id="challenger"
@@ -38,7 +41,7 @@ const Challenge: React.FC<ChallengeProps> = ({
           }
         >
           <option value="" disabled>
-            Select Challenger
+            {t("selectChallenger")}
           </option>
           {availableChallengers.map((player) => (
             <option key={player.id} value={player.id}>
@@ -52,14 +55,14 @@ const Challenge: React.FC<ChallengeProps> = ({
         onClick={handleStartChallenge}
         disabled={challengeModeDisabled || !selectedChallenger}
       >
-        Start Challenge
+        {t("DayActions.startChallenge")}
       </button>
       <button
         className="btn btn-ghost btn-outline btn-success mb-2 mx-2"
         onClick={handleEndChallenge}
         disabled={!challengeMode}
       >
-        End Challenge
+        {t("DayActions.endChallenge")}
       </button>
     </>
   );

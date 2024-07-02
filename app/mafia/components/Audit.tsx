@@ -7,8 +7,10 @@ import CarbonUserIdentification from "~icons/carbon/user-identification";
 import CarbonGroup from "~icons/carbon/group.jsx";
 import CarbonUserRole from "~icons/carbon/user-role";
 import { useModal } from "../contexts/ModalContext";
+import { useTranslations } from "next-intl";
 
 export default function Audit() {
+  const t = useTranslations("Mafia");
   const { gameState } = useGameContext();
   const { handleClose } = useModal();
   const [unassignedRoles, setUnassignedRoles] = useState<any[]>([]);
@@ -36,30 +38,30 @@ export default function Audit() {
           <span># {error.message} </span>
           {error.code === 10 && (
             <ModalButton modalId="RoleAssignment">
-              Assign Role
+              {t("Settings.assignRoles")}
               <CarbonUserIdentification />
             </ModalButton>
           )}
           {error.code === 20 && (
             <div className="flex flex-col gap4">
               <ModalButton modalId="Players">
-                + Players - <CarbonGroup />
+                + {t("Settings.players")} - <CarbonGroup />
               </ModalButton>
               <div className="my-1"></div>
               <ModalButton modalId="Roles">
-                + Roles -
+                + {t("Settings.roles")} -
                 <CarbonUserRole />
               </ModalButton>
             </div>
           )}
           {error.code === 30 && (
             <ModalButton modalId="Players">
-              + Players - <CarbonGroup />
+              + {t("Settings.players")} - <CarbonGroup />
             </ModalButton>
           )}
           {error.code === 40 && (
             <ModalButton modalId="Roles">
-              + Roles -
+              + {t("Settings.roles")} -
               <CarbonUserRole />
             </ModalButton>
           )}
@@ -69,7 +71,7 @@ export default function Audit() {
         <div className="collapse collapse-arrow bg-base-200 mb-2">
           <input type="checkbox" />
           <div className="collapse-title">
-            Unassigned Roles ({unassignedRoles.length})
+            {t("Audit.unassignedRoles")} ({unassignedRoles.length})
           </div>
           <div className="collapse-content">
             <ul>
@@ -85,7 +87,7 @@ export default function Audit() {
         <div className="collapse collapse-arrow bg-base-200 mb-2">
           <input type="checkbox" />
           <div className="collapse-title">
-            Players without Role ({unassignedPlayers.length})
+            {t("Audit.playersWithoutRole")} ({unassignedPlayers.length})
           </div>
           <div className="collapse-content">
             <ul>
@@ -105,7 +107,7 @@ export default function Audit() {
               handleClose("audit");
             }}
           >
-            Game is ready!
+            {t("Audit.gameIsReady")}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
