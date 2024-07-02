@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import { getDeadPlayers, getRoleByPlayerId } from "../utils/get-from-fns";
 import { useModal } from "../contexts/ModalContext";
+import { useTranslations } from "next-intl";
 
 const Inquiries: React.FC = () => {
   const { gameState, decreaseInquiries } = useGameContext();
@@ -29,16 +30,18 @@ const Inquiries: React.FC = () => {
     if (modals["Inquiries"] === false) setIsVisible(false);
   }, [modals]);
 
+  const t = useTranslations("Mafia");
+
   return (
     <div>
       {inquiries === 0 && (
-        <p className="my-4 text-info">You have no inquiries left.</p>
+        <p className="my-4 text-info">{t("Inquiries.noInquiriesLeft")}</p>
       )}
       {!isVisible && inquiries > 0 ? (
         <>
           <p className="my-4 text-info ">
-            {inquiries} {inquiries === 1 ? "inquiry" : "inquiries"} left. Do you
-            want to use one?
+            {inquiries} {inquiries === 1 ? "inquiry" : "inquiries"}{" "}
+            {t("leftDoYouWantToUseOne")}
           </p>
           <button
             className="btn btn-primary btn-outline"
@@ -48,7 +51,7 @@ const Inquiries: React.FC = () => {
               setIsVisible(true);
             }}
           >
-            Show status of dead players
+            {t("Inquiries.showStatusOfDeadPlayers")}
           </button>
         </>
       ) : (
@@ -61,13 +64,13 @@ const Inquiries: React.FC = () => {
                 handleClose("Inquiries");
               }}
             >
-              Got it, Close! 🚪
+              {t("gotItClose")}
             </button>
             <div className="divider"></div>
             {deadPlayers.length > 0 && (
               <>
                 <div className="font-bold mb-4">
-                  Out of game roles: ({deadPlayers.length})
+                  {t("Inquiries.outOfGameRoles")} ({deadPlayers.length})
                 </div>
                 {Object.entries(groupedDeadPlayers).map(([side, players]) => (
                   <div key={side} className="mb-4">
@@ -95,7 +98,8 @@ const Inquiries: React.FC = () => {
             <div className="collapse bg-base-200">
               <input type="checkbox" />
               <div className="collapse-title font-bold">
-                Roles still in game: ({players.length - deadPlayers.length})
+                {t("Inquiries.rolesStillInGame")} (
+                {players.length - deadPlayers.length})
               </div>
               <div className="collapse-content">
                 {players.map((player) => {

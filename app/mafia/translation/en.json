@@ -192,6 +192,24 @@
     "dayActions": "Day Actions",
     "noEventToShow": "No event to show!",
     "notTimerSet": "Not timer set",
-    "namePrefix": "Name Prefix"
+    "namePrefix": "Name Prefix",
+    "usedAsABaseForNames": "Used as a base for names",
+    "startNumber": "Start Number",
+    "firstPlayerNumber": "First player number",
+    "numberOfPlayers": "Number of Players",
+    "howManyToGenerate": "How many to generate",
+    "totalPlayersToAdd": "Total players to add",
+    "generatePlayers": "Generate Players",
+    "leftDoYouWantToUseOne": "left. Do you want to use one?",
+    "gotItClose": "Got it, Close! 🚪",
+    "offerInquiriesBeforeDayBegins": "Offer inquiries before day begins?",
+    "lastActionsCards": "Last Actions Cards",
+    "addAction": "Add Action",
+    "requiredNumberOfPlayersNeededToSuggestLastActions": "At least 4 players needed to suggest last actions.",
+    "suggestActions": "Suggest Actions!",
+    "suggestedLastActions": "Suggested Last Actions:",
+    "addSelectedLastActions": "Add Selected Last Actions",
+    "gameResetSuccessful": "Game reset successful!",
+    "everythingCleanedUpLetsStartFresh": "Everything cleaned up, Let&apos;s start fresh!"
   }
 }

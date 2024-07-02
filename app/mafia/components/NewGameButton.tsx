@@ -4,6 +4,7 @@ import FlexibleModal from "./FlexibleModal";
 import CarbonRenew from "~icons/carbon/renew.jsx";
 import { useModal } from "../contexts/ModalContext";
 import DropdownButton from "./DropdownButton"; // Import the new DropdownButton component
+import { useTranslations } from "next-intl";
 
 const NewGameButton: React.FC = () => {
   const { resetGameState, softResetGameState } = useGameContext();
@@ -19,11 +20,13 @@ const NewGameButton: React.FC = () => {
     handleOpen("hard-reset");
   };
 
+  const t = useTranslations("Mafia");
+
   return (
     <>
       <FlexibleModal modalId="soft-reset" title="Next Round">
         <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-          Game reset successful!:
+          {t("gameResetSuccessful")}
         </h2>
         <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
           <li className="flex items-center">
@@ -36,7 +39,7 @@ const NewGameButton: React.FC = () => {
             >
               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
             </svg>
-            Player statuses reset.
+            {t("NewGameButton.playerStatusesReset")}
           </li>
           <li className="flex items-center">
             <svg
@@ -48,7 +51,7 @@ const NewGameButton: React.FC = () => {
             >
               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
             </svg>
-            Votes reset.
+            {t("NewGameButton.votesReset")}
           </li>
           <li className="flex items-center">
             <svg
@@ -60,7 +63,7 @@ const NewGameButton: React.FC = () => {
             >
               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
             </svg>
-            Roles unassigned.
+            {t("NewGameButton.rolesUnassigned")}
           </li>
           <li className="flex items-center">
             <svg
@@ -72,7 +75,7 @@ const NewGameButton: React.FC = () => {
             >
               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
             </svg>
-            Last actions reset.
+            {t("NewGameButton.lastActionsReset")}
           </li>
           <li className="flex items-center">
             <svg
@@ -84,17 +87,17 @@ const NewGameButton: React.FC = () => {
             >
               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
             </svg>
-            Inquiries set to two.
+            {t("NewGameButton.inquiriesSet")}
           </li>
         </ul>
       </FlexibleModal>
       <FlexibleModal modalId="hard-reset" title="Game Reset">
-        Everything cleaned up, Let&apos;s start fresh!
+        {t("everythingCleanedUpLetsStartFresh")}
       </FlexibleModal>
       <DropdownButton
         title={
           <>
-            <CarbonRenew /> Reset Game
+            <CarbonRenew /> {t("NewGameButton.resetGame")}
           </>
         }
       >
@@ -102,14 +105,14 @@ const NewGameButton: React.FC = () => {
           className="btn btn-ghost btn-outline btn-secondary btn-sm mb-3"
           onClick={handleSoftReset}
         >
-          Next Round!
+          {t("NewGameButton.nextRound")}
         </button>
 
         <button
           className="btn btn-ghost btn-outline btn-secondary btn-sm mb-2"
           onClick={handleHardReset}
         >
-          Hard Reset
+          {t("NewGameButton.hardReset")}
         </button>
       </DropdownButton>
     </>

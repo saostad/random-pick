@@ -15,6 +15,7 @@ import GlowingButton from "./GlowingButton";
 import MaterialSymbolsChipExtraction from "~icons/material-symbols/chip-extraction";
 import { CldImage } from "next-cloudinary";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const handleNightActions = (gameState: GameState): GameState => {
   gameState.gameRoles
@@ -93,6 +94,8 @@ const NightActionsControl: React.FC = () => {
     increaseNightCount,
     nightCompleted,
   ]);
+
+  const t = useTranslations("Mafia");
 
   return (
     <div className="flex flex-col items-center mt-6">
@@ -221,7 +224,7 @@ const NightActionsControl: React.FC = () => {
             </>
           ) : (
             <>
-              <p>All actions completed.</p>
+              <p>{t("NightActions.allActionsCompleted")}</p>
             </>
           )}
         </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { predefinedLastActions } from "../data/predefinedLastActions";
 import { useGameContext } from "../contexts/GameContext";
+import { useTranslations } from "next-intl";
 
 const LastActionsSuggestion: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
@@ -54,11 +55,13 @@ const LastActionsSuggestion: React.FC = () => {
   const decreasePlayers = () =>
     setNumPlayers(numPlayers > 0 ? numPlayers - 1 : 0);
 
+  const t = useTranslations("Mafia");
+
   return (
     <div>
       <div className="grid grid-cols-1 gap-2 mb-4">
         <div className="grid grid-cols-2 gap-4 items-center mb-4">
-          <span>Number of Players:</span>
+          <span>{t("numberOfPlayers")}</span>
           <div className="flex items-center">
             <button
               className="btn btn-circle btn-outline"
@@ -77,20 +80,22 @@ const LastActionsSuggestion: React.FC = () => {
         </div>
         {numPlayers <= 3 ? (
           <div className="alert alert-warning">
-            <span>At least 4 players needed to suggest last actions.</span>
+            <span>
+              {t("requiredNumberOfPlayersNeededToSuggestLastActions")}
+            </span>
           </div>
         ) : (
           <button
             className="btn btn-outline btn-ghost btn-secondary mt-4"
             onClick={handleSuggestLastActions}
           >
-            Suggest Actions!
+            {t("suggestActions")}
           </button>
         )}
       </div>
       {suggestedLastActions.length > 0 && (
         <div className="mb-4">
-          <h4>Suggested Last Actions:</h4>
+          <h4>{t("suggestedLastActions")}</h4>
           <div className="grid grid-cols-1 gap-2">
             {suggestedLastActions.map((action) => (
               <label key={action.id} className="flex items-center">
@@ -110,7 +115,7 @@ const LastActionsSuggestion: React.FC = () => {
             className="btn btn-ghost btn-outline btn-primary mt-2"
             onClick={handleAddSelectedLastActions}
           >
-            Add Selected Last Actions
+            {t("addSelectedLastActions")}
           </button>
         </div>
       )}

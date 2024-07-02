@@ -2,6 +2,7 @@ import { useState } from "react";
 import { LastActType, useGameContext } from "../contexts/GameContext";
 import PredefinedLastActions from "./PredefinedLastActions";
 import LastActionsSuggestion from "./LastActionsSuggestion";
+import { useTranslations } from "next-intl";
 
 interface LastActCardsProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -56,11 +57,13 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
     });
   };
 
+  const t = useTranslations("Mafia");
+
   return (
     <div {...props}>
       <div className="form-control">
         <label className="label cursor-pointer">
-          <span className="label-text">Last Actions Cards</span>
+          <span className="label-text">{t("lastActionsCards")}</span>
           <input
             type="checkbox"
             checked={lastActionsActive}
@@ -120,7 +123,7 @@ const LastActCards: React.FC<LastActCardsProps> = (props) => {
                 className="btn btn-primary btn-outline"
                 onClick={handleAddLastAct}
               >
-                Add Action
+                {t("addAction")}
               </button>
               {error && <p className="text-error">{error}</p>}
             </div>

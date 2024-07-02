@@ -51,14 +51,14 @@ const GeneratePlayerNames: React.FC = () => {
             onChange={(e) => setPrefix(e.target.value)}
           />
           <div className="label">
-            <span className="label-text-alt">Used as a base for names</span>
+            <span className="label-text-alt">{t("usedAsABaseForNames")}</span>
           </div>
         </label>
 
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Start Number</span>
-            <span className="label-text-alt">First player number</span>
+            <span className="label-text">{t("startNumber")}</span>
+            <span className="label-text-alt">{t("firstPlayerNumber")}</span>
           </div>
           <input
             type="number"
@@ -76,8 +76,8 @@ const GeneratePlayerNames: React.FC = () => {
 
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Number of Players</span>
-            <span className="label-text-alt">How many to generate</span>
+            <span className="label-text">{t("numberOfPlayers")}</span>
+            <span className="label-text-alt">{t("howManyToGenerate")}</span>
           </div>
           <input
             type="number"
@@ -87,12 +87,12 @@ const GeneratePlayerNames: React.FC = () => {
             onChange={(e) => setCount(parseInt(e.target.value))}
           />
           <div className="label">
-            <span className="label-text-alt">Total players to add</span>
+            <span className="label-text-alt">{t("totalPlayersToAdd")}</span>
           </div>
         </label>
       </div>
       <button className="btn btn-primary" onClick={generatePlayers}>
-        Generate Players
+        {t("generatePlayers")}
       </button>
     </div>
   );

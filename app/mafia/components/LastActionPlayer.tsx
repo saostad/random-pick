@@ -3,6 +3,7 @@ import { LastActType, useGameContext } from "../contexts/GameContext";
 import Animation from "./Animation";
 import { useModal } from "../contexts/ModalContext";
 import ModalButton from "./ModalButton";
+import { useTranslations } from "next-intl";
 
 const LastActionPlayer: React.FC = () => {
   const { gameState, setVotingStatus, updateGameState } = useGameContext();
@@ -49,6 +50,8 @@ const LastActionPlayer: React.FC = () => {
     handleClose("LastActionPlayer");
   }
 
+  const t = useTranslations("Mafia");
+
   return (
     <>
       <div className="collapse bg-base-200">
@@ -58,7 +61,7 @@ const LastActionPlayer: React.FC = () => {
           onChange={() => {}}
         />
         <div className="collapse-title text-xl font-medium">
-          Available Actions
+          {t("LastActionPlayer.availableActions")}
         </div>
         <div className="collapse-content">
           <ul>
@@ -80,9 +83,11 @@ const LastActionPlayer: React.FC = () => {
 
       {stillInGameLastActions.length === 0 ? (
         <div className="flex flex-col gap-4">
-          <span>No action card available!</span>
+          <span>{t("LastActionPlayer.noActionCardAvailable")}</span>
           <div className="grid grid-cols-2 gap-4">
-            <ModalButton modalId="LastActs">+ Last Actions -</ModalButton>
+            <ModalButton modalId="LastActs">
+              + {t("Home.lastActions")} -
+            </ModalButton>
             <button
               className="btn btn-info btn-outline"
               onClick={() => {
@@ -90,7 +95,7 @@ const LastActionPlayer: React.FC = () => {
                 handleClose("LastActionPlayer");
               }}
             >
-              Go to next step
+              {t("LastActionPlayer.goToNextStep")}
             </button>
           </div>
         </div>
@@ -100,7 +105,7 @@ const LastActionPlayer: React.FC = () => {
           disabled={randomCardVisible}
           onClick={shuffleActions}
         >
-          Shuffle Cards
+          {t("LastActionPlayer.shuffleCards")}
         </button>
       )}
       {animationVisible && (
@@ -122,7 +127,7 @@ const LastActionPlayer: React.FC = () => {
             className="btn btn-primary btn-outline"
             onClick={performAction}
           >
-            Action Performed!
+            {t("LastActionPlayer.actionPerformed")}
           </button>
         </>
       )}
