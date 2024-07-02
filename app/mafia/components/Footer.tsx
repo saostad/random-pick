@@ -1,5 +1,6 @@
 import React from "react";
 import { useGameContext } from "../contexts/GameContext";
+import { useTranslations } from "next-intl";
 
 import CarbonSettingsCheck from "~icons/carbon/settings-check";
 import IconParkOutlineGamePs from "~icons/icon-park-outline/game-ps";
@@ -9,6 +10,7 @@ interface FooterProps {}
 
 const Footer: React.FC<FooterProps> = () => {
   const { updateGameState, gameState } = useGameContext();
+  const t = useTranslations("Mafia.Footer");
 
   const onNavigate = (tab: (typeof gameState)["activeTab"]) => {
     updateGameState({ activeTab: tab });
@@ -27,7 +29,7 @@ const Footer: React.FC<FooterProps> = () => {
         }`}
       >
         <IconParkOutlineGamePs />
-        Game
+        {t("game")}
       </button>
       <button
         onClick={() => onNavigate("timeline")}
@@ -38,7 +40,7 @@ const Footer: React.FC<FooterProps> = () => {
         }`}
       >
         <IcOutlineHistoryToggleOff />
-        Timeline
+        {t("timeline")}
       </button>
       <button
         onClick={() => onNavigate("settings")}
@@ -49,7 +51,7 @@ const Footer: React.FC<FooterProps> = () => {
         }`}
       >
         <CarbonSettingsCheck />
-        Settings
+        {t("settings")}
       </button>
     </div>
   );

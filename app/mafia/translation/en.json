@@ -2,7 +2,193 @@
   "Mafia": {
     "Common": {
       "title": "Mafia",
-      "slug": "Manage your Game!"
+      "slug": "Manage your Game!",
+      "close": "Close",
+      "add": "Add",
+      "remove": "Remove",
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "yes": "Yes",
+      "no": "No",
+      "ok": "OK",
+      "next": "Next",
+      "previous": "Previous",
+      "back": "Back",
+      "finish": "Finish",
+      "player": "Player",
+      "role": "Role",
+      "action": "Action",
+      "town": "Town",
+      "mafia": "Mafia",
+      "thirdParty": "Third Party",
+      "alive": "Alive",
+      "dead": "Dead",
+      "night": "Night",
+      "day": "Day",
+      "vote": "Vote",
+      "votes": "Votes"
+    },
+    "About": {
+      "developedBy": "Developed by",
+      "developerName": "Saeid Ostad.",
+      "copyRight": "Copyright © 2024 - All right reserved."
+    },
+    "Footer": {
+      "game": "Game",
+      "timeline": "Timeline",
+      "settings": "Settings"
+    },
+    "Home": {
+      "auditStatus": "Audit Status",
+      "gameReady": "Game is READY to begin!",
+      "suggestedSteps": "Suggested Steps:",
+      "showPlayerCards": "Show Player's Cards",
+      "timers": "Timers",
+      "tags": "+ Tags -",
+      "lastActions": "+ Last Actions -",
+      "inquiries": "Inquiries"
+    },
+    "DayActions": {
+      "startDay": "Start Day 🌞",
+      "lastDayStarter": "Last day's starter was:",
+      "startingPlayer": "Starting Player:",
+      "selectPlayer": "Select Player",
+      "randomSelect": "Randomly select a player",
+      "addPlayer": "Add Player",
+      "currentSpeaker": "Current Speaker:",
+      "challenger": "Challenger:",
+      "nextSpeaker": "Next Speaker",
+      "startChallenge": "Start Challenge",
+      "endChallenge": "End Challenge"
+    },
+    "VotingSession": {
+      "startVoting": "Start Voting",
+      "resumeVoting": "Resume Voting",
+      "resumeLastAction": "Resume Last Action!",
+      "votingSession": "Voting Session",
+      "playersInGame": "Player in the game. Count/2 =",
+      "endVoting": "End Voting",
+      "startAgain": "Start Again!",
+      "endWithoutOusting": "End without Ousting!",
+      "votingResults": "Voting Results",
+      "markAsDead": "Mark as Dead"
+    },
+    "NightActions": {
+      "startNight": "Start Night",
+      "nightActions": "Night Actions",
+      "gameReady": "Game is READY to begin!",
+      "allActionsCompleted": "All actions completed.",
+      "nextRole": "Next Role",
+      "actions": "Actions",
+      "tag": "Tag",
+      "kill": "Kill",
+      "player": "Player:",
+      "unassigned": "Unassigned",
+      "dead": "(Dead)"
+    },
+    "GameStats": {
+      "players": "Players",
+      "dead": "Dead",
+      "inquiry": "Inquiry",
+      "timers": "Timers",
+      "alivePlayers": "Alive Players",
+      "deadPlayers": "Dead Players",
+      "outOf": "out of",
+      "left": "left",
+      "speaker": "Speaker:",
+      "challenger": "Challenger:"
+    },
+    "PlayerStatusManager": {
+      "players": "Players",
+      "deadPlayers": "Dead Players",
+      "dead": "Dead",
+      "revive": "Revive"
+    },
+    "Roles": {
+      "addRole": "Add a Role",
+      "suggestRoles": "Suggest",
+      "predefinedRoles": "Predefined",
+      "roleName": "Role name",
+      "roleAltName": "Role alt name",
+      "imageUrl": "Image URL",
+      "roleDescription": "Role description",
+      "nightAction": "Night action?",
+      "generateRoles": "Generate Roles"
+    },
+    "Players": {
+      "addPlayer": "Add a Player",
+      "generatePlayers": "Generate Players",
+      "playerName": "Player's Name",
+      "seatNumber": "Seat Number",
+      "pressEnterToAdd": "Press Enter to add",
+      "uniqueSeatNumber": "Unique seat number"
+    },
+    "RoleAssignment": {
+      "byPlayers": "By Players",
+      "byRoles": "By Roles",
+      "shuffle": "Shuffle",
+      "selectRole": "Select a role",
+      "selectPlayer": "Select a player"
+    },
+    "Settings": {
+      "players": "Players",
+      "roles": "Roles",
+      "actions": "Actions",
+      "timer": "Timer",
+      "audit": "Audit",
+      "about": "About Me!",
+      "assignRoles": "Assign Roles",
+      "setupYourGame": "Setup your Game"
+    },
+    "Wizard": {
+      "nextPhase": "Next Phase:",
+      "letsGo": "Let's Go!",
+      "wantAnInquiry": "Want an inquiry?",
+      "lastNightEvents": "Last Night Events:",
+      "quiteNight": "Quite Night!"
+    },
+    "NewGameButton": {
+      "resetGame": "Reset Game",
+      "nextRound": "Next Round!",
+      "hardReset": "Hard Reset",
+      "gameResetSuccessful": "Game reset successful!:",
+      "playerStatusesReset": "Player statuses reset.",
+      "votesReset": "Votes reset.",
+      "rolesUnassigned": "Roles unassigned.",
+      "lastActionsReset": "Last actions reset.",
+      "inquiriesSet": "Inquiries set to two.",
+      "everythingCleaned": "Everything cleaned up, Let's start fresh!"
+    },
+    "GameMode": {
+      "professionalMode": "Professional mode",
+      "simple": "Simple",
+      "pro": "Pro"
+    },
+    "Inquiries": {
+      "noInquiriesLeft": "You have no inquiries left.",
+      "inquiriesLeft": "inquiries left. Do you want to use one?",
+      "showStatusOfDeadPlayers": "Show status of dead players",
+      "gotItClose": "Got it, Close!",
+      "outOfGameRoles": "Out of game roles:",
+      "rolesStillInGame": "Roles still in game:",
+      "details": "Details"
+    },
+    "LastActionPlayer": {
+      "availableActions": "Available Actions",
+      "shuffleCards": "Shuffle Cards",
+      "noActionCardAvailable": "No action card available!",
+      "goToNextStep": "Go to next step",
+      "actionPerformed": "Action Performed!"
+    },
+    "Timer": {
+      "elapsedTime": "Elapsed Time:"
+    },
+    "TimerSettings": {
+      "playSoundInSpeakingTime": "Play sound in speaking time",
+      "playSoundInChallengeMode": "Play sound in challenge mode",
+      "seconds": "Seconds"
     }
   }
 }

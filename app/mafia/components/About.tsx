@@ -1,11 +1,16 @@
+import { useTranslations } from "next-intl";
+
 const About = () => {
+  const t = useTranslations("Mafia.About");
   return (
     <aside>
       <p>
-        Developed by{" "}
-        <a href="https://www.linkedin.com/in/saeidostad/">Saeid Ostad.</a>
+        {t("developedBy")}{" "}
+        <a href="https://www.linkedin.com/in/saeidostad/">
+          {t("developerName")}
+        </a>
       </p>
-      <p>Copyright © 2024 - All right reserved.</p>
+      <p>{t("copyRight")}</p>
     </aside>
   );
 };

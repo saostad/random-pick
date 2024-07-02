@@ -1,5 +1,6 @@
 import React from "react";
 import { useModal } from "../contexts/ModalContext";
+import { useTranslations } from "next-intl";
 
 interface ModalProps extends React.DialogHTMLAttributes<HTMLDialogElement> {
   component?: React.ElementType; // React component to render inside the modal
@@ -16,6 +17,7 @@ const FlexibleModal: React.FC<ModalProps> = ({
   ...props
 }) => {
   const { handleClose } = useModal();
+  const t = useTranslations("Mafia.Common");
 
   return (
     <dialog id={modalId} className="modal" {...props}>
@@ -38,7 +40,7 @@ const FlexibleModal: React.FC<ModalProps> = ({
         {Component ? <Component /> : children}
         <div className="modal-action">
           <button className="btn" onClick={() => handleClose(modalId)}>
-            Close
+            {t("close")}
           </button>
         </div>
       </div>

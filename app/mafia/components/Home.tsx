@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useGameContext } from "../contexts/GameContext";
 import { getAuditProblems } from "../utils/get-from-fns";
 import GameStats from "./GameStats";
@@ -9,6 +10,8 @@ import CarbonCloudAuditing from "~icons/carbon/cloud-auditing";
 
 const Home = () => {
   const { gameState } = useGameContext();
+  const t = useTranslations("Mafia.Home");
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -17,7 +20,7 @@ const Home = () => {
           modalId="audit"
           animate={getAuditProblems(gameState).isAuditFailed}
         >
-          Audit Status
+          {t("auditStatus")}
           <CarbonCloudAuditing />
         </ModalButton>
       </div>
