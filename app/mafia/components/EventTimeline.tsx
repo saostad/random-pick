@@ -1,6 +1,7 @@
-import React from "react";
+import React, { use } from "react";
 import { GameEvent, useGameContext } from "../contexts/GameContext";
 import Animation from "./Animation";
+import { useTranslations } from "next-intl";
 
 const EventTimeline: React.FC = () => {
   const { gameState } = useGameContext();
@@ -23,9 +24,11 @@ const EventTimeline: React.FC = () => {
     );
   });
 
+  const t = useTranslations("Mafia");
+
   return events.length === 0 ? (
     <div className="flex flex-col items-center mt-10">
-      <p className="text-xl font-bold my-4">No event to show!</p>
+      <p className="text-xl font-bold my-4">{t("noEventToShow")}</p>
       <Animation
         className=""
         src="mafia/animation/bored.lottie"

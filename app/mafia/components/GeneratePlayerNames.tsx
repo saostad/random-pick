@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useGameContext, Player } from "../contexts/GameContext";
+import { useTranslations } from "next-intl";
 
 const GeneratePlayerNames: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
@@ -29,13 +30,17 @@ const GeneratePlayerNames: React.FC = () => {
     updateGameState({ players: [...gameState.players, ...newPlayers] });
   };
 
+  const t = useTranslations("Mafia");
+
   return (
     <div className="mb-4">
-      <h3 className="text-lg font-semibold mb-2">Generate Players</h3>
+      <h3 className="text-lg font-semibold mb-2">
+        {t("Players.generatePlayers")}
+      </h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Name Prefix</span>
+            <span className="label-text">{t("namePrefix")}</span>
             <span className="label-text-alt">e.g., &quot;Player&quot;</span>
           </div>
           <input

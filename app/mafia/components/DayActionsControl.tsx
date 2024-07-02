@@ -17,6 +17,7 @@ import Animation from "./Animation";
 import MediaPlayer, { MediaPlayerRef } from "./MediaPlayer";
 import { ToastContext } from "../contexts/ToastContext";
 import GlowingButton from "./GlowingButton";
+import { useTranslations } from "next-intl";
 
 const DayActionsControl: React.FC = () => {
   const { gameState, updateGameState, increaseDayCount, setSpeakingOrder } =
@@ -210,6 +211,8 @@ const DayActionsControl: React.FC = () => {
     challengeMode,
   ]);
 
+  const t = useTranslations("Mafia");
+
   return (
     <>
       <div className="text-center my-4">
@@ -218,18 +221,18 @@ const DayActionsControl: React.FC = () => {
           disabled={!selectedStartingPlayer}
           className="my-4 btn-wide"
         >
-          Start Day 🌞 {gameState.dayCount}
+          {t("DayActions.startDay")} {gameState.dayCount}
         </GlowingButton>
       </div>
       {gameState.dayCount !== 0 && lastStartingPlayer && (
         <p className="my-4">
-          Last day&apos;s starter was:{" "}
+          {t("lastDayStarterWas")}{" "}
           <span className="font-bold">{lastStartingPlayer.name}</span>
         </p>
       )}
       <div className="mb-2 flex items-center">
         <label htmlFor="starting-player" className="mr-2">
-          Starting Player:{" "}
+          {t("DayActions.startingPlayer")}{" "}
         </label>
         <select
           className="select select-secondary w-full max-w-xs my-2"
@@ -238,7 +241,7 @@ const DayActionsControl: React.FC = () => {
           onChange={handleSelectChange}
         >
           <option value="" disabled>
-            Select Player
+            {t("DayActions.selectPlayer")}
           </option>
           {alivePlayers.map((player) => (
             <option key={player.id} value={player.id}>
@@ -261,10 +264,10 @@ const DayActionsControl: React.FC = () => {
         autoplay={true}
       />
 
-      <FlexibleModal modalId="day-actions" title="Day Actions">
+      <FlexibleModal modalId="day-actions" title={t("dayActions")}>
         <>
           {allPlayersCompleted ? (
-            <p>All players have spoken.</p>
+            <p>{t("allPlayersHaveSpoken")}</p>
           ) : (
             <>
               {alivePlayers.length > 0 &&

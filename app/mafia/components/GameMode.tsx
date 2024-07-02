@@ -1,5 +1,6 @@
 import { CldImage } from "next-cloudinary";
 import { useGameContext } from "../contexts/GameContext";
+import { useTranslations } from "next-intl";
 
 const GameMode: React.FC = () => {
   const { gameState, setGameMode } = useGameContext();
@@ -15,13 +16,17 @@ const GameMode: React.FC = () => {
     }
   }
 
+  const t = useTranslations("Mafia");
+
   return (
     <div className="flex flex-col justify-center">
       <div className="flex gap-4 my-4">
         <div className="flex flex-col">
           <div className="form-control w-52">
             <label className="cursor-pointer label">
-              <span className="label-text">Professional mode</span>
+              <span className="label-text">
+                {t("GameMode.professionalMode")}
+              </span>
               <input
                 type="checkbox"
                 className="toggle toggle-primary"
@@ -39,8 +44,8 @@ const GameMode: React.FC = () => {
             onChange={handleGameModeChange}
           />
 
-          <div className="swap-on">Pro 😈</div>
-          <div className="swap-off">Simple 😇</div>
+          <div className="swap-on">{t("GameMode.pro")} 😈</div>
+          <div className="swap-off">{t("GameMode.simple")} 😇</div>
         </label>
       </div>
       {gameMode === "pro" ? (

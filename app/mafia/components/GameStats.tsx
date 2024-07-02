@@ -3,6 +3,7 @@ import { useGameContext } from "../contexts/GameContext";
 import { getAlivePlayers, getDeadPlayers } from "../utils/get-from-fns";
 import FlexibleModal from "./FlexibleModal";
 import { useModal } from "../contexts/ModalContext";
+import { useTranslations } from "next-intl";
 
 const GameStats: React.FC = () => {
   const [items, setItems] = useState<string[]>([]);
@@ -15,9 +16,15 @@ const GameStats: React.FC = () => {
     speakingTimeEnabled,
     players,
   } = gameState;
+
+  const t = useTranslations("Mafia");
+
   return (
     <>
-      <FlexibleModal modalId="StatListAlivePlayers" title="Alive Players">
+      <FlexibleModal
+        modalId="StatListAlivePlayers"
+        title={t("GameStats.alivePlayers")}
+      >
         <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
           {items.map((item, index) => (
             <li key={index} className="flex items-center">
@@ -36,7 +43,10 @@ const GameStats: React.FC = () => {
         </ul>
       </FlexibleModal>
 
-      <FlexibleModal modalId="StatListDeadPlayers" title="Dead Players">
+      <FlexibleModal
+        modalId="StatListDeadPlayers"
+        title={t("GameStats.deadPlayers")}
+      >
         <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
           {items.length === 0
             ? "No Body!"
@@ -59,7 +69,7 @@ const GameStats: React.FC = () => {
 
       <div className="stats container max-w-lg">
         <div className="stat px-3">
-          <div className="stat-title">Players</div>
+          <div className="stat-title">{t("Settings.players")}</div>
           <div
             className="stat-value text-primary"
             onClick={() => {
@@ -70,12 +80,14 @@ const GameStats: React.FC = () => {
             {getAlivePlayers({ players }).length}
           </div>
           <div className="stat-desc">
-            <span>out of {players.length}</span>
+            <span>
+              {t("GameStats.outOf")} {players.length}
+            </span>
           </div>
         </div>
 
         <div className="stat px-3">
-          <div className="stat-title">Dead</div>
+          <div className="stat-title">{t("Common.dead")}</div>
           <div
             className="stat-value text-warning"
             onClick={() => {
@@ -86,12 +98,14 @@ const GameStats: React.FC = () => {
             {getDeadPlayers({ players }).length}
           </div>
           <div className="stat-desc">
-            <span>out of {players.length}</span>
+            <span>
+              {t("GameStats.outOf")} {players.length}
+            </span>
           </div>
         </div>
 
         <div className="stat px-3">
-          <div className="stat-title">Inquiry</div>
+          <div className="stat-title">{t("GameStats.inquiry")}</div>
           <div
             className="stat-value text-success"
             onClick={() => {
@@ -100,11 +114,11 @@ const GameStats: React.FC = () => {
           >
             {gameState.inquiries}
           </div>
-          <div className="stat-desc">left</div>
+          <div className="stat-desc">{t("GameStats.left")}</div>
         </div>
 
         <div className="stat px-3">
-          <div className="stat-title">Timers</div>
+          <div className="stat-title">{t("GameStats.timers")}</div>
           <div
             onClick={() => {
               handleOpen("TimerSettings");
@@ -112,10 +126,12 @@ const GameStats: React.FC = () => {
             className="stat-desc text-info"
           >
             {speakingTimeEnabled && (
-              <p className="my-4">Speaker: {speakingTime}s</p>
+              <p className="my-4">
+                {t("GameStats.speaker")} {speakingTime}s
+              </p>
             )}
             {challengeTimeEnabled && <p>Challenger: {challengeTime}s</p>}
-            {!speakingTimeEnabled && !challengeTimeEnabled && "Not timer set"}
+            {!speakingTimeEnabled && !challengeTimeEnabled && t("notTimerSet")}
           </div>
         </div>
       </div>

@@ -45,7 +45,6 @@
       "gameReady": "Game is READY to begin!",
       "suggestedSteps": "Suggested Steps:",
       "showPlayerCards": "Show Player's Cards",
-      "timers": "Timers",
       "tags": "Tags",
       "lastActions": "Last Actions",
       "inquiries": "Inquiries"
@@ -86,7 +85,6 @@
       "unassigned": "Unassigned"
     },
     "GameStats": {
-      "dead": "Dead",
       "inquiry": "Inquiry",
       "timers": "Timers",
       "alivePlayers": "Alive Players",
@@ -96,7 +94,6 @@
       "speaker": "Speaker:"
     },
     "PlayerStatusManager": {
-      "deadPlayers": "Dead Players",
       "revive": "Revive"
     },
     "Roles": {
@@ -188,7 +185,13 @@
       "unassignedRoles": "Unassigned Roles",
       "playersWithoutRole": "Players without Role",
       "gameIsReady": "Game is ready!"
-    }
-  },
-  "selectChallenger": "Select Challenger"
+    },
+    "selectChallenger": "Select Challenger",
+    "lastDayStarterWas": "Last day&apos;s starter was:",
+    "allPlayersHaveSpoken": "All players have spoken.",
+    "dayActions": "Day Actions",
+    "noEventToShow": "No event to show!",
+    "notTimerSet": "Not timer set",
+    "namePrefix": "Name Prefix"
+  }
 }
