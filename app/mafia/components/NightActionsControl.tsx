@@ -170,6 +170,7 @@ const NightActionsControl: React.FC = () => {
                       <Image
                         className="m-0 self-center"
                         src={actionableRoles[currentActionIndex].image}
+                        unoptimized={true}
                         loader={() => {
                           return actionableRoles[currentActionIndex].image;
                         }}
