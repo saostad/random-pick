@@ -20,6 +20,7 @@ import InquiriesSetting from "./InquiriesSetting";
 import Inquiries from "./Inquiries";
 import LastActionPlayer from "./LastActionPlayer";
 import GameMode from "./GameMode";
+import EndGame from "./EndGame";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -104,6 +105,7 @@ const Main: React.FC<MainProps> = (props) => {
       />
 
       <ActionRecommender />
+      <EndGame />
       <div className="my-24" />
     </div>
   );
