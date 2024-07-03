@@ -31,10 +31,7 @@ const EndGame: React.FC = () => {
     }
   }, [players, gameRoles]);
 
-  if (
-    loading &&
-    (!gameEnded || currentStepIndex < 2 || currentStepIndex % 2 === 0)
-  ) {
+  if (loading && (!gameEnded || currentStepIndex < 2)) {
     return null;
   }
 
