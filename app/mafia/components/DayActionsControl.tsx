@@ -31,7 +31,7 @@ const DayActionsControl: React.FC = () => {
     challengeTime,
     challengeTimeEnabled,
   } = gameState;
-  const { handleOpen } = useModal();
+  const { handleOpen, modals } = useModal();
   const { addToast } = useContext(ToastContext);
   const [currentSpeakerIndex, setCurrentSpeakerIndex] = useState<number>(0);
   const [allPlayersCompleted, setAllPlayersCompleted] =
@@ -187,8 +187,10 @@ const DayActionsControl: React.FC = () => {
   const mediaPlayerRef = useRef<MediaPlayerRef>(null);
 
   const handleStartAudio = () => {
-    if (mediaPlayerRef.current) {
-      mediaPlayerRef.current.play();
+    if (modals["day-actions"]) {
+      if (mediaPlayerRef.current) {
+        mediaPlayerRef.current.play();
+      }
     }
   };
 
