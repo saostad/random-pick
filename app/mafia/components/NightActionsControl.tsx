@@ -10,7 +10,7 @@ import DropdownButton from "./DropdownButton";
 import MdiDead from "~icons/mdi/dead";
 import PlayerTagsIndicator from "./PlayerTagsIndicator";
 import Animation from "./Animation";
-import MediaPlayer from "./MediaPlayer";
+import MediaPlayer, { MediaPlayerRef } from "./MediaPlayer";
 import GlowingButton from "./GlowingButton";
 import MaterialSymbolsChipExtraction from "~icons/material-symbols/chip-extraction";
 import { CldImage } from "next-cloudinary";
@@ -79,12 +79,21 @@ const NightActionsControl: React.FC = () => {
     setRolePlayers(roleToPlayerMap);
   }, [gameState]);
 
+  const mediaPlayerRef = useRef<MediaPlayerRef>(null);
+
+  const mediaPlayerStop = () => {
+    if (mediaPlayerRef.current) {
+      mediaPlayerRef.current.stop();
+    }
+  };
+
   useEffect(() => {
     if (
       currentActionIndex >= actionableRoles.length &&
       actionableRoles.length > 0 &&
       !nightCompleted
     ) {
+      mediaPlayerStop();
       increaseNightCount();
       setNightCompleted(true);
     }
@@ -116,16 +125,17 @@ const NightActionsControl: React.FC = () => {
       />
       <FlexibleModal modalId="night-actions" title="Night Actions">
         <div className="min-h-64">
+          <div className="flex justify-between">
+            <Timer isRunning={isTimerRunning} />
+            <MediaPlayer
+              loop={true}
+              mediaUrl="/mafia/Whispering20Shadows20ext20v1.2.1.1.1.mp3"
+              ref={mediaPlayerRef}
+            />
+          </div>
           {actionableRoles.length > 0 &&
           currentActionIndex < actionableRoles.length ? (
             <>
-              <div className="flex justify-between">
-                <Timer isRunning={isTimerRunning} />
-                <MediaPlayer
-                  loop={true}
-                  mediaUrl="/mafia/Whispering20Shadows20ext20v1.2.1.1.1.mp3"
-                />
-              </div>
               <div className="flex flex-col my-6">
                 <div className="flex">
                   <b className="text-2xl flex-none">

@@ -13,10 +13,14 @@ interface MediaPlayerProps {
   mediaUrl: string;
   loop?: boolean;
   play?: () => void;
+  pause?: () => void;
+  stop?: () => void;
 }
 
 export interface MediaPlayerRef {
   play: () => void;
+  pause: () => void;
+  stop: () => void;
 }
 
 const MediaPlayer = forwardRef<MediaPlayerRef, MediaPlayerProps>(
@@ -29,6 +33,19 @@ const MediaPlayer = forwardRef<MediaPlayerRef, MediaPlayerProps>(
         if (audioRef.current) {
           audioRef.current.play();
           setIsPlaying(true);
+        }
+      },
+      pause: () => {
+        if (audioRef.current) {
+          audioRef.current.pause();
+          setIsPlaying(false);
+        }
+      },
+      stop: () => {
+        if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current.currentTime = 0;
+          setIsPlaying(false);
         }
       },
     }));
