@@ -2,10 +2,22 @@ import React, { useState, useRef, useEffect, ReactElement } from "react";
 
 interface DropdownButtonProps {
   title: React.ReactNode;
+  /**
+   * dropdown-end	Modifier	Aligns to end
+   * dropdown-top	Modifier	Open from top
+   * dropdown-bottom	Modifier	Open from bottom
+   * dropdown-left	Modifier	Open from left
+   * dropdown-right	Modifier	Open from right
+   */
+  location?: "end" | "top" | "bottom" | "left" | "right";
   children: React.ReactNode;
 }
 
-const DropdownButton: React.FC<DropdownButtonProps> = ({ title, children }) => {
+const DropdownButton: React.FC<DropdownButtonProps> = ({
+  title,
+  children,
+  location,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -44,8 +56,10 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({ title, children }) => {
     return child;
   });
 
+  const locationClass = location ? `dropdown-${location}` : "";
+
   return (
-    <div className="dropdown" ref={dropdownRef}>
+    <div className={`dropdown ${locationClass}`} ref={dropdownRef}>
       <div
         tabIndex={0}
         role="button"
