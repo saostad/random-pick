@@ -221,13 +221,15 @@ const NightActionsControl: React.FC = () => {
                 </div>
               </div>
               <DropdownButton title="Actions" location="top">
-                <ModalButton modalId="TagPlayers">
-                  Tag <CarbonTag />
-                </ModalButton>
-                <div className="my-2"></div>
-                <ModalButton modalId="playersStatus">
-                  Kill <MdiDead />
-                </ModalButton>
+                <div className="card-body">
+                  <ModalButton modalId="TagPlayers">
+                    Tag <CarbonTag />
+                  </ModalButton>
+                  <div className="my-2"></div>
+                  <ModalButton modalId="playersStatus">
+                    Kill <MdiDead />
+                  </ModalButton>
+                </div>
               </DropdownButton>
 
               <GlowingButton onClick={handleNextAction} className="ml-4">
