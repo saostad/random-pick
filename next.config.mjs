@@ -2,10 +2,7 @@
 import Icons from "unplugin-icons/webpack";
 import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = createNextIntlPlugin(
-  // Specify a custom path here
-  "./app/mafia/i18n.ts"
-);
+const withNextIntl = createNextIntlPlugin("./app/i18n/i18n.ts");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

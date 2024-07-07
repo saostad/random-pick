@@ -1,9 +1,8 @@
 import { getRequestConfig } from "next-intl/server";
-import { getUserLocale } from "./utils/locale";
+import { getUserLocale } from "./locale";
 
 export type Locale = "fa" | "en";
 
-// Assuming you have a similar structure for languages as in the Svelte example
 export const langs: { code: Locale; name: string; direction: "ltr" | "rtl" }[] =
   [
     { code: "en", name: "English", direction: "ltr" },
@@ -18,6 +17,6 @@ export default getRequestConfig(async () => {
 
   return {
     locale,
-    messages: (await import(`./translation/${locale}.json`)).default,
+    messages: (await import(`./translations/${locale}.json`)).default,
   };
 });

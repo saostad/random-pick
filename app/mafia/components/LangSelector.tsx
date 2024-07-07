@@ -1,6 +1,6 @@
+import { langs, Locale } from "@/app/i18n/i18n";
+import { setUserLocale } from "@/app/i18n/locale";
 import React, { useState, useTransition } from "react";
-import { setUserLocale } from "../utils/locale";
-import { Locale, langs } from "../i18n";
 
 export const LangSelector: React.FC = () => {
   const [isPending, startTransition] = useTransition();
