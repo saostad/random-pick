@@ -103,15 +103,17 @@ const PlayerRoleCarousel: React.FC = () => {
                             return getRoleImage(player.roleId)!;
                           }}
                           alt={""}
+                          style={{ width: "100%", height: "auto" }}
                           width={214}
                           height={123}
                         />
                       ) : (
                         <CldImage
-                          className="m-0 self-center h-auto"
+                          className="m-0 self-center"
                           src={getRoleImage(player.roleId)!}
                           priority={true}
                           alt={""}
+                          style={{ width: "100%", height: "auto" }}
                           width={214}
                           height={123}
                         />

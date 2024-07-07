@@ -178,22 +178,24 @@ const NightActionsControl: React.FC = () => {
                       "http"
                     ) ? (
                       <Image
-                        className="m-0 self-center h-auto"
+                        className="m-0 self-center"
                         src={actionableRoles[currentActionIndex].image}
                         unoptimized={true}
                         loader={() => {
                           return actionableRoles[currentActionIndex].image;
                         }}
                         alt={""}
+                        style={{ width: "100%", height: "auto" }}
                         width={214}
                         height={123}
                       />
                     ) : (
                       <CldImage
-                        className="m-0 self-center h-auto"
+                        className="m-0 self-center"
                         src={actionableRoles[currentActionIndex].image || ""}
                         alt={""}
                         priority={true}
+                        style={{ width: "100%", height: "auto" }}
                         width={214}
                         height={123}
                       />
