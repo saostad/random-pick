@@ -14,6 +14,7 @@ const EndGame: React.FC = () => {
   );
   const [isLylo, setIsLylo] = useState(false);
   const { handleOpen, handleClose } = useModal();
+  const [doNotShowAgain, setDoNotShowAgain] = useState(false);
 
   useEffect(() => {
     if (loading || currentStepIndex < 2) return;
@@ -32,7 +33,7 @@ const EndGame: React.FC = () => {
       return role?.side === "ThirdParty";
     }).length;
 
-    // Check for game end conditions
+    if (doNotShowAgain) return;
     if (mafiaCount === 0 && thirdPartyCount === 0) {
       setGameEnded(true);
       setWinner("Town");
@@ -89,7 +90,10 @@ const EndGame: React.FC = () => {
           </p>
           <button
             className="btn btn-primary mt-6"
-            onClick={() => handleClose("end-game")}
+            onClick={() => {
+              setDoNotShowAgain(true);
+              handleClose("end-game");
+            }}
           >
             Close
           </button>
@@ -113,7 +117,10 @@ const EndGame: React.FC = () => {
           />
           <button
             className="btn btn-primary mt-6"
-            onClick={() => handleClose("lylo-warning")}
+            onClick={() => {
+              setDoNotShowAgain(true);
+              handleClose("lylo-warning");
+            }}
           >
             Understood
           </button>
