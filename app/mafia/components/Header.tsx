@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from "react";
+import React, { HTMLAttributes, useEffect } from "react";
 import ColorSchemeSwitcher from "./ColorSchemeSwitcher";
 
 import { useTranslations } from "next-intl";

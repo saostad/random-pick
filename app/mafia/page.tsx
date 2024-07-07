@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import Mafia from "./Mafia";
 import { Metadata } from "next";
+import { createClient } from "./utils/servers";
+import { supabase } from "./utils/servers";
 
 export const metadata: Metadata = {
   icons: [
@@ -44,4 +47,17 @@ export const metadata: Metadata = {
   description: "A simple mafia roleplaying game.",
 };
 
-export default Mafia;
+const Test: React.FC = () => {
+  (async () => {
+    console.log("inside");
+
+    const supabase = createClient();
+    const { data: notes } = await supabase.from("notes").select();
+
+    console.log(notes);
+  })();
+
+  return <Mafia />;
+};
+
+export default Test;
