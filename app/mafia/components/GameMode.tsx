@@ -50,17 +50,19 @@ const GameMode: React.FC = () => {
       </div>
       {gameMode === "pro" ? (
         <CldImage
-          className="m-0 self-center"
+          className="m-0 self-center h-auto"
           src="mafia/all-roles"
           alt="all-roles"
+          priority={true}
           width="300"
           height="200"
         />
       ) : (
         <CldImage
-          className="m-0 self-center"
+          className="m-0 self-center h-auto"
           src="mafia/all-roles-beginner"
           alt="all-roles"
+          priority={true}
           width="300"
           height="200"
         />

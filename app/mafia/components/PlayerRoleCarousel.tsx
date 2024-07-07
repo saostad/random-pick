@@ -108,8 +108,9 @@ const PlayerRoleCarousel: React.FC = () => {
                         />
                       ) : (
                         <CldImage
-                          className="m-0 self-center"
+                          className="m-0 self-center h-auto"
                           src={getRoleImage(player.roleId)!}
+                          priority={true}
                           alt={""}
                           width={214}
                           height={123}

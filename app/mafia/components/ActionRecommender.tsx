@@ -97,7 +97,7 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
                   <CarbonUserRole />
                 </ModalButton>
                 <ModalButton modalId="TimerSettings">
-                  {t("Home.timers")} <CarbonTimer />
+                  {t("GameStats.timers")} <CarbonTimer />
                 </ModalButton>
                 <ModalButton modalId="Tags">
                   + {t("Home.tags")} - <CilTags />
