@@ -151,21 +151,21 @@ const VotingSession: React.FC = () => {
                   gridTemplateColumns: "2fr 4fr",
                   gap: "1rem",
                   alignItems: "center",
-                  paddingBottom: "0.5rem",
+                  paddingBottom: "0.75rem",
                 }}
                 key={player.id}
               >
                 <span style={{ marginRight: "1rem" }}>{player.name}</span>
                 <div>
                   <button
-                    className="btn btn-circle btn-outline"
+                    className="btn btn-square btn-outline"
                     onClick={() => decreaseVote(player.id)}
                   >
                     -
                   </button>
                   {` Votes: ${player.voteCount} `}
                   <button
-                    className="btn btn-circle btn-outline"
+                    className="btn btn-square btn-outline"
                     onClick={() => increaseVote(player.id)}
                   >
                     +
