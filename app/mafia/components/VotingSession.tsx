@@ -7,18 +7,12 @@ import { getAlivePlayers } from "../utils/get-from-fns";
 import Animation from "./Animation";
 import GlowingButton from "./GlowingButton";
 import IconoirEmojiPuzzled from "~icons/iconoir/emoji-puzzled";
-import VotingButtons from "./VotingButtons";
+import VotingInProgress from "./VotingInProgress";
 
 const VotingSession: React.FC = () => {
-  const {
-    gameState,
-    decreaseVote,
-    increaseVote,
-    resetVotes,
-    markPlayerAsDead,
-    setVotingStatus,
-  } = useGameContext();
-  const { votingStatus, players, speakingOrder, lastActionsActive } = gameState;
+  const { gameState, resetVotes, markPlayerAsDead, setVotingStatus } =
+    useGameContext();
+  const { votingStatus, players, lastActionsActive } = gameState;
   const { handleOpen, handleClose } = useModal();
 
   const alivePlayers = getAlivePlayers({ players });
@@ -142,28 +136,7 @@ const VotingSession: React.FC = () => {
             </div>
           )}
         </div>
-        {votingStatus === "in_progress" &&
-          speakingOrder
-            .map((index) => players[index])
-            .map((player) => (
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "2fr 4fr",
-                  gap: "1rem",
-                  alignItems: "center",
-                  paddingBottom: "0.75rem",
-                }}
-                key={player.id}
-              >
-                <span style={{ marginRight: "1rem" }}>{player.name}</span>
-                <VotingButtons
-                  player={player}
-                  decreaseVote={decreaseVote}
-                  increaseVote={increaseVote}
-                />
-              </div>
-            ))}
+        {votingStatus === "in_progress" && <VotingInProgress />}
         {votingStatus === "ousting" && (
           <div style={{ marginBottom: "1rem" }}>
             <h3 className="font-semibold text-xl my-4">Voting Results</h3>
