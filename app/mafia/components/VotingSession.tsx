@@ -1,5 +1,5 @@
-import React from "react";
-import { useGameContext } from "../contexts/GameContext";
+import React, { FC } from "react";
+import { Player, useGameContext } from "../contexts/GameContext";
 import CarbonOutage from "~icons/carbon/outage";
 import FlexibleModal from "./FlexibleModal";
 import { useModal } from "../contexts/ModalContext";
@@ -7,6 +7,7 @@ import { getAlivePlayers } from "../utils/get-from-fns";
 import Animation from "./Animation";
 import GlowingButton from "./GlowingButton";
 import IconoirEmojiPuzzled from "~icons/iconoir/emoji-puzzled";
+import VotingButtons from "./VotingButtons";
 
 const VotingSession: React.FC = () => {
   const {
@@ -156,21 +157,11 @@ const VotingSession: React.FC = () => {
                 key={player.id}
               >
                 <span style={{ marginRight: "1rem" }}>{player.name}</span>
-                <div>
-                  <button
-                    className="btn btn-square btn-outline"
-                    onClick={() => decreaseVote(player.id)}
-                  >
-                    -
-                  </button>
-                  {` Votes: ${player.voteCount} `}
-                  <button
-                    className="btn btn-square btn-outline"
-                    onClick={() => increaseVote(player.id)}
-                  >
-                    +
-                  </button>
-                </div>
+                <VotingButtons
+                  player={player}
+                  decreaseVote={decreaseVote}
+                  increaseVote={increaseVote}
+                />
               </div>
             ))}
         {votingStatus === "ousting" && (
