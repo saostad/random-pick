@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { useGameContext } from "../contexts/GameContext";
+import { Player, useGameContext } from "../contexts/GameContext";
 import { useModal } from "../contexts/ModalContext";
 import FlexibleModal from "./FlexibleModal";
 import Timer from "./Timer";
@@ -18,10 +18,16 @@ import MediaPlayer, { MediaPlayerRef } from "./MediaPlayer";
 import { ToastContext } from "../contexts/ToastContext";
 import GlowingButton from "./GlowingButton";
 import { useTranslations } from "next-intl";
+import DayTargets from "./DayTargets";
 
 const DayActionsControl: React.FC = () => {
-  const { gameState, updateGameState, increaseDayCount, setSpeakingOrder } =
-    useGameContext();
+  const {
+    gameState,
+    updateGameState,
+    increaseDayCount,
+    setSpeakingOrder,
+    addEvent,
+  } = useGameContext();
   const {
     players,
     speakingOrder,
@@ -53,6 +59,8 @@ const DayActionsControl: React.FC = () => {
   const [elapsedTime, setElapsedTime] = useState<number>(0);
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
 
+  const [selectedTargets, setSelectedTargets] = useState<Player[]>([]);
+
   const handleNextSpeaker = () => {
     const nextIndex = (currentSpeakerIndex + 1) % speakingOrder.length;
     if (nextIndex === 0) {
@@ -60,6 +68,21 @@ const DayActionsControl: React.FC = () => {
       increaseDayCount();
       setIsTimerRunning(false);
     } else {
+      // register the selected targets in events
+      if (selectedTargets.length > 0) {
+        const playerName = challengeMode
+          ? getPlayerNameById({ playerId: selectedChallenger, players })
+          : gameState.players[speakingOrder[currentSpeakerIndex]].name;
+
+        addEvent({
+          type: "dayTargets",
+          description: `Player ${playerName} targeted: ${selectedTargets
+            .map((player) => player.name)
+            .join(", ")}`,
+        });
+      }
+
+      setSelectedTargets([]);
       setCurrentSpeakerIndex(nextIndex);
       setChallengeMode(false);
       setSelectedChallenger("");
@@ -168,10 +191,12 @@ const DayActionsControl: React.FC = () => {
     (player) => player.id === gameState.startingPlayerId
   );
   const alivePlayers = getAlivePlayers({ players: gameState.players });
+
   const currentSpeaker =
     speakingOrder.length > 0
       ? gameState.players[speakingOrder[currentSpeakerIndex]]
       : null;
+
   const availableChallengers = alivePlayers.filter(
     (player) =>
       currentSpeaker &&
@@ -180,6 +205,7 @@ const DayActionsControl: React.FC = () => {
   );
   const currentSpeakerHasChallenged =
     currentSpeaker && speakerChallenged.has(currentSpeaker.id);
+
   const currentChallengerName = currentChallenger
     ? gameState.players.find((player) => player.id === currentChallenger)?.name
     : null;
@@ -306,6 +332,12 @@ const DayActionsControl: React.FC = () => {
                       speakerHasChallenged={
                         currentSpeakerHasChallenged ?? false
                       }
+                    />
+                    <DayTargets
+                      playerId={
+                        challengeMode ? selectedChallenger : currentSpeaker.id
+                      }
+                      setTargets={setSelectedTargets}
                     />
                   </>
                 )}
