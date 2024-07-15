@@ -38,30 +38,28 @@ const DayTargets: React.FC<DayTargetsProps> = ({ playerId, setTargets }) => {
   }, [playerId]);
 
   return (
-    <div>
-      <div className="dropdown dropdown-top">
-        <div tabIndex={0} role="button" className="btn m-1 btn-outline">
-          Targets
-        </div>
-        <ul
-          tabIndex={0}
-          className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
-        >
-          {availableTargets.map((target) => (
-            <div key={target.id} className="form-control">
-              <label className="label cursor-pointer">
-                <span className="label-text">{target.name}</span>
-                <input
-                  type="checkbox"
-                  checked={selectedPlayers.some((p) => p.id === target.id)}
-                  onChange={() => handleSelectPlayer(target)}
-                  className="checkbox checkbox-primary"
-                />
-              </label>
-            </div>
-          ))}
-        </ul>
+    <div className="dropdown dropdown-top">
+      <div tabIndex={0} role="button" className="btn m-1 btn-outline">
+        Targets
       </div>
+      <ul
+        tabIndex={0}
+        className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+      >
+        {availableTargets.map((target) => (
+          <div key={target.id} className="form-control">
+            <label className="label cursor-pointer">
+              <span className="label-text">{target.name}</span>
+              <input
+                type="checkbox"
+                checked={selectedPlayers.some((p) => p.id === target.id)}
+                onChange={() => handleSelectPlayer(target)}
+                className="checkbox checkbox-primary"
+              />
+            </label>
+          </div>
+        ))}
+      </ul>
     </div>
   );
 };

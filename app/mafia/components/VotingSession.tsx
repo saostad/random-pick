@@ -136,7 +136,9 @@ const VotingSession: React.FC = () => {
             </div>
           )}
         </div>
-        {votingStatus === "in_progress" && <VotingInProgress />}
+        {votingStatus === "in_progress" && (
+          <VotingInProgress endVoting={endVoting} />
+        )}
         {votingStatus === "ousting" && (
           <div style={{ marginBottom: "1rem" }}>
             <h3 className="font-semibold text-xl my-4">Voting Results</h3>

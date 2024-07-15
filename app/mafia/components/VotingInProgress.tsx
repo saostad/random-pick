@@ -3,7 +3,11 @@ import { useGameContext } from "../contexts/GameContext";
 import VotingButtons from "./VotingButtons";
 import MultiVoting from "./MultiVoting";
 
-const VotingInProgress: React.FC = () => {
+type VotingInProgressProps = {
+  endVoting: () => void;
+};
+
+const VotingInProgress: React.FC<VotingInProgressProps> = ({ endVoting }) => {
   const { gameState, decreaseVote, increaseVote } = useGameContext();
   const { players, speakingOrder } = gameState;
 
@@ -79,6 +83,7 @@ const VotingInProgress: React.FC = () => {
           decreaseVote={decreaseVote}
           increaseVote={increaseVote}
           players={playerVoters}
+          onEndVoting={endVoting}
         />
       ) : null}
 
