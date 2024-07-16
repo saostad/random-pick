@@ -50,7 +50,9 @@ const MultiVoting: React.FC<MultiVotingProps> = ({
                 tabIndex={0}
                 role="button"
                 className={`btn m-1 ${
-                  player.id === players[turnIndex].id ? "btn-outline" : ""
+                  player.id === players[turnIndex].id
+                    ? "btn-outline"
+                    : "btn-disabled"
                 }`}
               >
                 {player.name}
