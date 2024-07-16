@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Player } from "../contexts/GameContext";
+import { Player, useGameContext } from "../contexts/GameContext";
+import { getPlayerNameById } from "../utils/get-from-fns";
 
 type MultiVotingProps = {
   players: Player[];
@@ -14,6 +15,7 @@ const MultiVoting: React.FC<MultiVotingProps> = ({
   increaseVote,
   onEndVoting,
 }) => {
+  const { addEvent } = useGameContext();
   const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
   const [turnIndex, setTurnIndex] = useState(0);
   const availablePlayers = players.filter(
@@ -84,6 +86,17 @@ const MultiVoting: React.FC<MultiVotingProps> = ({
       <button
         className="btn btn-primary btn-outline btn-wide"
         onClick={(e) => {
+          // register votes to events
+          selectedPlayers.forEach((playerId) => {
+            addEvent({
+              type: "vote",
+              description: `${getPlayerNameById({
+                players: players,
+                playerId,
+              })} voted for ${players[turnIndex].name}.`,
+            });
+          });
+
           if (turnIndex < players.length - 1) {
             setTurnIndex(turnIndex + 1);
             setSelectedPlayers([]);
@@ -93,7 +106,6 @@ const MultiVoting: React.FC<MultiVotingProps> = ({
               dropdown.classList.remove("dropdown-open");
             });
           } else {
-            // end voting
             onEndVoting();
           }
         }}
