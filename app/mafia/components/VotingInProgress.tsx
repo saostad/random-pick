@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import VotingButtons from "./VotingButtons";
 import MultiVoting from "./MultiVoting";
+import SingleVoting from "./SingleVoting";
 
 type VotingInProgressProps = {
   endVoting: () => void;
@@ -88,37 +89,14 @@ const VotingInProgress: React.FC<VotingInProgressProps> = ({ endVoting }) => {
       ) : null}
 
       {activeTab === "single-voting" ? (
-        <Line start={{ x: 0, y: 0 }} end={{ x: 100, y: 100 }} />
+        <SingleVoting
+          increaseVote={increaseVote}
+          players={playerVoters}
+          onEndVoting={endVoting}
+        />
       ) : null}
     </>
   );
 };
 
 export default VotingInProgress;
-
-import { useSpring, animated } from "@react-spring/web";
-
-type LineProps = {
-  start: { x: number; y: number };
-  end: { x: number; y: number };
-};
-
-const Line: React.FC<LineProps> = ({ start, end }) => {
-  const animatedLine = useSpring({
-    from: { x2: start.x, y2: start.y },
-    to: { x2: end.x, y2: end.y },
-    config: { duration: 500 }, // Animation duration
-  });
-
-  return (
-    <svg width="200" height="200">
-      <animated.line
-        x1={start.x}
-        y1={start.y}
-        x2={animatedLine.x2}
-        y2={animatedLine.y2}
-        stroke="black"
-      />
-    </svg>
-  );
-};
