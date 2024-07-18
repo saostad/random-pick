@@ -37,7 +37,7 @@ const Main: React.FC<MainProps> = (props) => {
     if (!hasLandingShown) {
       setTimeout(() => handleOpen("Landing"), 1000); // Open the Landing modal after 1 second to make sure it's on top of other modals
     }
-  }, [handleOpen, hasLandingShown, loading]);
+  }, [handleOpen, loading]);
 
   return (
     <div className="px-4" {...props}>
