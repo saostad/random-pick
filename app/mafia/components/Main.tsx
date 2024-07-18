@@ -21,6 +21,7 @@ import Inquiries from "./Inquiries";
 import LastActionPlayer from "./LastActionPlayer";
 import GameMode from "./GameMode";
 import EndGame from "./EndGame";
+import Landing from "./Landing";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
@@ -91,17 +92,22 @@ const Main: React.FC<MainProps> = (props) => {
         component={TagPlayers}
       />
       <FlexibleModal
+        title="Players Status"
         modalId="playersStatus"
         component={PlayerStatusManager}
-        title="Players Status"
       />
-      <FlexibleModal modalId="audit" component={Audit} title="Audit" />
+      <FlexibleModal title="Audit" modalId="audit" component={Audit} />
       <FlexibleModal title="Tags" modalId="Tags" component={Tags} />
       <FlexibleModal title="About" modalId="About" component={About} />
       <FlexibleModal
         title="Last Actions"
         modalId="LastActs"
         component={LastActions}
+      />
+      <FlexibleModal
+        title="Select Language"
+        modalId="Landing"
+        component={Landing}
       />
 
       <ActionRecommender />

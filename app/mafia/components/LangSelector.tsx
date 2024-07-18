@@ -1,10 +1,16 @@
 import { langs, Locale } from "@/app/i18n/i18n";
-import { setUserLocale } from "@/app/i18n/locale";
-import React, { useState, useTransition } from "react";
+import { getUserLocale, setUserLocale } from "@/app/i18n/locale";
+import React, { useEffect, useState, useTransition } from "react";
 
 export const LangSelector: React.FC = () => {
   const [isPending, startTransition] = useTransition();
   const [currentLang, setCurrentLang] = useState<Locale>("en"); // Set default language
+
+  useEffect(() => {
+    (async () => {
+      setCurrentLang((await getUserLocale()) as Locale);
+    })();
+  }, []);
 
   function handleLocaleChange(value: Locale) {
     startTransition(() => {

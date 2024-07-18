@@ -17,6 +17,7 @@ const NewGameButton: React.FC = () => {
 
   const handleHardReset = () => {
     resetGameState();
+    handleOpen("Landing");
     handleOpen("hard-reset");
   };
 
