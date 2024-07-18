@@ -7,6 +7,7 @@ interface ModalProps extends React.DialogHTMLAttributes<HTMLDialogElement> {
   children?: React.ReactNode; // Directly passed children content
   modalId: string; // Identifier for the modal
   title?: string; // Title for the modal header
+  closeButtons?: boolean; // Show close button
 }
 
 const FlexibleModal: React.FC<ModalProps> = ({
@@ -14,6 +15,7 @@ const FlexibleModal: React.FC<ModalProps> = ({
   children,
   modalId,
   title,
+  closeButtons = true,
   ...props
 }) => {
   const { handleClose } = useModal();
@@ -29,20 +31,24 @@ const FlexibleModal: React.FC<ModalProps> = ({
             <div></div> // Spacer to keep the alignment
           )}
           <form method="dialog">
-            <button
-              className="btn btn-sm btn-circle btn-ghost"
-              onClick={() => handleClose(modalId)}
-            >
-              ✕
-            </button>
+            {closeButtons && (
+              <button
+                className="btn btn-sm btn-circle btn-ghost"
+                onClick={() => handleClose(modalId)}
+              >
+                ✕
+              </button>
+            )}
           </form>
         </div>
         {Component ? <Component /> : children}
-        <div className="modal-action">
-          <button className="btn" onClick={() => handleClose(modalId)}>
-            {t("close")}
-          </button>
-        </div>
+        {closeButtons && (
+          <div className="modal-action">
+            <button className="btn" onClick={() => handleClose(modalId)}>
+              {t("close")}
+            </button>
+          </div>
+        )}
       </div>
     </dialog>
   );
