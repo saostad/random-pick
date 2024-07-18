@@ -1,8 +1,13 @@
 import { useEffect, useState, useTransition } from "react";
 import { langs, Locale } from "@/app/i18n/i18n";
 import { setUserLocale, getUserLocale } from "@/app/i18n/locale";
+import GlowingButton from "./GlowingButton";
+import { useModal } from "../contexts/ModalContext";
+import { useGameContext } from "../contexts/GameContext";
 
 const Landing: React.FC = () => {
+  const { handleClose } = useModal();
+  const { updateGameState } = useGameContext();
   const [isPending, startTransition] = useTransition();
   const [currentLang, setCurrentLang] = useState<Locale>("en"); // Set default language
 
@@ -20,6 +25,7 @@ const Landing: React.FC = () => {
   }
   return (
     <div>
+      <h2 className="font-bold my-4">Select Language</h2>
       {langs.map((lang) => (
         <div key={lang.code} className="form-control">
           <label className="label cursor-pointer">
@@ -34,6 +40,15 @@ const Landing: React.FC = () => {
           </label>
         </div>
       ))}
+      <GlowingButton
+        className="my-4"
+        onClick={() => {
+          handleClose("Landing");
+          updateGameState({ hasLandingShown: true });
+        }}
+      >
+        Continue
+      </GlowingButton>
     </div>
   );
 };

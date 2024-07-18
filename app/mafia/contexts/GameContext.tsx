@@ -88,6 +88,7 @@ export type GameState = {
   inquiries: number;
   offerInquiries: boolean;
   gameMode: GameMode;
+  hasLandingShown: boolean;
 };
 
 export type GameContextType = {
@@ -130,6 +131,10 @@ export type GameContextType = {
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
 const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [loading, setLoading] = useState(true);
+  const [hasLandingShown, setHasLandingShown] = useState(false);
+  const { handleOpen } = useModal();
+
   const initialState: GameState = {
     players: [],
     gameRoles: [],
@@ -152,14 +157,13 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     inquiries: 2,
     offerInquiries: true,
     gameMode: "beginner",
+    hasLandingShown: false,
   };
 
   const [gameState, setGameState] = useLocalStorageState<GameState>(
     "gameState",
     { defaultValue: initialState }
   );
-  const [loading, setLoading] = useState(true);
-  const { handleOpen } = useModal();
 
   useEffect(() => {
     if (gameState) {
@@ -520,6 +524,7 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     getCurrentPhaseIndex,
     setSpeakingOrder,
     loading,
+    hasLandingShown,
     decreaseInquiries,
     addEvent,
     getEventsByPhase,

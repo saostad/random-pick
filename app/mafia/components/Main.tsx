@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from "react";
+import React, { HTMLAttributes, useEffect } from "react";
 import PlayerStatusManager from "./PlayerStatusManager";
 import Players from "./Players";
 import RoleAssignment from "./RoleAssignment";
@@ -22,13 +22,22 @@ import LastActionPlayer from "./LastActionPlayer";
 import GameMode from "./GameMode";
 import EndGame from "./EndGame";
 import Landing from "./Landing";
+import { useModal } from "../contexts/ModalContext";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
 
 const Main: React.FC<MainProps> = (props) => {
-  const { gameState } = useGameContext();
-  const { activeTab } = gameState;
+  const { loading, gameState } = useGameContext();
+  const { handleOpen } = useModal();
+  const { activeTab, hasLandingShown } = gameState;
+
+  useEffect(() => {
+    if (loading) return;
+    if (!hasLandingShown) {
+      setTimeout(() => handleOpen("Landing"), 1000); // Open the Landing modal after 1 second to make sure it's on top of other modals
+    }
+  }, [handleOpen, hasLandingShown, loading]);
 
   return (
     <div className="px-4" {...props}>
@@ -105,9 +114,10 @@ const Main: React.FC<MainProps> = (props) => {
         component={LastActions}
       />
       <FlexibleModal
-        title="Select Language"
+        title="Welcome to Mafia"
         modalId="Landing"
         component={Landing}
+        closeButtons={false}
       />
 
       <ActionRecommender />
