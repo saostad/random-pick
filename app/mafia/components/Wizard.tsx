@@ -6,7 +6,7 @@ import NightActionsControl from "./NightActionsControl";
 import Animation from "./Animation";
 import { useModal } from "../contexts/ModalContext";
 import GlowingButton from "./GlowingButton";
-import MaterialSymbolsLightNightSightAutoOffRounded from "~icons/material-symbols-light/night-sight-auto-off-rounded";
+import { useTranslations } from "next-intl";
 
 const Wizard: React.FC = () => {
   const { gameState, setCurrentStepIndex, getEventsByPhase } = useGameContext();
@@ -20,6 +20,7 @@ const Wizard: React.FC = () => {
   } = gameState;
 
   const { handleOpen } = useModal();
+  const t = useTranslations("Mafia");
 
   const sequence: string[] = [];
   for (let i = 0; i <= nightCount; i++) {
@@ -80,7 +81,7 @@ const Wizard: React.FC = () => {
         </span>
       );
     }
-    return "No more phases!";
+    return <span>{t("noMorePhases")}</span>;
   };
 
   // remove the space between sequence[currentStepIndex] like "Night 1" -> "Night1"
@@ -153,14 +154,15 @@ const Wizard: React.FC = () => {
                                 className="btn btn-warning btn-outline btn-wide"
                                 onClick={() => handleOpen("Inquiries")}
                               >
-                                Want an inquiry? 🕵️‍♂️ ({inquiries} left)
+                                {t("Wizard.wantAnInquiry")} 🕵️‍♂️ ({inquiries}{" "}
+                                left)
                               </button>
                             </div>
                           )}
                       </div>
                       <div className="flex flex-col my-4">
                         <div className="text-xl font-bold">
-                          Last Night Events:
+                          {t("Wizard.lastNightEvents")}
                         </div>
                         <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
                           {sequenceEvents.map((event) => (
@@ -199,7 +201,7 @@ const Wizard: React.FC = () => {
                         ></path>
                       </svg>
 
-                      <span className="">Quite Night!</span>
+                      <span className="">{t("Wizard.quiteNight")}</span>
 
                       <Animation
                         className="max-w-36 max-h-36 m-auto"

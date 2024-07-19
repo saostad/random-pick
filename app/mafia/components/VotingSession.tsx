@@ -8,6 +8,7 @@ import Animation from "./Animation";
 import GlowingButton from "./GlowingButton";
 import IconoirEmojiPuzzled from "~icons/iconoir/emoji-puzzled";
 import VotingInProgress from "./VotingInProgress";
+import { useTranslations } from "next-intl";
 
 const VotingSession: React.FC = () => {
   const { gameState, resetVotes, markPlayerAsDead, setVotingStatus } =
@@ -19,6 +20,8 @@ const VotingSession: React.FC = () => {
   const sortedPlayers = [...alivePlayers].sort(
     (a, b) => b.voteCount - a.voteCount
   );
+
+  const t = useTranslations("Mafia");
 
   const startVoting = () => {
     resetVotes();
@@ -57,7 +60,7 @@ const VotingSession: React.FC = () => {
             }}
           >
             <div className="flex">
-              <span className="mr-4">Start Voting</span>
+              <span className="mr-4">{t("VotingSession.startVoting")}</span>
               <IconoirEmojiPuzzled />
             </div>
           </GlowingButton>
@@ -77,7 +80,7 @@ const VotingSession: React.FC = () => {
             }}
             className="btn-wide"
           >
-            Resume Voting
+            {t("VotingSession.resumeVoting")}
           </GlowingButton>
           <Animation
             className=""
@@ -101,7 +104,7 @@ const VotingSession: React.FC = () => {
               handleOpen("LastActionPlayer");
             }}
           >
-            Resume Last Action!
+            {t("VotingSession.resumeLastAction")}
           </button>
         </div>
       )}
@@ -114,7 +117,7 @@ const VotingSession: React.FC = () => {
           </p>
           {votingStatus === "in_progress" && (
             <GlowingButton onClick={endVoting} className="btn-wide">
-              End Voting
+              {t("VotingSession.endVoting")}
             </GlowingButton>
           )}
           {votingStatus === "ousting" && (
@@ -123,7 +126,7 @@ const VotingSession: React.FC = () => {
                 className="btn btn-ghost btn-outline btn-primary"
                 onClick={startVoting}
               >
-                Start Again!
+                {t("VotingSession.startAgain")}
               </button>
               <button
                 className="btn btn-outline btn-warning"
@@ -131,7 +134,7 @@ const VotingSession: React.FC = () => {
                   votingOustingEnd();
                 }}
               >
-                End without Ousting!
+                {t("VotingSession.endWithoutOusting")}
               </button>
             </div>
           )}
@@ -141,7 +144,9 @@ const VotingSession: React.FC = () => {
         )}
         {votingStatus === "ousting" && (
           <div style={{ marginBottom: "1rem" }}>
-            <h3 className="font-semibold text-xl my-4">Voting Results</h3>
+            <h3 className="font-semibold text-xl my-4">
+              {t("VotingSession.votingResults")}
+            </h3>
             {sortedPlayers.map((player) => (
               <div
                 key={player.id}
@@ -157,7 +162,7 @@ const VotingSession: React.FC = () => {
                     votingOustingEnd(player.id);
                   }}
                 >
-                  Mark as Dead <CarbonOutage />
+                  {t("VotingSession.markAsDead")} <CarbonOutage />
                 </button>
               </div>
             ))}

@@ -233,6 +233,7 @@
     "about": "About",
     "welcomeToMafia": "Welcome to Mafia",
     "nextPlayer": "Next Player",
-    "prev": "Prev"
+    "prev": "Prev",
+    "noMorePhases": "No more phases!"
   }
 }
