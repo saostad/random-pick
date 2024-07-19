@@ -4,8 +4,10 @@ import { setUserLocale, getUserLocale } from "@/app/i18n/locale";
 import GlowingButton from "./GlowingButton";
 import { useModal } from "../contexts/ModalContext";
 import { useGameContext } from "../contexts/GameContext";
+import { useTranslations } from "next-intl";
 
 const Landing: React.FC = () => {
+  const t = useTranslations("Mafia");
   const { handleClose } = useModal();
   const { updateGameState } = useGameContext();
   const [isPending, startTransition] = useTransition();
@@ -47,7 +49,7 @@ const Landing: React.FC = () => {
           updateGameState({ hasLandingShown: true });
         }}
       >
-        Continue
+        {t("continue")}
       </GlowingButton>
     </div>
   );

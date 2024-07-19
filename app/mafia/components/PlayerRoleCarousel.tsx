@@ -7,8 +7,10 @@ import CarbonPreviousOutline from "~icons/carbon/previous-outline";
 import { useSwipeable } from "react-swipeable";
 import Image from "next/image";
 import { CldImage } from "next-cloudinary";
+import { useTranslations } from "next-intl";
 
 const PlayerRoleCarousel: React.FC = () => {
+  const t = useTranslations("Mafia");
   const { gameState } = useGameContext();
   const { players, gameRoles } = gameState;
   const [showRole, setShowRole] = useState<boolean[]>([]);
@@ -156,13 +158,13 @@ const PlayerRoleCarousel: React.FC = () => {
                   className="btn btn-ghost btn-outline md:min-w-24 btn-secondary"
                   onClick={handlePrevious}
                 >
-                  Prev <CarbonPreviousOutline />
+                  {t("prev")} <CarbonPreviousOutline />
                 </button>
                 <button
                   className="btn btn-ghost btn-outline md:min-w-24 btn-secondary"
                   onClick={handleNext}
                 >
-                  Next <CarbonNextOutline />
+                  {t("Common.next")} <CarbonNextOutline />
                 </button>
               </div>
             </div>

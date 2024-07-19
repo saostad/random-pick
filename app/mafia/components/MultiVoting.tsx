@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Player, useGameContext } from "../contexts/GameContext";
 import { getPlayerNameById } from "../utils/get-from-fns";
+import { useTranslations } from "next-intl";
 
 type MultiVotingProps = {
   players: Player[];
@@ -15,6 +16,7 @@ const MultiVoting: React.FC<MultiVotingProps> = ({
   increaseVote,
   onEndVoting,
 }) => {
+  const t = useTranslations("Mafia");
   const { addEvent } = useGameContext();
   const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
   const [turnIndex, setTurnIndex] = useState(0);
@@ -110,7 +112,9 @@ const MultiVoting: React.FC<MultiVotingProps> = ({
           }
         }}
       >
-        {turnIndex < players.length - 1 ? "Next Player" : "End Voting"}
+        {turnIndex < players.length - 1
+          ? t("nextPlayer")
+          : t("VotingSession.endVoting")}
       </button>
     </div>
   );

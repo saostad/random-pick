@@ -4,6 +4,7 @@ import { getAlivePlayers } from "../utils/get-from-fns";
 import FlexibleModal from "./FlexibleModal";
 import { useModal } from "../contexts/ModalContext";
 import Animation from "./Animation";
+import { useTranslations } from "next-intl";
 
 const EndGame: React.FC = () => {
   const { gameState, loading } = useGameContext();
@@ -15,6 +16,7 @@ const EndGame: React.FC = () => {
   const [isLylo, setIsLylo] = useState(false);
   const { handleOpen, handleClose } = useModal();
   const [doNotShowAgain, setDoNotShowAgain] = useState(false);
+  const t = useTranslations("Mafia");
 
   useEffect(() => {
     if (loading || currentStepIndex < 2) return;
@@ -64,10 +66,10 @@ const EndGame: React.FC = () => {
         <div className="flex flex-col items-center">
           <h2 className="text-2xl font-bold mb-4">
             {winner === "Town"
-              ? "Town Wins!"
+              ? t("townWins")
               : winner === "Mafia"
-              ? "Mafia Wins!"
-              : "Third Party Wins!"}
+              ? t("mafiaWins")
+              : t("thirdPartyWins")}
           </h2>
           <Animation
             className="max-w-56 max-h-56"
@@ -83,10 +85,10 @@ const EndGame: React.FC = () => {
           />
           <p className="mt-4 text-lg">
             {winner === "Town"
-              ? "All Mafia and Third Party members have been eliminated!"
+              ? t("townWinMessage")
               : winner === "Mafia"
-              ? "The Mafia has taken control of the town!"
-              : "The Third Party has achieved their goal!"}
+              ? t("mafiaWinMessage")
+              : t("thirdPartyWinMessage")}
           </p>
           <button
             className="btn btn-primary mt-6"
@@ -95,7 +97,7 @@ const EndGame: React.FC = () => {
               handleClose("end-game");
             }}
           >
-            Close
+            {t("Common.close")}
           </button>
         </div>
       </FlexibleModal>
@@ -103,12 +105,7 @@ const EndGame: React.FC = () => {
       <FlexibleModal modalId="lylo-warning" title="LYLO Situation">
         <div className="flex flex-col items-center">
           <h2 className="text-2xl font-bold mb-4">LYLO: Lynch or Lose!</h2>
-          <p className="mt-4 text-lg text-center">
-            The game has reached a critical point. There are only 3 players
-            left: 2 Town and 1 Mafia. This situation is known as LYLO (Lynch or
-            Lose). The Town must correctly identify the Mafia member now, or
-            they will lose in the night phase!
-          </p>
+          <p className="mt-4 text-lg text-center">{t("LYLOMessage")}</p>
           <Animation
             className="max-w-56 max-h-56"
             src="/mafia/animation/lylo-warning.lottie"
@@ -122,7 +119,7 @@ const EndGame: React.FC = () => {
               handleClose("lylo-warning");
             }}
           >
-            Understood
+            {t("understood")}
           </button>
         </div>
       </FlexibleModal>

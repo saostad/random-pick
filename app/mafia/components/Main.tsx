@@ -23,12 +23,14 @@ import GameMode from "./GameMode";
 import EndGame from "./EndGame";
 import Landing from "./Landing";
 import { useModal } from "../contexts/ModalContext";
+import { useTranslations } from "next-intl";
 
 // Define the props expected by the Main component, extending standard HTML attributes for <main>
 interface MainProps extends HTMLAttributes<HTMLElement> {}
 
 const Main: React.FC<MainProps> = (props) => {
   const { loading, gameState } = useGameContext();
+  const t = useTranslations("Mafia");
   const { handleOpen } = useModal();
   const { activeTab, hasLandingShown } = gameState;
 
@@ -48,73 +50,77 @@ const Main: React.FC<MainProps> = (props) => {
       <FlexibleModal
         modalId="InquiriesSetting"
         component={InquiriesSetting}
-        title="Inquiries"
+        title={t("Home.inquiries")}
       />
       <FlexibleModal
         modalId="GameMode"
         component={GameMode}
-        title="Game Mode"
+        title={t("gameMode")}
       />
       <FlexibleModal
         modalId="LastActionPlayer"
         component={LastActionPlayer}
-        title="Last Action for Player"
+        title={t("lastActionForPlayer")}
       />
       <FlexibleModal
         modalId="Inquiries"
         component={Inquiries}
-        title="Inquiry"
+        title={t("GameStats.inquiry")}
       />
       <FlexibleModal
         modalId="TimerSettings"
         component={TimerSettings}
-        title="Timer Settings"
+        title={t("timerSettings")}
       />
       <FlexibleModal
         modalId="Players"
         component={Players}
-        title="Add/Remove Players"
+        title={t("addRemovePlayers")}
       />
       <FlexibleModal
         modalId="Roles"
         component={Roles}
-        title="Add/Remove Roles"
+        title={t("addRemoveRoles")}
       />
       <FlexibleModal
-        title="Role Assignment"
+        title={t("roleAssignment")}
         modalId="RoleAssignment"
         component={RoleAssignment}
       />
       <FlexibleModal
-        title="Role Viewer"
+        title={t("roleViewer")}
         modalId="RoleViewer"
         component={PlayerRoleCarousel}
       />
       <FlexibleModal
-        title="Event Timeline"
+        title={t("eventTimeline")}
         modalId="EventTimeline"
         component={EventTimeline}
       />
       <FlexibleModal
-        title="Tag Players"
+        title={t("tagPlayers")}
         modalId="TagPlayers"
         component={TagPlayers}
       />
       <FlexibleModal
-        title="Players Status"
+        title={t("playersStatus")}
         modalId="playersStatus"
         component={PlayerStatusManager}
       />
-      <FlexibleModal title="Audit" modalId="audit" component={Audit} />
-      <FlexibleModal title="Tags" modalId="Tags" component={Tags} />
-      <FlexibleModal title="About" modalId="About" component={About} />
       <FlexibleModal
-        title="Last Actions"
+        title={t("Settings.audit")}
+        modalId="audit"
+        component={Audit}
+      />
+      <FlexibleModal title={t("Home.tags")} modalId="Tags" component={Tags} />
+      <FlexibleModal title={t("about")} modalId="About" component={About} />
+      <FlexibleModal
+        title={t("Home.lastActions")}
         modalId="LastActs"
         component={LastActions}
       />
       <FlexibleModal
-        title="Welcome to Mafia"
+        title={t("welcomeToMafia")}
         modalId="Landing"
         component={Landing}
         closeButtons={false}

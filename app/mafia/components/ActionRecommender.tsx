@@ -49,7 +49,10 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
   }
 
   return (
-    <FlexibleModal modalId="ActionRecommender" title="Setup your Game">
+    <FlexibleModal
+      modalId="ActionRecommender"
+      title={t("Settings.setupYourGame")}
+    >
       <div className="grid gap-6">
         {!isGameReady() && <GameMode />}
         {players.length === 0 ? (

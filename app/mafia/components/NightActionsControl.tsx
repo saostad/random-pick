@@ -224,11 +224,11 @@ const NightActionsControl: React.FC = () => {
                 <div className="dropdown-content card card-compact bg-neutral bg-opacity-95 z-[1] w-64 p-2 shadow">
                   <div className="card-body">
                     <ModalButton modalId="TagPlayers">
-                      Tag <CarbonTag />
+                      {t("NightActions.tag")} <CarbonTag />
                     </ModalButton>
                     <div className="my-2"></div>
                     <ModalButton modalId="playersStatus">
-                      Kill <MdiDead />
+                      {t("NightActions.kill")} <MdiDead />
                     </ModalButton>
                   </div>
                 </div>
