@@ -132,7 +132,6 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 
 const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  const [hasLandingShown, setHasLandingShown] = useState(false);
   const { handleOpen } = useModal();
 
   const initialState: GameState = {
@@ -524,7 +523,6 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     getCurrentPhaseIndex,
     setSpeakingOrder,
     loading,
-    hasLandingShown,
     decreaseInquiries,
     addEvent,
     getEventsByPhase,
