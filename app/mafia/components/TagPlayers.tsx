@@ -7,6 +7,7 @@ import {
 import * as changeCase from "change-case";
 import { useModal } from "../contexts/ModalContext";
 import { TagsType } from "../data/predefinedTags";
+import { useTranslations } from "next-intl";
 
 const TagPlayers: React.FC = () => {
   const { gameState, assignTagToPlayer, unassignTagFromPlayer } =
@@ -31,11 +32,13 @@ const TagPlayers: React.FC = () => {
     }
   };
 
+  const t = useTranslations("Mafia");
+
   return (
     <form onSubmit={handleSubmit}>
       <label className="form-control w-full max-w-xs">
         <div className="label">
-          <span className="label-text">Select an Action</span>
+          <span className="label-text">{t("selectAnAction")}</span>
         </div>
         <select
           className="select select-bordered"
@@ -45,24 +48,24 @@ const TagPlayers: React.FC = () => {
           }
         >
           <option value="" disabled>
-            Pick one
+            {t("pickOne")}
           </option>
-          <option value="assign">Assign Tag</option>
-          <option value="unassign">Unassign Tag</option>
+          <option value="assign">{t("assignTag")}</option>
+          <option value="unassign">{t("unassignTag")}</option>
         </select>
       </label>
       {actionType && (
         <>
           <label className="form-control w-full max-w-xs">
             <div className="label">
-              <span className="label-text">Select a Player</span>
+              <span className="label-text">{t("selectAPlayer")}</span>
             </div>
             <select
               className="select select-bordered"
               value={selectedPlayer}
               onChange={(e) => setSelectedPlayer(e.target.value)}
             >
-              <option value="">Pick one</option>
+              <option value="">{t("pickOne")}</option>
               {players.map((player) => (
                 <option key={player.id} value={player.id}>
                   {player.name}
@@ -74,7 +77,7 @@ const TagPlayers: React.FC = () => {
             <>
               <label className="form-control w-full max-w-xs">
                 <div className="label">
-                  <span className="label-text">Tag</span>
+                  <span className="label-text">{t("tag")}</span>
                 </div>
                 <select
                   className="select select-bordered"
@@ -92,7 +95,7 @@ const TagPlayers: React.FC = () => {
                 <>
                   <label className="form-control w-full max-w-xs">
                     <div className="label">
-                      <span className="label-text">Expires</span>
+                      <span className="label-text">{t("expires")}</span>
                     </div>
                     <select
                       className="select select-bordered"

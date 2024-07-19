@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { GameRole, useGameContext } from "../contexts/GameContext";
 import predefinedRoles from "../data/predefinedRoles";
+import { useTranslations } from "next-intl";
 
 const PredefinedRoles: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
@@ -21,9 +22,11 @@ const PredefinedRoles: React.FC = () => {
     setSelectedRoles([]);
   };
 
+  const t = useTranslations("Mafia");
+
   return (
     <div className="mb-4">
-      <h3>Predefined Roles</h3>
+      <h3>{t("predefinedRoles")}</h3>
       <div className="grid grid-cols-1 gap-2">
         {predefinedRoles.map((role) => (
           <label key={role.id} className="flex items-center">
@@ -49,7 +52,7 @@ const PredefinedRoles: React.FC = () => {
         className="btn btn-secondary mt-2"
         onClick={handleAddPredefinedRoles}
       >
-        Add Selected Roles
+        {t("addSelectedRoles")}
       </button>
     </div>
   );

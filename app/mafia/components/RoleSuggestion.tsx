@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GameMode, GameRole, useGameContext } from "../contexts/GameContext";
 import predefinedRoles, { PredefinedRole } from "../data/predefinedRoles";
+import { useTranslations } from "next-intl";
 
 const RoleSuggestion: React.FC = () => {
   const { gameState, updateGameState, loading } = useGameContext();
@@ -153,6 +154,8 @@ const RoleSuggestion: React.FC = () => {
   const decreasePlayers = () =>
     setNumPlayers(numPlayers > 0 ? numPlayers - 1 : 0);
 
+  const t = useTranslations("Mafia");
+
   return (
     <div>
       <div className="grid grid-cols-1 gap-2 mb-4">
@@ -165,7 +168,7 @@ const RoleSuggestion: React.FC = () => {
             marginBottom: "1rem",
           }}
         >
-          <span>Number of Players:</span>
+          <span>{t("numberOfPlayers")}</span>
           <div>
             <button
               className="btn btn-circle btn-outline"
@@ -183,27 +186,27 @@ const RoleSuggestion: React.FC = () => {
           </div>
         </div>
         <div className="">
-          <label className="mr-4">Game Level:</label>
+          <label className="mr-4">{t("gameLevel")}</label>
           <select
             className="select select-bordered select-primary w-full max-w-xs"
             value={gameLevel}
             onChange={(e) => setGameLevel(e.target.value as GameMode)}
           >
-            <option value="beginner">Beginner</option>
-            <option value="pro">Pro</option>
+            <option value="beginner">{t("beginner")}</option>
+            <option value="pro">{t("GameMode.pro")}</option>
           </select>
         </div>
         <button
           className="btn btn-outline btn-ghost btn-secondary mt-4"
           onClick={handleSuggestRoles}
         >
-          Suggest some Roles!
+          {t("suggestSomeRoles")}
         </button>
       </div>
       {message && <div className="alert">{message}</div>}
       {suggestedRoles.length > 0 && (
         <div className="mb-4">
-          <h4>Suggested Roles:</h4>
+          <h4>{t("suggestedRoles")}</h4>
           <div className="grid grid-cols-1 gap-2">
             {suggestedRoles.map((role) => (
               <label key={role.id} className="flex items-center">
@@ -231,7 +234,7 @@ const RoleSuggestion: React.FC = () => {
             className="btn btn-ghost btn-outline btn-primary mt-2"
             onClick={handleAddSuggestedRoles}
           >
-            Let&apos;s go with selected Roles!
+            {t("letsGoWithSelectedRoles")}
           </button>
         </div>
       )}

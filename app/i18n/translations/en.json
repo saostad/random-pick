@@ -234,6 +234,24 @@
     "welcomeToMafia": "Welcome to Mafia",
     "nextPlayer": "Next Player",
     "prev": "Prev",
-    "noMorePhases": "No more phases!"
+    "noMorePhases": "No more phases!",
+    "addTag": "Add Tag",
+    "selectAnAction": "Select an Action",
+    "pickOne": "Pick one",
+    "assignTag": "Assign Tag",
+    "unassignTag": "Unassign Tag",
+    "selectAPlayer": "Select a Player",
+    "expires": "Expires",
+    "isChallenging": "is challenging",
+    "gameLevel": "Game Level:",
+    "beginner": "Beginner",
+    "suggestSomeRoles": "Suggest some Roles!",
+    "suggestedRoles": "Suggested Roles:",
+    "letsGoWithSelectedRoles": "Let's go with selected Roles!",
+    "predefinedRoles": "Predefined Roles",
+    "addSelectedRoles": "Add Selected Roles",
+    "addSelectedActions": "Add Selected Actions",
+    "predefinedActions": "Predefined Actions",
+    "playerNotFound": "Player not found"
   }
 }

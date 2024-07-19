@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import React, { useEffect, useRef, useState } from "react";
 
 interface TimerProps {
@@ -8,6 +9,7 @@ interface TimerProps {
 const Timer: React.FC<TimerProps> = ({ isRunning, onElapsedTimeChange }) => {
   const [elapsedTime, setElapsedTime] = useState<number>(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const t = useTranslations("Mafia");
 
   useEffect(() => {
     if (isRunning) {
@@ -49,7 +51,7 @@ const Timer: React.FC<TimerProps> = ({ isRunning, onElapsedTimeChange }) => {
 
   return (
     <div>
-      <b>Elapsed Time:</b> {elapsedTime}s
+      <b>{t("Timer.elapsedTime")}</b> {elapsedTime}s
     </div>
   );
 };

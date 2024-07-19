@@ -1,5 +1,6 @@
 import React from "react";
 import { TagExpiration, useGameContext } from "../contexts/GameContext";
+import { useTranslations } from "next-intl";
 
 type PlayerTagsIndicatorProps = {
   playerId: string;
@@ -21,8 +22,10 @@ const PlayerTagsIndicator: React.FC<PlayerTagsIndicatorProps> = ({
   const { players, currentStepIndex } = gameState;
   const player = players.find((p) => p.id === playerId);
 
+  const t = useTranslations("Mafia");
+
   if (!player) {
-    return <div>Player not found</div>;
+    return <div>{t("playerNotFound")}</div>;
   }
 
   /**

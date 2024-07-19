@@ -1,5 +1,6 @@
 import React from "react";
 import { useGameContext } from "../contexts/GameContext";
+import { useTranslations } from "next-intl";
 
 const TimerSettings: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
@@ -9,6 +10,8 @@ const TimerSettings: React.FC = () => {
     speakingTime,
     speakingTimeEnabled,
   } = gameState;
+
+  const t = useTranslations("Mafia");
 
   const handleChallengeTimeToggle = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -52,7 +55,9 @@ const TimerSettings: React.FC = () => {
     <div>
       <div className="form-control">
         <label className="label cursor-pointer">
-          <span className="label-text">Play sound in speaking time</span>
+          <span className="label-text">
+            {t("TimerSettings.playSoundInSpeakingTime")}
+          </span>
           <input
             type="checkbox"
             checked={speakingTimeEnabled}
@@ -62,7 +67,7 @@ const TimerSettings: React.FC = () => {
         </label>
       </div>
       <label className="input input-bordered flex items-center gap-2">
-        Seconds
+        {t("TimerSettings.seconds")}
         <input
           type="number"
           className="grow"
@@ -75,7 +80,9 @@ const TimerSettings: React.FC = () => {
       <div className="divider"></div>
       <div className="form-control">
         <label className="label cursor-pointer">
-          <span className="label-text">Play sound in challenge mode</span>
+          <span className="label-text">
+            {t("TimerSettings.playSoundInChallengeMode")}
+          </span>
           <input
             type="checkbox"
             checked={challengeTimeEnabled}
@@ -85,7 +92,7 @@ const TimerSettings: React.FC = () => {
         </label>
       </div>
       <label className="input input-bordered flex items-center gap-2">
-        Seconds
+        {t("TimerSettings.seconds")}
         <input
           type="number"
           className="grow"

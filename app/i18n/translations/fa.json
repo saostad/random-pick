@@ -233,6 +233,26 @@
     "about": "درباره",
     "welcomeToMafia": "به مافیا خوش آمدید",
     "nextPlayer": "بازیکن بعدی",
-    "prev": "قبلی"
+    "prev": "قبلی",
+
+    "noMorePhases": "فاز دیگری وجود ندارد!",
+    "addTag": "افزودن برچسب",
+    "selectAnAction": "یک اقدام را انتخاب کنید",
+    "pickOne": "یکی را انتخاب کنید",
+    "assignTag": "اختصاص برچسب",
+    "unassignTag": "حذف برچسب",
+    "selectAPlayer": "یک بازیکن را انتخاب کنید",
+    "expires": "منقضی می‌شود",
+    "isChallenging": "در حال چالش است",
+    "gameLevel": "سطح بازی:",
+    "beginner": "مبتدی",
+    "suggestSomeRoles": "تعدادی نقش پیشنهاد دهید!",
+    "suggestedRoles": "نقش‌های پیشنهادی:",
+    "letsGoWithSelectedRoles": "با نقش‌های انتخاب شده شروع کنیم!",
+    "predefinedRoles": "نقش‌های از پیش تعریف شده",
+    "addSelectedRoles": "افزودن نقش‌های انتخاب شده",
+    "addSelectedActions": "افزودن اقدامات انتخاب شده",
+    "predefinedActions": "اقدامات از پیش تعریف شده",
+    "playerNotFound": "بازیکن یافت نشد"
   }
 }

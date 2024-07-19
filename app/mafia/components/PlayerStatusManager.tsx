@@ -5,6 +5,7 @@ import CarbonReturn from "~icons/carbon/return";
 
 import PlayerTagsIndicator from "./PlayerTagsIndicator";
 import { getRoleByPlayerId } from "../utils/get-from-fns";
+import { useTranslations } from "next-intl";
 
 const PlayerStatusManager: React.FC = () => {
   const { gameState, markPlayerAsDead, markPlayerAsAlive } = useGameContext();
@@ -20,10 +21,12 @@ const PlayerStatusManager: React.FC = () => {
     markPlayerAsAlive(playerId);
   };
 
+  const t = useTranslations("Mafia");
+
   return (
     <>
       <div className="text-xl font-bold mb-4">
-        Players ({alivePlayers.length})
+        {t("Settings.players")} ({alivePlayers.length})
       </div>
       <>
         {alivePlayers.map((player) => (
@@ -44,7 +47,7 @@ const PlayerStatusManager: React.FC = () => {
               className="btn btn-outline btn-error btn-sm"
               onClick={() => handleMarkPlayerAsDead(player.id)}
             >
-              Dead <CarbonOutage />
+              {t("Common.dead")} <CarbonOutage />
             </button>
           </div>
         ))}
@@ -52,7 +55,7 @@ const PlayerStatusManager: React.FC = () => {
       {deadPlayers.length > 0 && (
         <>
           <div className="text-xl font-bold mb-4">
-            Dead Players ({deadPlayers.length})
+            {t("GameStats.deadPlayers")} ({deadPlayers.length})
           </div>
           <>
             {deadPlayers.map((player) => (
@@ -73,7 +76,7 @@ const PlayerStatusManager: React.FC = () => {
                   className="btn btn-outline btn-success btn-sm"
                   onClick={() => handleMarkPlayerAsAlive(player.id)}
                 >
-                  Revive <CarbonReturn />
+                  {t("PlayerStatusManager.revive")} <CarbonReturn />
                 </button>
               </div>
             ))}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { LastActType, useGameContext } from "../contexts/GameContext";
 import { predefinedLastActions } from "../data/predefinedLastActions";
+import { useTranslations } from "next-intl";
 
 const PredefinedLastActions: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
@@ -18,9 +19,11 @@ const PredefinedLastActions: React.FC = () => {
     setSelectedItems([]);
   };
 
+  const t = useTranslations("Mafia");
+
   return (
     <div className="mb-4">
-      <h3>Predefined Roles</h3>
+      <h3>{t("predefinedActions")}</h3>
       <div className="grid grid-cols-1 gap-2">
         {predefinedLastActions.map((item) => (
           <label key={item.id} className="flex items-center">
@@ -41,7 +44,7 @@ const PredefinedLastActions: React.FC = () => {
               <div className="collapse bg-base-200">
                 <input type="checkbox" />
                 <div className="collapse-title text-sm font-medium">
-                  Details
+                  {t("Inquiries.details")}
                 </div>
                 <div className="collapse-content">
                   <p>{item.description}</p>
@@ -56,7 +59,7 @@ const PredefinedLastActions: React.FC = () => {
         className="btn btn-secondary mt-2"
         onClick={handleAddPredefinedItem}
       >
-        Add Selected Roles
+        {t("addSelectedActions")}
       </button>
     </div>
   );

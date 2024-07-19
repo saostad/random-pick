@@ -2,6 +2,7 @@ import React from "react";
 import { Player } from "../contexts/GameContext";
 import PlayerTagsIndicator from "./PlayerTagsIndicator";
 import GlowingButton from "./GlowingButton";
+import { useTranslations } from "next-intl";
 
 interface SpeakerProps {
   currentSpeaker: Player | null;
@@ -18,10 +19,12 @@ const Speaker: React.FC<SpeakerProps> = ({
   handleNextSpeaker,
   challengeModeDisabled,
 }) => {
+  const t = useTranslations("Mafia");
+
   return (
     <>
       <div className="my-4">
-        <b>Current Speaker:</b>{" "}
+        <b>{t("DayActions.currentSpeaker")}</b>{" "}
         {currentSpeaker ? (
           <>
             <PlayerTagsIndicator playerId={currentSpeaker.id} />
@@ -32,15 +35,15 @@ const Speaker: React.FC<SpeakerProps> = ({
       </div>
       {challengeMode && currentChallengerName && (
         <p>
-          <b>Challenger:</b> {currentChallengerName} is challenging{" "}
-          {currentSpeaker?.name}
+          <b>{t("DayActions.challenger")}</b> {currentChallengerName}{" "}
+          {t("isChallenging")} {currentSpeaker?.name}
         </p>
       )}
       <GlowingButton
         onClick={handleNextSpeaker}
         disabled={challengeModeDisabled}
       >
-        Next Speaker
+        {t("DayActions.nextSpeaker")}
       </GlowingButton>
     </>
   );

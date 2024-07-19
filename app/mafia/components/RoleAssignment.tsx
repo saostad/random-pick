@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import CarbonShuffle from "~icons/carbon/shuffle"; // Assuming you have an icon for shuffle
+import { useTranslations } from "next-intl";
 
 const RoleAssignment: React.FC = () => {
   const { gameState, assignRoleToPlayer, unassignRoleFromPlayer } =
@@ -69,6 +70,8 @@ const RoleAssignment: React.FC = () => {
     });
   };
 
+  const t = useTranslations("Mafia");
+
   return (
     <>
       <div role="tablist" className="tabs tabs-boxed mb-4">
@@ -77,14 +80,14 @@ const RoleAssignment: React.FC = () => {
           className={`tab ${assignBy === "players" ? "tab-active" : ""}`}
           onClick={() => setAssignBy("players")}
         >
-          By Players
+          {t("RoleAssignment.byPlayers")}
         </a>
         <a
           role="tab"
           className={`tab ${assignBy === "roles" ? "tab-active" : ""}`}
           onClick={() => setAssignBy("roles")}
         >
-          By Roles
+          {t("RoleAssignment.byRoles")}
         </a>
       </div>
 
@@ -93,7 +96,7 @@ const RoleAssignment: React.FC = () => {
         onClick={handleRandomAssignment}
         title="Randomly select a player"
       >
-        Shuffle <CarbonShuffle />
+        {t("RoleAssignment.shuffle")} <CarbonShuffle />
       </button>
 
       {assignBy === "players"
@@ -120,7 +123,7 @@ const RoleAssignment: React.FC = () => {
                   title="Select a role"
                 >
                   <option disabled value="">
-                    Select a role
+                    {t("RoleAssignment.selectRole")}
                   </option>
                   {gameState.gameRoles
                     .filter(
@@ -165,7 +168,7 @@ const RoleAssignment: React.FC = () => {
                 title="Select a player"
               >
                 <option disabled value="">
-                  Select a player
+                  {t("RoleAssignment.selectPlayer")}
                 </option>
                 {gameState.players
                   .filter(

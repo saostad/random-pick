@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useGameContext } from "../contexts/GameContext";
 import { TagsType } from "../data/predefinedTags";
+import { useTranslations } from "next-intl";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -26,6 +27,9 @@ const Tags: React.FC<Props> = (props) => {
     const updatedTags = tags.map((t) => (t === tag ? value : t));
     updateGameState({ tags: updatedTags as TagsType[] });
   }
+
+  const t = useTranslations("Mafia");
+
   return (
     <div {...props}>
       <input
@@ -36,7 +40,7 @@ const Tags: React.FC<Props> = (props) => {
         onChange={(e) => setNewTag(e.target.value as TagsType)}
       />
       <button className="btn btn-primary btn-outline" onClick={handleAdd}>
-        Add Tag
+        {t("addTag")}
       </button>
       <div className="divider"></div>
 

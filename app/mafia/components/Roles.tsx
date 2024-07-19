@@ -4,6 +4,7 @@ import PredefinedRoles from "./PredefinedRoles";
 import RoleSuggestion from "./RoleSuggestion";
 import CarbonAdd from "~icons/carbon/add";
 import DraggableItems from "./DraggableItems";
+import { useTranslations } from "next-intl";
 
 const Roles: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
@@ -17,6 +18,8 @@ const Roles: React.FC = () => {
   >("suggestRoles");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
+
+  const t = useTranslations("Mafia");
 
   const handleAddRole = () => {
     if (!newRoleName.trim()) return;
@@ -197,9 +200,9 @@ const Roles: React.FC = () => {
               setSide(e.target.value as "Town" | "Mafia" | "ThirdParty")
             }
           >
-            <option value="Town">Town</option>
-            <option value="Mafia">Mafia</option>
-            <option value="ThirdParty">Third Party</option>
+            <option value="Town">{t("Common.town")}</option>
+            <option value="Mafia">{t("Common.mafia")}</option>
+            <option value="ThirdParty">{t("Common.thirdParty")}</option>
           </select>
           <input
             type="text"
@@ -217,7 +220,7 @@ const Roles: React.FC = () => {
           <div className="m-2">
             <div className="form-control">
               <label className="cursor-pointer label">
-                <span className="label-text">Night action?</span>
+                <span className="label-text">{t("Roles.nightAction")}</span>
                 <input
                   type="checkbox"
                   checked={hasAction}
@@ -228,7 +231,7 @@ const Roles: React.FC = () => {
             </div>
           </div>
           <button className="btn btn-primary" onClick={handleAddRole}>
-            Add <CarbonAdd />
+            {t("Common.add")} <CarbonAdd />
           </button>
           {error && <div style={{ color: "red" }}>{error}</div>}
         </div>
