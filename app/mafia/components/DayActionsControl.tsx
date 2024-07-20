@@ -259,7 +259,7 @@ const DayActionsControl: React.FC = () => {
         </p>
       )}
       <div className="mb-2 flex items-center">
-        <label htmlFor="starting-player" className="mr-2">
+        <label htmlFor="starting-player" className="mx-2">
           {t("DayActions.startingPlayer")}{" "}
         </label>
         <select
