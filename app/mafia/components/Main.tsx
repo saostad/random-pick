@@ -31,13 +31,17 @@ interface MainProps extends HTMLAttributes<HTMLElement> {}
 const Main: React.FC<MainProps> = (props) => {
   const { loading, gameState } = useGameContext();
   const t = useTranslations("Mafia");
-  const { handleOpen } = useModal();
+  const { handleOpen, modals } = useModal();
   const { activeTab, hasLandingShown } = gameState;
 
   useEffect(() => {
     if (loading) return;
     if (!hasLandingShown) {
-      setTimeout(() => handleOpen("Landing"), 1000); // Open the Landing modal after 1 second to make sure it's on top of other modals
+      setTimeout(() => {
+        if (!modals["Landing"]) {
+          handleOpen("Landing");
+        }
+      }, 1000); // Open the Landing modal after 1 second to make sure it's on top of other modals
     }
   }, [handleOpen, loading]);
 

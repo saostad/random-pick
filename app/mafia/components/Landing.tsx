@@ -27,7 +27,7 @@ const Landing: React.FC = () => {
   }
   return (
     <div>
-      <h2 className="font-bold my-4">Select Language</h2>
+      <h2 className="font-bold my-4">{t("selectLanguage")}</h2>
       {langs.map((lang) => (
         <div key={lang.code} className="form-control">
           <label className="label cursor-pointer">
