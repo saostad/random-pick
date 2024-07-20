@@ -259,7 +259,7 @@ const DayActionsControl: React.FC = () => {
         </p>
       )}
       <div className="mb-2 flex items-center">
-        <label htmlFor="starting-player" className="mx-2">
+        <label htmlFor="starting-player" className="mr-2">
           {t("DayActions.startingPlayer")}{" "}
         </label>
         <select
@@ -278,7 +278,7 @@ const DayActionsControl: React.FC = () => {
           ))}
         </select>
         <button
-          className="btn btn-ghost btn-outline btn-secondary ml-2"
+          className="btn btn-ghost btn-outline btn-secondary mx-2"
           onClick={handleRandomSelect}
           title="Randomly select a player"
         >
