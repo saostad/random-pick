@@ -74,8 +74,8 @@ const Wizard: React.FC = () => {
     if (currentStepIndex < sequence.length - 1) {
       return (
         <span>
-          <span className="font-bold">Next Phase:</span>
-          <span className="ml-2 underline">
+          <span className="font-bold">{t("Wizard.nextPhase")}</span>
+          <span className="mx-2 underline">
             {sequence[currentStepIndex + 1]}
           </span>
         </span>
@@ -129,7 +129,7 @@ const Wizard: React.FC = () => {
                 currentStepIndex >= sequence.length - 1
               }
             >
-              Let&apos;s Go! <span className="ml-2">🚀</span>
+              {t("Wizard.letsGo")} <span className="ml-2">🚀</span>
             </GlowingButton>
           </div>
           <Animation

@@ -130,7 +130,11 @@ const GameStats: React.FC = () => {
                 {t("GameStats.speaker")} {speakingTime}s
               </p>
             )}
-            {challengeTimeEnabled && <p>Challenger: {challengeTime}s</p>}
+            {challengeTimeEnabled && (
+              <p>
+                {t("DayActions.challenger")} {challengeTime}s
+              </p>
+            )}
             {!speakingTimeEnabled && !challengeTimeEnabled && t("notTimerSet")}
           </div>
         </div>

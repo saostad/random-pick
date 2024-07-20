@@ -8,6 +8,7 @@ import CarbonGroup from "~icons/carbon/group.jsx";
 import CarbonUserRole from "~icons/carbon/user-role";
 import { useModal } from "../contexts/ModalContext";
 import { useTranslations } from "next-intl";
+import GlowingButton from "./GlowingButton";
 
 export default function Audit() {
   const t = useTranslations("Mafia");
@@ -101,28 +102,30 @@ export default function Audit() {
 
       {!getAuditProblems(gameState).isAuditFailed && (
         <div className="flex justify-center">
-          <button
-            className="btn btn-success btn-wide"
+          <GlowingButton
+            className="btn-wide"
             onClick={() => {
               handleClose("audit");
             }}
           >
-            {t("Audit.gameIsReady")}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
-          </button>
+            <div className="flex items-center">
+              {t("Audit.gameIsReady")}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+          </GlowingButton>
         </div>
       )}
     </>

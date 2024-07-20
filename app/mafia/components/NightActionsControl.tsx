@@ -109,7 +109,7 @@ const NightActionsControl: React.FC = () => {
   return (
     <div className="flex flex-col items-center mt-6">
       <GlowingButton onClick={handleStartNight} className="my-4 btn-wide">
-        Start Night {gameState.nightCount}
+        {t("NightActions.startNight")} {gameState.nightCount}
       </GlowingButton>
       <Animation
         className=""
@@ -123,7 +123,10 @@ const NightActionsControl: React.FC = () => {
         component={TagPlayers}
         title="Tag Management"
       />
-      <FlexibleModal modalId="night-actions" title="Night Actions">
+      <FlexibleModal
+        modalId="night-actions"
+        title={t("NightActions.nightActions")}
+      >
         <div className="min-h-64">
           <div className="flex justify-between">
             <Timer isRunning={isTimerRunning} />
@@ -220,7 +223,7 @@ const NightActionsControl: React.FC = () => {
                   )
                 </div>
               </div>
-              <DropdownButton title="Actions" location="top">
+              <DropdownButton title={t("NightActions.actions")} location="top">
                 <div className="dropdown-content card card-compact bg-neutral bg-opacity-95 z-[1] w-64 p-2 shadow">
                   <div className="card-body">
                     <ModalButton modalId="TagPlayers">
@@ -234,7 +237,7 @@ const NightActionsControl: React.FC = () => {
                 </div>
               </DropdownButton>
 
-              <GlowingButton onClick={handleNextAction} className="ml-4">
+              <GlowingButton onClick={handleNextAction} className="mx-4">
                 <div className="flex">
                   <span className="mx-2">{t("NightActions.nextRole")}</span>
                   <MaterialSymbolsChipExtraction />
