@@ -252,6 +252,11 @@
     "addSelectedRoles": "Add Selected Roles",
     "addSelectedActions": "Add Selected Actions",
     "predefinedActions": "Predefined Actions",
-    "playerNotFound": "Player not found"
+    "playerNotFound": "Player not found",
+    "singleVoting": "Single Voting",
+    "multiVoting": "Multi Voting",
+    "noRoleAssigned": "No role assigned",
+    "playersOrder": "Player's order",
+    "gameReset": "Game Reset"
   }
 }

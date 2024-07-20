@@ -92,7 +92,7 @@ const NewGameButton: React.FC = () => {
           </li>
         </ul>
       </FlexibleModal>
-      <FlexibleModal modalId="hard-reset" title="Game Reset">
+      <FlexibleModal modalId="hard-reset" title={t("gameReset")}>
         {t("everythingCleanedUpLetsStartFresh")}
       </FlexibleModal>
       <DropdownButton

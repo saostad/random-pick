@@ -253,6 +253,11 @@
     "addSelectedRoles": "افزودن نقش‌های انتخاب شده",
     "addSelectedActions": "افزودن اقدامات انتخاب شده",
     "predefinedActions": "اقدامات از پیش تعریف شده",
-    "playerNotFound": "بازیکن یافت نشد"
+    "playerNotFound": "بازیکن یافت نشد",
+    "singleVoting": "رأی‌گیری تکی",
+    "multiVoting": "رأی‌گیری چندگانه",
+    "noRoleAssigned": "نقشی اختصاص داده نشده",
+    "playersOrder": "ترتیب بازیکنان",
+    "gameReset": "بازنشانی بازی"
   }
 }

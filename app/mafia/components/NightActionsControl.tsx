@@ -216,7 +216,7 @@ const NightActionsControl: React.FC = () => {
                     "Unassigned"
                   )}
                   {!rolePlayers[actionableRoles[currentActionIndex].id]
-                    ?.isAlive && <mark> (Dead)</mark>}
+                    ?.isAlive && <mark> ({t("Common.dead")})</mark>}
                   )
                 </div>
               </div>
@@ -236,7 +236,7 @@ const NightActionsControl: React.FC = () => {
 
               <GlowingButton onClick={handleNextAction} className="ml-4">
                 <div className="flex">
-                  <span className="mr-2">Next Role</span>
+                  <span className="mx-2">{t("NightActions.nextRole")}</span>
                   <MaterialSymbolsChipExtraction />
                 </div>
               </GlowingButton>

@@ -3,6 +3,7 @@ import { useGameContext } from "../contexts/GameContext";
 import VotingButtons from "./VotingButtons";
 import MultiVoting from "./MultiVoting";
 import SingleVoting from "./SingleVoting";
+import { useTranslations } from "next-intl";
 
 type VotingInProgressProps = {
   endVoting: () => void;
@@ -11,6 +12,7 @@ type VotingInProgressProps = {
 const VotingInProgress: React.FC<VotingInProgressProps> = ({ endVoting }) => {
   const { gameState, decreaseVote, increaseVote } = useGameContext();
   const { players, speakingOrder } = gameState;
+  const t = useTranslations("Mafia");
 
   const [activeTab, setActiveTab] = useState<
     "simple" | "multi-voting" | "single-voting"
@@ -28,7 +30,7 @@ const VotingInProgress: React.FC<VotingInProgressProps> = ({ endVoting }) => {
             }`}
             type="radio"
             name="options"
-            aria-label="Simple"
+            aria-label={t("GameMode.simple")}
             checked={activeTab === "simple"}
             onChange={() => setActiveTab("simple")}
           />
@@ -38,7 +40,7 @@ const VotingInProgress: React.FC<VotingInProgressProps> = ({ endVoting }) => {
             }`}
             type="radio"
             name="options"
-            aria-label="Multi Voting"
+            aria-label={t("multiVoting")}
             checked={activeTab === "multi-voting"}
             onChange={() => setActiveTab("multi-voting")}
           />
@@ -48,7 +50,7 @@ const VotingInProgress: React.FC<VotingInProgressProps> = ({ endVoting }) => {
             }`}
             type="radio"
             name="options"
-            aria-label="Single Voting"
+            aria-label={t("singleVoting")}
             checked={activeTab === "single-voting"}
             onChange={() => setActiveTab("single-voting")}
           />

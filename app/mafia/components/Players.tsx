@@ -3,8 +3,10 @@ import { useGameContext, Player } from "../contexts/GameContext";
 import DraggableItems from "./DraggableItems";
 import GeneratePlayerNames from "./GeneratePlayerNames";
 import CarbonAdd from "~icons/carbon/add";
+import { useTranslations } from "next-intl";
 
 const Players: React.FC = () => {
+  const t = useTranslations("Mafia");
   const { gameState, updateGameState } = useGameContext();
   const [newPlayerName, setNewPlayerName] = useState("");
   const [newPlayerOrder, setNewPlayerOrder] = useState<number>(1);
@@ -123,7 +125,7 @@ const Players: React.FC = () => {
             }`}
             type="radio"
             name="options"
-            aria-label="Add a Player"
+            aria-label={t("Players.addPlayer")}
             checked={activeTab === "addPlayer"}
             onChange={() => setActiveTab("addPlayer")}
           />
@@ -133,7 +135,7 @@ const Players: React.FC = () => {
             }`}
             type="radio"
             name="options"
-            aria-label="Generate Players"
+            aria-label={t("generatePlayers")}
             checked={activeTab === "generatePlayers"}
             onChange={() => setActiveTab("generatePlayers")}
           />
@@ -145,7 +147,7 @@ const Players: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Player&apos;s Name</span>
+                <span className="label-text">{t("Players.playerName")}</span>
               </div>
               <input
                 type="text"
@@ -156,14 +158,16 @@ const Players: React.FC = () => {
                 onKeyDown={handleKeyDown}
               />
               <div className="label">
-                <span className="label-text-alt">Press Enter to add</span>
+                <span className="label-text-alt">
+                  {t("Players.pressEnterToAdd")}
+                </span>
               </div>
             </label>
 
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Seat Number</span>
-                <span className="label-text-alt">Player&apos;s order</span>
+                <span className="label-text">{t("Players.seatNumber")}</span>
+                <span className="label-text-alt">{t("playersOrder")}</span>
               </div>
               <input
                 type="number"
@@ -173,7 +177,9 @@ const Players: React.FC = () => {
                 onChange={(e) => setNewPlayerOrder(Number(e.target.value))}
               />
               <div className="label">
-                <span className="label-text-alt">Unique seat number</span>
+                <span className="label-text-alt">
+                  {t("Players.uniqueSeatNumber")}
+                </span>
               </div>
             </label>
           </div>
@@ -182,7 +188,7 @@ const Players: React.FC = () => {
             onClick={handleAddPlayer}
             disabled={!newPlayerName.trim()}
           >
-            Add Player <CarbonAdd />
+            {t("DayActions.addPlayer")} <CarbonAdd />
           </button>
           {error && <div className="text-error mt-2">{error}</div>}
         </div>

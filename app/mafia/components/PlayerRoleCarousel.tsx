@@ -50,7 +50,9 @@ const PlayerRoleCarousel: React.FC = () => {
 
   function getRoleName(roleId: string | undefined) {
     return (
-      gameRoles.find((role) => role.id === roleId)?.name || "No role assigned"
+      gameRoles.find((role) => role.id === roleId)?.name || (
+        <span>{t("noRoleAssigned")}</span>
+      )
     );
   }
 

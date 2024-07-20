@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Player, useGameContext } from "../contexts/GameContext";
 import { getPlayerNameById } from "../utils/get-from-fns";
+import { useTranslations } from "next-intl";
 
 type SingleVotingProps = {
   players: Player[];
@@ -13,6 +14,7 @@ const SingleVoting: React.FC<SingleVotingProps> = ({
   increaseVote,
   onEndVoting,
 }) => {
+  const t = useTranslations("Mafia");
   const { addEvent } = useGameContext();
   const [chosenPlayer, setChosenPlayer] = useState<string>("");
   const [turnIndex, setTurnIndex] = useState(0);
@@ -103,7 +105,11 @@ const SingleVoting: React.FC<SingleVotingProps> = ({
           }
         }}
       >
-        {turnIndex < players.length - 1 ? "Next Player" : "End Voting"}
+        {turnIndex < players.length - 1 ? (
+          <span>{t("nextPlayer")}</span>
+        ) : (
+          <span>{t("VotingSession.endVoting")}</span>
+        )}
       </button>
     </div>
   );
