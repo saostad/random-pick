@@ -260,6 +260,12 @@
     "playersOrder": "ترتیب بازیکنان",
     "gameReset": "بازنشانی بازی",
     "selectLanguage": "انتخاب زبان",
-    "targets": "تارگت‌ها"
+    "targets": "تارگت‌ها",
+    "playersName": "نام بازیکن",
+    "typePlayersName": "نام بازیکن را وارد کنید",
+    "eGPlayer": "مثال: بازیکن",
+    "enterCount": "تعداد را وارد کنید",
+    "enterStartNumber": "شماره شروع را وارد کنید",
+    "enterPrefix": "پیشوند را وارد کنید"
   }
 }

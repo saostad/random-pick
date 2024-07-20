@@ -99,7 +99,7 @@ const Players: React.FC = () => {
         className="input input-sm input-bordered w-full max-w-xs col-span-3"
         value={player.name}
         onChange={(e) => handleUpdatePlayerName(player.id, e.target.value)}
-        placeholder="Player's name"
+        placeholder={t("playersName")}
       />
       <span className="col-span-2">
         <small>
@@ -151,7 +151,7 @@ const Players: React.FC = () => {
               </div>
               <input
                 type="text"
-                placeholder="Type player's name"
+                placeholder={t("typePlayersName")}
                 className="input input-bordered w-full max-w-xs"
                 value={newPlayerName}
                 onChange={(e) => setNewPlayerName(e.target.value)}

@@ -98,7 +98,7 @@ const Roles: React.FC = () => {
           className="input input-sm input-primary w-full"
           value={role.name}
           onChange={(e) => handleUpdateRoleName(role.id, e.target.value)}
-          placeholder="Role name"
+          placeholder={t("Roles.roleName")}
         />
       </div>
       <div className="col-span-3 flex items-center">
@@ -109,9 +109,9 @@ const Roles: React.FC = () => {
             handleUpdateRoleSide(role.id, e.target.value as RoleSide)
           }
         >
-          <option value="Town">Town</option>
-          <option value="Mafia">Mafia</option>
-          <option value="ThirdParty">Third Party</option>
+          <option value="Town">{t("Common.town")}</option>
+          <option value="Mafia">{t("Common.mafia")}</option>
+          <option value="ThirdParty">{t("Common.thirdParty")}</option>
         </select>
       </div>
       <div className="col-span-3 flex items-center">
@@ -125,7 +125,9 @@ const Roles: React.FC = () => {
                 handleUpdateRoleAction(role.id, e.target.checked)
               }
             />
-            <span className="label-text text-xs ml-2">Night action?</span>
+            <span className="label-text text-xs ml-2">
+              {t("Roles.nightAction")}
+            </span>
           </label>
         </div>
       </div>
@@ -150,7 +152,7 @@ const Roles: React.FC = () => {
             }`}
             type="radio"
             name="options"
-            aria-label="Add a Role"
+            aria-label={t("Roles.addRole")}
             checked={activeTab === "addRole"}
             onChange={() => setActiveTab("addRole")}
           />
@@ -160,7 +162,7 @@ const Roles: React.FC = () => {
             }`}
             type="radio"
             name="options"
-            aria-label="Suggest"
+            aria-label={t("Roles.suggestRoles")}
             checked={activeTab === "suggestRoles"}
             onChange={() => setActiveTab("suggestRoles")}
           />
@@ -170,7 +172,7 @@ const Roles: React.FC = () => {
             }`}
             type="radio"
             name="options"
-            aria-label="Predefined"
+            aria-label={t("Roles.predefinedRoles")}
             checked={activeTab === "predefinedRoles"}
             onChange={() => setActiveTab("predefinedRoles")}
           />
@@ -184,14 +186,14 @@ const Roles: React.FC = () => {
             className="input input-bordered input-primary w-full max-w-xs mb-2"
             value={newRoleName}
             onChange={(e) => setNewRoleName(e.target.value)}
-            placeholder="Role name"
+            placeholder={t("Roles.roleName")}
           />
           <input
             type="text"
             className="input input-bordered input-primary w-full max-w-xs mb-2"
             value={nativeName}
             onChange={(e) => setNativeName(e.target.value)}
-            placeholder="Role alt name"
+            placeholder={t("Roles.roleAltName")}
           />
           <select
             className="select select-bordered select-primary w-full max-w-xs mb-2"
@@ -209,13 +211,13 @@ const Roles: React.FC = () => {
             className="input input-bordered input-primary w-full max-w-xs mb-2"
             value={image}
             onChange={(e) => setImage(e.target.value)}
-            placeholder="Image URL"
+            placeholder={t("Roles.imageUrl")}
           />
           <textarea
             className="textarea textarea-bordered textarea-primary w-full max-w-xs mb-2"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Role description"
+            placeholder={t("Roles.roleDescription")}
           />
           <div className="m-2">
             <div className="form-control">

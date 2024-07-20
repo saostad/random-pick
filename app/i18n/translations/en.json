@@ -259,6 +259,12 @@
     "playersOrder": "Player's order",
     "gameReset": "Game Reset",
     "selectLanguage": "Select Language",
-    "targets": "Targets"
+    "targets": "Targets",
+    "playersName": "Player's name",
+    "typePlayersName": "Type player's name",
+    "eGPlayer": "e.g., Player",
+    "enterCount": "Enter count",
+    "enterStartNumber": "Enter start number",
+    "enterPrefix": "Enter prefix"
   }
 }

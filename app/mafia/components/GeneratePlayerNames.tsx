@@ -4,7 +4,9 @@ import { useTranslations } from "next-intl";
 
 const GeneratePlayerNames: React.FC = () => {
   const { gameState, updateGameState } = useGameContext();
-  const [prefix, setPrefix] = useState("Player");
+  const t = useTranslations("Mafia");
+  const defaultPrefix = t("Common.player");
+  const [prefix, setPrefix] = useState(defaultPrefix);
   const [startNumber, setStartNumber] = useState(1);
   const [count, setCount] = useState(5);
 
@@ -30,8 +32,6 @@ const GeneratePlayerNames: React.FC = () => {
     updateGameState({ players: [...gameState.players, ...newPlayers] });
   };
 
-  const t = useTranslations("Mafia");
-
   return (
     <div className="mb-4">
       <h3 className="text-lg font-semibold mb-2">
@@ -41,11 +41,11 @@ const GeneratePlayerNames: React.FC = () => {
         <label className="form-control w-full max-w-xs">
           <div className="label">
             <span className="label-text">{t("namePrefix")}</span>
-            <span className="label-text-alt">e.g., &quot;Player&quot;</span>
+            <span className="label-text-alt">{t("eGPlayer")}</span>
           </div>
           <input
             type="text"
-            placeholder="Enter prefix"
+            placeholder={t("enterPrefix")}
             className="input input-bordered w-full max-w-xs"
             value={prefix}
             onChange={(e) => setPrefix(e.target.value)}
@@ -62,7 +62,7 @@ const GeneratePlayerNames: React.FC = () => {
           </div>
           <input
             type="number"
-            placeholder="Enter start number"
+            placeholder={t("enterStartNumber")}
             className="input input-bordered w-full max-w-xs"
             value={startNumber}
             onChange={(e) => setStartNumber(parseInt(e.target.value))}
@@ -81,7 +81,7 @@ const GeneratePlayerNames: React.FC = () => {
           </div>
           <input
             type="number"
-            placeholder="Enter count"
+            placeholder={t("enterCount")}
             className="input input-bordered w-full max-w-xs"
             value={count}
             onChange={(e) => setCount(parseInt(e.target.value))}
