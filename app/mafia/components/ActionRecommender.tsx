@@ -11,6 +11,7 @@ import CilTags from "~icons/cil/tags";
 import CarbonTimer from "~icons/carbon/timer";
 import HugeiconsValidationApproval from "~icons/hugeicons/validation-approval";
 import { useTranslations } from "next-intl";
+import GlowingButton from "./GlowingButton";
 
 interface ActionRecommenderProps extends HTMLAttributes<HTMLElement> {}
 
@@ -76,14 +77,13 @@ const ActionRecommender: React.FC<ActionRecommenderProps> = (props) => {
               loop={true}
               autoplay={true}
             />
-            <button
-              className="btn btn-success"
+            <GlowingButton
               onClick={() => {
                 handleClose("ActionRecommender");
               }}
             >
               {t("Home.gameReady")}
-            </button>
+            </GlowingButton>
             <div className="mt-4 text-warning">{t("Home.suggestedSteps")}</div>
             {gameMode === "beginner" && (
               <div className="flex flex-col gap-4">

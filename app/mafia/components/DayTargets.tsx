@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Player, useGameContext } from "../contexts/GameContext";
 import { getAlivePlayers } from "../utils/get-from-fns";
+import { useTranslations } from "next-intl";
 
 type DayTargetsProps = {
   playerId: string;
@@ -8,6 +9,7 @@ type DayTargetsProps = {
 };
 
 const DayTargets: React.FC<DayTargetsProps> = ({ playerId, setTargets }) => {
+  const t = useTranslations("Mafia");
   const [selectedPlayers, setSelectedPlayers] = useState<Player[]>([]);
 
   const {
@@ -38,9 +40,9 @@ const DayTargets: React.FC<DayTargetsProps> = ({ playerId, setTargets }) => {
   }, [playerId]);
 
   return (
-    <div className="dropdown dropdown-top">
+    <div className="dropdown dropdown-top dropdown-end">
       <div tabIndex={0} role="button" className="btn m-1 btn-outline">
-        Targets
+        {t("targets")}
       </div>
       <ul
         tabIndex={0}

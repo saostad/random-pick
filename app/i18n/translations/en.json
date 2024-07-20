@@ -258,6 +258,7 @@
     "noRoleAssigned": "No role assigned",
     "playersOrder": "Player's order",
     "gameReset": "Game Reset",
-    "selectLanguage": "Select Language"
+    "selectLanguage": "Select Language",
+    "targets": "Targets"
   }
 }
