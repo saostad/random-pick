@@ -46,9 +46,9 @@ const MultiVoting: React.FC<MultiVotingProps> = ({
             key={player.id}
           >
             <div
-              className={`dropdown dropdown-top ${
-                index % 2 !== 0 ? "dropdown-end" : ""
-              } ${player.id === players[turnIndex].id ? "dropdown-open" : ""}`}
+              className={`dropdown ${index % 2 !== 0 ? "dropdown-end" : ""} ${
+                player.id === players[turnIndex].id ? "dropdown-open" : ""
+              }`}
             >
               <div
                 tabIndex={0}
