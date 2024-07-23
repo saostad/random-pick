@@ -2,7 +2,12 @@
 
 import { langs } from "@/app/i18n/i18n";
 import { getUserLocale } from "@/app/i18n/locale";
-import React from "react";
+import React, { useEffect } from "react";
+
+export const DirectionContext = React.createContext<{
+  locale: string | null;
+  direction: string;
+}>({ direction: "ltr", locale: null });
 
 export default function DirectionProvider({
   children,
@@ -10,19 +15,27 @@ export default function DirectionProvider({
   children: React.ReactNode;
 }) {
   const [locale, setLocale] = React.useState<string | null>(null);
+  const [direction, setDirection] = React.useState<string>("ltr");
 
   React.useEffect(() => {
     getUserLocale().then(setLocale);
+    // TODO: find a way to update the locale when the user changes it
   }, []);
 
-  const direction = React.useMemo(() => {
+  useEffect(() => {
     const lang = langs.find((lang) => lang.code === locale);
-    return lang ? lang.direction : "ltr";
+    if (lang) {
+      setDirection(lang.direction);
+    }
   }, [locale]);
 
   React.useEffect(() => {
     document.documentElement.dir = direction;
   }, [direction]);
 
-  return <>{children}</>;
+  return (
+    <DirectionContext.Provider value={{ locale, direction }}>
+      {children}
+    </DirectionContext.Provider>
+  );
 }

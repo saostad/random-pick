@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Player, useGameContext } from "../contexts/GameContext";
 import { getAlivePlayers } from "../utils/get-from-fns";
 import { useTranslations } from "next-intl";
+import { DirectionContext } from "../contexts/DirectionProvider";
 
 type DayTargetsProps = {
   playerId: string;
@@ -9,6 +10,8 @@ type DayTargetsProps = {
 };
 
 const DayTargets: React.FC<DayTargetsProps> = ({ playerId, setTargets }) => {
+  const { direction } = useContext(DirectionContext);
+
   const t = useTranslations("Mafia");
   const [selectedPlayers, setSelectedPlayers] = useState<Player[]>([]);
 
@@ -40,7 +43,7 @@ const DayTargets: React.FC<DayTargetsProps> = ({ playerId, setTargets }) => {
   }, [playerId]);
 
   return (
-    <div className="dropdown dropdown-top dropdown-end">
+    <div className={`dropdown ${direction === "rtl" ? "dropdown-end" : ""}`}>
       <div tabIndex={0} role="button" className="btn m-1 btn-outline">
         {t("targets")}
       </div>
