@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Player, useGameContext } from "../contexts/GameContext";
 import { getPlayerNameById } from "../utils/get-from-fns";
 import { useTranslations } from "next-intl";
@@ -18,99 +18,115 @@ const SingleVoting: React.FC<SingleVotingProps> = ({
   const { addEvent } = useGameContext();
   const [chosenPlayer, setChosenPlayer] = useState<string>("");
   const [turnIndex, setTurnIndex] = useState(0);
-  const availablePlayers = players.filter(
-    (player) => player.id !== players[turnIndex].id
-  );
+  const [line, setLine] = useState<{
+    x1: number;
+    y1: number;
+    x2: number;
+    y2: number;
+  } | null>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  const getItemPosition = (index: number) => {
+    if (!gridRef.current) return { x: 0, y: 0 };
+    const gridItem = gridRef.current.children[index] as HTMLElement;
+    const rect = gridItem.getBoundingClientRect();
+    const gridRect = gridRef.current.getBoundingClientRect();
+    return {
+      x: rect.left - gridRect.left + rect.width / 2,
+      y: rect.top - gridRect.top + rect.height / 2,
+    };
+  };
+
+  useEffect(() => {
+    if (chosenPlayer) {
+      const currentPlayerPos = getItemPosition(turnIndex);
+      const targetIndex = players.findIndex(
+        (player) => player.id === chosenPlayer
+      );
+      const targetPos = getItemPosition(targetIndex);
+      setLine({
+        x1: currentPlayerPos.x,
+        y1: currentPlayerPos.y,
+        x2: targetPos.x,
+        y2: targetPos.y,
+      });
+    } else {
+      setLine(null);
+    }
+  }, [chosenPlayer, turnIndex]);
 
   const handlePlayerSelection = (targetId: string) => {
     setChosenPlayer((prevChosen) => (prevChosen === targetId ? "" : targetId));
   };
 
-  return (
-    <div>
-      <div className="grid grid-cols-2 justify-items-stretch place-content-between gap-y-4">
-        {players.map((player, index) => (
-          <div
-            className={index % 2 !== 0 ? "justify-self-end" : ""}
-            key={player.id}
-          >
-            <div
-              className={`dropdown ${index % 2 !== 0 ? "dropdown-end" : ""} ${
-                player.id === players[turnIndex].id ? "dropdown-open" : ""
-              }`}
-            >
-              <div
-                tabIndex={0}
-                role="button"
-                className={`btn m-1 ${
-                  player.id === players[turnIndex].id
-                    ? "btn-outline"
-                    : "btn-disabled"
-                }`}
-              >
-                {player.name}
-                <div className="badge badge-secondary">{player.voteCount}</div>
-              </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
-              >
-                {availablePlayers.map((target) => (
-                  <div key={target.id} className="form-control">
-                    <label className="label cursor-pointer">
-                      <span className="label-text">{target.name}</span>
-                      <input
-                        type="radio"
-                        id={target.id}
-                        className="radio checked:bg-blue-500"
-                        checked={chosenPlayer === target.id}
-                        onChange={() => {}} // Empty onChange to avoid React warning
-                        onClick={() => handlePlayerSelection(target.id)}
-                      />
-                    </label>
-                  </div>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ))}
-      </div>
-      <button
-        className="btn btn-primary btn-outline btn-wide"
-        onClick={(e) => {
-          // register votes to events
-          if (chosenPlayer) {
-            addEvent({
-              type: "vote",
-              description: `${
-                players[turnIndex].name
-              } voted for ${getPlayerNameById({
-                players: players,
-                playerId: chosenPlayer,
-              })}.`,
-            });
-            increaseVote(chosenPlayer);
-          }
+  const handleNextPlayer = () => {
+    if (chosenPlayer) {
+      addEvent({
+        type: "vote",
+        description: `${players[turnIndex].name} voted for ${getPlayerNameById({
+          players,
+          playerId: chosenPlayer,
+        })}.`,
+      });
+      increaseVote(chosenPlayer);
+    }
 
-          if (turnIndex < players.length - 1) {
-            setTurnIndex(turnIndex + 1);
-            setChosenPlayer("");
-            // close the dropdown
-            const dropdowns = document.querySelectorAll(".dropdown-open");
-            dropdowns.forEach((dropdown) => {
-              dropdown.classList.remove("dropdown-open");
-            });
-          } else {
-            onEndVoting();
-          }
-        }}
-      >
-        {turnIndex < players.length - 1 ? (
-          <span>{t("nextPlayer")}</span>
-        ) : (
-          <span>{t("VotingSession.endVoting")}</span>
+    if (turnIndex < players.length - 1) {
+      setTurnIndex(turnIndex + 1);
+      setChosenPlayer("");
+    } else {
+      onEndVoting();
+    }
+  };
+
+  return (
+    <div className="w-full max-w-4xl mx-auto p-4">
+      <div className="relative">
+        <div ref={gridRef} className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          {players.map((player, index) => (
+            <div
+              key={player.id}
+              className={`p-4 border rounded cursor-pointer ${
+                index === turnIndex
+                  ? "bg-primary text-primary-content"
+                  : player.id === chosenPlayer
+                  ? "bg-secondary text-secondary-content"
+                  : "bg-base-200"
+              } ${
+                player.id === players[turnIndex].id ? "cursor-not-allowed" : ""
+              }`}
+              onClick={() => {
+                if (player.id !== players[turnIndex].id) {
+                  handlePlayerSelection(player.id);
+                }
+              }}
+            >
+              <div className="font-bold">{player.name}</div>
+              <div className="badge badge-outline">{player.voteCount}</div>
+            </div>
+          ))}
+        </div>
+        {line && (
+          <svg className="absolute top-0 left-0 w-full h-full pointer-events-none">
+            <line
+              x1={line.x1}
+              y1={line.y1}
+              x2={line.x2}
+              y2={line.y2}
+              stroke="currentColor"
+              strokeWidth="2"
+              className="text-accent"
+            />
+          </svg>
         )}
-      </button>
+      </div>
+      <div className="mt-4 flex justify-center">
+        <button className="btn btn-primary btn-wide" onClick={handleNextPlayer}>
+          {turnIndex < players.length - 1
+            ? t("nextPlayer")
+            : t("VotingSession.endVoting")}
+        </button>
+      </div>
     </div>
   );
 };
