@@ -86,7 +86,7 @@ const SingleVoting: React.FC<SingleVotingProps> = ({
           {players.map((player, index) => (
             <div
               key={player.id}
-              className={`p-4 border rounded cursor-pointer ${
+              className={`p-2 border rounded-3xl cursor-pointer ${
                 index === turnIndex
                   ? "bg-primary text-primary-content"
                   : player.id === chosenPlayer
@@ -102,7 +102,7 @@ const SingleVoting: React.FC<SingleVotingProps> = ({
               }}
             >
               <div className="font-bold">{player.name}</div>
-              <div className="badge badge-outline">{player.voteCount}</div>
+              <div className="badge">{player.voteCount}</div>
             </div>
           ))}
         </div>
