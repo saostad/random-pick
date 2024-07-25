@@ -36,6 +36,19 @@ export type Player = {
   voteCount: number;
   order: number;
   tags: AssignedTag[];
+  gamesPlayed: number;
+  gamesWon: number;
+  totalVotesSurvived: number;
+  totalCorrectVotes: number;
+  totalCorrectTargetsInDay: number;
+  totalIncorrectTargetsInDay: number;
+  totalIncorrectVotes: number;
+  ranking: number;
+  currentGameVotesSurvived: number;
+  currentGameCorrectVotes: number;
+  currentGameCorrectTargets: number;
+  currentGameIncorrectTargets: number;
+  currentGameIncorrectVotes: number;
 };
 export type RoleSide = "Town" | "Mafia" | "ThirdParty";
 
@@ -126,6 +139,23 @@ export type GameContextType = {
   addEvent: (event: Omit<GameEvent, "eventAt" | "timestamp">) => void;
   getEventsByPhase: (phase: string) => GameEvent[];
   setGameMode: (mode: GameMode) => void;
+  updatePlayerStatistics: (input: {
+    playerId: string;
+    gameWon: boolean;
+    votesSurvived: number;
+    correctVotes: number;
+    correctTargets: number;
+    incorrectTargets: number;
+    totalIncorrectVotes: number;
+  }) => void;
+  getPlayerRankings: () => Player[];
+  incrementVotesSurvived: (playerId: string) => void;
+  incrementCorrectVote: (playerId: string) => void;
+  incrementIncorrectVote: (playerId: string) => void;
+  incrementCorrectTarget: (playerId: string) => void;
+  incrementIncorrectTarget: (playerId: string) => void;
+  resetGameTracking: () => void;
+  finalizeGameStatistics: (winningTeam: RoleSide) => void;
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -276,8 +306,70 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }));
   };
 
+  const calculatePlayerRankings = (players: Player[]): Player[] => {
+    return players
+      .map((player) => {
+        const winRate =
+          player.gamesPlayed > 0 ? player.gamesWon / player.gamesPlayed : 0;
+        const votesSurvivedRate =
+          player.gamesPlayed > 0
+            ? player.totalVotesSurvived / player.gamesPlayed
+            : 0;
+        const correctVotesRate =
+          player.gamesPlayed > 0
+            ? player.totalCorrectVotes / player.gamesPlayed
+            : 0;
+        const correctTargetsRate =
+          player.gamesPlayed > 0
+            ? player.totalCorrectTargetsInDay / player.gamesPlayed
+            : 0;
+        const incorrectTargetsRate =
+          player.gamesPlayed > 0
+            ? player.totalIncorrectTargetsInDay / player.gamesPlayed
+            : 0;
+        const incorrectVotesRate =
+          player.gamesPlayed > 0
+            ? player.totalIncorrectVotes / player.gamesPlayed
+            : 0;
+
+        const score =
+          winRate * 0.3 +
+          votesSurvivedRate * 0.15 +
+          correctVotesRate * 0.15 +
+          correctTargetsRate * 0.2 +
+          (1 - incorrectTargetsRate) * 0.1 +
+          (1 - incorrectVotesRate) * 0.1;
+
+        return { ...player, ranking: score };
+      })
+      .sort((a, b) => b.ranking - a.ranking)
+      .map((player, index) => ({ ...player, ranking: index + 1 }));
+  };
+
   const resetGameState = () => {
-    setGameState(initialState);
+    setGameState((prev) => ({
+      ...initialState,
+      players: prev.players.map((player) => ({
+        ...player,
+        isAlive: true,
+        roleId: undefined,
+        voteCount: 0,
+        tags: [],
+        currentGameVotesSurvived: 0,
+        currentGameCorrectVotes: 0,
+        currentGameCorrectTargets: 0,
+        currentGameIncorrectTargets: 0,
+        currentGameIncorrectVotes: 0,
+        gamesPlayed: player.gamesPlayed,
+        gamesWon: player.gamesWon,
+        totalVotesSurvived: player.totalVotesSurvived,
+        totalCorrectVotes: player.totalCorrectVotes,
+        totalCorrectTargetsInDay: player.totalCorrectTargetsInDay,
+        totalIncorrectTargetsInDay: player.totalIncorrectTargetsInDay,
+        totalIncorrectVotes: player.totalIncorrectVotes,
+        ranking: player.ranking,
+      })),
+    }));
     handleOpen("ActionRecommender");
   };
 
@@ -290,6 +382,11 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         roleId: undefined,
         voteCount: 0,
         tags: [],
+        currentGameVotesSurvived: 0,
+        currentGameCorrectVotes: 0,
+        currentGameCorrectTargets: 0,
+        currentGameIncorrectTargets: 0,
+        currentGameIncorrectVotes: 0,
       })),
       nightCount: 0,
       dayCount: 0,
@@ -502,6 +599,178 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }
   };
 
+  /**
+   *  Call this function for each player who survives a voting round.
+   */
+  const incrementVotesSurvived = (playerId: string) => {
+    setGameState((prev) => ({
+      ...prev,
+      players: prev.players.map((player) =>
+        player.id === playerId
+          ? {
+              ...player,
+              currentGameVotesSurvived: player.currentGameVotesSurvived + 1,
+            }
+          : player
+      ),
+    }));
+  };
+
+  const incrementCorrectVote = (playerId: string) => {
+    setGameState((prev) => ({
+      ...prev,
+      players: prev.players.map((player) =>
+        player.id === playerId
+          ? {
+              ...player,
+              currentGameCorrectVotes: player.currentGameCorrectVotes + 1,
+            }
+          : player
+      ),
+    }));
+  };
+
+  const incrementIncorrectVote = (playerId: string) => {
+    setGameState((prev) => ({
+      ...prev,
+      players: prev.players.map((player) =>
+        player.id === playerId
+          ? {
+              ...player,
+              currentGameIncorrectVotes: player.currentGameIncorrectVotes + 1,
+            }
+          : player
+      ),
+    }));
+  };
+
+  const incrementCorrectTarget = (playerId: string) => {
+    setGameState((prev) => ({
+      ...prev,
+      players: prev.players.map((player) =>
+        player.id === playerId
+          ? {
+              ...player,
+              currentGameCorrectTargets: player.currentGameCorrectTargets + 1,
+            }
+          : player
+      ),
+    }));
+  };
+
+  const incrementIncorrectTarget = (playerId: string) => {
+    setGameState((prev) => ({
+      ...prev,
+      players: prev.players.map((player) =>
+        player.id === playerId
+          ? {
+              ...player,
+              currentGameIncorrectTargets:
+                player.currentGameIncorrectTargets + 1,
+            }
+          : player
+      ),
+    }));
+  };
+
+  /**
+   * Use this at the beginning of each new game. It resets all the game-specific tracking fields for each player to zero.
+   */
+  const resetGameTracking = () => {
+    setGameState((prev) => ({
+      ...prev,
+      players: prev.players.map((player) => ({
+        ...player,
+        currentGameVotesSurvived: 0,
+        currentGameCorrectVotes: 0,
+        currentGameCorrectTargets: 0,
+        currentGameIncorrectTargets: 0,
+        currentGameIncorrectVotes: 0,
+      })),
+    }));
+  };
+
+  /**
+   * Call this at the end of each game to update the overall statistics for each player.
+   */
+  const finalizeGameStatistics = (winningTeam: RoleSide) => {
+    setGameState((prev) => ({
+      ...prev,
+      players: prev.players.map((player) => {
+        const gameWon =
+          player.roleId &&
+          prev.gameRoles.find((role) => role.id === player.roleId)?.side ===
+            winningTeam;
+        return {
+          ...player,
+          gamesPlayed: player.gamesPlayed + 1,
+          gamesWon: gameWon ? player.gamesWon + 1 : player.gamesWon,
+          totalVotesSurvived:
+            player.totalVotesSurvived + player.currentGameVotesSurvived,
+          totalCorrectVotes:
+            player.totalCorrectVotes + player.currentGameCorrectVotes,
+          totalCorrectTargetsInDay:
+            player.totalCorrectTargetsInDay + player.currentGameCorrectTargets,
+          totalIncorrectTargetsInDay:
+            player.totalIncorrectTargetsInDay +
+            player.currentGameIncorrectTargets,
+          totalIncorrectVotes:
+            player.totalIncorrectVotes + player.currentGameIncorrectVotes,
+        };
+      }),
+    }));
+  };
+
+  /**
+   * Use this whenever you need to display or update the player rankings, typically after a game ends or when viewing a leaderboard.
+   */
+  const getPlayerRankings = () => {
+    return calculatePlayerRankings(gameState.players);
+  };
+
+  /**
+   * This function is not typically called directly in your game logic. It's used internally by finalizeGameStatistics to update the overall statistics for each player at the end of a game.
+   */
+  const updatePlayerStatistics = (input: {
+    playerId: string;
+    gameWon: boolean;
+    votesSurvived: number;
+    correctVotes: number;
+    correctTargets: number;
+    incorrectTargets: number;
+    totalIncorrectVotes: number;
+  }) => {
+    const {
+      playerId,
+      gameWon,
+      votesSurvived,
+      correctVotes,
+      correctTargets,
+      incorrectTargets,
+      totalIncorrectVotes,
+    } = input;
+    setGameState((prev) => ({
+      ...prev,
+      players: prev.players.map((player) =>
+        player.id === playerId
+          ? {
+              ...player,
+              gamesPlayed: player.gamesPlayed + 1,
+              gamesWon: gameWon ? player.gamesWon + 1 : player.gamesWon,
+              totalVotesSurvived: player.totalVotesSurvived + votesSurvived,
+              totalCorrectVotes: player.totalCorrectVotes + correctVotes,
+              totalCorrectTargetsInDay:
+                player.totalCorrectTargetsInDay + correctTargets,
+              totalIncorrectTargetsInDay:
+                player.totalIncorrectTargetsInDay + incorrectTargets,
+              totalIncorrectVotes:
+                player.totalIncorrectVotes + totalIncorrectVotes,
+            }
+          : player
+      ),
+    }));
+  };
+
   const value = {
     gameState,
     updateGameState,
@@ -527,6 +796,15 @@ const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     addEvent,
     getEventsByPhase,
     setGameMode,
+    updatePlayerStatistics,
+    getPlayerRankings,
+    incrementVotesSurvived,
+    incrementCorrectVote,
+    incrementIncorrectVote,
+    incrementCorrectTarget,
+    incrementIncorrectTarget,
+    resetGameTracking,
+    finalizeGameStatistics,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

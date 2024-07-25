@@ -56,6 +56,19 @@ const Players: React.FC = () => {
       isAlive: true,
       roleId: "",
       tags: [],
+      gamesPlayed: 0,
+      gamesWon: 0,
+      totalVotesSurvived: 0,
+      totalCorrectVotes: 0,
+      totalCorrectTargetsInDay: 0,
+      totalIncorrectTargetsInDay: 0,
+      totalIncorrectVotes: 0,
+      ranking: 0,
+      currentGameVotesSurvived: 0,
+      currentGameCorrectVotes: 0,
+      currentGameCorrectTargets: 0,
+      currentGameIncorrectTargets: 0,
+      currentGameIncorrectVotes: 0,
     };
     updateGameState({ players: [...gameState.players, newPlayer] });
     setNewPlayerName("");
