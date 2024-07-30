@@ -39,6 +39,7 @@ const DayTargets: React.FC<DayTargetsProps> = ({ playerId, setTargets }) => {
   };
 
   useEffect(() => {
+    // reset selected players when playerId changes
     setSelectedPlayers([]);
   }, [playerId]);
 

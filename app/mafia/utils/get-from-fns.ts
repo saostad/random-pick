@@ -111,3 +111,15 @@ export function getAuditProblems(gameState: GameState) {
     problems: { rolesWithoutPlayers, playersWithoutRoles },
   };
 }
+
+export function getRoleSideByPlayerId({
+  player,
+  gameRoles,
+}: {
+  player: Player;
+  gameRoles: GameRole[];
+}) {
+  const role = getRoleByPlayerId({ player, gameRoles });
+
+  return role?.side;
+}

@@ -25,7 +25,8 @@ const DayActionsControl: React.FC = () => {
     gameState,
     updateGameState,
     increaseDayCount,
-    setSpeakingOrder,
+    incrementCorrectTarget,
+    incrementIncorrectTarget,
     addEvent,
   } = useGameContext();
   const {
@@ -36,6 +37,7 @@ const DayActionsControl: React.FC = () => {
     speakingTimeEnabled,
     challengeTime,
     challengeTimeEnabled,
+    dayCount,
   } = gameState;
   const { handleOpen, modals } = useModal();
   const { addToast } = useContext(ToastContext);
@@ -72,8 +74,14 @@ const DayActionsControl: React.FC = () => {
       if (selectedTargets.length > 0) {
         const playerName = challengeMode
           ? getPlayerNameById({ playerId: selectedChallenger, players })
-          : gameState.players[speakingOrder[currentSpeakerIndex]].name;
+          : players[speakingOrder[currentSpeakerIndex]].name;
 
+        /**
+         * use incrementCorrectTarget and incrementIncorrectTarget functions to update player's stats
+         */
+        // TODO: implement this part - remember the challenger and speaker
+
+        // add events
         addEvent({
           type: "dayTargets",
           description: `Player ${playerName} targeted: ${selectedTargets
@@ -95,7 +103,7 @@ const DayActionsControl: React.FC = () => {
   };
 
   const handleRandomSelect = () => {
-    const alivePlayers = getAlivePlayers({ players: gameState.players });
+    const alivePlayers = getAlivePlayers({ players });
     if (alivePlayers.length > 0) {
       const randomPlayer =
         alivePlayers[Math.floor(Math.random() * alivePlayers.length)];
@@ -164,9 +172,7 @@ const DayActionsControl: React.FC = () => {
     setChallengeMode(false);
     setSelectedChallenger("");
     setSpeakerChallenged((prev) =>
-      new Set(prev).add(
-        gameState.players[speakingOrder[currentSpeakerIndex]].id
-      )
+      new Set(prev).add(players[speakingOrder[currentSpeakerIndex]].id)
     );
     setIsTimerRunning(false);
     setTimeout(() => {
@@ -187,14 +193,14 @@ const DayActionsControl: React.FC = () => {
     }
   }, [selectedStartingPlayer]);
 
-  const lastStartingPlayer = gameState.players.find(
-    (player) => player.id === gameState.startingPlayerId
+  const lastStartingPlayer = players.find(
+    (player) => player.id === startingPlayerId
   );
-  const alivePlayers = getAlivePlayers({ players: gameState.players });
+  const alivePlayers = getAlivePlayers({ players: players });
 
   const currentSpeaker =
     speakingOrder.length > 0
-      ? gameState.players[speakingOrder[currentSpeakerIndex]]
+      ? players[speakingOrder[currentSpeakerIndex]]
       : null;
 
   const availableChallengers = alivePlayers.filter(
@@ -207,7 +213,7 @@ const DayActionsControl: React.FC = () => {
     currentSpeaker && speakerChallenged.has(currentSpeaker.id);
 
   const currentChallengerName = currentChallenger
-    ? gameState.players.find((player) => player.id === currentChallenger)?.name
+    ? players.find((player) => player.id === currentChallenger)?.name
     : null;
 
   const mediaPlayerRef = useRef<MediaPlayerRef>(null);
@@ -249,10 +255,10 @@ const DayActionsControl: React.FC = () => {
           disabled={!selectedStartingPlayer}
           className="my-4 btn-wide"
         >
-          {t("DayActions.startDay")} {gameState.dayCount}
+          {t("DayActions.startDay")} {dayCount}
         </GlowingButton>
       </div>
-      {gameState.dayCount !== 0 && lastStartingPlayer && (
+      {dayCount !== 0 && lastStartingPlayer && (
         <p className="my-4">
           {t("lastDayStarterWas")}{" "}
           <span className="font-bold">{lastStartingPlayer.name}</span>

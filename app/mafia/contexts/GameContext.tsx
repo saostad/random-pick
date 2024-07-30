@@ -108,10 +108,7 @@ export type GameContextType = {
   loading: boolean;
   gameState: GameState;
   updateGameState: (newState: Partial<GameState>) => void;
-  markPlayerAsDead: ({
-    playerId,
-    reason,
-  }: {
+  markPlayerAsDead: (input: {
     playerId: string;
     reason?: "vote" | "breaking game rules";
   }) => void;
