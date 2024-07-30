@@ -27,27 +27,27 @@
   },
   "devDependencies": {
     "@iconify-json/carbon": "^1.1.36",
-    "@iconify-json/cil": "^1.1.8",
+    "@iconify-json/cil": "^1.1.9",
     "@iconify-json/hugeicons": "^1.1.0",
     "@iconify-json/ic": "^1.1.17",
     "@iconify-json/icon-park-outline": "^1.1.15",
     "@iconify-json/iconoir": "^1.1.45",
-    "@iconify-json/lucide": "^1.1.201",
+    "@iconify-json/lucide": "^1.1.203",
     "@iconify-json/material-symbols": "^1.1.85",
     "@iconify-json/material-symbols-light": "^1.1.25",
     "@iconify-json/mdi": "^1.1.67",
     "@iconify-json/streamline": "^1.1.8",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
-    "@types/node": "^20.14.12",
+    "@types/node": "^20.14.13",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "daisyui": "^4.12.10",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.5",
     "postcss": "^8.4.40",
-    "tailwindcss": "^3.4.6",
+    "tailwindcss": "^3.4.7",
     "typescript": "^5.5.4",
-    "unplugin-icons": "^0.19.0"
+    "unplugin-icons": "^0.19.1"
   }
 }
