@@ -12,7 +12,6 @@ type Props = {
 export default function EventsList({ events }: Props) {
     return (
         <div>
-            <h1>Events List</h1>
             {events.map((event) => (
                 <div className="card my-4 bg-base-100 w-96 shadow-xl" key={event.name}>
                     <div className="card-body">
@@ -29,4 +28,4 @@ export default function EventsList({ events }: Props) {
         </div>
     );
 }
- 
+

@@ -22,9 +22,13 @@ export default function EventScanner() {
     }, [response]);
 
     useEffect(() => {
-        getSampleApiResponse().then((response) => {
-            setResponse({modelResponse: JSON.stringify(response), success: true});
-        });
+        // if we are in dev mode, we want to use the sample api response
+        // eslint-disable-next-line no-process-env
+        if (process.env.NODE_ENV === 'development') {
+            getSampleApiResponse().then((response) => {
+                setResponse({modelResponse: JSON.stringify(response), success: true});
+            });
+        }
     }, []);
 
     return (
