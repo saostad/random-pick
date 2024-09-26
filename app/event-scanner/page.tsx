@@ -40,7 +40,7 @@ export default function EventScanner() {
             <SignedIn>
                 <UserButton />
                 <div className="divider"></div>
-                <h1 className="text-4xl font-bold">Event Scanner</h1>
+                <h1 className="text-4xl my-6 font-bold">Event Scanner</h1>
                 <UploadForm setResponse={setResponse} />
                 {response && response.success && (
                     <EventsList events={JSON.parse(response.modelResponse).events} />
