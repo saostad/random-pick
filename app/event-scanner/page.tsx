@@ -29,7 +29,7 @@ export default function EventScanner() {
 
     return (
         <ClerkProvider>
-            <div className="flex flex-col items-center justify-center h-screen">
+            <div className="flex flex-col items-center justify-center">
             <SignedOut>
                 <SignInButton />
             </SignedOut>
