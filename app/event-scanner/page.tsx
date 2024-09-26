@@ -35,7 +35,17 @@ export default function EventScanner() {
         <ClerkProvider>
             <div className="flex flex-col items-center justify-center">
             <SignedOut>
-                <SignInButton />
+                <div className="divider"></div>
+                <h1 className="text-4xl my-6 font-bold">Event Scanner</h1>
+                <h3 className="text-xl mb-6">scan handwritten, appointment cards, ...</h3>
+                <p className="text-xl mb-6">Please sign in to continue</p>
+                <SignInButton mode="modal">
+                    <button className="btn btn-primary btn-lg font-bold text-xl px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition duration-300">
+                        Sign In
+                    </button>
+                </SignInButton>
+
+                <div className="divider"></div>
             </SignedOut>
             <SignedIn>
                 <UserButton />
