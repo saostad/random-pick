@@ -10,7 +10,7 @@ export async function antropicImageAnalysis(imageBase64: string): Promise<string
     model: "claude-3-5-sonnet-20240620",
     max_tokens: 1800,
     temperature: 0,
-    system: "You are a helpful assistant that extracts text from images and returns a json format of the events, also include a property gcal_link to add to google calendar, make sure all the events are in 2024 and timezone is EST. remember to just return the json and nothing else.",
+    system: "You are a helpful assistant that extracts text from images and returns a json format of the events, also include a property gcal_link to add to google calendar, make sure all the events are in 2024 and timezone is EST. remember to just return the json and nothing else. here is the shape of the json: {events: [{name: string, date: string, time: string, location: string, gcal_link: string}]}.",
     messages: [
       {
       "role": "user",
