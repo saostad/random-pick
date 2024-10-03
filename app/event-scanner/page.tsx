@@ -15,21 +15,21 @@ import { getSampleApiResponse } from "./utils/sampleApiResponse";
 export default function EventScanner() {
   const [response, setResponse] = useState<ApiResponse | null>(null);
 
-  useEffect(() => {
-    if (response && response.success) {
-      console.log(response.modelResponse);
-    }
-  }, [response]);
+  // useEffect(() => {
+  //   if (response && response.success) {
+  //     console.log(response.modelResponse);
+  //   }
+  // }, [response]);
 
-  useEffect(() => {
-    // if we are in dev mode, we want to use the sample api response
-    // eslint-disable-next-line no-process-env
-    if (process.env.NODE_ENV === "development") {
-      getSampleApiResponse().then((response) => {
-        setResponse({ modelResponse: JSON.stringify(response), success: true });
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   // if we are in dev mode, we want to use the sample api response
+  //   // eslint-disable-next-line no-process-env
+  //   if (process.env.NODE_ENV === "development") {
+  //     getSampleApiResponse().then((response) => {
+  //       setResponse({ modelResponse: JSON.stringify(response), success: true });
+  //     });
+  //   }
+  // }, []);
 
   return (
     <ClerkProvider>

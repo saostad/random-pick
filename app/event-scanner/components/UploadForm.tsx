@@ -1,17 +1,20 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { uploadFile } from '../actions/uploadFile';
-import Image from 'next/image';
+import { useState, useEffect } from "react";
+import { uploadFile } from "../actions/uploadFile";
+import Image from "next/image";
+import z from "zod";
 
-export type ApiResponse = {
-  success: boolean;
-  modelResponse: string;
-}
+const ApiResponseSchema = z.object({
+  success: z.boolean(),
+  modelResponse: z.string(),
+});
+
+export type ApiResponse = z.infer<typeof ApiResponseSchema>;
 
 type Props = {
   setResponse: (response: ApiResponse) => void;
-}
+};
 
 export default function UploadForm({ setResponse }: Props) {
   const [file, setFile] = useState<File | null>(null);
@@ -34,14 +37,18 @@ export default function UploadForm({ setResponse }: Props) {
 
     setIsLoading(true);
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append("file", file);
 
     try {
       const result = await uploadFile(formData);
-      setResponse(result);
+      // check if the response is in JSON format
+      if (result.success && result.modelResponse) {
+        setResponse(result);
+      }
+
       // Handle success (e.g., show a success message)
     } catch (error) {
-      console.error('Upload failed:', error);
+      console.error("Upload failed:", error);
       // Handle error (e.g., show an error message)
     } finally {
       setIsLoading(false);
@@ -70,12 +77,12 @@ export default function UploadForm({ setResponse }: Props) {
           />
         </div>
       )}
-      <button 
-        className={`btn btn-outline btn-primary ${isLoading ? 'loading' : ''}`} 
+      <button
+        className={`btn btn-outline btn-primary ${isLoading ? "loading" : ""}`}
         type="submit"
         disabled={!file || isLoading}
       >
-        {isLoading ? 'Uploading...' : 'Upload'}
+        {isLoading ? "Uploading..." : "Upload"}
       </button>
     </form>
   );
