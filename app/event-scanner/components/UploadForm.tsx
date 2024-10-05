@@ -3,14 +3,7 @@
 import { useState, useEffect } from "react";
 import { uploadFile } from "../actions/uploadFile";
 import Image from "next/image";
-import z from "zod";
-
-const ApiResponseSchema = z.object({
-  success: z.boolean(),
-  modelResponse: z.string(),
-});
-
-export type ApiResponse = z.infer<typeof ApiResponseSchema>;
+import { ApiResponse } from "../typings/antropic-api";
 
 type Props = {
   setResponse: (response: ApiResponse) => void;
@@ -41,15 +34,10 @@ export default function UploadForm({ setResponse }: Props) {
 
     try {
       const result = await uploadFile(formData);
-      // check if the response is in JSON format
-      if (result.success && result.modelResponse) {
-        setResponse(result);
-      }
-
-      // Handle success (e.g., show a success message)
+      setResponse(result);
     } catch (error) {
       console.error("Upload failed:", error);
-      // Handle error (e.g., show an error message)
+      // TODO: Handle error (e.g., show an error message)
     } finally {
       setIsLoading(false);
     }

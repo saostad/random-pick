@@ -1,8 +1,9 @@
 "use server";
 
+import { ApiResponse } from "../typings/antropic-api";
 import { antropicImageAnalysis } from "../utils/antropic";
 
-export async function uploadFile(formData: FormData) {
+export async function uploadFile(formData: FormData): Promise<ApiResponse> {
   const file = formData.get("file") as File;
   if (!file) {
     throw new Error("No file uploaded");
@@ -44,5 +45,5 @@ export async function uploadFile(formData: FormData) {
   // Here you can do whatever you want with the base64Image
   // For example, you could save it to a database or return it to the client
 
-  return { success: true, modelResponse };
+  return modelResponse;
 }

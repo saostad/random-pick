@@ -2,6 +2,12 @@
 
 import Anthropic from "@anthropic-ai/sdk";
 import { getAnthropicApiKey } from "./utils";
+import {
+  ApiResponse,
+  ErrorResponseSchema,
+  ApiSuccessResponseSchema,
+} from "../typings/antropic-api";
+import { z } from "zod";
 
 export async function antropicImageAnalysis({
   imageBase64,
@@ -9,7 +15,7 @@ export async function antropicImageAnalysis({
 }: {
   imageBase64: string;
   imageType: "image/jpeg" | "image/png" | "image/gif";
-}): Promise<string> {
+}): Promise<ApiResponse> {
   const anthropic = new Anthropic({ apiKey: getAnthropicApiKey() });
 
   // get today's date in the format of mm-dd-yyyy
@@ -48,6 +54,57 @@ export async function antropicImageAnalysis({
     ],
   });
 
+  if (antropicResponse.stop_reason !== "end_turn") {
+    return {
+      events: [],
+      error: "Error: " + antropicResponse.stop_reason,
+    };
+  }
+
   const contentBlock = antropicResponse.content[0];
-  return "text" in contentBlock ? contentBlock.text : "no response";
+
+  if (!("text" in contentBlock)) {
+    return {
+      events: [],
+      error: "Error: no text in content block",
+    };
+  }
+
+  try {
+    const response = JSON.parse(contentBlock.text);
+
+    // check if error is present
+    if ("error" in response) {
+      const { success, error, data } = ErrorResponseSchema.safeParse(response);
+      if (success) {
+        return data;
+      } else {
+        return {
+          events: [],
+          error: "Error Parsing Error response: " + error,
+        };
+      }
+    }
+
+    // validate the response
+    const { success, data, error } =
+      ApiSuccessResponseSchema.safeParse(response);
+    if (success) {
+      return data;
+    } else {
+      return {
+        events: [],
+        error:
+          "Error Parsing Event response: " +
+          error +
+          " " +
+          JSON.stringify(response),
+      };
+    }
+  } catch (error) {
+    return {
+      events: [],
+      error: "Error: " + error,
+    };
+  }
 }

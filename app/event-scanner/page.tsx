@@ -7,29 +7,13 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
-import UploadForm, { ApiResponse } from "./components/UploadForm";
-import { useState, useEffect } from "react";
+import UploadForm from "./components/UploadForm";
+import { useState } from "react";
 import EventsList from "./components/EventsList";
-import { getSampleApiResponse } from "./utils/sampleApiResponse";
+import { ApiResponse } from "./typings/antropic-api";
 
 export default function EventScanner() {
   const [response, setResponse] = useState<ApiResponse | null>(null);
-
-  // useEffect(() => {
-  //   if (response && response.success) {
-  //     console.log(response.modelResponse);
-  //   }
-  // }, [response]);
-
-  // useEffect(() => {
-  //   // if we are in dev mode, we want to use the sample api response
-  //   // eslint-disable-next-line no-process-env
-  //   if (process.env.NODE_ENV === "development") {
-  //     getSampleApiResponse().then((response) => {
-  //       setResponse({ modelResponse: JSON.stringify(response), success: true });
-  //     });
-  //   }
-  // }, []);
 
   return (
     <ClerkProvider>
@@ -55,8 +39,11 @@ export default function EventScanner() {
           <div className="divider"></div>
           <h1 className="text-4xl my-6 font-bold">Event Scanner</h1>
           <UploadForm setResponse={setResponse} />
-          {response && response.success && (
-            <EventsList events={JSON.parse(response.modelResponse).events} />
+          {response && !("error" in response) && (
+            <EventsList events={response.events} />
+          )}
+          {response && "error" in response && (
+            <div className="alert alert-error w-96">{response.error}</div>
           )}
         </SignedIn>
       </div>
