@@ -1,6 +1,6 @@
 {
   "functions": {
-    "*.*": {
+    "app/event-scanner/utils/antropic.ts": {
       "maxDuration": 60
     }
   }
