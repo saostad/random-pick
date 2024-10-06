@@ -1,5 +1,7 @@
 "use server";
 
+export const maxDuration = 60;
+
 import Anthropic from "@anthropic-ai/sdk";
 import { getAnthropicApiKey } from "./utils";
 import {
@@ -7,7 +9,6 @@ import {
   ErrorResponseSchema,
   ApiSuccessResponseSchema,
 } from "../typings/antropic-api";
-import { z } from "zod";
 
 export async function antropicImageAnalysis({
   imageBase64,
